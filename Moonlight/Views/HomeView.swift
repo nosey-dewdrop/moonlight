@@ -15,15 +15,12 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             if let moonData = moonData {
-                // Moon character overlay on the shared sky background
-                MoonSceneView(moonData: moonData)
-                    .ignoresSafeArea()
-
-                // Scrollable content on top
+                // Scrollable content on top of shared sky background
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
-                        Spacer()
-                            .frame(height: UIScreen.main.bounds.height * 0.38)
+                        // Moon character at the top
+                        moonCharacter(moonData: moonData)
+                            .padding(.top, UIScreen.main.bounds.height * 0.12)
 
                         // Moon info - no card bg, just text floating
                         moonInfo(moonData: moonData)
@@ -136,6 +133,20 @@ struct HomeView: View {
                 )
         )
         .padding(.horizontal, 16)
+    }
+
+    // MARK: - Moon Character
+
+    private func moonCharacter(moonData: MoonData) -> some View {
+        let phaseName = moonData.phase.rawValue
+        let path = "/Users/damummyphus/moonlight/assets/characters/\(phaseName).png"
+        let image = UIImage(contentsOfFile: path) ?? UIImage()
+
+        return Image(uiImage: image)
+            .interpolation(.none)
+            .resizable()
+            .frame(width: 180, height: 180)
+            .shadow(color: .yellow.opacity(0.2), radius: 20)
     }
 
     // MARK: - Helpers

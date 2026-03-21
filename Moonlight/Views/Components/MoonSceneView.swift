@@ -1,61 +1,21 @@
 import SwiftUI
 
-struct MoonSceneView: View {
-    let moonData: MoonData
-    var showMoon: Bool = true
-    @State private var cloudOffset1: CGFloat = -200
-    @State private var cloudOffset2: CGFloat = 300
-    @State private var cloudOffset3: CGFloat = -100
-    @State private var cloudOffset4: CGFloat = 200
-    @State private var cloudOffset5: CGFloat = -300
+// Separate view for twinkling stars - isolates re-renders from clouds
+struct PixelStarsView: View {
+    let size: CGSize
     @State private var starTwinkle: [Double] = (0..<50).map { _ in Double.random(in: 0.3...1.0) }
-    @State private var blinkFrame: Int = 0
-    @State private var glowFrame: Int = 0
-
-    private let bgColor = Color(hex: "#0b0b2e")
-
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                // Solid pixel-art-friendly dark background
-                bgColor
-
-                // Pixel art stars
-                pixelStars(size: geometry.size)
-
-                // Back clouds (big, dreamy)
-                pixelCloud("cloud_1", width: 280, x: cloudOffset1, y: geometry.size.height * 0.25)
-                pixelCloud("cloud_2", width: 240, x: cloudOffset2, y: geometry.size.height * 0.45)
-
-                // Moon character (upper third)
-                if showMoon {
-                    pixelMoon()
-                        .position(x: geometry.size.width / 2, y: geometry.size.height * 0.28)
-                }
-
-                // Front clouds (bigger, layered)
-                pixelCloud("cloud_3", width: 320, x: cloudOffset3, y: geometry.size.height * 0.55)
-                pixelCloud("cloud_4", width: 260, x: cloudOffset4, y: geometry.size.height * 0.68)
-                pixelCloud("cloud_5", width: 350, x: cloudOffset5, y: geometry.size.height * 0.80)
-                pixelCloud("cloud_6", width: 300, x: -cloudOffset3, y: geometry.size.height * 0.92)
-            }
-        }
-        .onAppear { startAnimations() }
-    }
-
-    // MARK: - Pixel Stars (code-drawn, crisp pixel art)
 
     private let starColors: [Color] = [
-        Color(hex: "#FFE566"), // gold
-        Color(hex: "#FFD700"), // bright gold
-        Color(hex: "#FFFFFF"), // white
-        Color(hex: "#E8E8FF"), // cool white
-        Color(hex: "#AAC4FF"), // soft blue
-        Color(hex: "#7EB8DA"), // blue
+        Color(hex: "#FFE566"),
+        Color(hex: "#FFD700"),
+        Color(hex: "#FFFFFF"),
+        Color(hex: "#E8E8FF"),
+        Color(hex: "#AAC4FF"),
+        Color(hex: "#7EB8DA"),
     ]
 
-    private func pixelStars(size: CGSize) -> some View {
-        return ZStack {
+    var body: some View {
+        ZStack {
             ForEach(0..<50, id: \.self) { i in
                 let seed = UInt64(i * 7 + 13)
                 let x = CGFloat(seed * 31 % UInt64(max(size.width, 1)))
@@ -65,12 +25,13 @@ struct MoonSceneView: View {
                 let isCross = seed % 4 == 0
 
                 if isCross {
-                    // Cross-shaped pixel star (3x3 with only center + cardinal)
-                    pixelCrossStar(color: starColors[colorIdx], size: pixelSize)
-                        .opacity(i < starTwinkle.count ? starTwinkle[i] : 0.5)
-                        .position(x: x, y: y)
+                    ZStack {
+                        Rectangle().fill(starColors[colorIdx]).frame(width: pixelSize * 3, height: pixelSize)
+                        Rectangle().fill(starColors[colorIdx]).frame(width: pixelSize, height: pixelSize * 3)
+                    }
+                    .opacity(i < starTwinkle.count ? starTwinkle[i] : 0.5)
+                    .position(x: x, y: y)
                 } else {
-                    // Simple dot star
                     Rectangle()
                         .fill(starColors[colorIdx])
                         .frame(width: pixelSize, height: pixelSize)
@@ -79,12 +40,81 @@ struct MoonSceneView: View {
                 }
             }
         }
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+                withAnimation(.easeInOut(duration: 2.5)) {
+                    for i in 0..<starTwinkle.count {
+                        starTwinkle[i] = Double.random(in: 0.3...1.0)
+                    }
+                }
+            }
+        }
+    }
+}
+
+struct DriftingCloud: View {
+    let name: String
+    let width: CGFloat
+    let y: CGFloat
+    let startX: CGFloat
+    let endX: CGFloat
+    let duration: Double
+
+    @State private var atEnd = false
+
+    var body: some View {
+        let image = Self.loadCloudAsset(name)
+        Image(uiImage: image)
+            .interpolation(.none)
+            .resizable()
+            .frame(width: width, height: width * 0.4)
+            .opacity(0.8)
+            .position(
+                x: (atEnd ? endX : startX) + UIScreen.main.bounds.width / 2,
+                y: y
+            )
+            .animation(.linear(duration: duration).repeatForever(autoreverses: true), value: atEnd)
+            .onAppear { atEnd = true }
     }
 
-    private func pixelCrossStar(color: Color, size: CGFloat) -> some View {
-        ZStack {
-            Rectangle().fill(color).frame(width: size * 3, height: size) // horizontal
-            Rectangle().fill(color).frame(width: size, height: size * 3) // vertical
+    static func loadCloudAsset(_ name: String) -> UIImage {
+        if let bundlePath = Bundle.main.path(forResource: "atmospheric_\(name)", ofType: "png") {
+            return UIImage(contentsOfFile: bundlePath) ?? UIImage()
+        }
+        let fullPath = "/Users/damummyphus/moonlight/assets/atmospheric/\(name).png"
+        return UIImage(contentsOfFile: fullPath) ?? UIImage()
+    }
+}
+
+struct MoonSceneView: View {
+    let moonData: MoonData
+    var showMoon: Bool = true
+
+    private let bgColor = Color(hex: "#0b0b2e")
+
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                bgColor
+
+                PixelStarsView(size: geometry.size)
+
+                // Back clouds
+                DriftingCloud(name: "cloud_1", width: 280, y: geometry.size.height * 0.25, startX: -200, endX: 200, duration: 25)
+                DriftingCloud(name: "cloud_2", width: 240, y: geometry.size.height * 0.45, startX: 300, endX: -300, duration: 35)
+
+                // Moon character
+                if showMoon {
+                    pixelMoon()
+                        .position(x: geometry.size.width / 2, y: geometry.size.height * 0.28)
+                }
+
+                // Front clouds
+                DriftingCloud(name: "cloud_3", width: 320, y: geometry.size.height * 0.55, startX: -100, endX: 100, duration: 20)
+                DriftingCloud(name: "cloud_4", width: 260, y: geometry.size.height * 0.68, startX: 200, endX: -200, duration: 40)
+                DriftingCloud(name: "cloud_5", width: 350, y: geometry.size.height * 0.80, startX: -300, endX: 300, duration: 30)
+                DriftingCloud(name: "cloud_6", width: 300, y: geometry.size.height * 0.92, startX: 100, endX: -100, duration: 20)
+            }
         }
     }
 
@@ -101,41 +131,9 @@ struct MoonSceneView: View {
             .shadow(color: .yellow.opacity(0.2), radius: 20)
     }
 
-    // MARK: - Pixel Cloud
-
-    private func pixelCloud(_ name: String, width: CGFloat, x: CGFloat, y: CGFloat) -> some View {
-        Image(uiImage: loadAsset("atmospheric/\(name)"))
-            .interpolation(.none)
-            .resizable()
-            .frame(width: width, height: width * 0.4)
-            .opacity(0.8)
-            .position(x: x + UIScreen.main.bounds.width / 2, y: y)
-    }
-
-    // MARK: - Animations
-
-    private func startAnimations() {
-        // Star twinkle
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-            withAnimation(.easeInOut(duration: 1.0)) {
-                for i in 0..<starTwinkle.count {
-                    starTwinkle[i] = Double.random(in: 0.2...1.0)
-                }
-            }
-        }
-
-        // Cloud drift
-        withAnimation(.linear(duration: 25).repeatForever(autoreverses: true)) { cloudOffset1 = 200 }
-        withAnimation(.linear(duration: 35).repeatForever(autoreverses: true)) { cloudOffset2 = -300 }
-        withAnimation(.linear(duration: 20).repeatForever(autoreverses: true)) { cloudOffset3 = 100 }
-        withAnimation(.linear(duration: 40).repeatForever(autoreverses: true)) { cloudOffset4 = -200 }
-        withAnimation(.linear(duration: 30).repeatForever(autoreverses: true)) { cloudOffset5 = 300 }
-    }
-
     // MARK: - Asset Loading
 
     private func loadAsset(_ path: String) -> UIImage {
-        // Try bundle first, fallback to absolute path for development
         if let bundlePath = Bundle.main.path(forResource: path.replacingOccurrences(of: "/", with: "_"), ofType: "png") {
             return UIImage(contentsOfFile: bundlePath) ?? UIImage()
         }

@@ -12,10 +12,11 @@ struct ContentView: View {
         ZStack {
             moonlightBg.ignoresSafeArea()
 
-            // Shared sky background behind all tabs
+            // Shared sky background behind all tabs (clouds + stars only, no moon)
             if let moonData = moonData {
                 MoonSceneView(moonData: moonData, showMoon: false)
                     .ignoresSafeArea()
+                    .allowsHitTesting(false)
             }
 
             TabView(selection: $selectedTab) {
