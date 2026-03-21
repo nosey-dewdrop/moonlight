@@ -7,7 +7,27 @@ struct AstroEvent: Identifiable {
     let description: String
     let startDate: Date?
     let endDate: Date?
-    let isActive: Bool
+
+    /// Whether this event is currently active
+    var isActive: Bool {
+        isActiveOn(date: Date())
+    }
+
+    /// Check if active on a specific date
+    func isActiveOn(date: Date) -> Bool {
+        guard let start = startDate else { return false }
+
+        if let end = endDate {
+            // Range event (retrograde, transit)
+            return date >= start && date <= end
+        } else {
+            // Single-day event (eclipse) - active within 3 days
+            let calendar = Calendar.current
+            let daysBefore = calendar.date(byAdding: .day, value: -1, to: start)!
+            let daysAfter = calendar.date(byAdding: .day, value: 1, to: start)!
+            return date >= daysBefore && date <= daysAfter
+        }
+    }
 
     var dateRangeText: String {
         let formatter = DateFormatter()

@@ -39,7 +39,12 @@ struct ContentView: View {
         }
         .ignoresSafeArea()
         .task {
+            // Quick local calculation first
             moonData = moonService.calculateMoonPhase(date: Date())
+            // Then try real API
+            if let apiData = try? await moonService.fetchMoonData(latitude: 41.01, longitude: 28.98) {
+                moonData = apiData
+            }
         }
     }
 }

@@ -170,12 +170,16 @@ struct HomeView: View {
     }
 
     private func loadData() async {
+        // Use local calculation (reliable, no API dependency)
         moonData = moonService.calculateMoonPhase(date: Date())
+
+        // Load astro events (real 2025-2026 data)
         do {
             events = try await astrologyService.fetchEvents()
         } catch {
             print("Failed to load events: \(error)")
         }
+
         locationManager.requestLocation()
     }
 }

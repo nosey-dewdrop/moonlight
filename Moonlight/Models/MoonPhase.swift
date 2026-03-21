@@ -92,6 +92,20 @@ enum MoonPhase: String, CaseIterable, Identifiable {
         }
     }
 
+    /// Map USNO API phase name to enum
+    static func fromAPIName(_ name: String) -> MoonPhase? {
+        let lower = name.lowercased()
+        if lower.contains("new") { return .newMoon }
+        if lower.contains("full") { return .fullMoon }
+        if lower.contains("first") { return .firstQuarter }
+        if lower.contains("last") || lower.contains("third") { return .lastQuarter }
+        if lower.contains("waxing") && lower.contains("crescent") { return .waxingCrescent }
+        if lower.contains("waxing") && lower.contains("gibbous") { return .waxingGibbous }
+        if lower.contains("waning") && lower.contains("crescent") { return .waningCrescent }
+        if lower.contains("waning") && lower.contains("gibbous") { return .waningGibbous }
+        return nil
+    }
+
     /// Determine moon phase from illumination percentage and whether waxing
     static func from(illumination: Double, isWaxing: Bool) -> MoonPhase {
         let pct = illumination / 100.0
