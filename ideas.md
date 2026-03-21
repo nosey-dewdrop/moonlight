@@ -1,8 +1,12 @@
 # Ideas
 
-- backend eklenebilir (api route'lar ile astroloji verileri serve etmek, kullanici verileri tutmak)
-- sosyal etkilesim saglanabilir (kullanicilar ay fazina gore not/niyet paylasabilir, topluluk ozelligi)
-- horary astroloji modulu (soru bazli astroloji yorumlari)
-- spotify entegrasyonu, ay fazina gore playlist onerisi
-- gunluk bildirimler (ay fazi degistiginde push notification)
-- tarot cekimi sonuclarini kaydetme ve gecmis okumalar
+- pixel art assets via pixellab api (moon phases, clouds, stars, ui icons)
+- moon character with kawaii face, blinking animation
+- spotify integration, playlist suggestions based on moon phase
+- daily notifications when moon phase changes
+- social features, users share intentions/notes per moon phase
+- horary astrology module (question based astrology readings)
+- tarot card draw results saved with history
+- backend for user data and astrology data serving
+- sticker marketplace
+- seasonal astrology calendar (what happens each month)

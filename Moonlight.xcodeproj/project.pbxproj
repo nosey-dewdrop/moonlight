@@ -1,0 +1,384 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */; };
+		23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6008195D2E90A69B2C63950 /* LocationManager.swift */; };
+		4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */; };
+		5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E18E5FDBEB132B038DC644 /* Assets.xcassets */; };
+		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
+		7885D3A5072B14459E27C977 /* CloudLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4552D6881A1B9D339D37DA /* CloudLayer.swift */; };
+		89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */; };
+		9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5001853B051008B1080534 /* MoonService.swift */; };
+		DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177BFEF279100594D6CA762 /* MoonPhase.swift */; };
+		E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1DEF9A28050196370B3771 /* AstroEvent.swift */; };
+		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		19995CEC35295A5B5DB698F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1E1DEF9A28050196370B3771 /* AstroEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstroEvent.swift; sourceTree = "<group>"; };
+		2B5001853B051008B1080534 /* MoonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonService.swift; sourceTree = "<group>"; };
+		2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3D65D3A67C777D1FC0524B73 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonSceneView.swift; sourceTree = "<group>"; };
+		A177BFEF279100594D6CA762 /* MoonPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonPhase.swift; sourceTree = "<group>"; };
+		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A6008195D2E90A69B2C63950 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		CE4552D6881A1B9D339D37DA /* CloudLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayer.swift; sourceTree = "<group>"; };
+		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
+		EFA55BE42FBF2AF83406468B /* Moonlight.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Moonlight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonlightApp.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		043597F0272E407B96FF04F9 /* Moonlight */ = {
+			isa = PBXGroup;
+			children = (
+				A5E18E5FDBEB132B038DC644 /* Assets.xcassets */,
+				2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */,
+				19995CEC35295A5B5DB698F5 /* Info.plist */,
+				EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */,
+				B2B1D38287E417C20315C6A8 /* Models */,
+				927C5F3477864EB02C8A5B43 /* Services */,
+				19C41530FA4299C6BB62B4A1 /* Views */,
+			);
+			path = Moonlight;
+			sourceTree = "<group>";
+		};
+		19C41530FA4299C6BB62B4A1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D65D3A67C777D1FC0524B73 /* HomeView.swift */,
+				EA952D15568B504D1432B35F /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7ED7D4A73297A981E1C10746 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EFA55BE42FBF2AF83406468B /* Moonlight.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		927C5F3477864EB02C8A5B43 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */,
+				A6008195D2E90A69B2C63950 /* LocationManager.swift */,
+				2B5001853B051008B1080534 /* MoonService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B2B1D38287E417C20315C6A8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1E1DEF9A28050196370B3771 /* AstroEvent.swift */,
+				A177BFEF279100594D6CA762 /* MoonPhase.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EA952D15568B504D1432B35F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				CE4552D6881A1B9D339D37DA /* CloudLayer.swift */,
+				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F5E38A946C1BF66EC4AE9F9D = {
+			isa = PBXGroup;
+			children = (
+				043597F0272E407B96FF04F9 /* Moonlight */,
+				7ED7D4A73297A981E1C10746 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		32E0C782E89DEB4606415314 /* Moonlight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CE57F7FAED9333979E1BC1C7 /* Build configuration list for PBXNativeTarget "Moonlight" */;
+			buildPhases = (
+				C9591E77DCBD8DF21510A041 /* Sources */,
+				F579A6091F1CD0FA6AC9A1AD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Moonlight;
+			packageProductDependencies = (
+			);
+			productName = Moonlight;
+			productReference = EFA55BE42FBF2AF83406468B /* Moonlight.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6C354F13E10A5D493C1E7372 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					32E0C782E89DEB4606415314 = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 32414954D1DFD94977C19662 /* Build configuration list for PBXProject "Moonlight" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F5E38A946C1BF66EC4AE9F9D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 7ED7D4A73297A981E1C10746 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				32E0C782E89DEB4606415314 /* Moonlight */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F579A6091F1CD0FA6AC9A1AD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9591E77DCBD8DF21510A041 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */,
+				078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */,
+				7885D3A5072B14459E27C977 /* CloudLayer.swift in Sources */,
+				4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */,
+				77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */,
+				23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */,
+				DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */,
+				89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */,
+				9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */,
+				FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		14CEECD87CF3B6852561AF49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Moonlight/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Moonlight needs your location to show accurate moon phase and astrology data for where you are.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.damla.moonlight;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		18BCAC905E92A56889797D7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Moonlight/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Moonlight needs your location to show accurate moon phase and astrology data for where you are.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.damla.moonlight;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6C25C59050785C6E4EA7020E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A33F5CB6A6BDD6AB4CA7CFB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		32414954D1DFD94977C19662 /* Build configuration list for PBXProject "Moonlight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C25C59050785C6E4EA7020E /* Debug */,
+				A33F5CB6A6BDD6AB4CA7CFB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CE57F7FAED9333979E1BC1C7 /* Build configuration list for PBXNativeTarget "Moonlight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				14CEECD87CF3B6852561AF49 /* Debug */,
+				18BCAC905E92A56889797D7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6C354F13E10A5D493C1E7372 /* Project object */;
+}
