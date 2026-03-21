@@ -10,3 +10,5 @@
 - backend for user data and astrology data serving
 - sticker marketplace
 - seasonal astrology calendar (what happens each month)
+- usno api is free, no key needed, covers moon phase + rise/set + eclipses
+- hardcode planetary retrogrades as static json, update yearly

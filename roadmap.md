@@ -27,10 +27,10 @@
 - [ ] integrate pixel art assets into xcassets
 
 ## Phase 3: API Integrations
-- [ ] ipgeolocation astronomy api (moon phase by location)
-- [ ] prokerala astrology api (retrogrades, transits)
-- [ ] replace hardcoded astro events with live data
-- [ ] replace local moon calculation with api data
+- [ ] usno api integration (moon phase, illumination, moonrise/moonset, eclipses)
+- [ ] hardcoded retrograde dates json (mercury, venus, jupiter, saturn for 2025-2026)
+- [ ] replace hardcoded astro events with live usno data
+- [ ] replace local moon calculation with usno api data
 
 ## Phase 4: Core Features
 - [ ] horary astrology page
