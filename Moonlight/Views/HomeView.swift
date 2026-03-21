@@ -4,44 +4,43 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
-    @State private var isLoading = true
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
 
+    private let titleFont = "PressStart2P-Regular"
+    private let bodyFont = "Silkscreen-Regular"
+    private let bodyBoldFont = "Silkscreen-Bold"
+
     var body: some View {
         ZStack {
-            // Background
-            Color(hex: "#0a0a1a")
-                .ignoresSafeArea()
-
             if let moonData = moonData {
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        // Moon scene
-                        MoonSceneView(moonData: moonData)
-                            .frame(height: 420)
-                            .clipShape(RoundedRectangle(cornerRadius: 0))
+                // Moon character overlay on the shared sky background
+                MoonSceneView(moonData: moonData)
+                    .ignoresSafeArea()
 
-                        // Moon info card
-                        moonInfoCard(moonData: moonData)
-                            .padding(.top, -20)
+                // Scrollable content on top
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 16) {
+                        Spacer()
+                            .frame(height: UIScreen.main.bounds.height * 0.38)
+
+                        // Moon info - no card bg, just text floating
+                        moonInfo(moonData: moonData)
 
                         // Astro events
                         astroEventsList
-                            .padding(.top, 16)
                     }
                 }
                 .ignoresSafeArea(edges: .top)
             } else {
-                // Loading state
                 VStack(spacing: 16) {
                     ProgressView()
                         .tint(.white)
                         .scaleEffect(1.5)
-                    Text("Reading the stars...")
+                    Text("reading the stars...")
                         .foregroundColor(.white.opacity(0.6))
-                        .font(.custom("Georgia", size: 16))
+                        .font(.custom(bodyFont, size: 12))
                 }
             }
         }
@@ -50,108 +49,78 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Moon Info Card
+    // MARK: - Moon Info (no card, just text)
 
-    private func moonInfoCard(moonData: MoonData) -> some View {
-        VStack(spacing: 12) {
-            // Phase name
+    private func moonInfo(moonData: MoonData) -> some View {
+        VStack(spacing: 10) {
             Text(moonData.phase.displayName)
-                .font(.custom("Georgia-Bold", size: 28))
-                .foregroundColor(.white)
+                .font(.custom(titleFont, size: 12))
+                .foregroundColor(Color(hex: "#FFE566"))
+                .shadow(color: Color(hex: "#FFE566").opacity(0.5), radius: 4)
 
-            // Illumination
             Text("\(Int(moonData.illumination))% illuminated")
-                .font(.custom("Georgia", size: 16))
-                .foregroundColor(.white.opacity(0.7))
+                .font(.custom(bodyFont, size: 14))
+                .foregroundColor(.white.opacity(0.6))
 
-            // Moonrise / Moonset
             HStack(spacing: 32) {
                 HStack(spacing: 6) {
-                    Image(systemName: "arrow.up.circle")
-                        .foregroundColor(Color(hex: "#FFE566"))
+                    pixelIcon("icon_moonrise", size: 18)
                     Text(moonData.moonrise)
-                        .foregroundColor(.white.opacity(0.8))
+                        .font(.custom(bodyFont, size: 12))
+                        .foregroundColor(.white.opacity(0.7))
                 }
-
                 HStack(spacing: 6) {
-                    Image(systemName: "arrow.down.circle")
-                        .foregroundColor(Color(hex: "#A78BFA"))
+                    pixelIcon("icon_moonset", size: 18)
                     Text(moonData.moonset)
-                        .foregroundColor(.white.opacity(0.8))
+                        .font(.custom(bodyFont, size: 12))
+                        .foregroundColor(.white.opacity(0.7))
                 }
             }
-            .font(.custom("Georgia", size: 14))
         }
-        .padding(.vertical, 20)
-        .padding(.horizontal, 24)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(Color.white.opacity(0.1), lineWidth: 1)
-                )
-        )
-        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
     }
 
-    // MARK: - Astro Events List
+    // MARK: - Astro Events
 
     private var astroEventsList: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 10) {
             Text("Cosmic Events")
-                .font(.custom("Georgia-Bold", size: 20))
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
+                .font(.custom(titleFont, size: 8))
+                .foregroundColor(.white.opacity(0.8))
+                .padding(.horizontal, 20)
 
             ForEach(events) { event in
                 astroEventRow(event)
             }
         }
-        .padding(.bottom, 32)
+        .padding(.bottom, 40)
     }
 
     private func astroEventRow(_ event: AstroEvent) -> some View {
         HStack(spacing: 12) {
-            // Icon
-            Image(systemName: event.type.icon)
-                .font(.system(size: 20))
-                .foregroundColor(Color(hex: event.type.color))
-                .frame(width: 36, height: 36)
-                .background(
-                    Circle()
-                        .fill(Color(hex: event.type.color).opacity(0.15))
-                )
+            pixelIcon("icon_\(event.type.rawValue)", size: 24)
 
-            // Info
-            VStack(alignment: .leading, spacing: 4) {
-                HStack {
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
                     Text(event.title)
-                        .font(.custom("Georgia-Bold", size: 15))
+                        .font(.custom(bodyBoldFont, size: 13))
                         .foregroundColor(.white)
 
                     if event.isActive {
-                        Text("ACTIVE")
-                            .font(.system(size: 9, weight: .bold))
+                        Text("active")
+                            .font(.custom(bodyFont, size: 8))
                             .foregroundColor(Color(hex: "#34D399"))
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(
-                                Capsule()
-                                    .fill(Color(hex: "#34D399").opacity(0.15))
-                            )
                     }
                 }
 
                 Text(event.description)
-                    .font(.custom("Georgia", size: 12))
-                    .foregroundColor(.white.opacity(0.5))
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(.white.opacity(0.4))
 
                 if !event.dateRangeText.isEmpty {
                     Text(event.dateRangeText)
-                        .font(.custom("Georgia", size: 11))
-                        .foregroundColor(.white.opacity(0.4))
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(.white.opacity(0.3))
                 }
             }
 
@@ -159,30 +128,43 @@ struct HomeView: View {
         }
         .padding(12)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.03))
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color(hex: "#0b0b2e").opacity(0.85))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 12)
-                        .stroke(Color.white.opacity(0.06), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
                 )
         )
         .padding(.horizontal, 16)
     }
 
-    // MARK: - Data Loading
+    // MARK: - Helpers
+
+    private func pixelIcon(_ name: String, size: CGFloat) -> some View {
+        let path = "/Users/damummyphus/moonlight/assets/ui/\(name).png"
+        if let img = UIImage(contentsOfFile: path) {
+            return AnyView(
+                Image(uiImage: img)
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: size, height: size)
+            )
+        } else {
+            return AnyView(
+                Rectangle()
+                    .fill(Color.white.opacity(0.1))
+                    .frame(width: size, height: size)
+            )
+        }
+    }
 
     private func loadData() async {
-        // Calculate moon phase
         moonData = moonService.calculateMoonPhase(date: Date())
-
-        // Load astro events
         do {
             events = try await astrologyService.fetchEvents()
         } catch {
             print("Failed to load events: \(error)")
         }
-
-        // Request location for future API calls
         locationManager.requestLocation()
     }
 }

@@ -8,13 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */; };
+		1E0805DF8DEF824EB8518ED1 /* PixelifySans[wght].ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */; };
 		23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6008195D2E90A69B2C63950 /* LocationManager.swift */; };
 		4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */; };
 		5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E18E5FDBEB132B038DC644 /* Assets.xcassets */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
 		7885D3A5072B14459E27C977 /* CloudLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4552D6881A1B9D339D37DA /* CloudLayer.swift */; };
+		831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */; };
 		89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */; };
 		9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5001853B051008B1080534 /* MoonService.swift */; };
+		BC5EACC33421E9B33442F477 /* Silkscreen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */; };
+		C919808FAEF89D87299B1CCF /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */; };
 		DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177BFEF279100594D6CA762 /* MoonPhase.swift */; };
 		E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1DEF9A28050196370B3771 /* AstroEvent.swift */; };
 		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
@@ -26,14 +30,18 @@
 		2B5001853B051008B1080534 /* MoonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonService.swift; sourceTree = "<group>"; };
 		2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3D65D3A67C777D1FC0524B73 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Bold.ttf"; sourceTree = "<group>"; };
 		582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonSceneView.swift; sourceTree = "<group>"; };
+		8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans[wght].ttf"; sourceTree = "<group>"; };
 		A177BFEF279100594D6CA762 /* MoonPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonPhase.swift; sourceTree = "<group>"; };
 		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6008195D2E90A69B2C63950 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		CE4552D6881A1B9D339D37DA /* CloudLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudLayer.swift; sourceTree = "<group>"; };
+		D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Regular.ttf"; sourceTree = "<group>"; };
 		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
 		EFA55BE42FBF2AF83406468B /* Moonlight.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Moonlight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonlightApp.swift; sourceTree = "<group>"; };
+		FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PressStart2P-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -44,6 +52,7 @@
 				2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */,
 				19995CEC35295A5B5DB698F5 /* Info.plist */,
 				EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */,
+				7989B6912C2049F9727D35B9 /* Fonts */,
 				B2B1D38287E417C20315C6A8 /* Models */,
 				927C5F3477864EB02C8A5B43 /* Services */,
 				19C41530FA4299C6BB62B4A1 /* Views */,
@@ -58,6 +67,17 @@
 				EA952D15568B504D1432B35F /* Components */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7989B6912C2049F9727D35B9 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */,
+				FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */,
+				441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */,
+				D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		7ED7D4A73297A981E1C10746 /* Products */ = {
@@ -164,6 +184,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */,
+				1E0805DF8DEF824EB8518ED1 /* PixelifySans[wght].ttf in Resources */,
+				C919808FAEF89D87299B1CCF /* PressStart2P-Regular.ttf in Resources */,
+				831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */,
+				BC5EACC33421E9B33442F477 /* Silkscreen-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

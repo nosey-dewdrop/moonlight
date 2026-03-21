@@ -12,6 +12,9 @@ targets:
     platform: iOS
     sources:
       - path: Moonlight
+    resources:
+      - path: Moonlight/Fonts
+        buildPhase: resources
     info:
       path: Moonlight/Info.plist
       properties:
@@ -21,6 +24,11 @@ targets:
         CFBundleDisplayName: Moonlight
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
+        UIAppFonts:
+          - PressStart2P-Regular.ttf
+          - Silkscreen-Regular.ttf
+          - Silkscreen-Bold.ttf
+          - PixelifySans[wght].ttf
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.damla.moonlight
