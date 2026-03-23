@@ -235,7 +235,7 @@ struct TarotView: View {
                 let position = positionName(for: index)
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("\(position): \(drawn.card.name)")
+                    Text(drawn.card.name)
                         .font(.custom(bodyBoldFont, size: 11))
                         .foregroundColor(.white)
 
@@ -246,8 +246,12 @@ struct TarotView: View {
                     Text(drawn.card.meaning)
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.6))
+
+                    Spacer(minLength: 0)
                 }
                 .padding(12)
+                .frame(minHeight: 90)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 4)
                         .fill(bg.opacity(0.85))
@@ -258,12 +262,7 @@ struct TarotView: View {
                 )
             }
 
-            // Draw again
-            PixelButton("Draw Again", style: .secondary) {
-                resetDraw()
-            }
-
-            // AI Reading below Draw Again
+            // AI Reading
             if isLoadingAI {
                 HStack(spacing: 8) {
                     PixelLoading(color: accent)
@@ -276,7 +275,7 @@ struct TarotView: View {
 
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Oracle Reading")
+                    Text("Reading")
                         .font(.custom(titleFont, size: 8))
                         .foregroundColor(accent)
 
@@ -294,6 +293,16 @@ struct TarotView: View {
                                 .stroke(accent.opacity(0.3), lineWidth: 1)
                         )
                 )
+
+                // Two buttons side by side
+                HStack(spacing: 10) {
+                    PixelButton("Açıklama Kartı") {
+                        drawClarificationCard()
+                    }
+                    PixelButton("Draw Again") {
+                        resetDraw()
+                    }
+                }
             }
 
             if let error = errorMessage {
@@ -332,6 +341,50 @@ struct TarotView: View {
         spreadType = "custom"
         withAnimation { showReading = true }
         requestAIReading()
+    }
+
+    private func drawClarificationCard() {
+        guard creditManager.useCredit() else {
+            showNoCredit = true
+            return
+        }
+
+        // Pick a random card not already selected
+        let usedIds = Set(selectedCards.map { $0.card.id })
+        let available = TarotCard.allCards.filter { !usedIds.contains($0.id) }
+        guard let newCard = available.randomElement() else { return }
+        let clarification = DrawnCard(card: newCard)
+
+        selectedCards.append(clarification)
+        isLoadingAI = true
+        errorMessage = nil
+
+        Task {
+            do {
+                let moonData = MoonService().calculateMoonPhase(date: Date())
+                let previousReading = aiReading ?? ""
+
+                let reading = try await claudeService.tarotClarification(
+                    question: question,
+                    previousCards: Array(selectedCards.dropLast()),
+                    previousReading: previousReading,
+                    clarificationCard: clarification,
+                    moonPhase: moonData.phase,
+                    userProfile: userProfile
+                )
+
+                await MainActor.run {
+                    aiReading = (aiReading ?? "") + "\n\n" + reading
+                    isLoadingAI = false
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    isLoadingAI = false
+                    creditManager.refundCredit()
+                }
+            }
+        }
     }
 
     private func resetDraw() {

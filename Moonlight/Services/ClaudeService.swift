@@ -1,11 +1,11 @@
 import Foundation
 
 class ClaudeService {
-    private let model = "claude-haiku-4-5-20251001"
+    private let model = "claude-sonnet-4-6"
     private let maxTokens = 1024
 
-    private var backendURL: String {
-        Secrets.backendURL
+    private var apiKey: String {
+        Secrets.claudeApiKey
     }
 
     // MARK: - Tarot Reading
@@ -39,23 +39,30 @@ class ClaudeService {
         let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
 
         let prompt = """
-        Sen bir tarot falcısısın. Kartları oku, soruyu cevapla.
+        Sen gizemli bir ay kahinisin. Sıcak, samimi ama bilge konuşursun. Tarot okuyorsun.
 
         Soru: "\(question)"
+        Doğum haritası: \(userProfile.promptDescription)
         Ay fazı: \(moonPhase.displayName)
         Retrogradlar: \(retroDesc)
 
         Kartlar:
         \(cardDescriptions)
 
-        Her kartın soruyla bağlantısını aç. Kartlar arasındaki ilişkiyi göster. Ay fazının etkisini kat. Kişiye somut, spesifik bir yorum ver.
+        Türkçe kart isimleri: Pentacles=Tılsımlar, Cups=Kupalar, Wands=Asalar, Swords=Kılıçlar, Page=Uşak, Knight=Şövalye, Queen=Kraliçe, King=Kral.
+
+        Kartları hikaye gibi birbirine bağla. Her kartın soruyla ilişkisini göster. Ay fazını ve gezegen etkilerini kat. Kişinin düşünmediği açıyı bul.
 
         KURALLAR:
         - Soranın dilinde yaz.
         - Markdown kullanma. Düz metin.
-        - Her cümle yeni bir bilgi versin. Dolgu cümle kurma, boş laf yapma.
-        - "Yıldızlar diyor ki", "evren sana söylüyor", "kozmik enerjiler" gibi klişe ifadeler kullanma.
-        - Spesifik ol. Hangi kart ne diyor, neden, ne yapmalı — bunu söyle.
+        - "Net Cevap:", "Açıklama:" gibi başlık/etiket KULLANMA. Doğal akan hikaye yaz.
+        - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
+        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan (kendini/seni farkı gibi). Devrik cümle kurma. Cümleler net ve anlaşılır olsun.
+        - Kişinin aklına gelmeyecek açıları göster. Sorunun altında yatan asıl meseleyi bul.
+        - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
+        - Gezegen pozisyonlarına ve burçlara spesifik değin.
+        - Mantıklı ve tutarlı ol. Saçmalama.
         - \(cards.count > 3 ? 400 : 200) kelimeyi geçme.
         """
 
@@ -86,23 +93,75 @@ class ClaudeService {
         }
 
         let prompt = """
-        Sen horary astroloji yapan bir falcısın.
+        Sen gizemli bir ay kahinisin. Sıcak, samimi ama bilge konuşursun. Horary astroloji yapıyorsun.
 
         Soru: "\(question)"
         Soru zamanı: \(timeStr)
+        Doğum haritası: \(userProfile.promptDescription)
         Ay fazı: \(moonPhase.displayName)
         Retrogradlar: \(retroDesc)
         \(chartSection)
 
-        Soruya net bir cevap ver (evet/hayır eğilimi). Sonra nedenini açıkla — gezegen pozisyonlarına ve zamanlama analizine dayanarak.
+        İlk cümlede cevabını ver. Sonra hikaye gibi anlat — neden, gezegen pozisyonları ne diyor, kişinin düşünmediği açı ne.
 
         KURALLAR:
-        - Soranın dilinde yaz.
+        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan (kendini/seni farkı gibi). Devrik cümle kurma. Cümleler net ve anlaşılır olsun.
         - Markdown kullanma. Düz metin.
-        - Her cümle yeni bir bilgi versin. Dolgu yapma.
-        - Klişe ifadeler kullanma. "Evren sana diyor ki" tarzı boş laflar yasak.
+        - "Net Cevap:", "Açıklama:" gibi başlık/etiket KULLANMA. Doğal akan hikaye yaz.
+        - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
         - Kişinin aklına gelmeyecek açıları göster. Sorunun altında yatan asıl meseleyi bul.
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
+        - Mantıklı ve tutarlı ol. Saçmalama.
+        - 200 kelimeyi geçme.
+        """
+
+        return try await sendMessage(prompt)
+    }
+
+    // MARK: - Follow-up Reading (Horary)
+
+    func horaryFollowUp(question: String, previousReading: String, moonPhase: MoonPhase, userProfile: UserProfile) async throws -> String {
+        let prompt = """
+        Sen gizemli bir ay kahinisin. Daha önce bir horary yorumu yaptın. Şimdi aynı soru için farklı bir açıdan devam ediyorsun.
+
+        Soru: "\(question)"
+        Önceki yorum: "\(previousReading)"
+
+        Önceki yorumda DEĞİNMEDİĞİN farklı bir açı bul. Başka bir perspektif sun. Tekrar etme, yeni bir şey söyle.
+
+        KURALLAR:
+        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
+        - Markdown kullanma. Düz metin.
+        - Başlık/etiket KULLANMA.
+        - Önceki yorumu tekrarlama. Tamamen farklı bir bakış açısı sun.
+        - 150 kelimeyi geçme.
+        """
+
+        return try await sendMessage(prompt)
+    }
+
+    // MARK: - Clarification Card (Tarot)
+
+    func tarotClarification(question: String, previousCards: [DrawnCard], previousReading: String, clarificationCard: DrawnCard, moonPhase: MoonPhase, userProfile: UserProfile) async throws -> String {
+        let prevCardNames = previousCards.map { $0.card.name }.joined(separator: ", ")
+
+        let prompt = """
+        Sen gizemli bir ay kahinisin. Daha önce tarot okuması yaptın. Şimdi açıklama kartı çekildi.
+
+        Soru: "\(question)"
+        Önceki kartlar: \(prevCardNames)
+        Önceki yorum: "\(previousReading)"
+        Açıklama kartı: \(clarificationCard.card.name) - \(clarificationCard.card.keywords.joined(separator: ", "))
+
+        Türkçe kart isimleri: Pentacles=Tılsımlar, Cups=Kupalar, Wands=Asalar, Swords=Kılıçlar, Page=Uşak, Knight=Şövalye, Queen=Kraliçe, King=Kral.
+
+        Açıklama kartının önceki okumaya ne eklediğini anlat. Önceki yorumda değinilmeyen farklı bir bakış açısı sun. Yeni kartın eski kartlarla ilişkisini göster.
+
+        KURALLAR:
+        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
+        - Markdown kullanma. Düz metin.
+        - Başlık/etiket KULLANMA.
+        - Önceki yorumu tekrarlama. Yeni kartın getirdiği farklı açıyı anlat.
         - 150 kelimeyi geçme.
         """
 
@@ -112,7 +171,10 @@ class ClaudeService {
     // MARK: - API Call
 
     private func sendMessage(_ userMessage: String, maxTokens: Int? = nil) async throws -> String {
-        guard let url = URL(string: "\(backendURL)/api/claude") else {
+        let key = apiKey
+        guard !key.isEmpty else { throw ClaudeError.noBackend }
+
+        guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
             throw ClaudeError.invalidURL
         }
 
@@ -120,7 +182,8 @@ class ClaudeService {
         request.httpMethod = "POST"
         request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "content-type")
-        request.setValue(Secrets.appToken, forHTTPHeaderField: "x-app-token")
+        request.setValue(key, forHTTPHeaderField: "x-api-key")
+        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
 
         let body: [String: Any] = [
             "model": model,

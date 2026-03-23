@@ -63,8 +63,14 @@ struct HoraryView: View {
                                 )
                         )
 
-                        PixelButton("Ask Again", style: .secondary) {
-                            resetQuestion()
+                        // Two buttons side by side
+                        HStack(spacing: 10) {
+                            PixelButton("Daha Fazla") {
+                                requestFollowUp()
+                            }
+                            PixelButton("Ask Again") {
+                                resetQuestion()
+                            }
                         }
                     } else if isLoading {
                         HStack(spacing: 8) {
@@ -174,6 +180,42 @@ struct HoraryView: View {
 
                 await MainActor.run {
                     aiReading = reading
+                    isLoading = false
+                }
+            } catch {
+                await MainActor.run {
+                    errorMessage = error.localizedDescription
+                    isLoading = false
+                    creditManager.refundCredit()
+                }
+            }
+        }
+    }
+
+    private func requestFollowUp() {
+        guard creditManager.useCredit() else {
+            showNoCredit = true
+            return
+        }
+
+        guard let previousReading = aiReading else { return }
+
+        isLoading = true
+        errorMessage = nil
+
+        Task {
+            do {
+                let moonData = moonService.calculateMoonPhase(date: Date())
+
+                let followUp = try await claudeService.horaryFollowUp(
+                    question: question,
+                    previousReading: previousReading,
+                    moonPhase: moonData.phase,
+                    userProfile: userProfile
+                )
+
+                await MainActor.run {
+                    aiReading = (aiReading ?? "") + "\n\n" + followUp
                     isLoading = false
                 }
             } catch {
