@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CreditBadge: View {
-    @StateObject private var creditManager = CreditManager.shared
+    @ObservedObject private var creditManager = CreditManager.shared
     let onTap: () -> Void
 
     private let titleFont = "PressStart2P-Regular"

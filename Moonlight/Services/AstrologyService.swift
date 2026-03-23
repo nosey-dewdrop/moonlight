@@ -8,7 +8,7 @@ class AstrologyService {
 
         // Show active events + upcoming events within 60 days
         let calendar = Calendar.current
-        let sixtyDaysLater = calendar.date(byAdding: .day, value: 180, to: now)!
+        guard let sixtyDaysLater = calendar.date(byAdding: .day, value: 180, to: now) else { return [] }
 
         return allEvents.filter { event in
             // Active now

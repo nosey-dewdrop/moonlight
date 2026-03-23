@@ -106,6 +106,7 @@ class ClaudeService {
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "content-type")
         request.setValue(key, forHTTPHeaderField: "x-api-key")
         request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
@@ -127,8 +128,16 @@ class ClaudeService {
         }
 
         guard httpResponse.statusCode == 200 else {
-            let errorBody = String(data: data, encoding: .utf8) ?? "Unknown error"
-            throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: errorBody)
+            switch httpResponse.statusCode {
+            case 401:
+                throw ClaudeError.apiError(statusCode: 401, message: "Invalid API key")
+            case 429:
+                throw ClaudeError.apiError(statusCode: 429, message: "Too many requests. Please wait a moment.")
+            case 529:
+                throw ClaudeError.apiError(statusCode: 529, message: "Service is busy. Please try again.")
+            default:
+                throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: "Something went wrong. Please try again.")
+            }
         }
 
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]

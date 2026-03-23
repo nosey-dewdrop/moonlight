@@ -128,6 +128,7 @@ struct PixelEnergyBar: View {
 
 struct PixelLoading: View {
     @State private var dotCount = 0
+    @State private var timer: Timer?
     let color: Color
 
     var body: some View {
@@ -139,9 +140,13 @@ struct PixelLoading: View {
             }
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { _ in
                 dotCount = (dotCount % 3) + 1
             }
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }

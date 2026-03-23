@@ -31,6 +31,7 @@
 		D5C448D8C1CF23859254CE61 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDE2E825A08BF3BA6846D11 /* Element.swift */; };
 		DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177BFEF279100594D6CA762 /* MoonPhase.swift */; };
 		E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1DEF9A28050196370B3771 /* AstroEvent.swift */; };
+		E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD9AF05C9FED66463F1672 /* Secrets.swift */; };
 		EC0E02EEDA9B0190BB514DB8 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3821B75EA4F9D80CE049289 /* KeychainHelper.swift */; };
 		EF824263791A4FF7961B8074 /* TarotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6764A0D5ABCA78B21A676E /* TarotView.swift */; };
 		FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66558B03446532A322AE0CD1 /* UserProfile.swift */; };
@@ -54,6 +55,7 @@
 		66558B03446532A322AE0CD1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		7CDE2E825A08BF3BA6846D11 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans[wght].ttf"; sourceTree = "<group>"; };
+		9DDD9AF05C9FED66463F1672 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		A177BFEF279100594D6CA762 /* MoonPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonPhase.swift; sourceTree = "<group>"; };
 		A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryChartService.swift; sourceTree = "<group>"; };
 		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				B3821B75EA4F9D80CE049289 /* KeychainHelper.swift */,
 				A6008195D2E90A69B2C63950 /* LocationManager.swift */,
 				2B5001853B051008B1080534 /* MoonService.swift */,
+				9DDD9AF05C9FED66463F1672 /* Secrets.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */,
 				CE4926201673B62C2C319E84 /* NoCreditView.swift in Sources */,
 				58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */,
+				E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */,
 				8025825C15665681A55657FC /* SettingsView.swift in Sources */,
 				1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */,
 				EF824263791A4FF7961B8074 /* TarotView.swift in Sources */,

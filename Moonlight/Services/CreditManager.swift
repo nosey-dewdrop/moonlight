@@ -29,10 +29,30 @@ class CreditManager: ObservableObject {
         "com.damla.moonlight.credits30",
     ]
 
+    private var transactionTask: Task<Void, Never>?
+
     private init() {
         self.purchasedCredits = UserDefaults.standard.integer(forKey: purchasedKey)
         self.dailyCreditsUsed = UserDefaults.standard.integer(forKey: dailyUsedKey)
         resetDailyIfNeeded()
+        listenForTransactions()
+    }
+
+    deinit {
+        transactionTask?.cancel()
+    }
+
+    // MARK: - Transaction Listener
+
+    private func listenForTransactions() {
+        transactionTask = Task.detached { [weak self] in
+            for await result in Transaction.updates {
+                if let transaction = try? await self?.checkVerified(result) {
+                    await self?.addCredits(for: transaction.productID)
+                    await transaction.finish()
+                }
+            }
+        }
     }
 
     // MARK: - Daily Reset
@@ -60,11 +80,11 @@ class CreditManager: ObservableObject {
         totalCredits > 0
     }
 
+    /// Returns number of daily credits used in this call (for refund tracking)
     func useCredit() -> Bool {
         resetDailyIfNeeded()
         guard totalCredits > 0 else { return false }
 
-        // Use daily free credits first
         if dailyCreditsRemaining > 0 {
             dailyCreditsUsed += 1
         } else {
@@ -79,6 +99,21 @@ class CreditManager: ObservableObject {
             if !useCredit() { return false }
         }
         return true
+    }
+
+    /// Refund credits correctly — tries daily first, then purchased
+    func refundCredit() {
+        if dailyCreditsUsed > 0 {
+            dailyCreditsUsed -= 1
+        } else {
+            purchasedCredits += 1
+        }
+    }
+
+    func refundCredits(_ amount: Int) {
+        for _ in 0..<amount {
+            refundCredit()
+        }
     }
 
     // MARK: - StoreKit 2
@@ -116,12 +151,23 @@ class CreditManager: ObservableObject {
     }
 
     func restorePurchases() async {
+        var processedIds = Set<UInt64>()
+        let finishedKey = "com.damla.moonlight.finishedTransactions"
+        let alreadyFinished = Set(UserDefaults.standard.array(forKey: finishedKey) as? [UInt64] ?? [])
+
         for await result in Transaction.currentEntitlements {
             if let transaction = try? checkVerified(result) {
-                addCredits(for: transaction.productID)
+                if !alreadyFinished.contains(transaction.id) && !processedIds.contains(transaction.id) {
+                    addCredits(for: transaction.productID)
+                    processedIds.insert(transaction.id)
+                }
                 await transaction.finish()
             }
         }
+
+        // Save processed transaction IDs
+        let allFinished = alreadyFinished.union(processedIds)
+        UserDefaults.standard.set(Array(allFinished), forKey: finishedKey)
     }
 
     // MARK: - Helpers

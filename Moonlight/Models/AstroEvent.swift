@@ -23,8 +23,8 @@ struct AstroEvent: Identifiable {
         } else {
             // Single-day event (eclipse) - active within 3 days
             let calendar = Calendar.current
-            let daysBefore = calendar.date(byAdding: .day, value: -1, to: start)!
-            let daysAfter = calendar.date(byAdding: .day, value: 1, to: start)!
+            guard let daysBefore = calendar.date(byAdding: .day, value: -1, to: start),
+                  let daysAfter = calendar.date(byAdding: .day, value: 1, to: start) else { return false }
             return date >= daysBefore && date <= daysAfter
         }
     }

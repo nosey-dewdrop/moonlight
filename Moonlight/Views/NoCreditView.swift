@@ -2,7 +2,7 @@ import SwiftUI
 
 struct NoCreditView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var creditManager = CreditManager.shared
+    @ObservedObject private var creditManager = CreditManager.shared
 
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"

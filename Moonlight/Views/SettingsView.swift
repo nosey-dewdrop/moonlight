@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @StateObject private var creditManager = CreditManager.shared
-    @StateObject private var userProfile = UserProfile.shared
+    @ObservedObject private var creditManager = CreditManager.shared
+    @ObservedObject private var userProfile = UserProfile.shared
 
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"

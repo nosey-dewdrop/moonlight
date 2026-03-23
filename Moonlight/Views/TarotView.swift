@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct TarotView: View {
-    @StateObject private var creditManager = CreditManager.shared
-    @StateObject private var userProfile = UserProfile.shared
+    @ObservedObject private var creditManager = CreditManager.shared
+    @ObservedObject private var userProfile = UserProfile.shared
     @State private var question = ""
     @State private var selectedCards: [DrawnCard] = []
     @State private var shuffledDeck: [TarotCard] = TarotCard.allCards.shuffled()
@@ -365,6 +365,7 @@ struct TarotView: View {
                 await MainActor.run {
                     errorMessage = error.localizedDescription
                     isLoadingAI = false
+                    creditManager.refundCredits(selectedCards.count)
                 }
             }
         }

@@ -163,11 +163,7 @@ struct HomeView: View {
     // MARK: - Moon Character
 
     private func moonCharacter(moonData: MoonData) -> some View {
-        let phaseName = moonData.phase.rawValue
-        let path = "/Users/damummyphus/moonlight/assets/characters/\(phaseName).png"
-        let image = UIImage(contentsOfFile: path) ?? UIImage()
-
-        return Image(uiImage: image)
+        Image(moonData.phase.rawValue)
             .interpolation(.none)
             .resizable()
             .frame(width: 180, height: 180)
@@ -177,21 +173,10 @@ struct HomeView: View {
     // MARK: - Helpers
 
     private func pixelIcon(_ name: String, size: CGFloat) -> some View {
-        let path = "/Users/damummyphus/moonlight/assets/ui/\(name).png"
-        if let img = UIImage(contentsOfFile: path) {
-            return AnyView(
-                Image(uiImage: img)
-                    .interpolation(.none)
-                    .resizable()
-                    .frame(width: size, height: size)
-            )
-        } else {
-            return AnyView(
-                Rectangle()
-                    .fill(Color.white.opacity(0.1))
-                    .frame(width: size, height: size)
-            )
-        }
+        Image(name)
+            .interpolation(.none)
+            .resizable()
+            .frame(width: size, height: size)
     }
 
     private func loadData() async {

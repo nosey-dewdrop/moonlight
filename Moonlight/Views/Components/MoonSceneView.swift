@@ -3,6 +3,7 @@ import SwiftUI
 struct PixelStarsView: View {
     let size: CGSize
     @State private var twinkle: [Double] = (0..<20).map { _ in Double.random(in: 0.3...0.8) }
+    @State private var timer: Timer?
 
     // Hand-placed stars scattered across the sky, no lines, no patterns
     private let positions: [(xFrac: CGFloat, yFrac: CGFloat, px: CGFloat)] = [
@@ -56,13 +57,17 @@ struct PixelStarsView: View {
             }
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { _ in
                 withAnimation(.easeInOut(duration: 2.0)) {
                     for i in 0..<twinkle.count {
                         twinkle[i] = Double.random(in: 0.2...0.9)
                     }
                 }
             }
+        }
+        .onDisappear {
+            timer?.invalidate()
+            timer = nil
         }
     }
 }
@@ -78,8 +83,7 @@ struct DriftingCloud: View {
     @State private var atEnd = false
 
     var body: some View {
-        let image = Self.loadCloudAsset(name)
-        Image(uiImage: image)
+        Image("atmospheric_\(name)")
             .interpolation(.none)
             .resizable()
             .frame(width: width, height: width * 0.4)
@@ -90,14 +94,6 @@ struct DriftingCloud: View {
             )
             .animation(.linear(duration: duration).repeatForever(autoreverses: true), value: atEnd)
             .onAppear { atEnd = true }
-    }
-
-    static func loadCloudAsset(_ name: String) -> UIImage {
-        if let bundlePath = Bundle.main.path(forResource: "atmospheric_\(name)", ofType: "png") {
-            return UIImage(contentsOfFile: bundlePath) ?? UIImage()
-        }
-        let fullPath = "/Users/damummyphus/moonlight/assets/atmospheric/\(name).png"
-        return UIImage(contentsOfFile: fullPath) ?? UIImage()
     }
 }
 
@@ -136,24 +132,11 @@ struct MoonSceneView: View {
     // MARK: - Pixel Moon
 
     private func pixelMoon() -> some View {
-        let phaseName = moonData.phase.rawValue
-        let image = loadAsset("characters/\(phaseName)")
-
-        return Image(uiImage: image)
+        Image(moonData.phase.rawValue)
             .interpolation(.none)
             .resizable()
             .frame(width: 180, height: 180)
             .shadow(color: .yellow.opacity(0.2), radius: 20)
-    }
-
-    // MARK: - Asset Loading
-
-    private func loadAsset(_ path: String) -> UIImage {
-        if let bundlePath = Bundle.main.path(forResource: path.replacingOccurrences(of: "/", with: "_"), ofType: "png") {
-            return UIImage(contentsOfFile: bundlePath) ?? UIImage()
-        }
-        let fullPath = "/Users/damummyphus/moonlight/assets/\(path).png"
-        return UIImage(contentsOfFile: fullPath) ?? UIImage()
     }
 }
 

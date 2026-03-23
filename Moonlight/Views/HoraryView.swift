@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct HoraryView: View {
-    @StateObject private var creditManager = CreditManager.shared
-    @StateObject private var userProfile = UserProfile.shared
+    @ObservedObject private var creditManager = CreditManager.shared
+    @ObservedObject private var userProfile = UserProfile.shared
     @StateObject private var locationManager = LocationManager()
     @State private var question = ""
     @State private var aiReading: String?
@@ -174,8 +174,7 @@ struct HoraryView: View {
                 await MainActor.run {
                     errorMessage = error.localizedDescription
                     isLoading = false
-                    // Refund credit on error
-                    creditManager.purchasedCredits += 1
+                    creditManager.refundCredit()
                 }
             }
         }
