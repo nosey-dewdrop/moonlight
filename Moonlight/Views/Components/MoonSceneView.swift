@@ -16,16 +16,18 @@ struct PixelStarsView: View {
     ]
 
     private let assetStars: [(name: String, xFrac: CGFloat, yFrac: CGFloat, sz: CGFloat)] = [
-        ("atmospheric_sparkle_1", 0.12, 0.04, 20),
-        ("atmospheric_star_gold_1", 0.80, 0.07, 24),
-        ("atmospheric_sparkle_3", 0.48, 0.02, 16),
+        ("atmospheric_star_gold_2", 0.12, 0.04, 20),
+        ("atmospheric_star_blue_1", 0.80, 0.07, 20),
+        ("atmospheric_star_white_2", 0.48, 0.02, 18),
         ("atmospheric_star_gold_2", 0.25, 0.18, 20),
-        ("atmospheric_sparkle_2", 0.70, 0.13, 18),
-        ("atmospheric_star_gold_3", 0.92, 0.22, 20),
-        ("atmospheric_sparkle_1", 0.38, 0.32, 16),
-        ("atmospheric_star_gold_1", 0.62, 0.45, 22),
-        ("atmospheric_sparkle_3", 0.08, 0.50, 18),
-        ("atmospheric_star_gold_2", 0.85, 0.40, 16),
+        ("atmospheric_star_white_2", 0.70, 0.13, 16),
+        ("atmospheric_star_blue_1", 0.92, 0.22, 18),
+        ("atmospheric_star_gold_2", 0.38, 0.32, 18),
+        ("atmospheric_star_white_2", 0.62, 0.45, 20),
+        ("atmospheric_star_blue_1", 0.08, 0.50, 16),
+        ("atmospheric_star_gold_2", 0.85, 0.40, 18),
+        ("atmospheric_star_white_2", 0.55, 0.60, 16),
+        ("atmospheric_star_blue_1", 0.18, 0.55, 18),
     ]
 
     private let starColor = Color(hex: "#FFE566")
