@@ -141,7 +141,7 @@ class HoraryChartService {
                 return nil
             }
 
-            let isRetro = (planet["isRetro"] as? String) == "True"
+            let isRetro = (planet["isRetro"] as? String)?.lowercased() == "true"
             return PlanetPosition(name: name, sign: sign, degree: normDegree, isRetro: isRetro)
         }
     }

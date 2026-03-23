@@ -18,8 +18,8 @@ class MoonService {
         let (data, _) = try await URLSession.shared.data(from: url)
         let response = try JSONDecoder().decode(USNOResponse.self, from: data)
 
-        // Parse moon phase
-        let phaseName = response.properties.data.closestPhase?.phase ?? ""
+        // Parse moon phase — use curphase (actual current phase), not closestphase
+        let phaseName = response.properties.data.curphase ?? ""
         let fracIllum = response.properties.data.fracillum ?? ""
         let illumination = Double(fracIllum.replacingOccurrences(of: "%", with: "")) ?? 0
 
@@ -123,11 +123,13 @@ struct USNOProperties: Decodable {
 
 struct USNOData: Decodable {
     let closestPhase: USNOPhase?
+    let curphase: String?
     let fracillum: String?
     let moondata: [USNOPhenomenon]?
 
     enum CodingKeys: String, CodingKey {
         case closestPhase = "closestphase"
+        case curphase
         case fracillum
         case moondata
     }
