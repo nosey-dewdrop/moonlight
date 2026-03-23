@@ -30,7 +30,7 @@ class ClaudeService {
         let positions = positionNames(for: spreadType, count: cards.count)
         let cardDescriptions = cards.enumerated().map { i, drawn in
             let pos = positions[i]
-            return "\(pos): \(drawn.card.name) (\(drawn.positionLabel)) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
+            return "\(pos): \(drawn.card.name) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
         }.joined(separator: "\n")
 
         let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }

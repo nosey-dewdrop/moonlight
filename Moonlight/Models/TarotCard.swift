@@ -22,8 +22,7 @@ struct TarotCard: Identifiable, Codable {
     let arcana: Arcana
     let suit: Suit?
     let keywords: [String]
-    let uprightMeaning: String
-    let reversedMeaning: String
+    let meaning: String
     let imageName: String
 
     static let allCards: [TarotCard] = majorArcana + minorArcana
@@ -33,113 +32,91 @@ struct TarotCard: Identifiable, Codable {
     static let majorArcana: [TarotCard] = [
         TarotCard(id: 0, name: "The Fool", arcana: .major, suit: nil,
                   keywords: ["beginnings", "innocence", "adventure"],
-                  uprightMeaning: "New beginnings, spontaneity, a free spirit",
-                  reversedMeaning: "Recklessness, fear of the unknown, holding back",
+                  meaning: "New beginnings, spontaneity, a free spirit",
                   imageName: "tarot_fool"),
         TarotCard(id: 1, name: "The Magician", arcana: .major, suit: nil,
                   keywords: ["willpower", "creation", "manifestation"],
-                  uprightMeaning: "Manifestation, resourcefulness, inspired action",
-                  reversedMeaning: "Manipulation, poor planning, untapped talents",
+                  meaning: "Manifestation, resourcefulness, inspired action",
                   imageName: "tarot_magician"),
         TarotCard(id: 2, name: "The High Priestess", arcana: .major, suit: nil,
                   keywords: ["intuition", "mystery", "subconscious"],
-                  uprightMeaning: "Intuition, sacred knowledge, the subconscious mind",
-                  reversedMeaning: "Secrets, withdrawal, silence",
+                  meaning: "Intuition, sacred knowledge, the subconscious mind",
                   imageName: "tarot_high_priestess"),
         TarotCard(id: 3, name: "The Empress", arcana: .major, suit: nil,
                   keywords: ["abundance", "nurturing", "fertility"],
-                  uprightMeaning: "Femininity, beauty, nature, abundance",
-                  reversedMeaning: "Creative block, dependence, emptiness",
+                  meaning: "Femininity, beauty, nature, abundance",
                   imageName: "tarot_empress"),
         TarotCard(id: 4, name: "The Emperor", arcana: .major, suit: nil,
                   keywords: ["authority", "structure", "stability"],
-                  uprightMeaning: "Authority, establishment, structure, a father figure",
-                  reversedMeaning: "Tyranny, rigidity, lack of discipline",
+                  meaning: "Authority, establishment, structure, a father figure",
                   imageName: "tarot_emperor"),
         TarotCard(id: 5, name: "The Hierophant", arcana: .major, suit: nil,
                   keywords: ["tradition", "wisdom", "guidance"],
-                  uprightMeaning: "Spiritual wisdom, religious beliefs, tradition",
-                  reversedMeaning: "Personal beliefs, freedom, challenging the status quo",
+                  meaning: "Spiritual wisdom, religious beliefs, tradition",
                   imageName: "tarot_hierophant"),
         TarotCard(id: 6, name: "The Lovers", arcana: .major, suit: nil,
                   keywords: ["love", "harmony", "choices"],
-                  uprightMeaning: "Love, harmony, relationships, values alignment",
-                  reversedMeaning: "Self-love, disharmony, imbalance",
+                  meaning: "Love, harmony, relationships, values alignment",
                   imageName: "tarot_lovers"),
         TarotCard(id: 7, name: "The Chariot", arcana: .major, suit: nil,
                   keywords: ["determination", "willpower", "victory"],
-                  uprightMeaning: "Control, willpower, success, determination",
-                  reversedMeaning: "Lack of control, opposition, no direction",
+                  meaning: "Control, willpower, success, determination",
                   imageName: "tarot_chariot"),
         TarotCard(id: 8, name: "Strength", arcana: .major, suit: nil,
                   keywords: ["courage", "patience", "compassion"],
-                  uprightMeaning: "Strength, courage, patience, compassion",
-                  reversedMeaning: "Self-doubt, weakness, insecurity",
+                  meaning: "Strength, courage, patience, compassion",
                   imageName: "tarot_strength"),
         TarotCard(id: 9, name: "The Hermit", arcana: .major, suit: nil,
                   keywords: ["solitude", "reflection", "inner guidance"],
-                  uprightMeaning: "Soul searching, introspection, being alone",
-                  reversedMeaning: "Isolation, loneliness, withdrawal",
+                  meaning: "Soul searching, introspection, being alone",
                   imageName: "tarot_hermit"),
         TarotCard(id: 10, name: "Wheel of Fortune", arcana: .major, suit: nil,
                   keywords: ["fate", "cycles", "turning point"],
-                  uprightMeaning: "Good luck, karma, life cycles, destiny",
-                  reversedMeaning: "Bad luck, resistance to change, breaking cycles",
+                  meaning: "Good luck, karma, life cycles, destiny",
                   imageName: "tarot_wheel"),
         TarotCard(id: 11, name: "Justice", arcana: .major, suit: nil,
                   keywords: ["truth", "fairness", "law"],
-                  uprightMeaning: "Justice, fairness, truth, cause and effect",
-                  reversedMeaning: "Unfairness, dishonesty, lack of accountability",
+                  meaning: "Justice, fairness, truth, cause and effect",
                   imageName: "tarot_justice"),
         TarotCard(id: 12, name: "The Hanged Man", arcana: .major, suit: nil,
                   keywords: ["surrender", "perspective", "pause"],
-                  uprightMeaning: "Pause, surrender, letting go, new perspectives",
-                  reversedMeaning: "Delays, resistance, stalling, indecision",
+                  meaning: "Pause, surrender, letting go, new perspectives",
                   imageName: "tarot_hanged_man"),
         TarotCard(id: 13, name: "Death", arcana: .major, suit: nil,
                   keywords: ["endings", "transformation", "transition"],
-                  uprightMeaning: "Endings, change, transformation, transition",
-                  reversedMeaning: "Resistance to change, personal transformation",
+                  meaning: "Endings, change, transformation, transition",
                   imageName: "tarot_death"),
         TarotCard(id: 14, name: "Temperance", arcana: .major, suit: nil,
                   keywords: ["balance", "moderation", "patience"],
-                  uprightMeaning: "Balance, moderation, patience, finding meaning",
-                  reversedMeaning: "Imbalance, excess, self-healing",
+                  meaning: "Balance, moderation, patience, finding meaning",
                   imageName: "tarot_temperance"),
         TarotCard(id: 15, name: "The Devil", arcana: .major, suit: nil,
                   keywords: ["shadow", "attachment", "excess"],
-                  uprightMeaning: "Shadow self, attachment, addiction, restriction",
-                  reversedMeaning: "Releasing limiting beliefs, exploring dark thoughts",
+                  meaning: "Shadow self, attachment, addiction, restriction",
                   imageName: "tarot_devil"),
         TarotCard(id: 16, name: "The Tower", arcana: .major, suit: nil,
                   keywords: ["upheaval", "revelation", "awakening"],
-                  uprightMeaning: "Sudden change, upheaval, chaos, revelation",
-                  reversedMeaning: "Personal transformation, fear of change",
+                  meaning: "Sudden change, upheaval, chaos, revelation",
                   imageName: "tarot_tower"),
         TarotCard(id: 17, name: "The Star", arcana: .major, suit: nil,
                   keywords: ["hope", "faith", "renewal"],
-                  uprightMeaning: "Hope, faith, purpose, renewal, spirituality",
-                  reversedMeaning: "Lack of faith, despair, disconnection",
+                  meaning: "Hope, faith, purpose, renewal, spirituality",
                   imageName: "tarot_star"),
         TarotCard(id: 18, name: "The Moon", arcana: .major, suit: nil,
                   keywords: ["illusion", "intuition", "unconscious"],
-                  uprightMeaning: "Illusion, fear, anxiety, subconscious, intuition",
-                  reversedMeaning: "Release of fear, repressed emotion, inner confusion",
+                  meaning: "Illusion, fear, anxiety, subconscious, intuition",
                   imageName: "tarot_moon"),
         TarotCard(id: 19, name: "The Sun", arcana: .major, suit: nil,
                   keywords: ["joy", "success", "vitality"],
-                  uprightMeaning: "Positivity, fun, warmth, success, vitality",
-                  reversedMeaning: "Inner child, feeling down, overly optimistic",
+                  meaning: "Positivity, fun, warmth, success, vitality",
                   imageName: "tarot_sun"),
         TarotCard(id: 20, name: "Judgement", arcana: .major, suit: nil,
                   keywords: ["reflection", "reckoning", "rebirth"],
-                  uprightMeaning: "Judgement, rebirth, inner calling, absolution",
-                  reversedMeaning: "Self-doubt, inner critic, ignoring the call",
+                  meaning: "Judgement, rebirth, inner calling, absolution",
                   imageName: "tarot_judgement"),
         TarotCard(id: 21, name: "The World", arcana: .major, suit: nil,
                   keywords: ["completion", "achievement", "wholeness"],
-                  uprightMeaning: "Completion, integration, accomplishment, travel",
-                  reversedMeaning: "Seeking personal closure, shortcuts, delays",
+                  meaning: "Completion, integration, accomplishment, travel",
                   imageName: "tarot_world"),
     ]
 
@@ -162,43 +139,33 @@ struct TarotCard: Identifiable, Codable {
             let suitLower = suit.rawValue
 
             // Numbered cards (Ace through 10)
-            let numberedData: [(String, [String], String, String)] = [
+            let numberedData: [(String, [String], String)] = [
                 ("Ace", ["new beginning", "potential", "opportunity"],
-                 "A powerful new beginning in the realm of \(suitLower)",
-                 "Missed opportunity, delays in \(suitLower) matters"),
+                 "A powerful new beginning in the realm of \(suitLower)"),
                 ("Two", ["balance", "partnership", "duality"],
-                 "Partnership and balance in \(suitLower) energy",
-                 "Imbalance, indecision in \(suitLower) matters"),
+                 "Partnership and balance in \(suitLower) energy"),
                 ("Three", ["growth", "collaboration", "creativity"],
-                 "Growth and expansion through \(suitLower)",
-                 "Overextension, lack of progress"),
+                 "Growth and expansion through \(suitLower)"),
                 ("Four", ["stability", "foundation", "rest"],
-                 "Stability and contemplation in \(suitLower)",
-                 "Restlessness, stagnation"),
+                 "Stability and contemplation in \(suitLower)"),
                 ("Five", ["conflict", "challenge", "change"],
-                 "Challenge and conflict in \(suitLower) realm",
-                 "Resolution, compromise, moving past conflict"),
+                 "Challenge and conflict in \(suitLower) realm"),
                 ("Six", ["harmony", "generosity", "nostalgia"],
-                 "Harmony and giving in \(suitLower) energy",
-                 "Strings attached, one-sided generosity"),
+                 "Harmony and giving in \(suitLower) energy"),
                 ("Seven", ["assessment", "perseverance", "vision"],
-                 "Assessment and patience in \(suitLower)",
-                 "Impatience, lack of long-term vision"),
+                 "Assessment and patience in \(suitLower)"),
                 ("Eight", ["movement", "speed", "mastery"],
-                 "Rapid movement and mastery of \(suitLower)",
-                 "Slowdown, scattered energy in \(suitLower)"),
+                 "Rapid movement and mastery of \(suitLower)"),
                 ("Nine", ["fulfillment", "attainment", "solitude"],
-                 "Near completion and fulfillment in \(suitLower)",
-                 "Inner work needed, unfulfillment"),
+                 "Near completion and fulfillment in \(suitLower)"),
                 ("Ten", ["completion", "ending", "legacy"],
-                 "Completion and culmination of \(suitLower) cycle",
-                 "Carrying too much, need to release"),
+                 "Completion and culmination of \(suitLower) cycle"),
             ]
 
-            for (numName, keywords, upright, reversed) in numberedData {
+            for (numName, keywords, meaning) in numberedData {
                 cards.append(TarotCard(
                     id: nextId, name: "\(numName) of \(suitWord)", arcana: .minor, suit: suit,
-                    keywords: keywords, uprightMeaning: upright, reversedMeaning: reversed,
+                    keywords: keywords, meaning: meaning,
                     imageName: "tarot_\(suitLower)_\(numName.lowercased())"
                 ))
                 nextId += 1
@@ -209,8 +176,7 @@ struct TarotCard: Identifiable, Codable {
                 cards.append(TarotCard(
                     id: nextId, name: "\(court) of \(suitWord)", arcana: .minor, suit: suit,
                     keywords: courtKeywords[i],
-                    uprightMeaning: "\(court) energy channeled through \(suitLower)",
-                    reversedMeaning: "Immature or blocked \(court.lowercased()) energy in \(suitLower)",
+                    meaning: "\(court) energy channeled through \(suitLower)",
                     imageName: "tarot_\(suitLower)_\(court.lowercased())"
                 ))
                 nextId += 1
@@ -224,13 +190,4 @@ struct TarotCard: Identifiable, Codable {
 struct DrawnCard: Identifiable {
     let id = UUID()
     let card: TarotCard
-    let isReversed: Bool
-
-    var meaning: String {
-        isReversed ? card.reversedMeaning : card.uprightMeaning
-    }
-
-    var positionLabel: String {
-        isReversed ? "Reversed" : "Upright"
-    }
 }

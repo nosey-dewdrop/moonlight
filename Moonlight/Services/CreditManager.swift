@@ -21,7 +21,7 @@ class CreditManager: ObservableObject {
     private let purchasedKey = "com.damla.moonlight.purchasedCredits"
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
     private let lastResetKey = "com.damla.moonlight.lastDailyReset"
-    private let dailyFreeAmount = 3
+    private let dailyFreeAmount = 5
 
     private let productIds = [
         "com.damla.moonlight.credits5",

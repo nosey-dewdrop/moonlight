@@ -18,7 +18,6 @@
 		58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71EF318F8BE609DABC579B /* PixelUI.swift */; };
 		5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F87798DD5D3A852D01EA71C /* CreditManager.swift */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
-
 		8025825C15665681A55657FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42137A85229E7DD13F9060 /* SettingsView.swift */; };
 		831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */; };
 		89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */; };
@@ -32,7 +31,6 @@
 		DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177BFEF279100594D6CA762 /* MoonPhase.swift */; };
 		E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1DEF9A28050196370B3771 /* AstroEvent.swift */; };
 		E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD9AF05C9FED66463F1672 /* Secrets.swift */; };
-
 		EF824263791A4FF7961B8074 /* TarotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6764A0D5ABCA78B21A676E /* TarotView.swift */; };
 		FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66558B03446532A322AE0CD1 /* UserProfile.swift */; };
 		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
@@ -60,9 +58,7 @@
 		A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryChartService.swift; sourceTree = "<group>"; };
 		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6008195D2E90A69B2C63950 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-
 		B5203CA177AA14629615143B /* HoraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryView.swift; sourceTree = "<group>"; };
-
 		D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Regular.ttf"; sourceTree = "<group>"; };
 		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
 		EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
@@ -127,7 +123,6 @@
 				EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */,
 				1F87798DD5D3A852D01EA71C /* CreditManager.swift */,
 				A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */,
-
 				A6008195D2E90A69B2C63950 /* LocationManager.swift */,
 				2B5001853B051008B1080534 /* MoonService.swift */,
 				9DDD9AF05C9FED66463F1672 /* Secrets.swift */,
@@ -150,7 +145,6 @@
 		EA952D15568B504D1432B35F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-
 				4B500BB010C598B1A61627FA /* CreditBadge.swift */,
 				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
 				4F71EF318F8BE609DABC579B /* PixelUI.swift */,
@@ -243,7 +237,6 @@
 				E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */,
 				078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */,
 				A48483E2DFAE6F9151117837 /* ClaudeService.swift in Sources */,
-
 				4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */,
 				C4FC5B141D935DB72FF3CAB8 /* CreditBadge.swift in Sources */,
 				5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */,
@@ -251,7 +244,6 @@
 				77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */,
 				53AC9DD551A0998E154521EB /* HoraryChartService.swift in Sources */,
 				43E4544F730203A4BECC0B56 /* HoraryView.swift in Sources */,
-
 				23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */,
 				DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */,
 				89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */,

@@ -235,23 +235,15 @@ struct TarotView: View {
                 let position = positionName(for: index)
 
                 VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("\(position): \(drawn.card.name)")
-                            .font(.custom(bodyBoldFont, size: 11))
-                            .foregroundColor(.white)
-
-                        Spacer()
-
-                        Text(drawn.positionLabel)
-                            .font(.custom(bodyFont, size: 9))
-                            .foregroundColor(drawn.isReversed ? Color(hex: "#FF6B6B") : Color(hex: "#34D399"))
-                    }
+                    Text("\(position): \(drawn.card.name)")
+                        .font(.custom(bodyBoldFont, size: 11))
+                        .foregroundColor(.white)
 
                     Text(drawn.card.keywords.joined(separator: " · "))
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(accent.opacity(0.7))
 
-                    Text(drawn.meaning)
+                    Text(drawn.card.meaning)
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.6))
                 }
@@ -324,7 +316,7 @@ struct TarotView: View {
         if let index = selectedCards.firstIndex(where: { $0.card.id == card.id }) {
             _ = withAnimation { selectedCards.remove(at: index) }
         } else if selectedCards.count < 3 {
-            let drawn = DrawnCard(card: card, isReversed: Bool.random())
+            let drawn = DrawnCard(card: card)
             withAnimation { selectedCards.append(drawn) }
         }
     }
@@ -381,7 +373,7 @@ struct TarotView: View {
         let deck = TarotCard.allCards.shuffled()
         var drawn: [DrawnCard] = []
         for i in 0..<cards {
-            drawn.append(DrawnCard(card: deck[i], isReversed: Bool.random()))
+            drawn.append(DrawnCard(card: deck[i]))
         }
         selectedCards = drawn
 
