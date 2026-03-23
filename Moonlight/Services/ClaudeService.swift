@@ -4,8 +4,8 @@ class ClaudeService {
     private let model = "claude-haiku-4-5-20251001"
     private let maxTokens = 1024
 
-    private var apiKey: String {
-        Secrets.claudeApiKey
+    private var backendURL: String {
+        Secrets.backendURL
     }
 
     // MARK: - Tarot Reading
@@ -122,12 +122,7 @@ class ClaudeService {
     // MARK: - API Call
 
     private func sendMessage(_ userMessage: String, maxTokens: Int? = nil) async throws -> String {
-        let key = apiKey
-        guard !key.isEmpty else {
-            throw ClaudeError.noApiKey
-        }
-
-        guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
+        guard let url = URL(string: "\(backendURL)/api/claude") else {
             throw ClaudeError.invalidURL
         }
 
@@ -135,8 +130,7 @@ class ClaudeService {
         request.httpMethod = "POST"
         request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "content-type")
-        request.setValue(key, forHTTPHeaderField: "x-api-key")
-        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+        request.setValue(Secrets.appToken, forHTTPHeaderField: "x-app-token")
 
         let body: [String: Any] = [
             "model": model,
@@ -179,7 +173,7 @@ class ClaudeService {
 }
 
 enum ClaudeError: LocalizedError {
-    case noApiKey
+    case noBackend
     case invalidURL
     case invalidResponse
     case apiError(statusCode: Int, message: String)
@@ -187,7 +181,7 @@ enum ClaudeError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noApiKey: return "No API key configured"
+        case .noBackend: return "Cannot connect to server"
         case .invalidURL: return "Invalid URL"
         case .invalidResponse: return "Invalid response"
         case .apiError(let code, let msg): return "API error (\(code)): \(msg)"
