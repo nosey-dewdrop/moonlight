@@ -23,22 +23,45 @@ struct ContentView: View {
                 HomeView()
                     .tag(0)
 
-                TarotView()
+                PlaceholderView(title: "Horary", description: "Ask the stars")
                     .tag(1)
 
-                HoraryView()
+                PlaceholderView(title: "Astrology", description: "Birth chart")
                     .tag(2)
+
+                PlaceholderView(title: "Tarot", description: "Daily card")
+                    .tag(3)
+
+                PlaceholderView(title: "Dictionary", description: "Terms")
+                    .tag(4)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
         .ignoresSafeArea()
         .task {
-            // Quick local calculation first
             moonData = moonService.calculateMoonPhase(date: Date())
-            // Then try real API
-            if let apiData = try? await moonService.fetchMoonData(latitude: 41.01, longitude: 28.98) {
-                moonData = apiData
-            }
+        }
+    }
+}
+
+struct PlaceholderView: View {
+    let title: String
+    let description: String
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Text(title)
+                .font(.custom("PressStart2P-Regular", size: 16))
+                .foregroundColor(Color(hex: "#FFE566"))
+
+            Text(description)
+                .font(.custom("Silkscreen-Regular", size: 14))
+                .foregroundColor(.white.opacity(0.5))
+
+            Text("coming soon")
+                .font(.custom("Silkscreen-Regular", size: 10))
+                .foregroundColor(.white.opacity(0.3))
+                .padding(.top, 8)
         }
     }
 }

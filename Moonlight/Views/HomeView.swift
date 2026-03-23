@@ -4,8 +4,6 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
-    @State private var elementEnergies: [Element: Double] = [:]
-    @State private var showSettings = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -27,27 +25,11 @@ struct HomeView: View {
                         // Moon info - no card bg, just text floating
                         moonInfo(moonData: moonData)
 
-                        // Element energy dots
-                        elementDots
-
                         // Astro events
                         astroEventsList
                     }
                 }
                 .ignoresSafeArea(edges: .top)
-
-                // Settings gear (pixel art)
-                VStack {
-                    HStack {
-                        Spacer()
-                        Button(action: { showSettings = true }) {
-                            PixelTextIcon.gear()
-                                .padding(12)
-                        }
-                    }
-                    .padding(.top, 50)
-                    Spacer()
-                }
             } else {
                 VStack(spacing: 16) {
                     ProgressView()
@@ -58,9 +40,6 @@ struct HomeView: View {
                         .font(.custom(bodyFont, size: 12))
                 }
             }
-        }
-        .sheet(isPresented: $showSettings) {
-            SettingsView()
         }
         .task {
             await loadData()
@@ -115,102 +94,88 @@ struct HomeView: View {
     }
 
     private func astroEventRow(_ event: AstroEvent) -> some View {
-        ZStack {
-            Image("card_bg_event")
-                .interpolation(.none)
-                .resizable()
+        HStack(spacing: 12) {
+            pixelIcon("icon_\(event.type.rawValue)", size: 24)
 
-            HStack(spacing: 12) {
-                PixelIcon(name: "icon_\(event.type.rawValue)", size: 24)
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 6) {
+                    Text(event.title)
+                        .font(.custom(bodyBoldFont, size: 13))
+                        .foregroundColor(.white)
 
-                VStack(alignment: .leading, spacing: 3) {
-                    HStack(spacing: 6) {
-                        Text(event.title)
-                            .font(.custom(bodyBoldFont, size: 13))
-                            .foregroundColor(.white)
-
-                        if event.isActive {
-                            Image("badge_active")
-                                .interpolation(.none)
-                                .resizable()
-                                .frame(width: 10, height: 10)
-                        }
-                    }
-
-                    Text(event.description)
-                        .font(.custom(bodyFont, size: 10))
-                        .foregroundColor(.white.opacity(0.4))
-
-                    if !event.dateRangeText.isEmpty {
-                        Text(event.dateRangeText)
-                            .font(.custom(bodyFont, size: 9))
-                            .foregroundColor(.white.opacity(0.3))
+                    if event.isActive {
+                        Text("active")
+                            .font(.custom(bodyFont, size: 8))
+                            .foregroundColor(Color(hex: "#34D399"))
                     }
                 }
 
-                Spacer()
+                Text(event.description)
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(.white.opacity(0.4))
+
+                if !event.dateRangeText.isEmpty {
+                    Text(event.dateRangeText)
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(.white.opacity(0.3))
+                }
             }
-            .padding(12)
+
+            Spacer()
         }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color(hex: "#0b0b2e").opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
         .padding(.horizontal, 16)
     }
 
     // MARK: - Moon Character
 
     private func moonCharacter(moonData: MoonData) -> some View {
-        Image(moonData.phase.rawValue)
+        let phaseName = moonData.phase.rawValue
+        let path = "/Users/damummyphus/moonlight/assets/characters/\(phaseName).png"
+        let image = UIImage(contentsOfFile: path) ?? UIImage()
+
+        return Image(uiImage: image)
             .interpolation(.none)
             .resizable()
             .frame(width: 180, height: 180)
             .shadow(color: .yellow.opacity(0.2), radius: 20)
     }
 
-    // MARK: - Element Dots
-
-    private var elementDots: some View {
-        HStack(spacing: 16) {
-            ForEach(Element.allCases, id: \.self) { element in
-                let energy = elementEnergies[element] ?? 0.5
-                VStack(spacing: 4) {
-                    PixelElementDot(element: element, energy: energy, size: 12)
-                        .scaleEffect(energy > 0.7 ? 1.2 : 0.9)
-                        .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: energy)
-
-                    Text(element.displayName.prefix(1).uppercased())
-                        .font(.custom(bodyFont, size: 7))
-                        .foregroundColor(element.color.opacity(0.6))
-                }
-            }
-        }
-        .padding(.vertical, 4)
-    }
-
     // MARK: - Helpers
 
     private func pixelIcon(_ name: String, size: CGFloat) -> some View {
-        Image(name)
-            .interpolation(.none)
-            .resizable()
-            .frame(width: size, height: size)
+        let path = "/Users/damummyphus/moonlight/assets/ui/\(name).png"
+        if let img = UIImage(contentsOfFile: path) {
+            return AnyView(
+                Image(uiImage: img)
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: size, height: size)
+            )
+        } else {
+            return AnyView(
+                Rectangle()
+                    .fill(Color.white.opacity(0.1))
+                    .frame(width: size, height: size)
+            )
+        }
     }
 
     private func loadData() async {
-        // Use local calculation (reliable, no API dependency)
         moonData = moonService.calculateMoonPhase(date: Date())
-
-        // Load astro events (real 2025-2026 data)
         do {
             events = try await astrologyService.fetchEvents()
         } catch {
             print("Failed to load events: \(error)")
         }
-
-        // Calculate element energies
-        if let moon = moonData {
-            let activeRetros = events.filter { $0.isActive && $0.type == .retrograde }.map { $0.title }
-            elementEnergies = Element.adjustedEnergies(for: moon.phase, activeRetrogrades: activeRetros)
-        }
-
         locationManager.requestLocation()
     }
 }
