@@ -3,34 +3,82 @@ import Foundation
 class AstrologyService {
     private let chartService = HoraryChartService()
 
-    /// Fetches current retrogrades from API + hardcoded eclipse dates (NASA verified, predictable)
+    /// Fetches upcoming cosmic events within 2 weeks
     func fetchEvents() async throws -> [AstroEvent] {
         let now = Date()
+        let calendar = Calendar.current
+        guard let twoWeeksLater = calendar.date(byAdding: .day, value: 14, to: now) else { return [] }
+
         var events: [AstroEvent] = []
 
         // 1. Live retrogrades from FreeAstrologyAPI
         let liveRetrogrades = await fetchLiveRetrogrades()
         events.append(contentsOf: liveRetrogrades)
 
-        // 2. Eclipse dates (NASA data — these are fixed astronomical predictions, not guesses)
-        let eclipses = Self.verifiedEclipses()
-        let calendar = Calendar.current
-        guard let sixMonthsLater = calendar.date(byAdding: .day, value: 180, to: now) else { return events }
+        // 2. Upcoming moon phases (local calculation)
+        let moonPhaseEvents = Self.upcomingMoonPhases(from: now, within: 14)
+        events.append(contentsOf: moonPhaseEvents)
 
-        let relevantEclipses = eclipses.filter { event in
-            if event.isActiveOn(date: now) { return true }
-            if let start = event.startDate, start > now && start <= sixMonthsLater { return true }
-            return false
+        // 3. Eclipses within 2 weeks (NASA verified)
+        let eclipses = Self.verifiedEclipses().filter { event in
+            guard let start = event.startDate else { return false }
+            return start > now && start <= twoWeeksLater
         }
-        events.append(contentsOf: relevantEclipses)
+        events.append(contentsOf: eclipses)
 
-        // Sort: active first, then by date
+        // Sort by date
         return events.sorted { a, b in
-            if a.isActiveOn(date: now) != b.isActiveOn(date: now) {
-                return a.isActiveOn(date: now)
-            }
             return (a.startDate ?? .distantFuture) < (b.startDate ?? .distantFuture)
         }
+    }
+
+    // MARK: - Upcoming Moon Phases
+
+    private static func upcomingMoonPhases(from date: Date, within days: Int) -> [AstroEvent] {
+        let synodicMonth = 29.53058868
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour], from: date)
+
+        guard let year = components.year, let month = components.month,
+              let day = components.day, let hour = components.hour else { return [] }
+
+        var y = year, m = month
+        if m <= 2 { y -= 1; m += 12 }
+        let a = y / 100
+        let b = a / 4
+        let c = 2 - a + b
+        let e = Int(365.25 * Double(y + 4716))
+        let f = Int(30.6001 * Double(m + 1))
+        let jd = Double(c + day + e + f) + Double(hour) / 24.0 - 1524.5
+
+        let daysSinceNew = jd - 2451550.1
+        let age = daysSinceNew.truncatingRemainder(dividingBy: synodicMonth)
+        let currentAge = age < 0 ? age + synodicMonth : age
+
+        // Major phases at these ages: New=0, First Quarter=7.38, Full=14.77, Last Quarter=22.15
+        let phases: [(name: String, age: Double, icon: String, desc: String)] = [
+            ("New Moon", 0, "new_moon", "New cycle begins, set intentions"),
+            ("Full Moon", 14.77, "full_moon", "Harvest, clarity, release"),
+        ]
+
+        var events: [AstroEvent] = []
+        for phase in phases {
+            var daysUntil = phase.age - currentAge
+            if daysUntil < 0 { daysUntil += synodicMonth }
+            if daysUntil > 0 && daysUntil <= Double(days) {
+                if let phaseDate = calendar.date(byAdding: .day, value: Int(daysUntil), to: date) {
+                    events.append(AstroEvent(
+                        type: .transit,
+                        title: phase.name,
+                        description: phase.desc,
+                        startDate: phaseDate,
+                        endDate: nil
+                    ))
+                }
+            }
+        }
+
+        return events
     }
 
     // MARK: - Live Retrogrades from API

@@ -108,13 +108,21 @@ struct HomeView: View {
 
     private var astroEventsList: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Cosmic Events")
-                .font(.custom(titleFont, size: 8))
-                .foregroundColor(.white.opacity(0.8))
-                .padding(.horizontal, 20)
+            if !events.isEmpty {
+                Text("Cosmic Events")
+                    .font(.custom(titleFont, size: 8))
+                    .foregroundColor(.white.opacity(0.8))
+                    .padding(.horizontal, 20)
 
-            ForEach(events) { event in
-                astroEventRow(event)
+                ForEach(events) { event in
+                    astroEventRow(event)
+                }
+            } else {
+                Text("No active cosmic events")
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(.white.opacity(0.3))
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 8)
             }
         }
         .padding(.bottom, 40)

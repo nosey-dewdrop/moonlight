@@ -36,6 +36,14 @@ class CreditManager: ObservableObject {
         self.dailyCreditsUsed = UserDefaults.standard.integer(forKey: dailyUsedKey)
         resetDailyIfNeeded()
         listenForTransactions()
+
+        // DEBUG: Remove before App Store
+        #if DEBUG
+        if purchasedCredits == 0 && !UserDefaults.standard.bool(forKey: "debugCreditsGiven") {
+            purchasedCredits = 200
+            UserDefaults.standard.set(true, forKey: "debugCreditsGiven")
+        }
+        #endif
     }
 
     deinit {
