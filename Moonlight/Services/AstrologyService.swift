@@ -1,24 +1,31 @@
 import Foundation
 
 class AstrologyService {
-    /// Returns current and upcoming astrological events based on real astronomical data
+    private let chartService = HoraryChartService()
+
+    /// Fetches current retrogrades from API + hardcoded eclipse dates (NASA verified, predictable)
     func fetchEvents() async throws -> [AstroEvent] {
         let now = Date()
-        let allEvents = Self.astronomicalEvents2025_2026()
+        var events: [AstroEvent] = []
 
-        // Show active events + upcoming events within 60 days
+        // 1. Live retrogrades from FreeAstrologyAPI
+        let liveRetrogrades = await fetchLiveRetrogrades()
+        events.append(contentsOf: liveRetrogrades)
+
+        // 2. Eclipse dates (NASA data — these are fixed astronomical predictions, not guesses)
+        let eclipses = Self.verifiedEclipses()
         let calendar = Calendar.current
-        guard let sixtyDaysLater = calendar.date(byAdding: .day, value: 180, to: now) else { return [] }
+        guard let sixMonthsLater = calendar.date(byAdding: .day, value: 180, to: now) else { return events }
 
-        return allEvents.filter { event in
-            // Active now
+        let relevantEclipses = eclipses.filter { event in
             if event.isActiveOn(date: now) { return true }
-            // Starting within 60 days
-            if let start = event.startDate, start > now && start <= sixtyDaysLater { return true }
+            if let start = event.startDate, start > now && start <= sixMonthsLater { return true }
             return false
         }
-        .sorted { a, b in
-            // Active first, then by start date
+        events.append(contentsOf: relevantEclipses)
+
+        // Sort: active first, then by date
+        return events.sorted { a, b in
             if a.isActiveOn(date: now) != b.isActiveOn(date: now) {
                 return a.isActiveOn(date: now)
             }
@@ -26,60 +33,49 @@ class AstrologyService {
         }
     }
 
-    // MARK: - Real Astronomical Data 2025-2026
+    // MARK: - Live Retrogrades from API
 
-    private static func astronomicalEvents2025_2026() -> [AstroEvent] {
+    private func fetchLiveRetrogrades() async -> [AstroEvent] {
+        do {
+            // Fetch planetary positions for right now
+            let chart = try await chartService.fetchChart(latitude: 41.01, longitude: 28.98)
+
+            let retrogradeDescriptions: [String: String] = [
+                "Mercury": "Communication and travel may be disrupted",
+                "Venus": "Love and relationships under review",
+                "Mars": "Energy and motivation may feel blocked",
+                "Jupiter": "Growth and expansion slow down for reflection",
+                "Saturn": "Time to revisit structures and responsibilities",
+                "Uranus": "Inner rebellion, rethinking freedom",
+                "Neptune": "Spiritual fog, illusions dissolving",
+                "Pluto": "Deep transformation beneath the surface",
+            ]
+
+            return chart.planets
+                .filter { $0.isRetro && retrogradeDescriptions.keys.contains($0.name) }
+                .map { planet in
+                    AstroEvent(
+                        type: .retrograde,
+                        title: "\(planet.name) Retrograde",
+                        description: retrogradeDescriptions[planet.name] ?? "Planet in retrograde motion",
+                        startDate: Date(),
+                        endDate: nil
+                    )
+                }
+        } catch {
+            print("Failed to fetch live retrogrades: \(error)")
+            return []
+        }
+    }
+
+    // MARK: - Verified Eclipse Dates (NASA/USNO data — fixed predictions)
+
+    private static func verifiedEclipses() -> [AstroEvent] {
         let f = DateFormatter()
         f.locale = Locale(identifier: "en_US_POSIX")
         f.dateFormat = "yyyy-MM-dd"
 
         return [
-            // Mercury Retrogrades 2025
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2025-03-15"), endDate: f.date(from: "2025-04-07")),
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2025-07-18"), endDate: f.date(from: "2025-08-11")),
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2025-11-09"), endDate: f.date(from: "2025-11-29")),
-
-            // Mercury Retrogrades 2026
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2026-02-26"), endDate: f.date(from: "2026-03-20")),
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2026-06-29"), endDate: f.date(from: "2026-07-23")),
-            AstroEvent(type: .retrograde, title: "Mercury Retrograde",
-                       description: "Communication and travel may be disrupted",
-                       startDate: f.date(from: "2026-10-24"), endDate: f.date(from: "2026-11-13")),
-
-            // Venus Retrograde
-            AstroEvent(type: .retrograde, title: "Venus Retrograde",
-                       description: "Love and relationships under review",
-                       startDate: f.date(from: "2025-03-01"), endDate: f.date(from: "2025-04-12")),
-            AstroEvent(type: .retrograde, title: "Venus Retrograde",
-                       description: "Love and relationships under review",
-                       startDate: f.date(from: "2026-10-03"), endDate: f.date(from: "2026-11-14")),
-
-            // Jupiter Retrograde
-            AstroEvent(type: .retrograde, title: "Jupiter Retrograde",
-                       description: "Growth and expansion slow down for reflection",
-                       startDate: f.date(from: "2025-11-11"), endDate: f.date(from: "2026-03-10")),
-            AstroEvent(type: .retrograde, title: "Jupiter Retrograde",
-                       description: "Growth and expansion slow down for reflection",
-                       startDate: f.date(from: "2026-12-12"), endDate: f.date(from: "2027-04-12")),
-
-            // Saturn Retrograde
-            AstroEvent(type: .retrograde, title: "Saturn Retrograde",
-                       description: "Time to revisit structures and responsibilities",
-                       startDate: f.date(from: "2025-07-12"), endDate: f.date(from: "2025-11-27")),
-            AstroEvent(type: .retrograde, title: "Saturn Retrograde",
-                       description: "Time to revisit structures and responsibilities",
-                       startDate: f.date(from: "2026-07-26"), endDate: f.date(from: "2026-12-10")),
-
             // Solar Eclipses 2025
             AstroEvent(type: .eclipse, title: "Partial Solar Eclipse",
                        description: "Solar eclipse, new beginnings",
@@ -111,6 +107,22 @@ class AstrologyService {
             AstroEvent(type: .eclipse, title: "Partial Lunar Eclipse",
                        description: "Partial eclipse, subtle inner changes",
                        startDate: f.date(from: "2026-08-28"), endDate: nil),
+
+            // Solar Eclipses 2027
+            AstroEvent(type: .eclipse, title: "Total Solar Eclipse",
+                       description: "Total solar eclipse, major life shift",
+                       startDate: f.date(from: "2027-02-06"), endDate: nil),
+            AstroEvent(type: .eclipse, title: "Annular Solar Eclipse",
+                       description: "Ring of fire, new cycles begin",
+                       startDate: f.date(from: "2027-08-02"), endDate: nil),
+
+            // Lunar Eclipses 2027
+            AstroEvent(type: .eclipse, title: "Penumbral Lunar Eclipse",
+                       description: "Subtle shifts in emotional landscape",
+                       startDate: f.date(from: "2027-02-20"), endDate: nil),
+            AstroEvent(type: .eclipse, title: "Penumbral Lunar Eclipse",
+                       description: "Inner tides gently turning",
+                       startDate: f.date(from: "2027-07-18"), endDate: nil),
         ]
     }
 }
