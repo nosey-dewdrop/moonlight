@@ -12,33 +12,30 @@
 - [x] stars layer with twinkling animation
 - [x] moon shape rendering (canvas, all 8 phases)
 - [x] swipe navigation container (tabview with page style)
-- [x] placeholder tabs (horary, astrology, tarot, dictionary)
 - [x] build and run on ios simulator
 
 ## Phase 2: Pixel Art Assets
-- [ ] top up pixellab api credits
-- [ ] generate test background (full_moon) to validate style prompt
-- [ ] generate 8 moon phase background scenes (pixflux, 320x320)
-- [ ] generate 8 moon characters with kawaii faces (pixflux, 128x128)
-- [ ] generate moon animation frames (animate-with-text, 64x64)
-- [ ] generate atmospheric elements (clouds, stars, halos)
-- [ ] generate ui icons (crystal ball, zodiac, book)
-- [ ] generate app icon (128x128)
-- [ ] integrate pixel art assets into xcassets
+- [x] integrate pixel art assets into xcassets (123 imagesets)
+- [ ] generate 22 major arcana tarot card art (pixellab, 64x64, dark fantasy)
+- [ ] generate minor arcana suit symbols (wand/cup/sword/pentacle + number)
 
 ## Phase 3: API Integrations
-- [ ] usno api integration (moon phase, illumination, moonrise/moonset, eclipses)
-- [ ] hardcoded retrograde dates json (mercury, venus, jupiter, saturn for 2025-2026)
-- [ ] replace hardcoded astro events with live usno data
-- [ ] replace local moon calculation with usno api data
+- [x] usno api integration (moon phase, illumination, moonrise/moonset)
+- [x] hardcoded retrograde dates (mercury, venus, jupiter, saturn for 2025-2026)
+- [x] real astronomical event data 2025-2026
 
 ## Phase 4: Core Features
-- [ ] horary astrology page
-- [ ] astrology page (birth chart, transits)
-- [ ] tarot page (daily card draw)
-- [ ] dictionary page (astrology terms)
+- [x] element compatibility system (fire/earth/air/water tied to moon, retrogrades, tarot)
+- [x] credit system with storekit 2 (5/$1.99, 15/$4.99, 30/$8.99)
+- [x] claude api service (haiku, keychain, mystical personality)
+- [x] tarot tab (78 cards, 3-card spread, free keywords, premium ai reading)
+- [x] horary tab (question input, cosmic context, free yes/no, premium deep reading)
+- [x] settings view (api key, credit balance, purchase, restore)
+- [x] element energy indicators on home view
+- [x] 3-tab layout (home, tarot, horary)
 
 ## Phase 5: Polish
+- [ ] tarot card pixel art assets (currently text-only cards)
 - [ ] pixel art moon character animations in app
 - [ ] smooth page transitions
 - [ ] push notifications (moon phase changes)

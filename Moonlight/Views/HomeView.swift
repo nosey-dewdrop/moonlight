@@ -4,6 +4,8 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
+    @State private var elementEnergies: [Element: Double] = [:]
+    @State private var showSettings = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -25,11 +27,29 @@ struct HomeView: View {
                         // Moon info - no card bg, just text floating
                         moonInfo(moonData: moonData)
 
+                        // Element energy dots
+                        elementDots
+
                         // Astro events
                         astroEventsList
                     }
                 }
                 .ignoresSafeArea(edges: .top)
+
+                // Settings gear
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: { showSettings = true }) {
+                            Image(systemName: "gearshape.fill")
+                                .font(.system(size: 18))
+                                .foregroundColor(.white.opacity(0.5))
+                                .padding(12)
+                        }
+                    }
+                    .padding(.top, 50)
+                    Spacer()
+                }
             } else {
                 VStack(spacing: 16) {
                     ProgressView()
@@ -40,6 +60,9 @@ struct HomeView: View {
                         .font(.custom(bodyFont, size: 12))
                 }
             }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
         }
         .task {
             await loadData()
@@ -138,35 +161,43 @@ struct HomeView: View {
     // MARK: - Moon Character
 
     private func moonCharacter(moonData: MoonData) -> some View {
-        let phaseName = moonData.phase.rawValue
-        let path = "/Users/damummyphus/moonlight/assets/characters/\(phaseName).png"
-        let image = UIImage(contentsOfFile: path) ?? UIImage()
-
-        return Image(uiImage: image)
+        Image(moonData.phase.rawValue)
             .interpolation(.none)
             .resizable()
             .frame(width: 180, height: 180)
             .shadow(color: .yellow.opacity(0.2), radius: 20)
     }
 
+    // MARK: - Element Dots
+
+    private var elementDots: some View {
+        HStack(spacing: 16) {
+            ForEach(Element.allCases, id: \.self) { element in
+                let energy = elementEnergies[element] ?? 0.5
+                VStack(spacing: 4) {
+                    Circle()
+                        .fill(element.color)
+                        .frame(width: 12, height: 12)
+                        .shadow(color: element.color.opacity(energy > 0.7 ? 0.8 : 0.2), radius: energy > 0.7 ? 8 : 2)
+                        .scaleEffect(energy > 0.7 ? 1.2 : 0.9)
+                        .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: energy)
+
+                    Text(element.displayName.prefix(1).uppercased())
+                        .font(.custom(bodyFont, size: 7))
+                        .foregroundColor(element.color.opacity(0.6))
+                }
+            }
+        }
+        .padding(.vertical, 4)
+    }
+
     // MARK: - Helpers
 
     private func pixelIcon(_ name: String, size: CGFloat) -> some View {
-        let path = "/Users/damummyphus/moonlight/assets/ui/\(name).png"
-        if let img = UIImage(contentsOfFile: path) {
-            return AnyView(
-                Image(uiImage: img)
-                    .interpolation(.none)
-                    .resizable()
-                    .frame(width: size, height: size)
-            )
-        } else {
-            return AnyView(
-                Rectangle()
-                    .fill(Color.white.opacity(0.1))
-                    .frame(width: size, height: size)
-            )
-        }
+        Image(name)
+            .interpolation(.none)
+            .resizable()
+            .frame(width: size, height: size)
     }
 
     private func loadData() async {
@@ -178,6 +209,12 @@ struct HomeView: View {
             events = try await astrologyService.fetchEvents()
         } catch {
             print("Failed to load events: \(error)")
+        }
+
+        // Calculate element energies
+        if let moon = moonData {
+            let activeRetros = events.filter { $0.isActive && $0.type == .retrograde }.map { $0.title }
+            elementEnergies = Element.adjustedEnergies(for: moon.phase, activeRetrogrades: activeRetros)
         }
 
         locationManager.requestLocation()

@@ -1,0 +1,156 @@
+import Foundation
+
+class ClaudeService {
+    private let model = "claude-haiku-4-5-20251001"
+    private let maxTokens = 1024
+    private let keychainKey = "com.damla.moonlight.claudeApiKey"
+
+    var hasApiKey: Bool {
+        apiKey != nil
+    }
+
+    var apiKey: String? {
+        KeychainHelper.load(key: keychainKey)
+    }
+
+    func saveApiKey(_ key: String) {
+        KeychainHelper.save(key: keychainKey, value: key)
+    }
+
+    func removeApiKey() {
+        KeychainHelper.delete(key: keychainKey)
+    }
+
+    // MARK: - Tarot Reading
+
+    func tarotReading(cards: [DrawnCard], moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], language: String) async throws -> String {
+        let cardDescriptions = cards.enumerated().map { i, drawn in
+            let pos = i == 0 ? "Past" : (i == 1 ? "Present" : "Future")
+            return "\(pos): \(drawn.card.name) (\(drawn.positionLabel)) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
+        }.joined(separator: "\n")
+
+        let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
+            .joined(separator: ", ")
+
+        let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
+
+        let prompt = """
+        You are a mystical pixel-art moon oracle. You speak in a poetic, enigmatic, yet warm tone — like a wise celestial being made of starlight and ancient code.
+
+        Current moon phase: \(moonPhase.displayName)
+        Element energies: \(elementDesc)
+        Active retrogrades: \(retroDesc)
+
+        The seeker drew these tarot cards:
+        \(cardDescriptions)
+
+        Give a cohesive reading that weaves the cards together with the current cosmic energies. Consider how the moon phase and element balance affect the reading. Keep it mystical but practical — the seeker should walk away with actionable insight.
+
+        Respond in \(language). Keep it under 200 words.
+        """
+
+        return try await sendMessage(prompt)
+    }
+
+    // MARK: - Horary Reading
+
+    func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], language: String) async throws -> String {
+        let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
+            .joined(separator: ", ")
+
+        let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
+
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let timeStr = formatter.string(from: now)
+
+        let prompt = """
+        You are a mystical pixel-art moon oracle practicing horary astrology. You speak in a poetic, enigmatic, yet warm tone — like a wise celestial being made of starlight and ancient code.
+
+        The seeker asks: "\(question)"
+        Question asked at: \(timeStr)
+        Current moon phase: \(moonPhase.displayName)
+        Element energies: \(elementDesc)
+        Active retrogrades: \(retroDesc)
+
+        Provide a horary astrology interpretation. Consider:
+        - The moon phase's influence on the question's timing and outcome
+        - Which elements are strong/weak and how they relate to the question
+        - How active retrogrades might delay or complicate matters
+        - Traditional horary rules about the moon's condition
+
+        Give a clear yes/no leaning with nuanced explanation. Be mystical but honest — if the stars say no, say it beautifully.
+
+        Respond in \(language). Keep it under 200 words.
+        """
+
+        return try await sendMessage(prompt)
+    }
+
+    // MARK: - API Call
+
+    private func sendMessage(_ userMessage: String) async throws -> String {
+        guard let key = apiKey else {
+            throw ClaudeError.noApiKey
+        }
+
+        guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
+            throw ClaudeError.invalidURL
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "content-type")
+        request.setValue(key, forHTTPHeaderField: "x-api-key")
+        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+
+        let body: [String: Any] = [
+            "model": model,
+            "max_tokens": maxTokens,
+            "messages": [
+                ["role": "user", "content": userMessage]
+            ]
+        ]
+
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw ClaudeError.invalidResponse
+        }
+
+        guard httpResponse.statusCode == 200 else {
+            let errorBody = String(data: data, encoding: .utf8) ?? "Unknown error"
+            throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: errorBody)
+        }
+
+        let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
+        guard let content = json?["content"] as? [[String: Any]],
+              let firstBlock = content.first,
+              let text = firstBlock["text"] as? String else {
+            throw ClaudeError.parseError
+        }
+
+        return text
+    }
+}
+
+enum ClaudeError: LocalizedError {
+    case noApiKey
+    case invalidURL
+    case invalidResponse
+    case apiError(statusCode: Int, message: String)
+    case parseError
+
+    var errorDescription: String? {
+        switch self {
+        case .noApiKey: return "No API key configured"
+        case .invalidURL: return "Invalid URL"
+        case .invalidResponse: return "Invalid response"
+        case .apiError(let code, let msg): return "API error (\(code)): \(msg)"
+        case .parseError: return "Failed to parse response"
+        }
+    }
+}
