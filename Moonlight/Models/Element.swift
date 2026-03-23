@@ -1,4 +1,4 @@
-import SwiftUI
+import Foundation
 
 enum Element: String, CaseIterable, Codable {
     case fire
@@ -6,35 +6,8 @@ enum Element: String, CaseIterable, Codable {
     case air
     case water
 
-    var color: Color {
-        switch self {
-        case .fire: return Color(hex: "#FF6B6B")
-        case .earth: return Color(hex: "#34D399")
-        case .air: return Color(hex: "#A78BFA")
-        case .water: return Color(hex: "#60A5FA")
-        }
-    }
-
     var displayName: String {
         rawValue.capitalized
-    }
-
-    var zodiacSigns: [String] {
-        switch self {
-        case .fire: return ["Aries", "Leo", "Sagittarius"]
-        case .earth: return ["Taurus", "Virgo", "Capricorn"]
-        case .air: return ["Gemini", "Libra", "Aquarius"]
-        case .water: return ["Cancer", "Scorpio", "Pisces"]
-        }
-    }
-
-    var tarotSuit: Suit {
-        switch self {
-        case .fire: return .wands
-        case .earth: return .pentacles
-        case .air: return .swords
-        case .water: return .cups
-        }
     }
 
     /// Base energy level for this element given the current moon phase
@@ -66,19 +39,15 @@ enum Element: String, CaseIterable, Codable {
         for retro in activeRetrogrades {
             let lower = retro.lowercased()
             if lower.contains("mercury") {
-                // Mercury retrograde weakens air, boosts water (introspection)
                 levels[.air, default: 0.5] -= 0.15
                 levels[.water, default: 0.5] += 0.1
             } else if lower.contains("venus") {
-                // Venus retrograde weakens earth (material), boosts water (emotions)
                 levels[.earth, default: 0.5] -= 0.1
                 levels[.water, default: 0.5] += 0.15
             } else if lower.contains("jupiter") {
-                // Jupiter retrograde weakens fire (expansion), boosts earth (grounding)
                 levels[.fire, default: 0.5] -= 0.15
                 levels[.earth, default: 0.5] += 0.1
             } else if lower.contains("saturn") {
-                // Saturn retrograde weakens earth (structure), boosts air (questioning)
                 levels[.earth, default: 0.5] -= 0.1
                 levels[.air, default: 0.5] += 0.15
             }

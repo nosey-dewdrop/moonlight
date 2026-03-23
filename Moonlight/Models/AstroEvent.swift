@@ -49,26 +49,6 @@ enum AstroEventType: String {
     case eclipse
     case conjunction
     case opposition
-
-    var icon: String {
-        switch self {
-        case .retrograde: return "arrow.uturn.backward.circle"
-        case .transit: return "arrow.right.circle"
-        case .eclipse: return "circle.lefthalf.filled"
-        case .conjunction: return "circle.grid.2x1"
-        case .opposition: return "arrow.left.arrow.right.circle"
-        }
-    }
-
-    var color: String {
-        switch self {
-        case .retrograde: return "#FF6B6B"
-        case .transit: return "#A78BFA"
-        case .eclipse: return "#FBBF24"
-        case .conjunction: return "#34D399"
-        case .opposition: return "#F472B6"
-        }
-    }
 }
 
 struct MoonData {

@@ -100,7 +100,7 @@ struct TarotView: View {
             )
             .textInputAutocapitalization(.sentences)
             .submitLabel(.done)
-            .onChange(of: question) { _ in
+            .onChange(of: question) {
                 if questionError { questionError = false }
             }
 
@@ -322,7 +322,7 @@ struct TarotView: View {
 
     private func toggleCard(_ card: TarotCard) {
         if let index = selectedCards.firstIndex(where: { $0.card.id == card.id }) {
-            withAnimation { selectedCards.remove(at: index) }
+            _ = withAnimation { selectedCards.remove(at: index) }
         } else if selectedCards.count < 3 {
             let drawn = DrawnCard(card: card, isReversed: Bool.random())
             withAnimation { selectedCards.append(drawn) }
@@ -416,8 +416,6 @@ struct TarotView: View {
                 let activeRetros = events.filter { $0.isActive && $0.type == .retrograde }.map { $0.title }
                 let energies = Element.adjustedEnergies(for: moonData.phase, activeRetrogrades: activeRetros)
 
-                let language = Locale.current.language.languageCode?.identifier == "tr" ? "Turkish" : "English"
-
                 let reading = try await claudeService.tarotReading(
                     question: question,
                     cards: selectedCards,
@@ -425,8 +423,7 @@ struct TarotView: View {
                     moonPhase: moonData.phase,
                     elementEnergies: energies,
                     activeRetrogrades: activeRetros,
-                    userProfile: userProfile,
-                    language: language
+                    userProfile: userProfile
                 )
 
                 await MainActor.run {

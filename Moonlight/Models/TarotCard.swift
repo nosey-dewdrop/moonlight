@@ -11,15 +11,6 @@ enum Suit: String, Codable, CaseIterable {
     case swords
     case pentacles
 
-    var element: Element {
-        switch self {
-        case .wands: return .fire
-        case .cups: return .water
-        case .swords: return .air
-        case .pentacles: return .earth
-        }
-    }
-
     var displayName: String {
         rawValue.capitalized
     }
@@ -34,10 +25,6 @@ struct TarotCard: Identifiable, Codable {
     let uprightMeaning: String
     let reversedMeaning: String
     let imageName: String
-
-    var element: Element? {
-        suit?.element
-    }
 
     static let allCards: [TarotCard] = majorArcana + minorArcana
 

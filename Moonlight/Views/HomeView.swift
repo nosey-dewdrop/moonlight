@@ -182,7 +182,7 @@ struct HomeView: View {
     }
 
     private func loadData() async {
-        // Request location first
+        // Request location
         locationManager.requestLocation()
 
         // Quick local fallback while API loads
@@ -195,10 +195,11 @@ struct HomeView: View {
             print("Failed to load events: \(error)")
         }
 
-        // Wait briefly for location, then fetch real API data
-        try? await Task.sleep(nanoseconds: 1_500_000_000)
+        // Wait for location to be available, then fetch real API data
+        while !locationManager.hasLocation {
+            try? await Task.sleep(nanoseconds: 100_000_000)
+        }
 
-        // Always try API with real location
         do {
             let apiData = try await moonService.fetchMoonData(
                 latitude: locationManager.latitude,

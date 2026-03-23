@@ -37,13 +37,13 @@ class MoonService {
             }
         }
 
-        // Determine phase from API or calculate
-        let localData = calculateMoonPhase(date: Date())
+        // Determine phase from API or calculate locally as fallback
+        let localFallback = calculateMoonPhase(date: Date())
         let phase: MoonPhase
-        if !phaseName.isEmpty {
-            phase = MoonPhase.fromAPIName(phaseName) ?? localData.phase
+        if !phaseName.isEmpty, let apiPhase = MoonPhase.fromAPIName(phaseName) {
+            phase = apiPhase
         } else {
-            phase = localData.phase
+            phase = localFallback.phase
         }
 
         return MoonData(
@@ -51,7 +51,7 @@ class MoonService {
             illumination: illumination,
             moonrise: moonrise,
             moonset: moonset,
-            age: localData.age
+            age: localFallback.age
         )
     }
 

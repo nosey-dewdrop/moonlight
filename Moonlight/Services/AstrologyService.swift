@@ -37,8 +37,10 @@ class AstrologyService {
 
     private func fetchLiveRetrogrades() async -> [AstroEvent] {
         do {
-            // Fetch planetary positions for right now
-            let chart = try await chartService.fetchChart(latitude: 41.01, longitude: 28.98)
+            // Fetch planetary positions for right now using user's location
+            let lat = await LocationManager.shared.latitude
+            let lon = await LocationManager.shared.longitude
+            let chart = try await chartService.fetchChart(latitude: lat, longitude: lon)
 
             let retrogradeDescriptions: [String: String] = [
                 "Mercury": "Communication and travel may be disrupted",

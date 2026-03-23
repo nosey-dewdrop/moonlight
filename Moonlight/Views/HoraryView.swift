@@ -163,16 +163,13 @@ struct HoraryView: View {
                 let lon = locationManager.longitude
                 let chartData = try? await chartService.fetchChart(latitude: lat, longitude: lon)
 
-                let language = Locale.current.language.languageCode?.identifier == "tr" ? "Turkish" : "English"
-
                 let reading = try await claudeService.horaryReading(
                     question: question,
                     moonPhase: moonData.phase,
                     elementEnergies: energies,
                     activeRetrogrades: activeRetros,
                     chartData: chartData,
-                    userProfile: userProfile,
-                    language: language
+                    userProfile: userProfile
                 )
 
                 await MainActor.run {

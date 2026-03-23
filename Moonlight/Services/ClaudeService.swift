@@ -26,7 +26,7 @@ class ClaudeService {
         }
     }
 
-    func tarotReading(question: String, cards: [DrawnCard], spreadType: String = "custom", moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile, language: String) async throws -> String {
+    func tarotReading(question: String, cards: [DrawnCard], spreadType: String = "custom", moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile) async throws -> String {
         let positions = positionNames(for: spreadType, count: cards.count)
         let cardDescriptions = cards.enumerated().map { i, drawn in
             let pos = positions[i]
@@ -67,7 +67,7 @@ class ClaudeService {
 
     // MARK: - Horary Reading
 
-    func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], chartData: HoraryChartData?, userProfile: UserProfile, language: String) async throws -> String {
+    func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], chartData: HoraryChartData?, userProfile: UserProfile) async throws -> String {
         let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
             .joined(separator: ", ")
 
