@@ -396,15 +396,14 @@ struct TarotView: View {
     }
 
     private func drawClarificationCard() {
-        showClarificationPicker = true
-    }
-
-    private func submitClarification(card: TarotCard) {
         guard creditManager.useCredit() else {
             showNoCredit = true
             return
         }
+        showClarificationPicker = true
+    }
 
+    private func submitClarification(card: TarotCard) {
         let clarification = DrawnCard(card: card)
         selectedCards.append(clarification)
         showClarificationPicker = false
