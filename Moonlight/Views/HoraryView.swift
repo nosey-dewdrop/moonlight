@@ -65,7 +65,7 @@ struct HoraryView: View {
 
                         // Two buttons side by side
                         HStack(spacing: 10) {
-                            PixelButton("Daha Fazla") {
+                            PixelButton("More") {
                                 requestFollowUp()
                             }
                             PixelButton("Ask Again") {

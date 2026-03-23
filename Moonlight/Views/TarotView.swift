@@ -298,7 +298,7 @@ struct TarotView: View {
 
                 // Two buttons side by side
                 HStack(spacing: 10) {
-                    PixelButton("Açıklama Kartı") {
+                    PixelButton("More") {
                         drawClarificationCard()
                     }
                     PixelButton("Draw Again") {
