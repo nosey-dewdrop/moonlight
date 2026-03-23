@@ -1,5 +1,4 @@
 import Foundation
-import CoreLocation
 
 struct HoraryChartData {
     let planets: [PlanetPosition]
@@ -10,7 +9,7 @@ struct HoraryChartData {
     var promptDescription: String {
         var desc = "Planets:\n"
         for p in planets {
-            desc += "  \(p.name) in \(p.sign) at \(String(format: "%.1f", p.degree))° (House \(p.house))\n"
+            desc += "  \(p.name) in \(p.sign) at \(String(format: "%.1f", p.degree))°\(p.isRetro ? " (retrograde)" : "")\n"
         }
         desc += "\nHouses:\n"
         for h in houses {
@@ -19,7 +18,7 @@ struct HoraryChartData {
         if !aspects.isEmpty {
             desc += "\nKey aspects:\n"
             for a in aspects.prefix(10) {
-                desc += "  \(a.planet1) \(a.aspect) \(a.planet2) (orb: \(String(format: "%.1f", a.orb))°)\n"
+                desc += "  \(a.planet1) \(a.aspect) \(a.planet2)\n"
             }
         }
         return desc
@@ -30,7 +29,7 @@ struct PlanetPosition {
     let name: String
     let sign: String
     let degree: Double
-    let house: Int
+    let isRetro: Bool
 }
 
 struct HousePosition {
@@ -43,11 +42,10 @@ struct ChartAspect {
     let planet1: String
     let aspect: String
     let planet2: String
-    let orb: Double
 }
 
 class HoraryChartService {
-    private let baseURL = "https://json.freeastrologyapi.com/horoscope-chart-info"
+    private let baseURL = "https://json.freeastrologyapi.com/western"
 
     func fetchChart(latitude: Double, longitude: Double) async throws -> HoraryChartData {
         let now = Date()
@@ -64,7 +62,7 @@ class HoraryChartService {
 
         let tz = Double(TimeZone.current.secondsFromGMT()) / 3600.0
 
-        let requestBody: [String: Any] = [
+        let body: [String: Any] = [
             "year": year,
             "month": month,
             "date": day,
@@ -75,20 +73,41 @@ class HoraryChartService {
             "longitude": longitude,
             "timezone": tz,
             "config": [
-                "observation_point": "geocentric",
+                "observation_point": "topocentric",
                 "ayanamsha": "tropical",
-                "house_system": "Regiomontanus"
+                "house_system": "Regiomontanus",
+                "language": "en"
             ]
         ]
 
-        guard let url = URL(string: baseURL) else {
+        // Fetch all three in parallel
+        async let planetsResult = postRequest(endpoint: "/planets", body: body)
+        async let housesResult = postRequest(endpoint: "/houses", body: body)
+        async let aspectsResult = postRequest(endpoint: "/aspects", body: body)
+
+        let planetsData = try await planetsResult
+        let housesData = try await housesResult
+        let aspectsData = try await aspectsResult
+
+        let planets = parsePlanets(planetsData)
+        let houses = parseHouses(housesData)
+        let aspects = parseAspects(aspectsData)
+
+        return HoraryChartData(planets: planets, houses: houses, aspects: aspects, queriedAt: now)
+    }
+
+    // MARK: - Network
+
+    private func postRequest(endpoint: String, body: [String: Any]) async throws -> Data {
+        guard let url = URL(string: "\(baseURL)\(endpoint)") else {
             throw ChartError.invalidURL
         }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)
+        request.setValue(Secrets.astrologyApiKey, forHTTPHeaderField: "x-api-key")
+        request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let (data, response) = try await URLSession.shared.data(for: request)
 
@@ -97,63 +116,73 @@ class HoraryChartService {
             throw ChartError.apiError
         }
 
-        return try parseResponse(data, queriedAt: now)
+        return data
     }
 
-    private func parseResponse(_ data: Data, queriedAt: Date) throws -> HoraryChartData {
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let output = json["output"] as? [String: Any] else {
-            throw ChartError.parseError
+    // MARK: - Parsing
+
+    private func parsePlanets(_ data: Data) -> [PlanetPosition] {
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let output = json["output"] as? [[String: Any]] else {
+            return []
         }
 
-        let signNames = ["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo",
-                         "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"]
+        let wanted = Set(["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto", "Ascendant", "MC"])
 
-        // Parse planets
-        var planets: [PlanetPosition] = []
-        let planetKeys = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]
-
-        for key in planetKeys {
-            if let planetData = output[key] as? [String: Any] {
-                let fullDegree = planetData["fullDegree"] as? Double ?? 0
-                let signIndex = Int(fullDegree / 30.0)
-                let degreeInSign = fullDegree.truncatingRemainder(dividingBy: 30.0)
-                let sign = signIndex < signNames.count ? signNames[signIndex] : "Unknown"
-                let house = planetData["house"] as? Int ?? 0
-
-                planets.append(PlanetPosition(name: key, sign: sign, degree: degreeInSign, house: house))
+        return output.compactMap { planet in
+            guard let planetInfo = planet["planet"] as? [String: Any],
+                  let name = planetInfo["en"] as? String,
+                  wanted.contains(name),
+                  let normDegree = planet["normDegree"] as? Double,
+                  let zodiacSign = planet["zodiac_sign"] as? [String: Any],
+                  let signName = zodiacSign["name"] as? [String: Any],
+                  let sign = signName["en"] as? String else {
+                return nil
             }
+
+            let isRetro = (planet["isRetro"] as? String) == "True"
+            return PlanetPosition(name: name, sign: sign, degree: normDegree, isRetro: isRetro)
+        }
+    }
+
+    private func parseHouses(_ data: Data) -> [HousePosition] {
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let output = json["output"] as? [String: Any],
+              let houses = output["Houses"] as? [[String: Any]] else {
+            return []
         }
 
-        // Parse houses
-        var houses: [HousePosition] = []
-        if let houseData = output["houses"] as? [[String: Any]] {
-            for (i, h) in houseData.enumerated() {
-                let fullDegree = h["degree"] as? Double ?? 0
-                let signIndex = Int(fullDegree / 30.0)
-                let degreeInSign = fullDegree.truncatingRemainder(dividingBy: 30.0)
-                let sign = signIndex < signNames.count ? signNames[signIndex] : "Unknown"
-                houses.append(HousePosition(number: i + 1, sign: sign, degree: degreeInSign))
+        return houses.compactMap { house in
+            guard let number = house["House"] as? Int,
+                  let normDegree = house["normDegree"] as? Double,
+                  let zodiacSign = house["zodiac_sign"] as? [String: Any],
+                  let signName = zodiacSign["name"] as? [String: Any],
+                  let sign = signName["en"] as? String else {
+                return nil
             }
+
+            return HousePosition(number: number, sign: sign, degree: normDegree)
+        }
+    }
+
+    private func parseAspects(_ data: Data) -> [ChartAspect] {
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let output = json["output"] as? [[String: Any]] else {
+            return []
         }
 
-        // Parse aspects
-        var aspects: [ChartAspect] = []
-        if let aspectData = output["aspects"] as? [[String: Any]] {
-            let aspectNames = ["conjunction": "conjunct", "opposition": "opposite",
-                             "trine": "trine", "square": "square", "sextile": "sextile"]
-            for a in aspectData {
-                let p1 = a["aspecting_planet"] as? String ?? ""
-                let p2 = a["aspected_planet"] as? String ?? ""
-                let type = a["type"] as? String ?? ""
-                let orb = a["orb"] as? Double ?? 0
-                let aspectName = aspectNames[type.lowercased()] ?? type
-
-                aspects.append(ChartAspect(planet1: p1, aspect: aspectName, planet2: p2, orb: orb))
+        return output.compactMap { aspect in
+            guard let p1Info = aspect["planet_1"] as? [String: Any],
+                  let p1 = p1Info["en"] as? String,
+                  let p2Info = aspect["planet_2"] as? [String: Any],
+                  let p2 = p2Info["en"] as? String,
+                  let aspectInfo = aspect["aspect"] as? [String: Any],
+                  let aspectName = aspectInfo["en"] as? String else {
+                return nil
             }
-        }
 
-        return HoraryChartData(planets: planets, houses: houses, aspects: aspects, queriedAt: queriedAt)
+            return ChartAspect(planet1: p1, aspect: aspectName, planet2: p2)
+        }
     }
 }
 

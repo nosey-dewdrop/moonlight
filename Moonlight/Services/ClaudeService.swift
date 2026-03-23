@@ -4,10 +4,8 @@ class ClaudeService {
     private let model = "claude-haiku-4-5-20251001"
     private let maxTokens = 1024
 
-    // Embedded API key — will move to backend proxy for production
     private var apiKey: String {
-        // TODO: Replace with backend proxy in production
-        KeychainHelper.load(key: "com.damla.moonlight.claudeApiKey") ?? ""
+        Secrets.claudeApiKey
     }
 
     // MARK: - Tarot Reading
