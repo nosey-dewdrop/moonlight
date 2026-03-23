@@ -30,6 +30,7 @@ class AstrologyService {
 
     private static func astronomicalEvents2025_2026() -> [AstroEvent] {
         let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
         f.dateFormat = "yyyy-MM-dd"
 
         return [

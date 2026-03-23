@@ -10,9 +10,26 @@ class ClaudeService {
 
     // MARK: - Tarot Reading
 
-    func tarotReading(question: String, cards: [DrawnCard], moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile, language: String) async throws -> String {
+    private func positionNames(for spreadType: String, count: Int) -> [String] {
+        switch spreadType {
+        case "celtic_cross":
+            return ["Situation", "Challenge", "Past", "Future", "Above", "Below", "Advice", "External", "Hopes", "Outcome"]
+        case "five_card":
+            return ["Past", "Present", "Hidden", "Advice", "Outcome"]
+        case "relationship":
+            return ["You", "Partner", "Connection", "Challenge", "Strength", "Advice", "Outcome"]
+        case "career":
+            return ["Current", "Obstacle", "Strength", "Weakness", "Goal", "Path", "Environment", "Hopes", "Outcome"]
+        default:
+            if count == 1 { return ["Card"] }
+            return ["Past", "Present", "Future"]
+        }
+    }
+
+    func tarotReading(question: String, cards: [DrawnCard], spreadType: String = "custom", moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile, language: String) async throws -> String {
+        let positions = positionNames(for: spreadType, count: cards.count)
         let cardDescriptions = cards.enumerated().map { i, drawn in
-            let pos = cards.count == 1 ? "Card" : (i == 0 ? "Past" : (i == 1 ? "Present" : "Future"))
+            let pos = positions[i]
             return "\(pos): \(drawn.card.name) (\(drawn.positionLabel)) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
         }.joined(separator: "\n")
 
@@ -34,12 +51,13 @@ class ClaudeService {
         The seeker drew these tarot cards:
         \(cardDescriptions)
 
-        Give a cohesive reading that weaves the cards together with the current cosmic energies and the seeker's birth chart. Consider how the moon phase, element balance, and the seeker's signs affect the reading. Keep it mystical but practical — the seeker should walk away with actionable insight.
+        Give a cohesive reading that weaves the cards together with the current cosmic energies and the seeker's birth chart. Consider how the moon phase, element balance, and the seeker's signs affect the reading. Address each card's position meaning. Keep it mystical but practical — the seeker should walk away with actionable insight.
 
-        Respond in \(language). Keep it under 200 words.
+        Respond in \(language). Keep it under \(cards.count > 3 ? 400 : 200) words.
         """
 
-        return try await sendMessage(prompt)
+        let tokens = cards.count > 3 ? 2048 : maxTokens
+        return try await sendMessage(prompt, maxTokens: tokens)
     }
 
     // MARK: - Horary Reading
@@ -94,7 +112,7 @@ class ClaudeService {
 
     // MARK: - API Call
 
-    private func sendMessage(_ userMessage: String) async throws -> String {
+    private func sendMessage(_ userMessage: String, maxTokens: Int? = nil) async throws -> String {
         let key = apiKey
         guard !key.isEmpty else {
             throw ClaudeError.noApiKey
@@ -113,7 +131,7 @@ class ClaudeService {
 
         let body: [String: Any] = [
             "model": model,
-            "max_tokens": maxTokens,
+            "max_tokens": maxTokens ?? self.maxTokens,
             "messages": [
                 ["role": "user", "content": userMessage]
             ]

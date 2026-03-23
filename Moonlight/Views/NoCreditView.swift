@@ -58,6 +58,7 @@ struct NoCreditView: View {
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.bottom, 40)
                 }
+                .accessibilityLabel("Close")
             }
         }
         .task {
@@ -98,6 +99,7 @@ struct NoCreditView: View {
                     )
             )
         }
+        .accessibilityLabel("Buy \(credits) credits for \(price)")
         .disabled(creditManager.purchaseInProgress)
     }
 

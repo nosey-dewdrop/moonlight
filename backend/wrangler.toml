@@ -1,0 +1,13 @@
+name = "moonlight-api"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+APP_TOKEN = "change-this-to-a-random-string"
+
+# KV namespace for rate limiting
+# Create with: npx wrangler kv:namespace create RATE_LIMIT
+# Then paste the id below
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "YOUR_KV_NAMESPACE_ID"

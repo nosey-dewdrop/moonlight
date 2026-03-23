@@ -42,8 +42,10 @@ struct HomeView: View {
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(12)
                         }
+                        .accessibilityLabel("Settings")
                         Spacer()
                         CreditBadge { showPremium = true }
+                            .accessibilityLabel("Credits")
                             .padding(.trailing, 12)
                     }
                     .padding(.top, 50)
@@ -187,6 +189,13 @@ struct HomeView: View {
             print("Failed to load events: \(error)")
         }
         locationManager.requestLocation()
+        // Try fetching real moon data using device location
+        if let locationData = try? await moonService.fetchMoonData(
+            latitude: locationManager.latitude,
+            longitude: locationManager.longitude
+        ) {
+            moonData = locationData
+        }
     }
 }
 

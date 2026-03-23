@@ -12,6 +12,8 @@ struct TarotView: View {
     @State private var errorMessage: String?
     @State private var showNoCredit = false
     @State private var showPremium = false
+    @State private var spreadType: String = "custom"
+    @State private var questionError = false
 
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
@@ -46,6 +48,7 @@ struct TarotView: View {
         }
             // Credit badge top right
             CreditBadge { showPremium = true }
+                .accessibilityLabel("Credits")
                 .padding(.top, 54)
                 .padding(.trailing, 12)
         }
@@ -97,11 +100,21 @@ struct TarotView: View {
             )
             .textInputAutocapitalization(.sentences)
             .submitLabel(.done)
+            .onChange(of: question) { _ in
+                if questionError { questionError = false }
+            }
+
+            if questionError {
+                Text("Please enter a question first")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(Color(hex: "#FF6B6B"))
+            }
 
             // Reveal button
             PixelButton(selectedCards.isEmpty ? "Select Cards Below" : "Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
                 revealCards()
             }
+            .accessibilityLabel(selectedCards.isEmpty ? "Select cards below" : "Reveal selected cards")
             .disabled(selectedCards.isEmpty || question.trimmingCharacters(in: .whitespaces).isEmpty)
 
             // 78 cards grid
@@ -147,6 +160,7 @@ struct TarotView: View {
                         }
                         .frame(height: 90)
                     }
+                    .accessibilityLabel(isSelected ? "Selected tarot card" : "Tarot card")
                     .disabled(selectedCards.count >= 3 && !isSelected)
                 }
             }
@@ -177,7 +191,7 @@ struct TarotView: View {
     }
 
     private func premiumSpreadRow(_ name: String, cards: Int, credits: Int) -> some View {
-        Button(action: { showNoCredit = true }) {
+        Button(action: { activatePremiumSpread(name, cards: cards, credits: credits) }) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
@@ -218,8 +232,7 @@ struct TarotView: View {
 
             // Revealed cards
             ForEach(Array(selectedCards.enumerated()), id: \.element.id) { index, drawn in
-                let position = selectedCards.count == 1 ? "Your Card" :
-                    ["Past", "Present", "Future"][index]
+                let position = positionName(for: index)
 
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
@@ -324,6 +337,7 @@ struct TarotView: View {
             return
         }
 
+        spreadType = "custom"
         withAnimation { showReading = true }
         requestAIReading()
     }
@@ -336,6 +350,58 @@ struct TarotView: View {
             aiReading = nil
             errorMessage = nil
             question = ""
+            spreadType = "custom"
+            questionError = false
+        }
+    }
+
+    private func activatePremiumSpread(_ name: String, cards: Int, credits: Int) {
+        guard !question.trimmingCharacters(in: .whitespaces).isEmpty else {
+            questionError = true
+            return
+        }
+
+        guard creditManager.useCredits(credits) else {
+            showNoCredit = true
+            return
+        }
+
+        // Determine spread type
+        if name.contains("Celtic") {
+            spreadType = "celtic_cross"
+        } else if name.contains("Five") {
+            spreadType = "five_card"
+        } else if name.contains("Relationship") {
+            spreadType = "relationship"
+        } else if name.contains("Career") {
+            spreadType = "career"
+        }
+
+        // Auto-select random cards from shuffled deck
+        let deck = TarotCard.allCards.shuffled()
+        var drawn: [DrawnCard] = []
+        for i in 0..<cards {
+            drawn.append(DrawnCard(card: deck[i], isReversed: Bool.random()))
+        }
+        selectedCards = drawn
+
+        withAnimation { showReading = true }
+        requestAIReading()
+    }
+
+    private func positionName(for index: Int) -> String {
+        switch spreadType {
+        case "celtic_cross":
+            return ["Situation", "Challenge", "Past", "Future", "Above", "Below", "Advice", "External", "Hopes", "Outcome"][index]
+        case "five_card":
+            return ["Past", "Present", "Hidden", "Advice", "Outcome"][index]
+        case "relationship":
+            return ["You", "Partner", "Connection", "Challenge", "Strength", "Advice", "Outcome"][index]
+        case "career":
+            return ["Current", "Obstacle", "Strength", "Weakness", "Goal", "Path", "Environment", "Hopes", "Outcome"][index]
+        default:
+            if selectedCards.count == 1 { return "Your Card" }
+            return ["Past", "Present", "Future"][index]
         }
     }
 
@@ -355,6 +421,7 @@ struct TarotView: View {
                 let reading = try await claudeService.tarotReading(
                     question: question,
                     cards: selectedCards,
+                    spreadType: spreadType,
                     moonPhase: moonData.phase,
                     elementEnergies: energies,
                     activeRetrogrades: activeRetros,

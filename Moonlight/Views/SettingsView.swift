@@ -25,6 +25,7 @@ struct SettingsView: View {
                                 .foregroundColor(.white.opacity(0.7))
                                 .padding(8)
                         }
+                        .accessibilityLabel("Close")
                         Spacer()
                         Text("Settings")
                             .font(.custom(titleFont, size: 14))
@@ -136,6 +137,7 @@ struct SettingsView: View {
                                         )
                                 )
                         }
+                        .accessibilityLabel(sign.displayName)
                     }
                 }
             }

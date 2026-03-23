@@ -38,5 +38,6 @@ struct CreditBadge: View {
                     )
             )
         }
+        .accessibilityLabel("\(creditManager.totalCredits) credits")
     }
 }

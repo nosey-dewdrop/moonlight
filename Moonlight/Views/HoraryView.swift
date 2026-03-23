@@ -88,6 +88,7 @@ struct HoraryView: View {
         }
             // Credit badge top right
             CreditBadge { showNoCredit = true }
+                .accessibilityLabel("Credits")
                 .padding(.top, 54)
                 .padding(.trailing, 12)
         }
@@ -123,6 +124,7 @@ struct HoraryView: View {
                     )
             )
             .textInputAutocapitalization(.sentences)
+            .accessibilityLabel("Enter your question")
             .onSubmit {
                 if !question.trimmingCharacters(in: .whitespaces).isEmpty && !isLoading {
                     askQuestion()
@@ -132,6 +134,7 @@ struct HoraryView: View {
             PixelButton("Ask the Stars (1 credit)") {
                 askQuestion()
             }
+            .accessibilityLabel("Ask the stars")
             .disabled(question.trimmingCharacters(in: .whitespaces).isEmpty || isLoading)
         }
     }
