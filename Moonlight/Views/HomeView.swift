@@ -4,6 +4,7 @@ struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
+    @State private var showSettings = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -30,6 +31,21 @@ struct HomeView: View {
                     }
                 }
                 .ignoresSafeArea(edges: .top)
+
+                // Settings gear
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: { showSettings = true }) {
+                            Text("*")
+                                .font(.custom(titleFont, size: 14))
+                                .foregroundColor(.white.opacity(0.5))
+                                .padding(12)
+                        }
+                    }
+                    .padding(.top, 50)
+                    Spacer()
+                }
             } else {
                 VStack(spacing: 16) {
                     ProgressView()
@@ -40,6 +56,9 @@ struct HomeView: View {
                         .font(.custom(bodyFont, size: 12))
                 }
             }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
         }
         .task {
             await loadData()

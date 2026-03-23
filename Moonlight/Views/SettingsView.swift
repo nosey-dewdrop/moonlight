@@ -3,11 +3,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var creditManager = CreditManager.shared
-    @State private var apiKeyInput = ""
-    @State private var showApiKey = false
-    @State private var hasApiKey = false
-
-    private let claudeService = ClaudeService()
+    @StateObject private var userProfile = UserProfile.shared
 
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"
@@ -24,7 +20,9 @@ struct SettingsView: View {
                     // Header
                     HStack {
                         Button(action: { dismiss() }) {
-                            PixelTextIcon.close()
+                            Text("X")
+                                .font(.custom(titleFont, size: 10))
+                                .foregroundColor(.white.opacity(0.7))
                                 .padding(8)
                         }
                         Spacer()
@@ -36,8 +34,8 @@ struct SettingsView: View {
                     }
                     .padding(.top, 60)
 
-                    // API Key section
-                    apiKeySection
+                    // Birth chart section
+                    birthChartSection
 
                     // Credits section
                     creditsSection
@@ -50,93 +48,149 @@ struct SettingsView: View {
                 .padding(.horizontal, 16)
             }
         }
-        .onAppear {
-            hasApiKey = claudeService.hasApiKey
-        }
         .task {
             await creditManager.loadProducts()
         }
     }
 
-    // MARK: - API Key
+    // MARK: - Birth Chart
 
-    private var apiKeySection: some View {
-        ZStack {
-            Image("card_bg_event")
-                .interpolation(.none)
-                .resizable()
+    private var birthChartSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Birth Chart")
+                .font(.custom(titleFont, size: 8))
+                .foregroundColor(.white.opacity(0.8))
 
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Claude API Key")
-                    .font(.custom(titleFont, size: 8))
-                    .foregroundColor(.white.opacity(0.8))
+            zodiacPicker("Sun Sign", selection: $userProfile.sunSign)
+            zodiacPicker("Rising Sign", selection: $userProfile.risingSign)
+            zodiacPicker("Moon Sign", selection: $userProfile.moonSign)
 
-                if hasApiKey {
+            // Birth time
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Birth Time")
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(.white.opacity(0.5))
+
+                if let time = userProfile.birthTime {
                     HStack {
-                        Text(showApiKey ? (claudeService.apiKey ?? "") : "sk-ant-............")
-                            .font(.custom(bodyFont, size: 10))
-                            .foregroundColor(.white.opacity(0.6))
-                            .lineLimit(1)
+                        Text({
+                            let f = DateFormatter()
+                            f.dateFormat = "HH:mm"
+                            return f.string(from: time)
+                        }())
+                            .font(.custom(bodyBoldFont, size: 12))
+                            .foregroundColor(.white)
 
                         Spacer()
 
-                        Button(action: { showApiKey.toggle() }) {
-                            PixelTextIcon(showApiKey ? "-" : "o", color: .white.opacity(0.5), size: 10)
-                                .padding(4)
-                        }
-
-                        Button(action: removeKey) {
-                            PixelTextIcon("x", color: Color(hex: "#FF6B6B"), size: 10)
-                                .padding(4)
+                        Button(action: { userProfile.birthTime = nil }) {
+                            Text("x")
+                                .font(.custom(titleFont, size: 8))
+                                .foregroundColor(Color(hex: "#FF6B6B"))
                         }
                     }
                 } else {
-                    HStack(spacing: 8) {
-                        TextField("", text: $apiKeyInput, prompt:
-                            Text("sk-ant-...")
-                                .foregroundColor(.white.opacity(0.2))
-                                .font(.custom(bodyFont, size: 11))
-                        )
-                        .font(.custom(bodyFont, size: 11))
-                        .foregroundColor(.white)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
+                    DatePicker("", selection: Binding(
+                        get: { userProfile.birthTime ?? Date() },
+                        set: { userProfile.birthTime = $0 }
+                    ), displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .colorScheme(.dark)
+                }
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
+    }
 
-                        PixelButton("Save") {
-                            saveKey()
+    private func zodiacPicker(_ label: String, selection: Binding<ZodiacSign?>) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(label)
+                .font(.custom(bodyFont, size: 10))
+                .foregroundColor(.white.opacity(0.5))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 6) {
+                    ForEach(ZodiacSign.allCases, id: \.self) { sign in
+                        let isSelected = selection.wrappedValue == sign
+
+                        Button(action: {
+                            selection.wrappedValue = isSelected ? nil : sign
+                        }) {
+                            Text(sign.emoji)
+                                .font(.system(size: 18))
+                                .padding(6)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .fill(isSelected ? accent.opacity(0.3) : Color.clear)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 2)
+                                                .stroke(isSelected ? accent : Color.white.opacity(0.1), lineWidth: 1)
+                                        )
+                                )
                         }
-                        .disabled(apiKeyInput.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
             }
-            .padding(12)
+
+            if let sign = selection.wrappedValue {
+                Text(sign.displayName)
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(accent.opacity(0.7))
+            }
         }
     }
 
     // MARK: - Credits
 
     private var creditsSection: some View {
-        ZStack {
-            Image("card_bg_event")
-                .interpolation(.none)
-                .resizable()
+        VStack(spacing: 8) {
+            Text("Credits")
+                .font(.custom(titleFont, size: 8))
+                .foregroundColor(.white.opacity(0.8))
 
-            VStack(spacing: 8) {
-                Text("Credits")
-                    .font(.custom(titleFont, size: 8))
-                    .foregroundColor(.white.opacity(0.8))
+            Text("\(creditManager.totalCredits)")
+                .font(.custom(titleFont, size: 24))
+                .foregroundColor(accent)
+                .shadow(color: accent.opacity(0.5), radius: 6)
 
-                Text("\(creditManager.credits)")
-                    .font(.custom(titleFont, size: 24))
-                    .foregroundColor(accent)
-                    .shadow(color: accent.opacity(0.5), radius: 6)
+            HStack(spacing: 16) {
+                VStack(spacing: 2) {
+                    Text("\(creditManager.dailyCreditsRemaining)")
+                        .font(.custom(bodyBoldFont, size: 12))
+                        .foregroundColor(.white)
+                    Text("daily free")
+                        .font(.custom(bodyFont, size: 8))
+                        .foregroundColor(.white.opacity(0.4))
+                }
 
-                Text("1 credit = 1 AI reading")
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
+                VStack(spacing: 2) {
+                    Text("\(creditManager.purchasedCredits)")
+                        .font(.custom(bodyBoldFont, size: 12))
+                        .foregroundColor(.white)
+                    Text("purchased")
+                        .font(.custom(bodyFont, size: 8))
+                        .foregroundColor(.white.opacity(0.4))
+                }
             }
-            .padding(16)
         }
+        .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(accent.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
 
     // MARK: - Purchase
@@ -175,45 +229,31 @@ struct SettingsView: View {
     }
 
     private func purchaseRow(name: String, price: String, credits: Int) -> some View {
-        ZStack {
-            Image("card_bg_event")
-                .interpolation(.none)
-                .resizable()
-
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(name)
-                        .font(.custom(bodyBoldFont, size: 12))
-                        .foregroundColor(.white)
-                    Text("\(credits) AI readings")
-                        .font(.custom(bodyFont, size: 9))
-                        .foregroundColor(.white.opacity(0.4))
-                }
-
-                Spacer()
-
-                Text(price)
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(name)
                     .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(accent)
+                    .foregroundColor(.white)
+                Text("\(credits) readings")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.4))
             }
-            .padding(12)
+
+            Spacer()
+
+            Text(price)
+                .font(.custom(bodyBoldFont, size: 12))
+                .foregroundColor(accent)
         }
-    }
-
-    // MARK: - Actions
-
-    private func saveKey() {
-        let key = apiKeyInput.trimmingCharacters(in: .whitespaces)
-        guard !key.isEmpty else { return }
-        claudeService.saveApiKey(key)
-        apiKeyInput = ""
-        hasApiKey = true
-    }
-
-    private func removeKey() {
-        claudeService.removeApiKey()
-        hasApiKey = false
-        showApiKey = false
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
     }
 
     // MARK: - Fallback products for dev/sandbox

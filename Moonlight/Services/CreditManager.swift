@@ -5,15 +5,24 @@ import StoreKit
 class CreditManager: ObservableObject {
     static let shared = CreditManager()
 
-    @Published var credits: Int {
+    @Published var purchasedCredits: Int {
         didSet {
-            UserDefaults.standard.set(credits, forKey: creditsKey)
+            UserDefaults.standard.set(purchasedCredits, forKey: purchasedKey)
+        }
+    }
+    @Published var dailyCreditsUsed: Int {
+        didSet {
+            UserDefaults.standard.set(dailyCreditsUsed, forKey: dailyUsedKey)
         }
     }
     @Published var products: [Product] = []
     @Published var purchaseInProgress = false
 
-    private let creditsKey = "com.damla.moonlight.credits"
+    private let purchasedKey = "com.damla.moonlight.purchasedCredits"
+    private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
+    private let lastResetKey = "com.damla.moonlight.lastDailyReset"
+    private let dailyFreeAmount = 3
+
     private let productIds = [
         "com.damla.moonlight.credits5",
         "com.damla.moonlight.credits15",
@@ -21,16 +30,54 @@ class CreditManager: ObservableObject {
     ]
 
     private init() {
-        self.credits = UserDefaults.standard.integer(forKey: creditsKey)
+        self.purchasedCredits = UserDefaults.standard.integer(forKey: purchasedKey)
+        self.dailyCreditsUsed = UserDefaults.standard.integer(forKey: dailyUsedKey)
+        resetDailyIfNeeded()
+    }
+
+    // MARK: - Daily Reset
+
+    private func resetDailyIfNeeded() {
+        let lastReset = UserDefaults.standard.object(forKey: lastResetKey) as? Date ?? .distantPast
+        if !Calendar.current.isDateInToday(lastReset) {
+            dailyCreditsUsed = 0
+            UserDefaults.standard.set(Date(), forKey: lastResetKey)
+        }
+    }
+
+    // MARK: - Credit Balance
+
+    var dailyCreditsRemaining: Int {
+        resetDailyIfNeeded()
+        return max(0, dailyFreeAmount - dailyCreditsUsed)
+    }
+
+    var totalCredits: Int {
+        dailyCreditsRemaining + purchasedCredits
     }
 
     var hasCredits: Bool {
-        credits > 0
+        totalCredits > 0
     }
 
     func useCredit() -> Bool {
-        guard credits > 0 else { return false }
-        credits -= 1
+        resetDailyIfNeeded()
+        guard totalCredits > 0 else { return false }
+
+        // Use daily free credits first
+        if dailyCreditsRemaining > 0 {
+            dailyCreditsUsed += 1
+        } else {
+            purchasedCredits -= 1
+        }
+        return true
+    }
+
+    func useCredits(_ amount: Int) -> Bool {
+        guard totalCredits >= amount else { return false }
+        for _ in 0..<amount {
+            if !useCredit() { return false }
+        }
         return true
     }
 
@@ -91,17 +138,16 @@ class CreditManager: ObservableObject {
     private func addCredits(for productId: String) {
         switch productId {
         case "com.damla.moonlight.credits5":
-            credits += 5
+            purchasedCredits += 5
         case "com.damla.moonlight.credits15":
-            credits += 15
+            purchasedCredits += 15
         case "com.damla.moonlight.credits30":
-            credits += 30
+            purchasedCredits += 30
         default:
             break
         }
     }
 
-    /// Display info for product
     static func creditsForProduct(_ productId: String) -> Int {
         switch productId {
         case "com.damla.moonlight.credits5": return 5

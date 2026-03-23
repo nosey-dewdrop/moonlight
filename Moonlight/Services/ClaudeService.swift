@@ -3,29 +3,18 @@ import Foundation
 class ClaudeService {
     private let model = "claude-haiku-4-5-20251001"
     private let maxTokens = 1024
-    private let keychainKey = "com.damla.moonlight.claudeApiKey"
 
-    var hasApiKey: Bool {
-        apiKey != nil
-    }
-
-    var apiKey: String? {
-        KeychainHelper.load(key: keychainKey)
-    }
-
-    func saveApiKey(_ key: String) {
-        KeychainHelper.save(key: keychainKey, value: key)
-    }
-
-    func removeApiKey() {
-        KeychainHelper.delete(key: keychainKey)
+    // Embedded API key — will move to backend proxy for production
+    private var apiKey: String {
+        // TODO: Replace with backend proxy in production
+        KeychainHelper.load(key: "com.damla.moonlight.claudeApiKey") ?? ""
     }
 
     // MARK: - Tarot Reading
 
-    func tarotReading(cards: [DrawnCard], moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], language: String) async throws -> String {
+    func tarotReading(question: String, cards: [DrawnCard], moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile, language: String) async throws -> String {
         let cardDescriptions = cards.enumerated().map { i, drawn in
-            let pos = i == 0 ? "Past" : (i == 1 ? "Present" : "Future")
+            let pos = cards.count == 1 ? "Card" : (i == 0 ? "Past" : (i == 1 ? "Present" : "Future"))
             return "\(pos): \(drawn.card.name) (\(drawn.positionLabel)) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
         }.joined(separator: "\n")
 
@@ -37,6 +26,9 @@ class ClaudeService {
         let prompt = """
         You are a mystical pixel-art moon oracle. You speak in a poetic, enigmatic, yet warm tone — like a wise celestial being made of starlight and ancient code.
 
+        The seeker asks: "\(question)"
+
+        Seeker's birth chart: \(userProfile.promptDescription)
         Current moon phase: \(moonPhase.displayName)
         Element energies: \(elementDesc)
         Active retrogrades: \(retroDesc)
@@ -44,7 +36,7 @@ class ClaudeService {
         The seeker drew these tarot cards:
         \(cardDescriptions)
 
-        Give a cohesive reading that weaves the cards together with the current cosmic energies. Consider how the moon phase and element balance affect the reading. Keep it mystical but practical — the seeker should walk away with actionable insight.
+        Give a cohesive reading that weaves the cards together with the current cosmic energies and the seeker's birth chart. Consider how the moon phase, element balance, and the seeker's signs affect the reading. Keep it mystical but practical — the seeker should walk away with actionable insight.
 
         Respond in \(language). Keep it under 200 words.
         """
@@ -54,7 +46,7 @@ class ClaudeService {
 
     // MARK: - Horary Reading
 
-    func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], language: String) async throws -> String {
+    func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], chartData: HoraryChartData?, userProfile: UserProfile, language: String) async throws -> String {
         let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
             .joined(separator: ", ")
 
@@ -65,20 +57,34 @@ class ClaudeService {
         formatter.dateFormat = "yyyy-MM-dd HH:mm"
         let timeStr = formatter.string(from: now)
 
+        var chartSection = ""
+        if let chart = chartData {
+            chartSection = """
+
+            Horary chart data for this moment:
+            \(chart.promptDescription)
+            """
+        }
+
         let prompt = """
         You are a mystical pixel-art moon oracle practicing horary astrology. You speak in a poetic, enigmatic, yet warm tone — like a wise celestial being made of starlight and ancient code.
 
         The seeker asks: "\(question)"
         Question asked at: \(timeStr)
+
+        Seeker's birth chart: \(userProfile.promptDescription)
         Current moon phase: \(moonPhase.displayName)
         Element energies: \(elementDesc)
         Active retrogrades: \(retroDesc)
+        \(chartSection)
 
         Provide a horary astrology interpretation. Consider:
         - The moon phase's influence on the question's timing and outcome
+        - The seeker's birth chart and how their signs interact with current transits
         - Which elements are strong/weak and how they relate to the question
         - How active retrogrades might delay or complicate matters
         - Traditional horary rules about the moon's condition
+        \(chartData != nil ? "- The planetary positions and house placements in the horary chart" : "")
 
         Give a clear yes/no leaning with nuanced explanation. Be mystical but honest — if the stars say no, say it beautifully.
 
@@ -91,7 +97,8 @@ class ClaudeService {
     // MARK: - API Call
 
     private func sendMessage(_ userMessage: String) async throws -> String {
-        guard let key = apiKey else {
+        let key = apiKey
+        guard !key.isEmpty else {
             throw ClaudeError.noApiKey
         }
 
