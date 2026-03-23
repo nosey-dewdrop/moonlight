@@ -16,8 +16,7 @@
 
 ## Phase 2: Pixel Art Assets
 - [x] integrate pixel art assets into xcassets (123 imagesets)
-- [ ] generate 22 major arcana tarot card art (pixellab, 64x64, dark fantasy)
-- [ ] generate minor arcana suit symbols (wand/cup/sword/pentacle + number)
+- [ ] (later) generate tarot card pixel art, hand-drawable for now
 
 ## Phase 3: API Integrations
 - [x] usno api integration (moon phase, illumination, moonrise/moonset)
