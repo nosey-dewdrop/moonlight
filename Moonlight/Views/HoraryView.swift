@@ -9,6 +9,7 @@ struct HoraryView: View {
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var hasAsked = false
+    @State private var showNoCredit = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -22,28 +23,19 @@ struct HoraryView: View {
     private let bg = Color(hex: "#0b0b2e")
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 20) {
-                Spacer().frame(height: 60)
+        ZStack(alignment: .topTrailing) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 20) {
+                    Spacer().frame(height: 60)
 
-                Text("Horary")
-                    .font(.custom(titleFont, size: 16))
-                    .foregroundColor(accent)
-                    .shadow(color: accent.opacity(0.5), radius: 4)
-
-                Text("Ask the Moon a Question")
-                    .font(.custom(bodyFont, size: 11))
-                    .foregroundColor(.white.opacity(0.5))
-
-                // Credits display
-                HStack(spacing: 4) {
-                    Text("\(creditManager.totalCredits)")
-                        .font(.custom(titleFont, size: 10))
+                    Text("Horary")
+                        .font(.custom(titleFont, size: 16))
                         .foregroundColor(accent)
-                    Text("credits")
-                        .font(.custom(bodyFont, size: 9))
-                        .foregroundColor(.white.opacity(0.4))
-                }
+                        .shadow(color: accent.opacity(0.5), radius: 4)
+
+                    Text("Ask the Moon a Question")
+                        .font(.custom(bodyFont, size: 11))
+                        .foregroundColor(.white.opacity(0.5))
 
                 // Question input
                 questionInput
@@ -94,6 +86,14 @@ struct HoraryView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 40)
         }
+            // Credit badge top right
+            CreditBadge { showNoCredit = true }
+                .padding(.top, 54)
+                .padding(.trailing, 12)
+        }
+        .sheet(isPresented: $showNoCredit) {
+            NoCreditView()
+        }
         .onAppear {
             locationManager.requestLocation()
         }
@@ -134,7 +134,7 @@ struct HoraryView: View {
 
     private func askQuestion() {
         guard creditManager.useCredit() else {
-            errorMessage = "No credits remaining"
+            showNoCredit = true
             return
         }
 

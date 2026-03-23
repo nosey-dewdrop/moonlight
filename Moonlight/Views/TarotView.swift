@@ -10,6 +10,8 @@ struct TarotView: View {
     @State private var aiReading: String?
     @State private var isLoadingAI = false
     @State private var errorMessage: String?
+    @State private var showNoCredit = false
+    @State private var showPremium = false
 
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
@@ -23,14 +25,15 @@ struct TarotView: View {
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            VStack(spacing: 16) {
-                Spacer().frame(height: 60)
+        ZStack(alignment: .topTrailing) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 16) {
+                    Spacer().frame(height: 60)
 
-                Text("Tarot")
-                    .font(.custom(titleFont, size: 16))
-                    .foregroundColor(accent)
-                    .shadow(color: accent.opacity(0.5), radius: 4)
+                    Text("Tarot")
+                        .font(.custom(titleFont, size: 16))
+                        .foregroundColor(accent)
+                        .shadow(color: accent.opacity(0.5), radius: 4)
 
                 if showReading {
                     readingView
@@ -41,12 +44,37 @@ struct TarotView: View {
             .padding(.horizontal, 12)
             .padding(.bottom, 40)
         }
+            // Credit badge top right
+            CreditBadge { showPremium = true }
+                .padding(.top, 54)
+                .padding(.trailing, 12)
+        }
+        .sheet(isPresented: $showNoCredit) {
+            NoCreditView()
+        }
+        .sheet(isPresented: $showPremium) {
+            NoCreditView()
+        }
     }
 
     // MARK: - Card Selection
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
+            Text("Pick up to 3 cards")
+                .font(.custom(bodyFont, size: 11))
+                .foregroundColor(.white.opacity(0.5))
+
+            // Credits display
+            HStack(spacing: 4) {
+                Text("\(creditManager.totalCredits)")
+                    .font(.custom(titleFont, size: 10))
+                    .foregroundColor(accent)
+                Text("credits")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.4))
+            }
+
             // Question input
             TextField("", text: $question, prompt:
                 Text("What is your question?")
@@ -68,19 +96,11 @@ struct TarotView: View {
             )
             .textInputAutocapitalization(.sentences)
 
-            Text("Pick up to 3 cards (1 credit each)")
-                .font(.custom(bodyFont, size: 10))
-                .foregroundColor(.white.opacity(0.4))
-
-            // Credits display
-            HStack(spacing: 4) {
-                Text("\(creditManager.totalCredits)")
-                    .font(.custom(titleFont, size: 10))
-                    .foregroundColor(accent)
-                Text("credits")
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
+            // Reveal button
+            PixelButton(selectedCards.isEmpty ? "Select Cards Below" : "Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
+                revealCards()
             }
+            .disabled(selectedCards.isEmpty || question.trimmingCharacters(in: .whitespaces).isEmpty)
 
             // 78 cards grid
             LazyVGrid(columns: columns, spacing: 8) {
@@ -88,29 +108,45 @@ struct TarotView: View {
                     let isSelected = selectedCards.contains(where: { $0.card.id == card.id })
 
                     Button(action: { toggleCard(card) }) {
-                        RoundedRectangle(cornerRadius: 2)
-                            .fill(bg.opacity(0.85))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 2)
-                                    .stroke(isSelected ? accent : Color.white.opacity(0.15), lineWidth: isSelected ? 2 : 1)
-                            )
-                            .overlay(
-                                Text(isSelected ? "*" : "?")
-                                    .font(.custom(titleFont, size: 12))
-                                    .foregroundColor(isSelected ? accent : .white.opacity(0.15))
-                            )
-                            .frame(height: 90)
+                        ZStack {
+                            // Solid opaque background
+                            RoundedRectangle(cornerRadius: 2)
+                                .fill(Color(hex: "#12123a"))
+
+                            // Inner border
+                            RoundedRectangle(cornerRadius: 2)
+                                .stroke(isSelected ? accent : Color(hex: "#2a2a5e"), lineWidth: 1)
+                                .padding(3)
+
+                            // Outer border
+                            RoundedRectangle(cornerRadius: 2)
+                                .stroke(isSelected ? accent : Color(hex: "#1e1e4e"), lineWidth: isSelected ? 2 : 1)
+
+                            // Corner dots
+                            VStack {
+                                HStack {
+                                    pixelDot(isSelected)
+                                    Spacer()
+                                    pixelDot(isSelected)
+                                }
+                                Spacer()
+                                HStack {
+                                    pixelDot(isSelected)
+                                    Spacer()
+                                    pixelDot(isSelected)
+                                }
+                            }
+                            .padding(6)
+
+                            // Center symbol
+                            Text(isSelected ? "*" : "?")
+                                .font(.custom(titleFont, size: 12))
+                                .foregroundColor(isSelected ? accent : Color(hex: "#2a2a5e"))
+                        }
+                        .frame(height: 90)
                     }
                     .disabled(selectedCards.count >= 3 && !isSelected)
                 }
-            }
-
-            // Reveal button
-            if !selectedCards.isEmpty && !question.trimmingCharacters(in: .whitespaces).isEmpty {
-                PixelButton("Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
-                    revealCards()
-                }
-                .padding(.top, 8)
             }
 
             Text("\(selectedCards.count)/3 selected")
@@ -213,7 +249,22 @@ struct TarotView: View {
                 )
             }
 
-            // AI Reading
+            // Draw again
+            PixelButton("Draw Again", style: .secondary) {
+                resetDraw()
+            }
+
+            // AI Reading below Draw Again
+            if isLoadingAI {
+                HStack(spacing: 8) {
+                    PixelLoading(color: accent)
+                    Text("Reading the stars...")
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(.white.opacity(0.5))
+                }
+                .padding(12)
+            }
+
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Oracle Reading")
@@ -234,14 +285,6 @@ struct TarotView: View {
                                 .stroke(accent.opacity(0.3), lineWidth: 1)
                         )
                 )
-            } else if isLoadingAI {
-                HStack(spacing: 8) {
-                    PixelLoading(color: accent)
-                    Text("Reading the stars...")
-                        .font(.custom(bodyFont, size: 10))
-                        .foregroundColor(.white.opacity(0.5))
-                }
-                .padding(12)
             }
 
             if let error = errorMessage {
@@ -249,15 +292,16 @@ struct TarotView: View {
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
             }
-
-            // Draw again
-            PixelButton("Draw Again", style: .secondary) {
-                resetDraw()
-            }
         }
     }
 
     // MARK: - Actions
+
+    private func pixelDot(_ active: Bool) -> some View {
+        Rectangle()
+            .fill(active ? accent : Color(hex: "#2a2a5e"))
+            .frame(width: 3, height: 3)
+    }
 
     private func toggleCard(_ card: TarotCard) {
         if let index = selectedCards.firstIndex(where: { $0.card.id == card.id }) {
@@ -271,7 +315,7 @@ struct TarotView: View {
     private func revealCards() {
         let cost = selectedCards.count
         guard creditManager.useCredits(cost) else {
-            errorMessage = "Not enough credits (\(cost) needed)"
+            showNoCredit = true
             return
         }
 

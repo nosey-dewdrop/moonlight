@@ -3,7 +3,7 @@ import SwiftUI
 let moonlightBg = Color(hex: "#0b0b2e")
 
 struct ContentView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab = 1
     @State private var moonData: MoonData?
 
     private let moonService = MoonService()
@@ -20,10 +20,10 @@ struct ContentView: View {
             }
 
             TabView(selection: $selectedTab) {
-                HomeView()
+                TarotView()
                     .tag(0)
 
-                TarotView()
+                HomeView()
                     .tag(1)
 
                 HoraryView()

@@ -5,6 +5,7 @@ struct HomeView: View {
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
     @State private var showSettings = false
+    @State private var showPremium = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -32,16 +33,18 @@ struct HomeView: View {
                 }
                 .ignoresSafeArea(edges: .top)
 
-                // Settings gear
+                // Top bar: settings left, credits right
                 VStack {
                     HStack {
-                        Spacer()
                         Button(action: { showSettings = true }) {
                             Text("*")
                                 .font(.custom(titleFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(12)
                         }
+                        Spacer()
+                        CreditBadge { showPremium = true }
+                            .padding(.trailing, 12)
                     }
                     .padding(.top, 50)
                     Spacer()
@@ -59,6 +62,9 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
+        }
+        .sheet(isPresented: $showPremium) {
+            NoCreditView()
         }
         .task {
             await loadData()
