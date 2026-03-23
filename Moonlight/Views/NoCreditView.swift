@@ -29,8 +29,15 @@ struct NoCreditView: View {
 
                 // Purchase options
                 VStack(spacing: 10) {
-                    ForEach(fallbackProducts, id: \.id) { product in
-                        purchaseRow(name: product.name, price: product.price, credits: product.credits)
+                    if creditManager.products.isEmpty {
+                        ForEach(fallbackProducts, id: \.id) { product in
+                            purchaseRow(name: product.name, price: product.price, credits: product.credits)
+                        }
+                    } else {
+                        ForEach(creditManager.products, id: \.id) { product in
+                            let credits = CreditManager.creditsForProduct(product.id)
+                            purchaseRow(name: product.displayName, price: product.displayPrice, credits: credits)
+                        }
                     }
                 }
                 .padding(.horizontal, 16)

@@ -3,6 +3,8 @@ import CoreLocation
 
 @MainActor
 class LocationManager: NSObject, ObservableObject {
+    static let shared = LocationManager()
+
     @Published var latitude: Double = 41.0082 // Istanbul default
     @Published var longitude: Double = 28.9784
     @Published var locationStatus: CLAuthorizationStatus?

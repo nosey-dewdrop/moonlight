@@ -49,6 +49,7 @@ struct TarotView: View {
                 .padding(.top, 54)
                 .padding(.trailing, 12)
         }
+        .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
         .sheet(isPresented: $showNoCredit) {
             NoCreditView()
         }
@@ -95,6 +96,7 @@ struct TarotView: View {
                     )
             )
             .textInputAutocapitalization(.sentences)
+            .submitLabel(.done)
 
             // Reveal button
             PixelButton(selectedCards.isEmpty ? "Select Cards Below" : "Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
@@ -175,31 +177,33 @@ struct TarotView: View {
     }
 
     private func premiumSpreadRow(_ name: String, cards: Int, credits: Int) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(.custom(bodyBoldFont, size: 11))
-                    .foregroundColor(.white)
-                Text("\(cards) cards")
+        Button(action: { showNoCredit = true }) {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(name)
+                        .font(.custom(bodyBoldFont, size: 11))
+                        .foregroundColor(.white)
+                    Text("\(cards) cards")
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(.white.opacity(0.4))
+                }
+
+                Spacer()
+
+                Text("\(credits) credits")
                     .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(accent)
             }
-
-            Spacer()
-
-            Text("\(credits) credits")
-                .font(.custom(bodyFont, size: 9))
-                .foregroundColor(accent)
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(bg.opacity(0.85))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                    )
+            )
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - Reading View
@@ -313,6 +317,7 @@ struct TarotView: View {
     }
 
     private func revealCards() {
+        guard !isLoadingAI else { return }
         let cost = selectedCards.count
         guard creditManager.useCredits(cost) else {
             showNoCredit = true

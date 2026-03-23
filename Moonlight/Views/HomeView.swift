@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @StateObject private var locationManager = LocationManager()
+    @ObservedObject private var locationManager = LocationManager.shared
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
     @State private var showSettings = false

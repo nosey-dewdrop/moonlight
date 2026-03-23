@@ -3,7 +3,7 @@ import SwiftUI
 struct HoraryView: View {
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
-    @StateObject private var locationManager = LocationManager()
+    @ObservedObject private var locationManager = LocationManager.shared
     @State private var question = ""
     @State private var aiReading: String?
     @State private var isLoading = false
@@ -91,6 +91,7 @@ struct HoraryView: View {
                 .padding(.top, 54)
                 .padding(.trailing, 12)
         }
+        .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
         .sheet(isPresented: $showNoCredit) {
             NoCreditView()
         }
@@ -122,6 +123,11 @@ struct HoraryView: View {
                     )
             )
             .textInputAutocapitalization(.sentences)
+            .onSubmit {
+                if !question.trimmingCharacters(in: .whitespaces).isEmpty && !isLoading {
+                    askQuestion()
+                }
+            }
 
             PixelButton("Ask the Stars (1 credit)") {
                 askQuestion()
