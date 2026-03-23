@@ -14,6 +14,8 @@ struct TarotView: View {
     @State private var showPremium = false
     @State private var spreadType: String = "custom"
     @State private var questionError = false
+    @State private var showClarificationPicker = false
+    @State private var clarificationQuestion = ""
 
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
@@ -65,7 +67,7 @@ struct TarotView: View {
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
-            Text("Pick up to 3 cards")
+            Text("Pick up to 3 cards (1 credit)")
                 .font(.custom(bodyFont, size: 11))
                 .foregroundColor(.white.opacity(0.5))
 
@@ -310,6 +312,56 @@ struct TarotView: View {
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
             }
+
+            // Clarification picker
+            if showClarificationPicker {
+                VStack(spacing: 12) {
+                    Text("Ek soru (opsiyonel)")
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(.white.opacity(0.5))
+
+                    TextField("", text: $clarificationQuestion, prompt:
+                        Text("Neyi merak ediyorsun?")
+                            .foregroundColor(.white.opacity(0.3))
+                            .font(.custom(bodyFont, size: 11))
+                    )
+                    .font(.custom(bodyFont, size: 11))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(bg.opacity(0.85))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
+                                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                            )
+                    )
+
+                    Text("Açıklama kartını seç (1 kredi)")
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(accent.opacity(0.7))
+
+                    LazyVGrid(columns: columns, spacing: 8) {
+                        let usedIds = Set(selectedCards.map { $0.card.id })
+                        ForEach(shuffledDeck.filter { !usedIds.contains($0.id) }) { card in
+                            Button(action: { submitClarification(card: card) }) {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .fill(Color(hex: "#12123a"))
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .stroke(Color(hex: "#1e1e4e"), lineWidth: 1)
+                                    Text("?")
+                                        .font(.custom(titleFont, size: 12))
+                                        .foregroundColor(Color(hex: "#2a2a5e"))
+                                }
+                                .frame(height: 90)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -332,8 +384,8 @@ struct TarotView: View {
 
     private func revealCards() {
         guard !isLoadingAI else { return }
-        let cost = selectedCards.count
-        guard creditManager.useCredits(cost) else {
+        // 3 cards = 1 credit
+        guard creditManager.useCredit() else {
             showNoCredit = true
             return
         }
@@ -344,18 +396,18 @@ struct TarotView: View {
     }
 
     private func drawClarificationCard() {
+        showClarificationPicker = true
+    }
+
+    private func submitClarification(card: TarotCard) {
         guard creditManager.useCredit() else {
             showNoCredit = true
             return
         }
 
-        // Pick a random card not already selected
-        let usedIds = Set(selectedCards.map { $0.card.id })
-        let available = TarotCard.allCards.filter { !usedIds.contains($0.id) }
-        guard let newCard = available.randomElement() else { return }
-        let clarification = DrawnCard(card: newCard)
-
+        let clarification = DrawnCard(card: card)
         selectedCards.append(clarification)
+        showClarificationPicker = false
         isLoadingAI = true
         errorMessage = nil
 
@@ -363,9 +415,10 @@ struct TarotView: View {
             do {
                 let moonData = MoonService().calculateMoonPhase(date: Date())
                 let previousReading = aiReading ?? ""
+                let fullQuestion = clarificationQuestion.isEmpty ? question : "\(question) — Ek soru: \(clarificationQuestion)"
 
                 let reading = try await claudeService.tarotClarification(
-                    question: question,
+                    question: fullQuestion,
                     previousCards: Array(selectedCards.dropLast()),
                     previousReading: previousReading,
                     clarificationCard: clarification,
@@ -376,6 +429,7 @@ struct TarotView: View {
                 await MainActor.run {
                     aiReading = (aiReading ?? "") + "\n\n" + reading
                     isLoadingAI = false
+                    clarificationQuestion = ""
                 }
             } catch {
                 await MainActor.run {
