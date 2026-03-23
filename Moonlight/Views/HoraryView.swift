@@ -44,7 +44,7 @@ struct HoraryView: View {
                     // AI reading
                     if let reading = aiReading {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Oracle Reading")
+                            Text("Horary Reading")
                                 .font(.custom(titleFont, size: 8))
                                 .foregroundColor(accent)
 

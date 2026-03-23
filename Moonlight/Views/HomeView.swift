@@ -182,19 +182,31 @@ struct HomeView: View {
     }
 
     private func loadData() async {
+        // Request location first
+        locationManager.requestLocation()
+
+        // Quick local fallback while API loads
         moonData = moonService.calculateMoonPhase(date: Date())
+
+        // Load events
         do {
             events = try await astrologyService.fetchEvents()
         } catch {
             print("Failed to load events: \(error)")
         }
-        locationManager.requestLocation()
-        // Try fetching real moon data using device location
-        if let locationData = try? await moonService.fetchMoonData(
-            latitude: locationManager.latitude,
-            longitude: locationManager.longitude
-        ) {
-            moonData = locationData
+
+        // Wait briefly for location, then fetch real API data
+        try? await Task.sleep(nanoseconds: 1_500_000_000)
+
+        // Always try API with real location
+        do {
+            let apiData = try await moonService.fetchMoonData(
+                latitude: locationManager.latitude,
+                longitude: locationManager.longitude
+            )
+            moonData = apiData
+        } catch {
+            print("USNO API failed, using local calculation: \(error)")
         }
     }
 }

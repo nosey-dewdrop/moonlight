@@ -53,7 +53,7 @@ class ClaudeService {
 
         Give a cohesive reading that weaves the cards together with the current cosmic energies and the seeker's birth chart. Consider how the moon phase, element balance, and the seeker's signs affect the reading. Address each card's position meaning. Keep it mystical but practical — the seeker should walk away with actionable insight.
 
-        Respond in \(language). Keep it under \(cards.count > 3 ? 400 : 200) words.
+        IMPORTANT: Respond in the SAME language the seeker used in their question. If they wrote in Turkish, respond in Turkish. If English, respond in English. Keep it under \(cards.count > 3 ? 400 : 200) words.
         """
 
         let tokens = cards.count > 3 ? 2048 : maxTokens
@@ -104,7 +104,7 @@ class ClaudeService {
 
         Give a clear yes/no leaning with nuanced explanation. Be mystical but honest — if the stars say no, say it beautifully.
 
-        Respond in \(language). Keep it under 200 words.
+        IMPORTANT: Respond in the SAME language the seeker used in their question. If they wrote in Turkish, respond in Turkish. If English, respond in English. Keep it under 200 words.
         """
 
         return try await sendMessage(prompt)
