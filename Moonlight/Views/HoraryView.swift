@@ -73,23 +73,14 @@ struct HoraryView: View {
             .foregroundColor(.white)
             .padding(12)
             .background(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                    )
+                Image("card_bg")
+                    .interpolation(.none)
+                    .resizable()
             )
             .textInputAutocapitalization(.sentences)
 
-            Button(action: askQuestion) {
-                Text(hasAsked ? "Ask Again" : "Ask the Stars")
-                    .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(bg)
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 10)
-                    .background(accent)
-                    .cornerRadius(4)
+            PixelButton(hasAsked ? "Ask Again" : "Ask the Stars") {
+                askQuestion()
             }
             .disabled(question.trimmingCharacters(in: .whitespaces).isEmpty)
         }
@@ -100,57 +91,55 @@ struct HoraryView: View {
     private var cosmicContext: some View {
         VStack(spacing: 12) {
             if let moon = moonData {
-                // Moon phase
-                HStack(spacing: 8) {
-                    Text(moon.phase.emoji)
-                        .font(.system(size: 20))
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(moon.phase.displayName)
-                            .font(.custom(bodyBoldFont, size: 12))
-                            .foregroundColor(.white)
-                        Text("\(Int(moon.illumination))% illuminated")
-                            .font(.custom(bodyFont, size: 10))
-                            .foregroundColor(.white.opacity(0.5))
+                // Moon phase with pixel art character
+                ZStack {
+                    Image("card_bg_event")
+                        .interpolation(.none)
+                        .resizable()
+
+                    HStack(spacing: 10) {
+                        Image(moon.phase.rawValue)
+                            .interpolation(.none)
+                            .resizable()
+                            .frame(width: 32, height: 32)
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(moon.phase.displayName)
+                                .font(.custom(bodyBoldFont, size: 12))
+                                .foregroundColor(.white)
+                            Text("\(Int(moon.illumination))% illuminated")
+                                .font(.custom(bodyFont, size: 10))
+                                .foregroundColor(.white.opacity(0.5))
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .padding(12)
                 }
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                        )
-                )
 
                 // Active retrogrades
                 if !activeRetrogrades.isEmpty {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text("Active Retrogrades")
-                            .font(.custom(titleFont, size: 7))
-                            .foregroundColor(Color(hex: "#FF6B6B"))
+                    ZStack {
+                        Image("card_bg_event")
+                            .interpolation(.none)
+                            .resizable()
 
-                        ForEach(activeRetrogrades, id: \.self) { retro in
-                            HStack(spacing: 6) {
-                                Image(systemName: "arrow.uturn.backward.circle")
-                                    .font(.system(size: 10))
-                                    .foregroundColor(Color(hex: "#FF6B6B"))
-                                Text(retro)
-                                    .font(.custom(bodyFont, size: 10))
-                                    .foregroundColor(.white.opacity(0.7))
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Active Retrogrades")
+                                .font(.custom(titleFont, size: 7))
+                                .foregroundColor(Color(hex: "#FF6B6B"))
+
+                            ForEach(activeRetrogrades, id: \.self) { retro in
+                                HStack(spacing: 6) {
+                                    PixelIcon(name: "icon_retrograde", size: 14)
+                                    Text(retro)
+                                        .font(.custom(bodyFont, size: 10))
+                                        .foregroundColor(.white.opacity(0.7))
+                                }
                             }
                         }
+                        .padding(12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .padding(12)
-                    .background(
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(bg.opacity(0.85))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .stroke(Color(hex: "#FF6B6B").opacity(0.2), lineWidth: 1)
-                            )
-                    )
                 }
 
                 // Element energies
@@ -160,63 +149,49 @@ struct HoraryView: View {
     }
 
     private var elementEnergyBar: some View {
-        HStack(spacing: 8) {
-            ForEach(Element.allCases, id: \.self) { element in
-                let energy = elementEnergies[element] ?? 0.5
-                VStack(spacing: 4) {
-                    Circle()
-                        .fill(element.color)
-                        .frame(width: 10, height: 10)
-                        .shadow(color: element.color.opacity(energy > 0.7 ? 0.8 : 0.2), radius: energy > 0.7 ? 6 : 2)
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(element.color.opacity(0.3))
-                        .frame(width: 16, height: 40)
-                        .overlay(alignment: .bottom) {
-                            RoundedRectangle(cornerRadius: 2)
-                                .fill(element.color)
-                                .frame(width: 16, height: CGFloat(energy) * 40)
-                        }
+            HStack(spacing: 16) {
+                ForEach(Element.allCases, id: \.self) { element in
+                    let energy = elementEnergies[element] ?? 0.5
+                    VStack(spacing: 4) {
+                        PixelElementDot(element: element, energy: energy, size: 10)
 
-                    Text(element.displayName.prefix(2).uppercased())
-                        .font(.custom(bodyFont, size: 7))
-                        .foregroundColor(element.color.opacity(0.7))
+                        PixelEnergyBar(element: element, energy: energy, height: 40)
+
+                        Text(element.displayName.prefix(2).uppercased())
+                            .font(.custom(bodyFont, size: 7))
+                            .foregroundColor(element.color.opacity(0.7))
+                    }
                 }
             }
+            .padding(12)
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - Free Answer
 
     private func freeAnswerView(_ answer: String) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Quick Answer")
-                .font(.custom(titleFont, size: 8))
-                .foregroundColor(accent)
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-            Text(answer)
-                .font(.custom(bodyBoldFont, size: 14))
-                .foregroundColor(.white)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Quick Answer")
+                    .font(.custom(titleFont, size: 8))
+                    .foregroundColor(accent)
+
+                Text(answer)
+                    .font(.custom(bodyBoldFont, size: 14))
+                    .foregroundColor(.white)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(accent.opacity(0.3), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - AI Reading
@@ -224,32 +199,28 @@ struct HoraryView: View {
     private var aiReadingSection: some View {
         VStack(spacing: 12) {
             if let reading = aiReading {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Deep Oracle Reading")
-                        .font(.custom(titleFont, size: 8))
-                        .foregroundColor(accent)
+                ZStack {
+                    Image("card_bg_event")
+                        .interpolation(.none)
+                        .resizable()
 
-                    Text(reading)
-                        .font(.custom(bodyFont, size: 11))
-                        .foregroundColor(.white.opacity(0.85))
-                        .lineSpacing(4)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Deep Oracle Reading")
+                            .font(.custom(titleFont, size: 8))
+                            .foregroundColor(accent)
+
+                        Text(reading)
+                            .font(.custom(bodyFont, size: 11))
+                            .foregroundColor(.white.opacity(0.85))
+                            .lineSpacing(4)
+                    }
+                    .padding(12)
                 }
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(accent.opacity(0.3), lineWidth: 1)
-                        )
-                )
             } else {
                 Button(action: requestDeepReading) {
                     HStack(spacing: 8) {
                         if isLoadingAI {
-                            ProgressView()
-                                .tint(bg)
-                                .scaleEffect(0.8)
+                            PixelLoading(color: bg)
                         }
                         Text(isLoadingAI ? "Consulting stars..." : "Get Deep Reading")
                             .font(.custom(bodyBoldFont, size: 12))
@@ -262,7 +233,6 @@ struct HoraryView: View {
                     .padding(.horizontal, 24)
                     .padding(.vertical, 10)
                     .background(accent)
-                    .cornerRadius(4)
                 }
                 .disabled(isLoadingAI || !claudeService.hasApiKey)
 

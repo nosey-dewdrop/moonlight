@@ -59,14 +59,8 @@ struct TarotView: View {
                 }
             }
 
-            Button(action: drawCards) {
-                Text(isDrawing ? "Drawing..." : "Draw Cards")
-                    .font(.custom(bodyBoldFont, size: 14))
-                    .foregroundColor(bg)
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 12)
-                    .background(accent)
-                    .cornerRadius(4)
+            PixelButton(isDrawing ? "Drawing..." : "Draw Cards") {
+                drawCards()
             }
             .disabled(isDrawing)
 
@@ -97,16 +91,8 @@ struct TarotView: View {
             aiReadingSection
 
             // Draw again
-            Button(action: resetDraw) {
-                Text("Draw Again")
-                    .font(.custom(bodyFont, size: 12))
-                    .foregroundColor(accent)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(accent.opacity(0.5), lineWidth: 1)
-                    )
+            PixelButton("Draw Again", style: .secondary) {
+                resetDraw()
             }
         }
     }
@@ -114,18 +100,16 @@ struct TarotView: View {
     // MARK: - Card Views
 
     private func cardBackView() -> some View {
-        RoundedRectangle(cornerRadius: 4)
-            .fill(bg.opacity(0.85))
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color.white.opacity(0.15), lineWidth: 1)
-            )
-            .overlay(
-                Text("?")
-                    .font(.custom(titleFont, size: 20))
-                    .foregroundColor(accent.opacity(0.3))
-            )
-            .frame(width: 90, height: 140)
+        ZStack {
+            Image("card_bg")
+                .interpolation(.none)
+                .resizable()
+
+            Text("?")
+                .font(.custom(titleFont, size: 20))
+                .foregroundColor(accent.opacity(0.3))
+        }
+        .frame(width: 90, height: 140)
     }
 
     private func drawnCardView(_ drawn: DrawnCard, index: Int) -> some View {
@@ -137,18 +121,13 @@ struct TarotView: View {
                 .foregroundColor(.white.opacity(0.4))
 
             ZStack {
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(elementBorderColor(drawn).opacity(0.4), lineWidth: 1)
-                    )
+                Image("card_bg")
+                    .interpolation(.none)
+                    .resizable()
 
                 VStack(spacing: 4) {
                     if let element = drawn.card.element {
-                        Circle()
-                            .fill(element.color)
-                            .frame(width: 8, height: 8)
+                        PixelElementDot(element: element, energy: 0.8, size: 8)
                     }
 
                     Text(shortName(drawn.card.name))
@@ -176,36 +155,34 @@ struct TarotView: View {
     }
 
     private func cardDetailRow(_ drawn: DrawnCard, position: String) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            HStack {
-                Text("\(position): \(drawn.card.name)")
-                    .font(.custom(bodyBoldFont, size: 11))
-                    .foregroundColor(.white)
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-                Spacer()
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("\(position): \(drawn.card.name)")
+                        .font(.custom(bodyBoldFont, size: 11))
+                        .foregroundColor(.white)
 
-                Text(drawn.positionLabel)
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(drawn.isReversed ? Color(hex: "#FF6B6B") : Color(hex: "#34D399"))
+                    Spacer()
+
+                    Text(drawn.positionLabel)
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(drawn.isReversed ? Color(hex: "#FF6B6B") : Color(hex: "#34D399"))
+                }
+
+                Text(drawn.card.keywords.joined(separator: " · "))
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(accent.opacity(0.7))
+
+                Text(drawn.meaning)
+                    .font(.custom(bodyFont, size: 10))
+                    .foregroundColor(.white.opacity(0.6))
             }
-
-            Text(drawn.card.keywords.joined(separator: " · "))
-                .font(.custom(bodyFont, size: 10))
-                .foregroundColor(accent.opacity(0.7))
-
-            Text(drawn.meaning)
-                .font(.custom(bodyFont, size: 10))
-                .foregroundColor(.white.opacity(0.6))
+            .padding(12)
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - AI Reading
@@ -213,32 +190,28 @@ struct TarotView: View {
     private var aiReadingSection: some View {
         VStack(spacing: 12) {
             if let reading = aiReading {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Oracle Reading")
-                        .font(.custom(titleFont, size: 8))
-                        .foregroundColor(accent)
+                ZStack {
+                    Image("card_bg_event")
+                        .interpolation(.none)
+                        .resizable()
 
-                    Text(reading)
-                        .font(.custom(bodyFont, size: 11))
-                        .foregroundColor(.white.opacity(0.85))
-                        .lineSpacing(4)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Oracle Reading")
+                            .font(.custom(titleFont, size: 8))
+                            .foregroundColor(accent)
+
+                        Text(reading)
+                            .font(.custom(bodyFont, size: 11))
+                            .foregroundColor(.white.opacity(0.85))
+                            .lineSpacing(4)
+                    }
+                    .padding(12)
                 }
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
-                                .stroke(accent.opacity(0.3), lineWidth: 1)
-                        )
-                )
             } else {
                 Button(action: requestAIReading) {
                     HStack(spacing: 8) {
                         if isLoadingAI {
-                            ProgressView()
-                                .tint(bg)
-                                .scaleEffect(0.8)
+                            PixelLoading(color: bg)
                         }
                         Text(isLoadingAI ? "Reading stars..." : "Get AI Reading")
                             .font(.custom(bodyBoldFont, size: 12))
@@ -251,7 +224,6 @@ struct TarotView: View {
                     .padding(.horizontal, 24)
                     .padding(.vertical, 10)
                     .background(accent)
-                    .cornerRadius(4)
                 }
                 .disabled(isLoadingAI || !claudeService.hasApiKey)
 

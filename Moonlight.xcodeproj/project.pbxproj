@@ -14,6 +14,7 @@
 		43E4544F730203A4BECC0B56 /* HoraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203CA177AA14629615143B /* HoraryView.swift */; };
 		4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */; };
 		5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E18E5FDBEB132B038DC644 /* Assets.xcassets */; };
+		58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71EF318F8BE609DABC579B /* PixelUI.swift */; };
 		5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F87798DD5D3A852D01EA71C /* CreditManager.swift */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
 		7885D3A5072B14459E27C977 /* CloudLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4552D6881A1B9D339D37DA /* CloudLayer.swift */; };
@@ -43,6 +44,7 @@
 		3D65D3A67C777D1FC0524B73 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Bold.ttf"; sourceTree = "<group>"; };
 		4983831EA7FFB894E1923A2D /* TarotCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarotCard.swift; sourceTree = "<group>"; };
+		4F71EF318F8BE609DABC579B /* PixelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelUI.swift; sourceTree = "<group>"; };
 		582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonSceneView.swift; sourceTree = "<group>"; };
 		7CDE2E825A08BF3BA6846D11 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans[wght].ttf"; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				CE4552D6881A1B9D339D37DA /* CloudLayer.swift */,
 				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
+				4F71EF318F8BE609DABC579B /* PixelUI.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -237,6 +240,7 @@
 				89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */,
 				9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */,
 				FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */,
+				58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */,
 				8025825C15665681A55657FC /* SettingsView.swift in Sources */,
 				1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */,
 				EF824263791A4FF7961B8074 /* TarotView.swift in Sources */,

@@ -36,14 +36,12 @@ struct HomeView: View {
                 }
                 .ignoresSafeArea(edges: .top)
 
-                // Settings gear
+                // Settings gear (pixel art)
                 VStack {
                     HStack {
                         Spacer()
                         Button(action: { showSettings = true }) {
-                            Image(systemName: "gearshape.fill")
-                                .font(.system(size: 18))
-                                .foregroundColor(.white.opacity(0.5))
+                            PixelTextIcon.gear()
                                 .padding(12)
                         }
                     }
@@ -117,44 +115,43 @@ struct HomeView: View {
     }
 
     private func astroEventRow(_ event: AstroEvent) -> some View {
-        HStack(spacing: 12) {
-            pixelIcon("icon_\(event.type.rawValue)", size: 24)
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-            VStack(alignment: .leading, spacing: 3) {
-                HStack(spacing: 6) {
-                    Text(event.title)
-                        .font(.custom(bodyBoldFont, size: 13))
-                        .foregroundColor(.white)
+            HStack(spacing: 12) {
+                PixelIcon(name: "icon_\(event.type.rawValue)", size: 24)
 
-                    if event.isActive {
-                        Text("active")
-                            .font(.custom(bodyFont, size: 8))
-                            .foregroundColor(Color(hex: "#34D399"))
+                VStack(alignment: .leading, spacing: 3) {
+                    HStack(spacing: 6) {
+                        Text(event.title)
+                            .font(.custom(bodyBoldFont, size: 13))
+                            .foregroundColor(.white)
+
+                        if event.isActive {
+                            Image("badge_active")
+                                .interpolation(.none)
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                        }
+                    }
+
+                    Text(event.description)
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(.white.opacity(0.4))
+
+                    if !event.dateRangeText.isEmpty {
+                        Text(event.dateRangeText)
+                            .font(.custom(bodyFont, size: 9))
+                            .foregroundColor(.white.opacity(0.3))
                     }
                 }
 
-                Text(event.description)
-                    .font(.custom(bodyFont, size: 10))
-                    .foregroundColor(.white.opacity(0.4))
-
-                if !event.dateRangeText.isEmpty {
-                    Text(event.dateRangeText)
-                        .font(.custom(bodyFont, size: 9))
-                        .foregroundColor(.white.opacity(0.3))
-                }
+                Spacer()
             }
-
-            Spacer()
+            .padding(12)
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Color(hex: "#0b0b2e").opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
         .padding(.horizontal, 16)
     }
 
@@ -175,10 +172,7 @@ struct HomeView: View {
             ForEach(Element.allCases, id: \.self) { element in
                 let energy = elementEnergies[element] ?? 0.5
                 VStack(spacing: 4) {
-                    Circle()
-                        .fill(element.color)
-                        .frame(width: 12, height: 12)
-                        .shadow(color: element.color.opacity(energy > 0.7 ? 0.8 : 0.2), radius: energy > 0.7 ? 8 : 2)
+                    PixelElementDot(element: element, energy: energy, size: 12)
                         .scaleEffect(energy > 0.7 ? 1.2 : 0.9)
                         .animation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true), value: energy)
 

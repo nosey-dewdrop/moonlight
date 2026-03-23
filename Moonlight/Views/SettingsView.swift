@@ -24,16 +24,15 @@ struct SettingsView: View {
                     // Header
                     HStack {
                         Button(action: { dismiss() }) {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white.opacity(0.7))
+                            PixelTextIcon.close()
+                                .padding(8)
                         }
                         Spacer()
                         Text("Settings")
                             .font(.custom(titleFont, size: 14))
                             .foregroundColor(accent)
                         Spacer()
-                        Color.clear.frame(width: 16)
+                        Color.clear.frame(width: 28)
                     }
                     .padding(.top, 60)
 
@@ -62,95 +61,82 @@ struct SettingsView: View {
     // MARK: - API Key
 
     private var apiKeySection: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Claude API Key")
-                .font(.custom(titleFont, size: 8))
-                .foregroundColor(.white.opacity(0.8))
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-            if hasApiKey {
-                HStack {
-                    Text(showApiKey ? (claudeService.apiKey ?? "") : "sk-ant-••••••••••••")
-                        .font(.custom(bodyFont, size: 10))
-                        .foregroundColor(.white.opacity(0.6))
-                        .lineLimit(1)
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Claude API Key")
+                    .font(.custom(titleFont, size: 8))
+                    .foregroundColor(.white.opacity(0.8))
 
-                    Spacer()
+                if hasApiKey {
+                    HStack {
+                        Text(showApiKey ? (claudeService.apiKey ?? "") : "sk-ant-............")
+                            .font(.custom(bodyFont, size: 10))
+                            .foregroundColor(.white.opacity(0.6))
+                            .lineLimit(1)
 
-                    Button(action: { showApiKey.toggle() }) {
-                        Image(systemName: showApiKey ? "eye.slash" : "eye")
-                            .font(.system(size: 12))
-                            .foregroundColor(.white.opacity(0.5))
+                        Spacer()
+
+                        Button(action: { showApiKey.toggle() }) {
+                            PixelTextIcon(showApiKey ? "-" : "o", color: .white.opacity(0.5), size: 10)
+                                .padding(4)
+                        }
+
+                        Button(action: removeKey) {
+                            PixelTextIcon("x", color: Color(hex: "#FF6B6B"), size: 10)
+                                .padding(4)
+                        }
                     }
+                } else {
+                    HStack(spacing: 8) {
+                        TextField("", text: $apiKeyInput, prompt:
+                            Text("sk-ant-...")
+                                .foregroundColor(.white.opacity(0.2))
+                                .font(.custom(bodyFont, size: 11))
+                        )
+                        .font(.custom(bodyFont, size: 11))
+                        .foregroundColor(.white)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
 
-                    Button(action: removeKey) {
-                        Image(systemName: "trash")
-                            .font(.system(size: 12))
-                            .foregroundColor(Color(hex: "#FF6B6B"))
+                        PixelButton("Save") {
+                            saveKey()
+                        }
+                        .disabled(apiKeyInput.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
-                }
-            } else {
-                HStack(spacing: 8) {
-                    TextField("", text: $apiKeyInput, prompt:
-                        Text("sk-ant-...")
-                            .foregroundColor(.white.opacity(0.2))
-                            .font(.custom(bodyFont, size: 11))
-                    )
-                    .font(.custom(bodyFont, size: 11))
-                    .foregroundColor(.white)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-
-                    Button(action: saveKey) {
-                        Text("Save")
-                            .font(.custom(bodyBoldFont, size: 10))
-                            .foregroundColor(bg)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(accent)
-                            .cornerRadius(4)
-                    }
-                    .disabled(apiKeyInput.trimmingCharacters(in: .whitespaces).isEmpty)
                 }
             }
+            .padding(12)
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - Credits
 
     private var creditsSection: some View {
-        VStack(spacing: 8) {
-            Text("Credits")
-                .font(.custom(titleFont, size: 8))
-                .foregroundColor(.white.opacity(0.8))
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
 
-            Text("\(creditManager.credits)")
-                .font(.custom(titleFont, size: 24))
-                .foregroundColor(accent)
-                .shadow(color: accent.opacity(0.5), radius: 6)
+            VStack(spacing: 8) {
+                Text("Credits")
+                    .font(.custom(titleFont, size: 8))
+                    .foregroundColor(.white.opacity(0.8))
 
-            Text("1 credit = 1 AI reading")
-                .font(.custom(bodyFont, size: 9))
-                .foregroundColor(.white.opacity(0.4))
+                Text("\(creditManager.credits)")
+                    .font(.custom(titleFont, size: 24))
+                    .foregroundColor(accent)
+                    .shadow(color: accent.opacity(0.5), radius: 6)
+
+                Text("1 credit = 1 AI reading")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.4))
+            }
+            .padding(16)
         }
-        .padding(16)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(accent.opacity(0.2), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - Purchase
@@ -162,7 +148,6 @@ struct SettingsView: View {
                 .foregroundColor(.white.opacity(0.8))
 
             if creditManager.products.isEmpty {
-                // Fallback display when products haven't loaded (sandbox/dev)
                 ForEach(fallbackProducts, id: \.id) { product in
                     purchaseRow(name: product.name, price: product.price, credits: product.credits)
                 }
@@ -190,37 +175,29 @@ struct SettingsView: View {
     }
 
     private func purchaseRow(name: String, price: String, credits: Int) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
+        ZStack {
+            Image("card_bg_event")
+                .interpolation(.none)
+                .resizable()
+
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(name)
+                        .font(.custom(bodyBoldFont, size: 12))
+                        .foregroundColor(.white)
+                    Text("\(credits) AI readings")
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(.white.opacity(0.4))
+                }
+
+                Spacer()
+
+                Text(price)
                     .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(.white)
-                Text("\(credits) AI readings")
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(accent)
             }
-
-            Spacer()
-
-            Text(price)
-                .font(.custom(bodyBoldFont, size: 12))
-                .foregroundColor(accent)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 6)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(accent.opacity(0.5), lineWidth: 1)
-                )
+            .padding(12)
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
     // MARK: - Actions
