@@ -71,11 +71,16 @@ struct HoraryView: View {
             )
             .font(.custom(bodyFont, size: 12))
             .foregroundColor(.white)
-            .padding(12)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
             .background(
-                Image("card_bg")
-                    .interpolation(.none)
-                    .resizable()
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(bg.opacity(0.85))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                    )
             )
             .textInputAutocapitalization(.sentences)
 

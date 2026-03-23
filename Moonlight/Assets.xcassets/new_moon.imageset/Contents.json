@@ -1,0 +1,5 @@
+{
+  "images": [{"filename": "new_moon.png", "idiom": "universal", "scale": "1x"}],
+  "info": {"version": 1, "author": "xcode"},
+  "properties": {"preserves-vector-representation": false}
+}

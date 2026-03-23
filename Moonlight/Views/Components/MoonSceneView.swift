@@ -1,50 +1,63 @@
 import SwiftUI
 
-// Separate view for twinkling stars - isolates re-renders from clouds
 struct PixelStarsView: View {
     let size: CGSize
-    @State private var starTwinkle: [Double] = (0..<50).map { _ in Double.random(in: 0.3...1.0) }
+    @State private var twinkle: [Double] = (0..<20).map { _ in Double.random(in: 0.3...0.8) }
 
-    private let starColors: [Color] = [
-        Color(hex: "#FFE566"),
-        Color(hex: "#FFD700"),
-        Color(hex: "#FFFFFF"),
-        Color(hex: "#E8E8FF"),
-        Color(hex: "#AAC4FF"),
-        Color(hex: "#7EB8DA"),
+    // Hand-placed stars scattered across the sky, no lines, no patterns
+    private let positions: [(xFrac: CGFloat, yFrac: CGFloat, px: CGFloat)] = [
+        (0.10, 0.05, 2), (0.82, 0.03, 3), (0.45, 0.08, 2),
+        (0.22, 0.14, 2), (0.68, 0.11, 3), (0.93, 0.17, 2),
+        (0.05, 0.22, 2), (0.52, 0.20, 2), (0.35, 0.28, 3),
+        (0.78, 0.30, 2), (0.15, 0.38, 2), (0.60, 0.42, 2),
+        (0.88, 0.36, 3), (0.40, 0.48, 2), (0.08, 0.55, 2),
+        (0.72, 0.52, 2), (0.28, 0.60, 3), (0.55, 0.65, 2),
+        (0.90, 0.58, 2), (0.18, 0.70, 2),
     ]
+
+    private let assetStars: [(name: String, xFrac: CGFloat, yFrac: CGFloat, sz: CGFloat)] = [
+        ("atmospheric_sparkle_1", 0.12, 0.04, 20),
+        ("atmospheric_star_gold_1", 0.80, 0.07, 24),
+        ("atmospheric_sparkle_3", 0.48, 0.02, 16),
+        ("atmospheric_star_gold_2", 0.25, 0.18, 20),
+        ("atmospheric_sparkle_2", 0.70, 0.13, 18),
+        ("atmospheric_star_gold_3", 0.92, 0.22, 20),
+        ("atmospheric_sparkle_1", 0.38, 0.32, 16),
+        ("atmospheric_star_gold_1", 0.62, 0.45, 22),
+        ("atmospheric_sparkle_3", 0.08, 0.50, 18),
+        ("atmospheric_star_gold_2", 0.85, 0.40, 16),
+    ]
+
+    private let starColor = Color(hex: "#FFE566")
 
     var body: some View {
         ZStack {
-            ForEach(0..<50, id: \.self) { i in
-                let seed = UInt64(i * 7 + 13)
-                let x = CGFloat(seed * 31 % UInt64(max(size.width, 1)))
-                let y = CGFloat(seed * 53 % UInt64(max(size.height * 0.85, 1)))
-                let colorIdx = Int(seed % UInt64(starColors.count))
-                let pixelSize: CGFloat = CGFloat(2 + (seed % 3))
-                let isCross = seed % 4 == 0
+            // Tiny yellow dots
+            ForEach(0..<positions.count, id: \.self) { i in
+                let pos = positions[i]
+                Rectangle()
+                    .fill(starColor)
+                    .frame(width: pos.px, height: pos.px)
+                    .opacity(i < twinkle.count ? twinkle[i] : 0.5)
+                    .position(x: size.width * pos.xFrac, y: size.height * pos.yFrac)
+            }
 
-                if isCross {
-                    ZStack {
-                        Rectangle().fill(starColors[colorIdx]).frame(width: pixelSize * 3, height: pixelSize)
-                        Rectangle().fill(starColors[colorIdx]).frame(width: pixelSize, height: pixelSize * 3)
-                    }
-                    .opacity(i < starTwinkle.count ? starTwinkle[i] : 0.5)
-                    .position(x: x, y: y)
-                } else {
-                    Rectangle()
-                        .fill(starColors[colorIdx])
-                        .frame(width: pixelSize, height: pixelSize)
-                        .opacity(i < starTwinkle.count ? starTwinkle[i] : 0.5)
-                        .position(x: x, y: y)
-                }
+            // Pixel art sparkles
+            ForEach(0..<assetStars.count, id: \.self) { i in
+                let star = assetStars[i]
+                Image(star.name)
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: star.sz, height: star.sz)
+                    .opacity(i < twinkle.count ? twinkle[i] : 0.5)
+                    .position(x: size.width * star.xFrac, y: size.height * star.yFrac)
             }
         }
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-                withAnimation(.easeInOut(duration: 2.5)) {
-                    for i in 0..<starTwinkle.count {
-                        starTwinkle[i] = Double.random(in: 0.3...1.0)
+            Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { _ in
+                withAnimation(.easeInOut(duration: 2.0)) {
+                    for i in 0..<twinkle.count {
+                        twinkle[i] = Double.random(in: 0.2...0.9)
                     }
                 }
             }
