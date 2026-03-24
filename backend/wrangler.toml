@@ -2,8 +2,7 @@ name = "moonlight-api"
 main = "worker.js"
 compatibility_date = "2024-01-01"
 
-[vars]
-APP_TOKEN = "moonlight-app-secret-2026"
+# APP_TOKEN is set via: npx wrangler secret put APP_TOKEN
 
 [[kv_namespaces]]
 binding = "RATE_LIMIT"

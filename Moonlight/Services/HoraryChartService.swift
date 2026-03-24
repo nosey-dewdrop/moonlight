@@ -45,7 +45,7 @@ struct ChartAspect {
 }
 
 class HoraryChartService {
-    private let baseURL = "https://json.freeastrologyapi.com/western"
+    private var baseURL: String { "\(Secrets.backendURL)/api/astrology" }
 
     func fetchChart(latitude: Double, longitude: Double) async throws -> HoraryChartData {
         let now = Date()
@@ -107,7 +107,7 @@ class HoraryChartService {
         request.httpMethod = "POST"
         request.timeoutInterval = 20
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(Secrets.astrologyApiKey, forHTTPHeaderField: "x-api-key")
+        request.setValue(Secrets.appToken, forHTTPHeaderField: "x-app-token")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let (data, response) = try await URLSession.shared.data(for: request)

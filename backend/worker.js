@@ -60,9 +60,9 @@ async function handleClaude(request, env) {
     return jsonResponse({ error: 'Invalid request' }, 400);
   }
 
-  // Enforce our limits
+  // Enforce our limits - model is set server-side for security
   body.model = 'claude-haiku-4-5-20251001';
-  body.max_tokens = Math.min(body.max_tokens || 1024, 1024);
+  body.max_tokens = Math.min(body.max_tokens || 1024, 2048);
 
   const response = await fetch(CLAUDE_URL, {
     method: 'POST',

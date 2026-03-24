@@ -1,12 +1,7 @@
 import Foundation
 
 class ClaudeService {
-    private let model = "claude-sonnet-4-6"
     private let maxTokens = 1024
-
-    private var apiKey: String {
-        Secrets.claudeApiKey
-    }
 
     // MARK: - Tarot Reading
 
@@ -170,25 +165,20 @@ class ClaudeService {
         return try await sendMessage(prompt)
     }
 
-    // MARK: - API Call
+    // MARK: - API Call (via backend proxy)
 
     private func sendMessage(_ userMessage: String, maxTokens: Int? = nil) async throws -> String {
-        let key = apiKey
-        guard !key.isEmpty else { throw ClaudeError.noBackend }
-
-        guard let url = URL(string: "https://api.anthropic.com/v1/messages") else {
+        guard let url = URL(string: "\(Secrets.backendURL)/api/claude") else {
             throw ClaudeError.invalidURL
         }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.timeoutInterval = 30
-        request.setValue("application/json", forHTTPHeaderField: "content-type")
-        request.setValue(key, forHTTPHeaderField: "x-api-key")
-        request.setValue("2023-06-01", forHTTPHeaderField: "anthropic-version")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue(Secrets.appToken, forHTTPHeaderField: "x-app-token")
 
         let body: [String: Any] = [
-            "model": model,
             "max_tokens": maxTokens ?? self.maxTokens,
             "messages": [
                 ["role": "user", "content": userMessage]
@@ -206,11 +196,9 @@ class ClaudeService {
         guard httpResponse.statusCode == 200 else {
             switch httpResponse.statusCode {
             case 401:
-                throw ClaudeError.apiError(statusCode: 401, message: "Invalid API key")
+                throw ClaudeError.apiError(statusCode: 401, message: "Cannot connect to the reading service.")
             case 429:
                 throw ClaudeError.apiError(statusCode: 429, message: "Too many requests. Please wait a moment.")
-            case 529:
-                throw ClaudeError.apiError(statusCode: 529, message: "Service is busy. Please try again.")
             default:
                 throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: "Something went wrong. Please try again.")
             }
