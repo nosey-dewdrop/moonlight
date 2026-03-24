@@ -273,7 +273,7 @@ struct SettingsView: View {
     private var legalSection: some View {
         VStack(spacing: 10) {
             Button(action: {
-                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/privacy-policy") {
+                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/privacy-policy.html") {
                     UIApplication.shared.open(url)
                 }
             }) {
@@ -298,7 +298,7 @@ struct SettingsView: View {
             }
 
             Button(action: {
-                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/terms") {
+                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/terms.html") {
                     UIApplication.shared.open(url)
                 }
             }) {
