@@ -17,6 +17,7 @@ class CreditManager: ObservableObject {
     }
     @Published var products: [Product] = []
     @Published var purchaseInProgress = false
+    @Published var purchaseError: String?
 
     private let purchasedKey = "com.damla.moonlight.purchasedCredits"
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
@@ -135,26 +136,31 @@ class CreditManager: ObservableObject {
         }
     }
 
-    func purchase(_ product: Product) async throws {
+    func purchase(_ product: Product) async {
         purchaseInProgress = true
+        purchaseError = nil
         defer { purchaseInProgress = false }
 
-        let result = try await product.purchase()
+        do {
+            let result = try await product.purchase()
 
-        switch result {
-        case .success(let verification):
-            let transaction = try checkVerified(verification)
-            addCredits(for: product.id)
-            await transaction.finish()
+            switch result {
+            case .success(let verification):
+                let transaction = try checkVerified(verification)
+                addCredits(for: product.id)
+                await transaction.finish()
 
-        case .userCancelled:
-            break
+            case .userCancelled:
+                break
 
-        case .pending:
-            break
+            case .pending:
+                purchaseError = "Purchase is pending. Check your Apple ID payment settings."
 
-        @unknown default:
-            break
+            @unknown default:
+                break
+            }
+        } catch {
+            purchaseError = "Purchase failed. Please try again."
         }
     }
 

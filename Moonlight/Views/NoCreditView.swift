@@ -42,6 +42,14 @@ struct NoCreditView: View {
                 }
                 .padding(.horizontal, 16)
 
+                if let error = creditManager.purchaseError {
+                    Text(error)
+                        .font(.custom(bodyFont, size: 9))
+                        .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 16)
+                }
+
                 Button(action: {
                     Task { await creditManager.restorePurchases() }
                 }) {
@@ -68,9 +76,8 @@ struct NoCreditView: View {
 
     private func purchaseRow(name: String, price: String, credits: Int) -> some View {
         Button(action: {
-            // Try to find matching StoreKit product
             if let product = creditManager.products.first(where: { CreditManager.creditsForProduct($0.id) == credits }) {
-                Task { try? await creditManager.purchase(product) }
+                Task { await creditManager.purchase(product) }
             }
         }) {
             HStack {

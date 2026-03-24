@@ -9,6 +9,7 @@ class LocationManager: NSObject, ObservableObject {
     @Published var longitude: Double = 28.9784
     @Published var locationStatus: CLAuthorizationStatus?
     @Published var hasLocation: Bool = false
+    @Published var usingDefaultLocation: Bool = false
 
     private let manager = CLLocationManager()
 
@@ -31,14 +32,14 @@ extension LocationManager: CLLocationManagerDelegate {
             self.latitude = location.coordinate.latitude
             self.longitude = location.coordinate.longitude
             self.hasLocation = true
+            self.usingDefaultLocation = false
         }
     }
 
     nonisolated func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error: \(error.localizedDescription)")
-        // Keep using Istanbul defaults
         Task { @MainActor in
             self.hasLocation = true
+            self.usingDefaultLocation = true
         }
     }
 
@@ -49,8 +50,8 @@ extension LocationManager: CLLocationManagerDelegate {
                manager.authorizationStatus == .authorizedAlways {
                 manager.requestLocation()
             } else {
-                // Use defaults even without permission
                 self.hasLocation = true
+                self.usingDefaultLocation = true
             }
         }
     }

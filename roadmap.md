@@ -31,9 +31,18 @@
 - [x] settings (birth chart, credits, purchases)
 - [x] settings gear on home
 
-## Phase 5: Polish
+## Phase 5: Production Hardening
+- [x] backend proxy for all api calls (production)
+- [x] api key rotation and secure token management
+- [x] purchase error handling with user feedback
+- [x] privacy policy and terms of service in app
+- [x] api error states with retry (home view)
+- [x] location fallback indicator
+- [ ] app icon (design, damla)
+- [ ] credits storage in keychain (tamper resistance)
+- [ ] host privacy policy and terms on github pages
+
+## Phase 6: Polish
 - [ ] premium spread implementations (celtic cross, 5-9 card)
 - [ ] push notifications (moon phase changes)
-- [ ] backend proxy for claude api key (production)
-- [ ] server-side receipt validation (production)
 - [ ] app store screenshots and metadata

@@ -6,6 +6,8 @@ struct HomeView: View {
     @State private var events: [AstroEvent] = []
     @State private var showSettings = false
     @State private var showPremium = false
+    @State private var usingLocalData = false
+    @State private var eventsError = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -86,6 +88,12 @@ struct HomeView: View {
                 .font(.custom(bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.6))
 
+            if usingLocalData {
+                Text("approximate data (no connection)")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.3))
+            }
+
             HStack(spacing: 32) {
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonrise", size: 18)
@@ -117,6 +125,19 @@ struct HomeView: View {
                 ForEach(events) { event in
                     astroEventRow(event)
                 }
+            } else if eventsError {
+                VStack(spacing: 8) {
+                    Text("Could not load cosmic events")
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(.white.opacity(0.4))
+                    Button(action: { Task { await retryEvents() } }) {
+                        Text("Tap to retry")
+                            .font(.custom(bodyFont, size: 9))
+                            .foregroundColor(Color(hex: "#FFE566").opacity(0.6))
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.top, 8)
             } else {
                 Text("No active cosmic events")
                     .font(.custom(bodyFont, size: 10))
@@ -190,20 +211,15 @@ struct HomeView: View {
     }
 
     private func loadData() async {
-        // Request location
         locationManager.requestLocation()
 
         // Quick local fallback while API loads
         moonData = moonService.calculateMoonPhase(date: Date())
 
         // Load events
-        do {
-            events = try await astrologyService.fetchEvents()
-        } catch {
-            print("Failed to load events: \(error)")
-        }
+        await retryEvents()
 
-        // Wait for location to be available (max 5 seconds), then fetch real API data
+        // Wait for location (max 5 seconds), then fetch real API data
         var waitAttempts = 0
         while !locationManager.hasLocation && waitAttempts < 50 {
             try? await Task.sleep(nanoseconds: 100_000_000)
@@ -216,8 +232,18 @@ struct HomeView: View {
                 longitude: locationManager.longitude
             )
             moonData = apiData
+            usingLocalData = false
         } catch {
-            print("USNO API failed, using local calculation: \(error)")
+            usingLocalData = true
+        }
+    }
+
+    private func retryEvents() async {
+        do {
+            events = try await astrologyService.fetchEvents()
+            eventsError = false
+        } catch {
+            eventsError = true
         }
     }
 }

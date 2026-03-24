@@ -44,6 +44,9 @@ struct SettingsView: View {
                     // Purchase section
                     purchaseSection
 
+                    // Legal
+                    legalSection
+
                     Spacer().frame(height: 40)
                 }
                 .padding(.horizontal, 16)
@@ -211,12 +214,19 @@ struct SettingsView: View {
                 ForEach(creditManager.products) { product in
                     let credits = CreditManager.creditsForProduct(product.id)
                     Button(action: {
-                        Task { try? await creditManager.purchase(product) }
+                        Task { await creditManager.purchase(product) }
                     }) {
                         purchaseRow(name: "\(credits) Credits", price: product.displayPrice, credits: credits)
                     }
                     .disabled(creditManager.purchaseInProgress)
                 }
+            }
+
+            if let error = creditManager.purchaseError {
+                Text(error)
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                    .multilineTextAlignment(.center)
             }
 
             Button(action: {
@@ -256,6 +266,67 @@ struct SettingsView: View {
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
                 )
         )
+    }
+
+    // MARK: - Legal
+
+    private var legalSection: some View {
+        VStack(spacing: 10) {
+            Button(action: {
+                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/privacy-policy") {
+                    UIApplication.shared.open(url)
+                }
+            }) {
+                HStack {
+                    Text("Privacy Policy")
+                        .font(.custom(bodyFont, size: 11))
+                        .foregroundColor(.white.opacity(0.6))
+                    Spacer()
+                    Text(">")
+                        .font(.custom(titleFont, size: 8))
+                        .foregroundColor(.white.opacity(0.3))
+                }
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(bg.opacity(0.85))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                        )
+                )
+            }
+
+            Button(action: {
+                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/terms") {
+                    UIApplication.shared.open(url)
+                }
+            }) {
+                HStack {
+                    Text("Terms of Service")
+                        .font(.custom(bodyFont, size: 11))
+                        .foregroundColor(.white.opacity(0.6))
+                    Spacer()
+                    Text(">")
+                        .font(.custom(titleFont, size: 8))
+                        .foregroundColor(.white.opacity(0.3))
+                }
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(bg.opacity(0.85))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                        )
+                )
+            }
+
+            Text("Moonlight v1.0")
+                .font(.custom(bodyFont, size: 9))
+                .foregroundColor(.white.opacity(0.2))
+                .padding(.top, 4)
+        }
     }
 
     // MARK: - Fallback products for dev/sandbox
