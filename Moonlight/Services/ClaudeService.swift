@@ -33,6 +33,9 @@ class ClaudeService {
 
         let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
 
+        let history = ReadingHistory.shared
+        let historySection = history.promptDescription
+
         let prompt = """
         Sen gizemli bir ay kahinisin. Sıcak, samimi ama bilge konuşursun. Tarot okuyorsun.
 
@@ -41,6 +44,7 @@ class ClaudeService {
         Ay fazı: \(moonPhase.displayName)
         Element enerjileri: \(elementInfo)
         Retrogradlar: \(retroDesc)
+        \(historySection.isEmpty ? "" : "\n        \(historySection)")
 
         Kartlar:
         \(cardDescriptions)
@@ -59,11 +63,14 @@ class ClaudeService {
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
         - Gezegen pozisyonlarına ve burçlara spesifik değin.
         - Mantıklı ve tutarlı ol. Saçmalama.
+        - Eğer kişi daha önce benzer/aynı soruyu sormuşsa, bunu fark et ve doğal bir şekilde değin. Tekrar tekrar aynı şeyi soruyorsa, kibarca ama dürüstçe buna dikkat çek.
         - \(cards.count > 3 ? 400 : 200) kelimeyi geçme.
         """
 
         let tokens = cards.count > 3 ? 2048 : maxTokens
-        return try await sendMessage(prompt, maxTokens: tokens)
+        let result = try await sendMessage(prompt, maxTokens: tokens)
+        history.add(question: question, type: .tarot)
+        return result
     }
 
     // MARK: - Horary Reading
@@ -88,6 +95,9 @@ class ClaudeService {
             """
         }
 
+        let history = ReadingHistory.shared
+        let historySection = history.promptDescription
+
         let prompt = """
         Sen gizemli bir ay kahinisin. Sıcak, samimi ama bilge konuşursun. Horary astroloji yapıyorsun.
 
@@ -98,6 +108,7 @@ class ClaudeService {
         Element enerjileri: \(elementInfo)
         Retrogradlar: \(retroDesc)
         \(chartSection)
+        \(historySection.isEmpty ? "" : "\n        \(historySection)")
 
         İlk cümlede cevabını ver. Sonra hikaye gibi anlat — neden, gezegen pozisyonları ne diyor, kişinin düşünmediği açı ne.
 
@@ -108,11 +119,14 @@ class ClaudeService {
         - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
         - Kişinin aklına gelmeyecek açıları göster. Sorunun altında yatan asıl meseleyi bul.
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
+        - Eğer kişi daha önce benzer/aynı soruyu sormuşsa, bunu fark et ve doğal bir şekilde değin. Tekrar tekrar aynı şeyi soruyorsa, kibarca ama dürüstçe buna dikkat çek.
         - Mantıklı ve tutarlı ol. Saçmalama.
         - 200 kelimeyi geçme.
         """
 
-        return try await sendMessage(prompt)
+        let result = try await sendMessage(prompt)
+        history.add(question: question, type: .horary)
+        return result
     }
 
     // MARK: - Follow-up Reading (Horary)
