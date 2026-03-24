@@ -352,6 +352,19 @@ struct TarotView: View {
                                         .fill(Color(hex: "#12123a"))
                                     RoundedRectangle(cornerRadius: 2)
                                         .stroke(Color(hex: "#1e1e4e"), lineWidth: 1)
+                                        .padding(3)
+                                    RoundedRectangle(cornerRadius: 2)
+                                        .stroke(Color(hex: "#1e1e4e"), lineWidth: 1)
+                                    VStack {
+                                        HStack {
+                                            pixelDot(false); Spacer(); pixelDot(false)
+                                        }
+                                        Spacer()
+                                        HStack {
+                                            pixelDot(false); Spacer(); pixelDot(false)
+                                        }
+                                    }
+                                    .padding(6)
                                     Text("?")
                                         .font(.custom(titleFont, size: 12))
                                         .foregroundColor(Color(hex: "#2a2a5e"))
@@ -488,19 +501,23 @@ struct TarotView: View {
     }
 
     private func positionName(for index: Int) -> String {
+        let names: [String]
         switch spreadType {
         case "celtic_cross":
-            return ["Situation", "Challenge", "Past", "Future", "Above", "Below", "Advice", "External", "Hopes", "Outcome"][index]
+            names = ["Situation", "Challenge", "Past", "Future", "Above", "Below", "Advice", "External", "Hopes", "Outcome"]
         case "five_card":
-            return ["Past", "Present", "Hidden", "Advice", "Outcome"][index]
+            names = ["Past", "Present", "Hidden", "Advice", "Outcome"]
         case "relationship":
-            return ["You", "Partner", "Connection", "Challenge", "Strength", "Advice", "Outcome"][index]
+            names = ["You", "Partner", "Connection", "Challenge", "Strength", "Advice", "Outcome"]
         case "career":
-            return ["Current", "Obstacle", "Strength", "Weakness", "Goal", "Path", "Environment", "Hopes", "Outcome"][index]
+            names = ["Current", "Obstacle", "Strength", "Weakness", "Goal", "Path", "Environment", "Hopes", "Outcome"]
         default:
-            if selectedCards.count == 1 { return "Your Card" }
-            return ["Past", "Present", "Future"][index]
+            names = ["Past", "Present", "Future"]
         }
+        if index < names.count {
+            return names[index]
+        }
+        return "Clarification"
     }
 
     private func requestAIReading() {
