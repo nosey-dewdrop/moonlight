@@ -6,8 +6,11 @@ struct HomeView: View {
     @State private var events: [AstroEvent] = []
     @State private var showSettings = false
     @State private var showPremium = false
+    @State private var showHistory = false
     @State private var usingLocalData = false
     @State private var eventsError = false
+    @State private var showMenu = false
+    @State private var showClearConfirm = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -35,16 +38,27 @@ struct HomeView: View {
                 }
                 .ignoresSafeArea(edges: .top)
 
-                // Top bar: settings left, credits right
+                // Top bar: menu left, credits right
                 VStack {
                     HStack {
-                        Button(action: { showSettings = true }) {
-                            Text("*")
+                        Menu {
+                            Button(action: { showSettings = true }) {
+                                Label("Settings", systemImage: "gearshape")
+                            }
+                            Button(action: { showHistory = true }) {
+                                Label("Reading History", systemImage: "clock.arrow.circlepath")
+                            }
+                            Divider()
+                            Button(role: .destructive, action: { showClearConfirm = true }) {
+                                Label("Clear History", systemImage: "trash")
+                            }
+                        } label: {
+                            Text("=")
                                 .font(.custom(titleFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(12)
                         }
-                        .accessibilityLabel("Settings")
+                        .accessibilityLabel("Menu")
                         Spacer()
                         CreditBadge { showPremium = true }
                             .accessibilityLabel("Credits")
@@ -69,6 +83,17 @@ struct HomeView: View {
         }
         .sheet(isPresented: $showPremium) {
             NoCreditView()
+        }
+        .sheet(isPresented: $showHistory) {
+            ReadingHistoryView()
+        }
+        .alert("Clear History", isPresented: $showClearConfirm) {
+            Button("Clear", role: .destructive) {
+                ReadingHistory.shared.clear()
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This will delete all your reading history. This cannot be undone.")
         }
         .task {
             await loadData()

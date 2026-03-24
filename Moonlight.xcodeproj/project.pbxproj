@@ -25,6 +25,7 @@
 		A48483E2DFAE6F9151117837 /* ClaudeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */; };
 		AB12CD34EF56789012345678 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD34EF56AB12789012345679 /* WelcomeView.swift */; };
 		DE45FA67BC23890123456780 /* ReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF56AB78CD34901234567891 /* ReadingHistory.swift */; };
+		FA67BC89DE45012345678902 /* ReadingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB89CD01EF23456789012345 /* ReadingHistoryView.swift */; };
 		BC5EACC33421E9B33442F477 /* Silkscreen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */; };
 		C4FC5B141D935DB72FF3CAB8 /* CreditBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B500BB010C598B1A61627FA /* CreditBadge.swift */; };
 		C919808FAEF89D87299B1CCF /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */; };
@@ -63,6 +64,7 @@
 		B5203CA177AA14629615143B /* HoraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryView.swift; sourceTree = "<group>"; };
 		CD34EF56AB12789012345679 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		EF56AB78CD34901234567891 /* ReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistory.swift; sourceTree = "<group>"; };
+		AB89CD01EF23456789012345 /* ReadingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistoryView.swift; sourceTree = "<group>"; };
 		D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Regular.ttf"; sourceTree = "<group>"; };
 		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
 		EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				F6438C64DC422B5996CFAB10 /* NoCreditView.swift */,
 				2A42137A85229E7DD13F9060 /* SettingsView.swift */,
 				2B6764A0D5ABCA78B21A676E /* TarotView.swift */,
+				AB89CD01EF23456789012345 /* ReadingHistoryView.swift */,
 				CD34EF56AB12789012345679 /* WelcomeView.swift */,
 				EA952D15568B504D1432B35F /* Components */,
 			);
@@ -259,6 +262,7 @@
 				FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */,
 				AB12CD34EF56789012345678 /* WelcomeView.swift in Sources */,
 				DE45FA67BC23890123456780 /* ReadingHistory.swift in Sources */,
+				FA67BC89DE45012345678902 /* ReadingHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

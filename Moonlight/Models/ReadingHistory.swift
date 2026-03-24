@@ -34,6 +34,10 @@ class ReadingHistory {
         return decoded
     }
 
+    func clear() {
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+
     func add(question: String, type: ReadingRecord.ReadingType) {
         var all = records
         all.insert(ReadingRecord(question: question, type: type), at: 0)

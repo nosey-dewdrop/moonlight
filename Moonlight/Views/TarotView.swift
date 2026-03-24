@@ -578,6 +578,7 @@ struct TarotView: View {
                 await MainActor.run {
                     aiReading = reading
                     isLoadingAI = false
+                    ReadingHistory.shared.add(question: question, type: .tarot)
                 }
             } catch {
                 await MainActor.run {

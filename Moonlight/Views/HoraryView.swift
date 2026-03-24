@@ -186,6 +186,7 @@ struct HoraryView: View {
                 await MainActor.run {
                     aiReading = reading
                     isLoading = false
+                    ReadingHistory.shared.add(question: question, type: .horary)
                 }
             } catch {
                 await MainActor.run {
