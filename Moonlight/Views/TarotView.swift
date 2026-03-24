@@ -16,6 +16,8 @@ struct TarotView: View {
     @State private var questionError = false
     @State private var showClarificationPicker = false
     @State private var clarificationQuestion = ""
+    @State private var isLoadingClarification = false
+    @State private var currentSpreadCredits = 1
 
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
@@ -67,7 +69,7 @@ struct TarotView: View {
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
-            Text("Pick up to 3 cards (1 credit)")
+            Text("Pick up to 3 cards (1 credit each reading)")
                 .font(.custom(bodyFont, size: 11))
                 .foregroundColor(.white.opacity(0.5))
 
@@ -114,10 +116,14 @@ struct TarotView: View {
 
             // Reveal button
             PixelButton(selectedCards.isEmpty ? "Select Cards Below" : "Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
-                revealCards()
+                if question.trimmingCharacters(in: .whitespaces).isEmpty {
+                    questionError = true
+                } else {
+                    revealCards()
+                }
             }
             .accessibilityLabel(selectedCards.isEmpty ? "Select cards below" : "Reveal selected cards")
-            .disabled(selectedCards.isEmpty || question.trimmingCharacters(in: .whitespaces).isEmpty)
+            .disabled(selectedCards.isEmpty || isLoadingAI)
 
             // 78 cards grid
             LazyVGrid(columns: columns, spacing: 8) {
@@ -234,12 +240,15 @@ struct TarotView: View {
 
             // Revealed cards
             ForEach(Array(selectedCards.enumerated()), id: \.element.id) { index, drawn in
-                let position = positionName(for: index)
-
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(drawn.card.name)
-                        .font(.custom(bodyBoldFont, size: 11))
-                        .foregroundColor(.white)
+                    HStack(spacing: 6) {
+                        Text(positionName(for: index))
+                            .font(.custom(bodyFont, size: 9))
+                            .foregroundColor(accent.opacity(0.5))
+                        Text(drawn.card.name)
+                            .font(.custom(bodyBoldFont, size: 11))
+                            .foregroundColor(.white)
+                    }
 
                     Text(drawn.card.keywords.joined(separator: " · "))
                         .font(.custom(bodyFont, size: 10))
@@ -297,13 +306,25 @@ struct TarotView: View {
                 )
 
                 // Two buttons side by side
+                if isLoadingClarification {
+                    HStack(spacing: 8) {
+                        PixelLoading(color: accent)
+                        Text("Drawing clarification...")
+                            .font(.custom(bodyFont, size: 10))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                    .padding(12)
+                }
+
                 HStack(spacing: 10) {
                     PixelButton("More") {
                         drawClarificationCard()
                     }
-                    PixelButton("Draw Again") {
+                    .disabled(isLoadingAI || isLoadingClarification || showClarificationPicker)
+                    PixelButton("Draw Again", style: .secondary) {
                         resetDraw()
                     }
+                    .disabled(isLoadingAI || isLoadingClarification)
                 }
             }
 
@@ -316,12 +337,12 @@ struct TarotView: View {
             // Clarification picker
             if showClarificationPicker {
                 VStack(spacing: 12) {
-                    Text("Ek soru (opsiyonel)")
+                    Text("Follow-up question (optional)")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.5))
 
                     TextField("", text: $clarificationQuestion, prompt:
-                        Text("Neyi merak ediyorsun?")
+                        Text("What do you want to know more about?")
                             .foregroundColor(.white.opacity(0.3))
                             .font(.custom(bodyFont, size: 11))
                     )
@@ -339,7 +360,7 @@ struct TarotView: View {
                             )
                     )
 
-                    Text("Açıklama kartını seç (1 kredi)")
+                    Text("Pick a clarification card (1 credit)")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(accent.opacity(0.7))
 
@@ -397,19 +418,19 @@ struct TarotView: View {
 
     private func revealCards() {
         guard !isLoadingAI else { return }
-        // 3 cards = 1 credit
         guard creditManager.useCredit() else {
             showNoCredit = true
             return
         }
 
         spreadType = "custom"
+        currentSpreadCredits = 1
         withAnimation { showReading = true }
         requestAIReading()
     }
 
     private func drawClarificationCard() {
-        guard creditManager.useCredit() else {
+        guard creditManager.hasCredits else {
             showNoCredit = true
             return
         }
@@ -417,17 +438,23 @@ struct TarotView: View {
     }
 
     private func submitClarification(card: TarotCard) {
+        guard !isLoadingClarification else { return }
+        guard creditManager.useCredit() else {
+            showNoCredit = true
+            return
+        }
+
         let clarification = DrawnCard(card: card)
         selectedCards.append(clarification)
         showClarificationPicker = false
-        isLoadingAI = true
+        isLoadingClarification = true
         errorMessage = nil
 
         Task {
             do {
                 let moonData = MoonService().calculateMoonPhase(date: Date())
                 let previousReading = aiReading ?? ""
-                let fullQuestion = clarificationQuestion.isEmpty ? question : "\(question) — Ek soru: \(clarificationQuestion)"
+                let fullQuestion = clarificationQuestion.isEmpty ? question : "\(question) — Follow-up: \(clarificationQuestion)"
 
                 let reading = try await claudeService.tarotClarification(
                     question: fullQuestion,
@@ -440,13 +467,13 @@ struct TarotView: View {
 
                 await MainActor.run {
                     aiReading = (aiReading ?? "") + "\n\n" + reading
-                    isLoadingAI = false
+                    isLoadingClarification = false
                     clarificationQuestion = ""
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = error.localizedDescription
-                    isLoadingAI = false
+                    errorMessage = userFriendlyError(error)
+                    isLoadingClarification = false
                     creditManager.refundCredit()
                 }
             }
@@ -463,10 +490,15 @@ struct TarotView: View {
             question = ""
             spreadType = "custom"
             questionError = false
+            showClarificationPicker = false
+            clarificationQuestion = ""
+            isLoadingClarification = false
+            currentSpreadCredits = 1
         }
     }
 
     private func activatePremiumSpread(_ name: String, cards: Int, credits: Int) {
+        guard !isLoadingAI else { return }
         guard !question.trimmingCharacters(in: .whitespaces).isEmpty else {
             questionError = true
             return
@@ -476,6 +508,8 @@ struct TarotView: View {
             showNoCredit = true
             return
         }
+
+        currentSpreadCredits = credits
 
         // Determine spread type
         if name.contains("Celtic") {
@@ -491,7 +525,7 @@ struct TarotView: View {
         // Auto-select random cards from shuffled deck
         let deck = TarotCard.allCards.shuffled()
         var drawn: [DrawnCard] = []
-        for i in 0..<cards {
+        for i in 0..<min(cards, deck.count) {
             drawn.append(DrawnCard(card: deck[i]))
         }
         selectedCards = drawn
@@ -547,12 +581,25 @@ struct TarotView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = error.localizedDescription
+                    errorMessage = userFriendlyError(error)
                     isLoadingAI = false
-                    creditManager.refundCredits(selectedCards.count)
+                    creditManager.refundCredits(currentSpreadCredits)
                 }
             }
         }
+    }
+
+    private func userFriendlyError(_ error: Error) -> String {
+        if let claudeError = error as? ClaudeError {
+            return claudeError.errorDescription ?? "Something went wrong. Please try again."
+        }
+        if (error as NSError).code == NSURLErrorTimedOut {
+            return "Request timed out. Please try again."
+        }
+        if (error as NSError).code == NSURLErrorNotConnectedToInternet {
+            return "No internet connection. Please check your network."
+        }
+        return "Something went wrong. Please try again."
     }
 }
 

@@ -76,8 +76,7 @@ class CreditManager: ObservableObject {
     // MARK: - Credit Balance
 
     var dailyCreditsRemaining: Int {
-        resetDailyIfNeeded()
-        return max(0, dailyFreeAmount - dailyCreditsUsed)
+        max(0, dailyFreeAmount - dailyCreditsUsed)
     }
 
     var totalCredits: Int {
@@ -102,6 +101,7 @@ class CreditManager: ObservableObject {
     }
 
     func useCredits(_ amount: Int) -> Bool {
+        resetDailyIfNeeded()
         guard totalCredits >= amount else { return false }
         for _ in 0..<amount {
             if !useCredit() { return false }

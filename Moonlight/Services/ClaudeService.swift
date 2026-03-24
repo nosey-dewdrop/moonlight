@@ -29,11 +29,11 @@ class ClaudeService {
     func tarotReading(question: String, cards: [DrawnCard], spreadType: String = "custom", moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], userProfile: UserProfile) async throws -> String {
         let positions = positionNames(for: spreadType, count: cards.count)
         let cardDescriptions = cards.enumerated().map { i, drawn in
-            let pos = positions[i]
+            let pos = i < positions.count ? positions[i] : "Card \(i + 1)"
             return "\(pos): \(drawn.card.name) - Keywords: \(drawn.card.keywords.joined(separator: ", "))"
         }.joined(separator: "\n")
 
-        let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
+        let elementInfo = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
             .joined(separator: ", ")
 
         let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
@@ -44,12 +44,13 @@ class ClaudeService {
         Soru: "\(question)"
         Doğum haritası: \(userProfile.promptDescription)
         Ay fazı: \(moonPhase.displayName)
+        Element enerjileri: \(elementInfo)
         Retrogradlar: \(retroDesc)
 
         Kartlar:
         \(cardDescriptions)
 
-        Türkçe kart isimleri: Pentacles=Tılsımlar, Cups=Kupalar, Wands=Asalar, Swords=Kılıçlar, Page=Uşak, Knight=Şövalye, Queen=Kraliçe, King=Kral.
+        Türkçe kart isimleri: Pentacles=Tılsımlar, Cups=Kupalar, Wands=Asalar, Swords=Kılıçlar, Page=Uşak, Knight=Şövalye, Queen=Kraliçe, King=Kral, Ace=As, Two=İki, Three=Üç, Four=Dört, Five=Beş, Six=Altı, Seven=Yedi, Eight=Sekiz, Nine=Dokuz, Ten=On.
 
         Kartları hikaye gibi birbirine bağla. Her kartın soruyla ilişkisini göster. Ay fazını ve gezegen etkilerini kat. Kişinin düşünmediği açıyı bul.
 
@@ -73,7 +74,7 @@ class ClaudeService {
     // MARK: - Horary Reading
 
     func horaryReading(question: String, moonPhase: MoonPhase, elementEnergies: [Element: Double], activeRetrogrades: [String], chartData: HoraryChartData?, userProfile: UserProfile) async throws -> String {
-        let elementDesc = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
+        let elementInfo = elementEnergies.map { "\($0.key.displayName): \(Int($0.value * 100))%" }
             .joined(separator: ", ")
 
         let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
@@ -99,6 +100,7 @@ class ClaudeService {
         Soru zamanı: \(timeStr)
         Doğum haritası: \(userProfile.promptDescription)
         Ay fazı: \(moonPhase.displayName)
+        Element enerjileri: \(elementInfo)
         Retrogradlar: \(retroDesc)
         \(chartSection)
 
@@ -234,11 +236,11 @@ enum ClaudeError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noBackend: return "Cannot connect to server"
-        case .invalidURL: return "Invalid URL"
-        case .invalidResponse: return "Invalid response"
-        case .apiError(let code, let msg): return "API error (\(code)): \(msg)"
-        case .parseError: return "Failed to parse response"
+        case .noBackend: return "Cannot connect to the reading service. Please try again later."
+        case .invalidURL: return "Something went wrong. Please try again."
+        case .invalidResponse: return "Could not get a reading. Please try again."
+        case .apiError(_, let msg): return msg
+        case .parseError: return "Could not read the response. Please try again."
         }
     }
 }

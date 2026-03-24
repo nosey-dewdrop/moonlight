@@ -203,9 +203,11 @@ struct HomeView: View {
             print("Failed to load events: \(error)")
         }
 
-        // Wait for location to be available, then fetch real API data
-        while !locationManager.hasLocation {
+        // Wait for location to be available (max 5 seconds), then fetch real API data
+        var waitAttempts = 0
+        while !locationManager.hasLocation && waitAttempts < 50 {
             try? await Task.sleep(nanoseconds: 100_000_000)
+            waitAttempts += 1
         }
 
         do {

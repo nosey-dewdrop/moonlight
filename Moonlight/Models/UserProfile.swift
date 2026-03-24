@@ -58,18 +58,16 @@ class UserProfile: ObservableObject {
     private let defaults = UserDefaults.standard
 
     private init() {
-        if let raw = defaults.string(forKey: "sunSign") {
-            sunSign = ZodiacSign(rawValue: raw)
-        }
-        if let raw = defaults.string(forKey: "risingSign") {
-            risingSign = ZodiacSign(rawValue: raw)
-        }
-        if let raw = defaults.string(forKey: "moonSign") {
-            moonSign = ZodiacSign(rawValue: raw)
-        }
-        if let time = defaults.object(forKey: "birthTime") as? Date {
-            birthTime = time
-        }
+        // Load without triggering didSet/save
+        let savedSun = defaults.string(forKey: "sunSign").flatMap { ZodiacSign(rawValue: $0) }
+        let savedRising = defaults.string(forKey: "risingSign").flatMap { ZodiacSign(rawValue: $0) }
+        let savedMoon = defaults.string(forKey: "moonSign").flatMap { ZodiacSign(rawValue: $0) }
+        let savedTime = defaults.object(forKey: "birthTime") as? Date
+
+        _sunSign = Published(initialValue: savedSun)
+        _risingSign = Published(initialValue: savedRising)
+        _moonSign = Published(initialValue: savedMoon)
+        _birthTime = Published(initialValue: savedTime)
     }
 
     private func save() {

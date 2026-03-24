@@ -68,11 +68,15 @@ struct HoraryView: View {
                             PixelButton("More") {
                                 requestFollowUp()
                             }
-                            PixelButton("Ask Again") {
+                            .disabled(isLoading)
+                            PixelButton("Ask Again", style: .secondary) {
                                 resetQuestion()
                             }
+                            .disabled(isLoading)
                         }
-                    } else if isLoading {
+                    }
+
+                    if isLoading {
                         HStack(spacing: 8) {
                             PixelLoading(color: accent)
                             Text("Consulting the stars...")
@@ -148,6 +152,7 @@ struct HoraryView: View {
     // MARK: - Actions
 
     private func askQuestion() {
+        guard !isLoading else { return }
         guard creditManager.useCredit() else {
             showNoCredit = true
             return
@@ -184,7 +189,7 @@ struct HoraryView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = error.localizedDescription
+                    errorMessage = userFriendlyError(error)
                     isLoading = false
                     creditManager.refundCredit()
                 }
@@ -193,12 +198,16 @@ struct HoraryView: View {
     }
 
     private func requestFollowUp() {
+        guard !isLoading else { return }
         guard creditManager.useCredit() else {
             showNoCredit = true
             return
         }
 
-        guard let previousReading = aiReading else { return }
+        guard let previousReading = aiReading else {
+            creditManager.refundCredit()
+            return
+        }
 
         isLoading = true
         errorMessage = nil
@@ -220,7 +229,7 @@ struct HoraryView: View {
                 }
             } catch {
                 await MainActor.run {
-                    errorMessage = error.localizedDescription
+                    errorMessage = userFriendlyError(error)
                     isLoading = false
                     creditManager.refundCredit()
                 }
@@ -235,6 +244,19 @@ struct HoraryView: View {
             errorMessage = nil
             question = ""
         }
+    }
+
+    private func userFriendlyError(_ error: Error) -> String {
+        if let claudeError = error as? ClaudeError {
+            return claudeError.localizedDescription
+        }
+        if (error as NSError).code == NSURLErrorTimedOut {
+            return "Request timed out. Please try again."
+        }
+        if (error as NSError).code == NSURLErrorNotConnectedToInternet {
+            return "No internet connection. Please check your network."
+        }
+        return "Something went wrong. Please try again."
     }
 }
 

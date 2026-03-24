@@ -59,7 +59,6 @@ struct PixelButton: View {
 
 struct PixelLoading: View {
     @State private var dotCount = 0
-    @State private var timer: Timer?
     let color: Color
 
     var body: some View {
@@ -70,14 +69,11 @@ struct PixelLoading: View {
                     .frame(width: 4, height: 4)
             }
         }
-        .onAppear {
-            timer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { _ in
+        .task {
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 400_000_000)
                 dotCount = (dotCount % 3) + 1
             }
-        }
-        .onDisappear {
-            timer?.invalidate()
-            timer = nil
         }
     }
 }
