@@ -5,6 +5,8 @@ let moonlightBg = Color(hex: "#0b0b2e")
 struct ContentView: View {
     @State private var selectedTab = 1
     @State private var moonData: MoonData?
+    @State private var showWelcome = false
+    @ObservedObject private var creditManager = CreditManager.shared
 
     private let moonService = MoonService()
 
@@ -34,6 +36,14 @@ struct ContentView: View {
         .ignoresSafeArea()
         .task {
             moonData = moonService.calculateMoonPhase(date: Date())
+        }
+        .onAppear {
+            if creditManager.isFirstLaunch {
+                showWelcome = true
+            }
+        }
+        .fullScreenCover(isPresented: $showWelcome) {
+            WelcomeView()
         }
     }
 }

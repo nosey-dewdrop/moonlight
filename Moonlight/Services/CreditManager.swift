@@ -22,7 +22,9 @@ class CreditManager: ObservableObject {
     private let purchasedKey = "com.damla.moonlight.purchasedCredits"
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
     private let lastResetKey = "com.damla.moonlight.lastDailyReset"
+    private let welcomeKey = "com.damla.moonlight.welcomeBonusGiven"
     private let dailyFreeAmount = 5
+    private let welcomeBonusAmount = 10
 
     private let productIds = [
         "com.damla.moonlight.credits5",
@@ -32,19 +34,30 @@ class CreditManager: ObservableObject {
 
     private var transactionTask: Task<Void, Never>?
 
+    /// True if this is the user's first launch (welcome bonus just given)
+    @Published var isFirstLaunch: Bool = false
+
     private init() {
         self.purchasedCredits = UserDefaults.standard.integer(forKey: purchasedKey)
         self.dailyCreditsUsed = UserDefaults.standard.integer(forKey: dailyUsedKey)
         resetDailyIfNeeded()
         listenForTransactions()
+        giveWelcomeBonus()
 
-        // DEBUG: Remove before App Store
         #if DEBUG
         if purchasedCredits == 0 && !UserDefaults.standard.bool(forKey: "debugCreditsGiven") {
             purchasedCredits = 200
             UserDefaults.standard.set(true, forKey: "debugCreditsGiven")
         }
         #endif
+    }
+
+    private func giveWelcomeBonus() {
+        if !UserDefaults.standard.bool(forKey: welcomeKey) {
+            purchasedCredits += welcomeBonusAmount
+            UserDefaults.standard.set(true, forKey: welcomeKey)
+            isFirstLaunch = true
+        }
     }
 
     deinit {
