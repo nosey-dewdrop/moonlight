@@ -4,7 +4,8 @@ struct ReadingRecord: Codable, Identifiable {
     let id: UUID
     let date: Date
     let question: String
-    let type: ReadingType // tarot or horary
+    let type: ReadingType
+    var isFavorite: Bool
 
     enum ReadingType: String, Codable {
         case tarot
@@ -16,6 +17,7 @@ struct ReadingRecord: Codable, Identifiable {
         self.date = Date()
         self.question = question
         self.type = type
+        self.isFavorite = false
     }
 }
 
@@ -34,6 +36,10 @@ class ReadingHistory {
         return decoded
     }
 
+    var favorites: [ReadingRecord] {
+        records.filter { $0.isFavorite }
+    }
+
     func clear() {
         UserDefaults.standard.removeObject(forKey: key)
     }
@@ -42,23 +48,26 @@ class ReadingHistory {
         var all = records
         all.insert(ReadingRecord(question: question, type: type), at: 0)
         if all.count > maxRecords { all = Array(all.prefix(maxRecords)) }
-        if let data = try? JSONEncoder().encode(all) {
-            UserDefaults.standard.set(data, forKey: key)
-        }
+        save(all)
     }
 
-    /// Returns a prompt-friendly summary of recent readings
-    var promptDescription: String {
-        let recent = records.prefix(15)
-        guard !recent.isEmpty else { return "" }
+    func delete(id: UUID) {
+        var all = records
+        all.removeAll { $0.id == id }
+        save(all)
+    }
 
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d MMM"
-
-        let lines = recent.map { record in
-            "\(formatter.string(from: record.date)): \"\(record.question)\" (\(record.type.rawValue))"
+    func toggleFavorite(id: UUID) {
+        var all = records
+        if let index = all.firstIndex(where: { $0.id == id }) {
+            all[index].isFavorite.toggle()
         }
+        save(all)
+    }
 
-        return "Bu kişinin son okumaları:\n" + lines.joined(separator: "\n")
+    private func save(_ records: [ReadingRecord]) {
+        if let data = try? JSONEncoder().encode(records) {
+            UserDefaults.standard.set(data, forKey: key)
+        }
     }
 }
