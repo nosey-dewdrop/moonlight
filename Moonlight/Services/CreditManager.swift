@@ -54,9 +54,13 @@ class CreditManager: ObservableObject {
 
     private func giveWelcomeBonus() {
         if !UserDefaults.standard.bool(forKey: welcomeKey) {
-            purchasedCredits += welcomeBonusAmount
+            // Check if user already existed (has used credits before)
+            let isExistingUser = UserDefaults.standard.object(forKey: lastResetKey) != nil
             UserDefaults.standard.set(true, forKey: welcomeKey)
-            isFirstLaunch = true
+            if !isExistingUser {
+                purchasedCredits += welcomeBonusAmount
+                isFirstLaunch = true
+            }
         }
     }
 
