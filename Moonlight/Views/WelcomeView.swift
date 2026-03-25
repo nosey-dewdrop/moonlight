@@ -48,7 +48,7 @@ struct WelcomeView: View {
                             .font(.custom(bodyFont, size: 12))
                             .foregroundColor(.white.opacity(0.6))
 
-                        Text("+ 5 daily credits every day")
+                        Text("+ 3 daily credits every day")
                             .font(.custom(bodyFont, size: 10))
                             .foregroundColor(.white.opacity(0.3))
                     }

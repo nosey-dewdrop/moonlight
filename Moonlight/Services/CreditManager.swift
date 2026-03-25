@@ -23,13 +23,13 @@ class CreditManager: ObservableObject {
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
     private let lastResetKey = "com.damla.moonlight.lastDailyReset"
     private let welcomeKey = "com.damla.moonlight.welcomeBonusGiven"
-    private let dailyFreeAmount = 5
+    private let dailyFreeAmount = 3
     private let welcomeBonusAmount = 10
 
     private let productIds = [
-        "com.damla.moonlight.credits5",
-        "com.damla.moonlight.credits15",
+        "com.damla.moonlight.credits10",
         "com.damla.moonlight.credits30",
+        "com.damla.moonlight.credits75",
     ]
 
     private var transactionTask: Task<Void, Never>?
@@ -121,9 +121,13 @@ class CreditManager: ObservableObject {
     func useCredits(_ amount: Int) -> Bool {
         resetDailyIfNeeded()
         guard totalCredits >= amount else { return false }
-        for _ in 0..<amount {
-            if !useCredit() { return false }
-        }
+
+        // Calculate how many come from daily vs purchased to avoid partial consumption
+        let fromDaily = min(dailyCreditsRemaining, amount)
+        let fromPurchased = amount - fromDaily
+
+        dailyCreditsUsed += fromDaily
+        purchasedCredits -= fromPurchased
         return true
     }
 
@@ -213,26 +217,35 @@ class CreditManager: ObservableObject {
     }
 
     private func addCredits(for productId: String) {
-        switch productId {
-        case "com.damla.moonlight.credits5":
-            purchasedCredits += 5
-        case "com.damla.moonlight.credits15":
-            purchasedCredits += 15
-        case "com.damla.moonlight.credits30":
-            purchasedCredits += 30
-        default:
-            break
+        let amount = Self.creditsForProduct(productId)
+        if amount > 0 {
+            purchasedCredits += amount
         }
     }
 
     static func creditsForProduct(_ productId: String) -> Int {
         switch productId {
-        case "com.damla.moonlight.credits5": return 5
-        case "com.damla.moonlight.credits15": return 15
+        case "com.damla.moonlight.credits10": return 10
         case "com.damla.moonlight.credits30": return 30
+        case "com.damla.moonlight.credits75": return 75
         default: return 0
         }
     }
+
+    // MARK: - Shared Fallback Products (when StoreKit fails to load)
+
+    struct FallbackProduct: Identifiable {
+        let id: String
+        let name: String
+        let price: String
+        let credits: Int
+    }
+
+    static let fallbackProducts = [
+        FallbackProduct(id: "credits10", name: "10 Credits", price: "₺14,99", credits: 10),
+        FallbackProduct(id: "credits30", name: "30 Credits", price: "₺34,99", credits: 30),
+        FallbackProduct(id: "credits75", name: "75 Credits", price: "₺59,99", credits: 75),
+    ]
 }
 
 enum StoreError: LocalizedError {

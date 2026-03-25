@@ -4,13 +4,10 @@ struct HomeView: View {
     @ObservedObject private var locationManager = LocationManager.shared
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
-    @State private var showSettings = false
+    @State private var showMenu = false
     @State private var showPremium = false
-    @State private var showHistory = false
     @State private var usingLocalData = false
     @State private var eventsError = false
-    @State private var showMenu = false
-    @State private var showClearConfirm = false
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -27,7 +24,7 @@ struct HomeView: View {
                     VStack(spacing: 16) {
                         // Moon character at the top
                         moonCharacter(moonData: moonData)
-                            .padding(.top, UIScreen.main.bounds.height * 0.12)
+                            .padding(.top, 100)
 
                         // Moon info - no card bg, just text floating
                         moonInfo(moonData: moonData)
@@ -41,18 +38,7 @@ struct HomeView: View {
                 // Top bar: menu left, credits right
                 VStack {
                     HStack {
-                        Menu {
-                            Button(action: { showSettings = true }) {
-                                Label("Settings", systemImage: "gearshape")
-                            }
-                            Button(action: { showHistory = true }) {
-                                Label("Reading History", systemImage: "clock.arrow.circlepath")
-                            }
-                            Divider()
-                            Button(role: .destructive, action: { showClearConfirm = true }) {
-                                Label("Clear History", systemImage: "trash")
-                            }
-                        } label: {
+                        Button(action: { showMenu = true }) {
                             Text("=")
                                 .font(.custom(titleFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
@@ -78,22 +64,11 @@ struct HomeView: View {
                 }
             }
         }
-        .sheet(isPresented: $showSettings) {
+        .sheet(isPresented: $showMenu) {
             SettingsView()
         }
         .sheet(isPresented: $showPremium) {
             NoCreditView()
-        }
-        .sheet(isPresented: $showHistory) {
-            ReadingHistoryView()
-        }
-        .alert("Clear History", isPresented: $showClearConfirm) {
-            Button("Clear", role: .destructive) {
-                ReadingHistory.shared.clear()
-            }
-            Button("Cancel", role: .cancel) {}
-        } message: {
-            Text("This will delete all your reading history. This cannot be undone.")
         }
         .task {
             await loadData()

@@ -9,6 +9,7 @@ struct ReadingHistoryView: View {
     private let bodyBoldFont = "Silkscreen-Bold"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
+    private let moonService = MoonService()
 
     private var sortedRecords: [ReadingRecord] {
         // Favorites first, then by date
@@ -21,6 +22,12 @@ struct ReadingHistoryView: View {
     var body: some View {
         ZStack {
             bg.ignoresSafeArea()
+
+            if let moonData = moonService.calculateMoonPhase(date: Date()) as MoonData? {
+                MoonSceneView(moonData: moonData, showMoon: false)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+            }
 
             VStack(spacing: 16) {
                 // Header

@@ -69,7 +69,7 @@ struct TarotView: View {
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
-            Text("Pick up to 3 cards (1 credit each reading)")
+            Text("Pick up to 3 cards (1 credit per reading)")
                 .font(.custom(bodyFont, size: 11))
                 .foregroundColor(.white.opacity(0.5))
 

@@ -39,16 +39,13 @@ struct ContentView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
 
                 // Custom pixel tab bar
-                HStack {
-                    tabButton(icon: "tarot", label: "Tarot", tag: 0)
-                    Spacer()
-                    tabButton(icon: "moon", label: "Moon", tag: 1)
-                    Spacer()
-                    tabButton(icon: "horary", label: "Horary", tag: 2)
+                HStack(spacing: 0) {
+                    tabButton(asset: "tab_tarot", label: "Tarot", tag: 0)
+                    tabButton(asset: "waxing_crescent", label: "Moon", tag: 1)
+                    tabButton(asset: "tab_horary", label: "Horary", tag: 2)
                 }
-                .padding(.horizontal, 40)
-                .padding(.top, 8)
-                .padding(.bottom, 20)
+                .padding(.top, 6)
+                .padding(.bottom, 24)
                 .background(moonlightBg.opacity(0.95))
             }
         }
@@ -66,28 +63,22 @@ struct ContentView: View {
         }
     }
 
-    private func tabButton(icon: String, label: String, tag: Int) -> some View {
+    private func tabButton(asset: String, label: String, tag: Int) -> some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.2)) { selectedTab = tag }
         }) {
             VStack(spacing: 4) {
-                Text(tabIcon(for: icon))
-                    .font(.custom(titleFont, size: 12))
-                    .foregroundColor(selectedTab == tag ? accent : .white.opacity(0.3))
+                Image(asset)
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 28, height: 28)
+                    .opacity(selectedTab == tag ? 1.0 : 0.35)
 
                 Text(label)
-                    .font(.custom(bodyFont, size: 8))
+                    .font(.custom(bodyFont, size: 9))
                     .foregroundColor(selectedTab == tag ? accent : .white.opacity(0.3))
             }
-        }
-    }
-
-    private func tabIcon(for name: String) -> String {
-        switch name {
-        case "tarot": return "<>"
-        case "moon": return "()"
-        case "horary": return "**"
-        default: return "?"
+            .frame(maxWidth: .infinity)
         }
     }
 }

@@ -4,6 +4,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
+    @State private var showHistory = false
 
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"
@@ -11,9 +12,18 @@ struct SettingsView: View {
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
 
+    private let moonService = MoonService()
+
     var body: some View {
         ZStack {
             bg.ignoresSafeArea()
+
+            // Pixel art sky background
+            if let moonData = moonService.calculateMoonPhase(date: Date()) as MoonData? {
+                MoonSceneView(moonData: moonData, showMoon: false)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+            }
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 24) {
@@ -44,6 +54,28 @@ struct SettingsView: View {
                     // Purchase section
                     purchaseSection
 
+                    // Reading History
+                    Button(action: { showHistory = true }) {
+                        HStack {
+                            Text("Reading History")
+                                .font(.custom(bodyFont, size: 11))
+                                .foregroundColor(.white.opacity(0.6))
+                            Spacer()
+                            Text(">")
+                                .font(.custom(titleFont, size: 8))
+                                .foregroundColor(.white.opacity(0.3))
+                        }
+                        .padding(12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(bg.opacity(0.85))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                                )
+                        )
+                    }
+
                     // Legal
                     legalSection
 
@@ -54,6 +86,9 @@ struct SettingsView: View {
         }
         .task {
             await creditManager.loadProducts()
+        }
+        .sheet(isPresented: $showHistory) {
+            ReadingHistoryView()
         }
     }
 
@@ -207,9 +242,13 @@ struct SettingsView: View {
                 .foregroundColor(.white.opacity(0.8))
 
             if creditManager.products.isEmpty {
-                ForEach(fallbackProducts, id: \.id) { product in
+                ForEach(CreditManager.fallbackProducts) { product in
                     purchaseRow(name: product.name, price: product.price, credits: product.credits)
                 }
+
+                Text("Loading store...")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.3))
             } else {
                 ForEach(creditManager.products) { product in
                     let credits = CreditManager.creditsForProduct(product.id)
@@ -219,6 +258,15 @@ struct SettingsView: View {
                         purchaseRow(name: "\(credits) Credits", price: product.displayPrice, credits: credits)
                     }
                     .disabled(creditManager.purchaseInProgress)
+                }
+            }
+
+            if creditManager.purchaseInProgress {
+                HStack(spacing: 8) {
+                    PixelLoading(color: accent)
+                    Text("Processing...")
+                        .font(.custom(bodyFont, size: 10))
+                        .foregroundColor(.white.opacity(0.5))
                 }
             }
 
@@ -329,20 +377,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Fallback products for dev/sandbox
-
-    private struct FallbackProduct: Identifiable {
-        let id: String
-        let name: String
-        let price: String
-        let credits: Int
-    }
-
-    private let fallbackProducts = [
-        FallbackProduct(id: "credits5", name: "5 Credits", price: "$1.99", credits: 5),
-        FallbackProduct(id: "credits15", name: "15 Credits", price: "$4.99", credits: 15),
-        FallbackProduct(id: "credits30", name: "30 Credits", price: "$8.99", credits: 30),
-    ]
 }
 
 #Preview {

@@ -30,17 +30,35 @@ struct NoCreditView: View {
                 // Purchase options
                 VStack(spacing: 10) {
                     if creditManager.products.isEmpty {
-                        ForEach(fallbackProducts, id: \.id) { product in
-                            purchaseRow(name: product.name, price: product.price, credits: product.credits)
+                        ForEach(CreditManager.fallbackProducts) { product in
+                            purchaseRow(name: product.name, price: product.price, credits: product.credits, isAvailable: false)
                         }
+
+                        Text("Loading store...")
+                            .font(.custom(bodyFont, size: 9))
+                            .foregroundColor(.white.opacity(0.3))
                     } else {
                         ForEach(creditManager.products, id: \.id) { product in
                             let credits = CreditManager.creditsForProduct(product.id)
-                            purchaseRow(name: product.displayName, price: product.displayPrice, credits: credits)
+                            Button(action: {
+                                Task { await creditManager.purchase(product) }
+                            }) {
+                                purchaseRow(name: "\(credits) Credits", price: product.displayPrice, credits: credits, isAvailable: true)
+                            }
+                            .disabled(creditManager.purchaseInProgress)
                         }
                     }
                 }
                 .padding(.horizontal, 16)
+
+                if creditManager.purchaseInProgress {
+                    HStack(spacing: 8) {
+                        PixelLoading(color: accent)
+                        Text("Processing...")
+                            .font(.custom(bodyFont, size: 10))
+                            .foregroundColor(.white.opacity(0.5))
+                    }
+                }
 
                 if let error = creditManager.purchaseError {
                     Text(error)
@@ -74,54 +92,34 @@ struct NoCreditView: View {
         }
     }
 
-    private func purchaseRow(name: String, price: String, credits: Int) -> some View {
-        Button(action: {
-            if let product = creditManager.products.first(where: { CreditManager.creditsForProduct($0.id) == credits }) {
-                Task { await creditManager.purchase(product) }
-            }
-        }) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(name)
-                        .font(.custom(bodyBoldFont, size: 12))
-                        .foregroundColor(.white)
-                    Text("\(credits) readings")
-                        .font(.custom(bodyFont, size: 9))
-                        .foregroundColor(.white.opacity(0.4))
-                }
-
-                Spacer()
-
-                Text(price)
+    private func purchaseRow(name: String, price: String, credits: Int, isAvailable: Bool) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(name)
                     .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(accent)
+                    .foregroundColor(.white)
+                Text("\(credits) readings")
+                    .font(.custom(bodyFont, size: 9))
+                    .foregroundColor(.white.opacity(0.4))
             }
-            .padding(12)
-            .background(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 4)
-                            .stroke(accent.opacity(0.3), lineWidth: 1)
-                    )
-            )
+
+            Spacer()
+
+            Text(price)
+                .font(.custom(bodyBoldFont, size: 12))
+                .foregroundColor(accent)
         }
-        .accessibilityLabel("Buy \(credits) credits for \(price)")
-        .disabled(creditManager.purchaseInProgress)
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(accent.opacity(0.3), lineWidth: 1)
+                )
+        )
+        .opacity(isAvailable ? 1.0 : 0.5)
     }
-
-    private struct FallbackProduct: Identifiable {
-        let id: String
-        let name: String
-        let price: String
-        let credits: Int
-    }
-
-    private let fallbackProducts = [
-        FallbackProduct(id: "credits5", name: "5 Credits", price: "$1.99", credits: 5),
-        FallbackProduct(id: "credits15", name: "15 Credits", price: "$4.99", credits: 15),
-        FallbackProduct(id: "credits30", name: "30 Credits", price: "$8.99", credits: 30),
-    ]
 }
 
 #Preview {
