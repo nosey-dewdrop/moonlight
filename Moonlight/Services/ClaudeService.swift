@@ -99,7 +99,7 @@ class ClaudeService {
         Retrogradlar: \(retroDesc)
         \(chartSection)
 
-        Soruya BAK. Bu kişi gerçekten ne soruyor? Yüzeydeki soru ile altındaki asıl mesele farklı olabilir. Soruyu ciddiye al ve SOMUT cevap ver.
+        İlk cümlede cevabını ver. Sonra soruya BAK. Bu kişi gerçekten ne soruyor? Yüzeydeki soru ile altındaki asıl mesele farklı olabilir. Soruyu ciddiye al ve SOMUT cevap ver.
 
         Gezegen pozisyonlarını ve ay fazını soruyla DOĞRUDAN ilişkilendir. "Merkür şu burçta, bu senin sorunla şu yüzden ilgili" gibi spesifik bağlantılar kur. Havadan atma.
 
