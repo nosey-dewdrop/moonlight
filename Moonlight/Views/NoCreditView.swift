@@ -5,8 +5,8 @@ struct NoCreditView: View {
     @ObservedObject private var creditManager = CreditManager.shared
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
 

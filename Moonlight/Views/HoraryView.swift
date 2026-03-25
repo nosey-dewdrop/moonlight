@@ -17,8 +17,8 @@ struct HoraryView: View {
     private let chartService = HoraryChartService()
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let readingFont = "PixelifySans-Regular"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
@@ -46,7 +46,7 @@ struct HoraryView: View {
                     if let reading = aiReading {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Yorum")
-                                .font(.custom(titleFont, size: 8))
+                                .font(.custom(titleFont, size: 16))
                                 .foregroundColor(accent)
 
                             Text(reading)

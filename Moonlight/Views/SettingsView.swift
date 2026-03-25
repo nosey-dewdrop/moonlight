@@ -7,8 +7,8 @@ struct SettingsView: View {
     @State private var showHistory = false
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
 
@@ -38,7 +38,7 @@ struct SettingsView: View {
                         .accessibilityLabel("Close")
                         Spacer()
                         Text("Ayarlar")
-                            .font(.custom(titleFont, size: 14))
+                            .font(.custom(titleFont, size: 24))
                             .foregroundColor(accent)
                         Spacer()
                         Color.clear.frame(width: 28)
@@ -62,7 +62,7 @@ struct SettingsView: View {
                                 .foregroundColor(.white.opacity(0.6))
                             Spacer()
                             Text(">")
-                                .font(.custom(titleFont, size: 8))
+                                .font(.custom(titleFont, size: 16))
                                 .foregroundColor(.white.opacity(0.3))
                         }
                         .padding(12)
@@ -97,7 +97,7 @@ struct SettingsView: View {
     private var birthChartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Doğum Haritası")
-                .font(.custom(titleFont, size: 8))
+                .font(.custom(titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             zodiacPicker("Güneş Burcu", selection: $userProfile.sunSign)
@@ -124,7 +124,7 @@ struct SettingsView: View {
 
                         Button(action: { userProfile.birthTime = nil }) {
                             Text("x")
-                                .font(.custom(titleFont, size: 8))
+                                .font(.custom(titleFont, size: 16))
                                 .foregroundColor(Color(hex: "#FF6B6B"))
                         }
                     }
@@ -193,7 +193,7 @@ struct SettingsView: View {
     private var creditsSection: some View {
         VStack(spacing: 8) {
             Text("Krediler")
-                .font(.custom(titleFont, size: 8))
+                .font(.custom(titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             Text("\(creditManager.totalCredits)")
@@ -238,7 +238,7 @@ struct SettingsView: View {
     private var purchaseSection: some View {
         VStack(spacing: 10) {
             Text("Kredi Al")
-                .font(.custom(titleFont, size: 8))
+                .font(.custom(titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             if creditManager.products.isEmpty {
@@ -331,7 +331,7 @@ struct SettingsView: View {
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
-                        .font(.custom(titleFont, size: 8))
+                        .font(.custom(titleFont, size: 16))
                         .foregroundColor(.white.opacity(0.3))
                 }
                 .padding(12)
@@ -356,7 +356,7 @@ struct SettingsView: View {
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
-                        .font(.custom(titleFont, size: 8))
+                        .font(.custom(titleFont, size: 16))
                         .foregroundColor(.white.opacity(0.3))
                 }
                 .padding(12)

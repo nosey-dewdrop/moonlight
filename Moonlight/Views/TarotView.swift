@@ -22,8 +22,8 @@ struct TarotView: View {
     private let astrologyService = AstrologyService()
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let readingFont = "PixelifySans-Regular"
     private let readingBoldFont = "PixelifySans-SemiBold"
     private let accent = Color(hex: "#FFE566")
@@ -185,7 +185,7 @@ struct TarotView: View {
     private var premiumSpreadsSection: some View {
         VStack(spacing: 12) {
             Text("Premium Açılımlar")
-                .font(.custom(titleFont, size: 8))
+                .font(.custom(titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.6))
                 .padding(.top, 20)
 
@@ -285,7 +285,7 @@ struct TarotView: View {
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Yorum")
-                        .font(.custom(titleFont, size: 8))
+                        .font(.custom(titleFont, size: 16))
                         .foregroundColor(accent)
 
                     Text(reading)

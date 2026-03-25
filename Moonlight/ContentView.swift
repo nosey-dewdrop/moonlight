@@ -9,7 +9,7 @@ struct ContentView: View {
     @ObservedObject private var creditManager = CreditManager.shared
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
+    private let bodyFont = "PixelifySans-Regular"
     private let accent = Color(hex: "#FFE566")
     private let moonService = MoonService()
 

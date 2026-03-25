@@ -13,8 +13,8 @@ struct HomeView: View {
     private let astrologyService = AstrologyService()
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let readingFont = "PixelifySans-Regular"
 
     var body: some View {
@@ -41,7 +41,7 @@ struct HomeView: View {
                     HStack {
                         Button(action: { showMenu = true }) {
                             Text("=")
-                                .font(.custom(titleFont, size: 14))
+                                .font(.custom(titleFont, size: 24))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(12)
                         }
@@ -119,7 +119,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
                 Text("Gökyüzü Olayları")
-                    .font(.custom(titleFont, size: 8))
+                    .font(.custom(titleFont, size: 16))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
 

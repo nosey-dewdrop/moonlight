@@ -5,8 +5,8 @@ struct ReadingHistoryView: View {
     @State private var records: [ReadingRecord] = []
 
     private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "Silkscreen-Regular"
-    private let bodyBoldFont = "Silkscreen-Bold"
+    private let bodyFont = "PixelifySans-Regular"
+    private let bodyBoldFont = "PixelifySans-SemiBold"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
     private let moonService = MoonService()
@@ -40,7 +40,7 @@ struct ReadingHistoryView: View {
                     }
                     Spacer()
                     Text("Geçmiş")
-                        .font(.custom(titleFont, size: 14))
+                        .font(.custom(titleFont, size: 24))
                         .foregroundColor(accent)
                     Spacer()
                     Color.clear.frame(width: 28)
@@ -108,7 +108,7 @@ struct ReadingHistoryView: View {
                 HStack(spacing: 4) {
                     if record.isFavorite {
                         Text("*")
-                            .font(.custom(titleFont, size: 8))
+                            .font(.custom(titleFont, size: 16))
                             .foregroundColor(accent)
                     }
                     Text(record.question)
