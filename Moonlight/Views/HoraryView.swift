@@ -19,6 +19,7 @@ struct HoraryView: View {
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"
     private let bodyBoldFont = "Silkscreen-Bold"
+    private let readingFont = "PixelifySans-Regular"
     private let accent = Color(hex: "#FFE566")
     private let bg = Color(hex: "#0b0b2e")
 
@@ -49,9 +50,9 @@ struct HoraryView: View {
                                 .foregroundColor(accent)
 
                             Text(reading)
-                                .font(.custom(bodyFont, size: 11))
+                                .font(.custom(readingFont, size: 15))
                                 .foregroundColor(.white.opacity(0.85))
-                                .lineSpacing(4)
+                                .lineSpacing(5)
                         }
                         .padding(12)
                         .background(
@@ -69,7 +70,7 @@ struct HoraryView: View {
                                 requestFollowUp()
                             }
                             .disabled(isLoading)
-                            PixelButton("Tekrar Sor", style: .secondary) {
+                            PixelButton("Tamam", style: .secondary) {
                                 resetQuestion()
                             }
                             .disabled(isLoading)

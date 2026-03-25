@@ -15,6 +15,7 @@ struct HomeView: View {
     private let titleFont = "PressStart2P-Regular"
     private let bodyFont = "Silkscreen-Regular"
     private let bodyBoldFont = "Silkscreen-Bold"
+    private let readingFont = "PixelifySans-Regular"
 
     var body: some View {
         ZStack {
@@ -117,7 +118,7 @@ struct HomeView: View {
     private var astroEventsList: some View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
-                Text("Kozmik Olaylar")
+                Text("Gökyüzü Olayları")
                     .font(.custom(titleFont, size: 8))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
@@ -127,7 +128,7 @@ struct HomeView: View {
                 }
             } else if eventsError {
                 VStack(spacing: 8) {
-                    Text("Kozmik olaylar yüklenemedi")
+                    Text("Gökyüzü olayları yüklenemedi")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.4))
                     Button(action: { Task { await retryEvents() } }) {
@@ -139,7 +140,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             } else {
-                Text("Aktif kozmik olay yok")
+                Text("Aktif gökyüzü olayı yok")
                     .font(.custom(bodyFont, size: 10))
                     .foregroundColor(.white.opacity(0.3))
                     .frame(maxWidth: .infinity)
@@ -167,7 +168,7 @@ struct HomeView: View {
                 }
 
                 Text(event.description)
-                    .font(.custom(bodyFont, size: 10))
+                    .font(.custom(readingFont, size: 13))
                     .foregroundColor(.white.opacity(0.4))
 
                 if !event.dateRangeText.isEmpty {
