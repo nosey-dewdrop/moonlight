@@ -33,6 +33,8 @@ struct PixelButton: View {
                     ZStack {
                         if style == .primary {
                             accent
+                        } else {
+                            bg.opacity(0.9)
                         }
                         // Pixel border: 2px solid lines
                         VStack(spacing: 0) {

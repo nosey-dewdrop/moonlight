@@ -31,6 +31,26 @@ struct PixelStarsView: View {
         ("atmospheric_star_blue_1", 0.18, 0.55, 18),
     ]
 
+    // Big pixel art sparkles - concentrated at the top around the moon
+    private let bigSparkles: [(name: String, xFrac: CGFloat, yFrac: CGFloat, sz: CGFloat)] = [
+        // Top cluster - around moon area
+        ("sparkle_gold", 0.06, 0.04, 34),
+        ("sparkle_blue", 0.92, 0.06, 38),
+        ("sparkle_gold", 0.35, 0.02, 30),
+        ("sparkle_blue", 0.70, 0.08, 32),
+        ("sparkle_gold", 0.18, 0.10, 28),
+        ("sparkle_blue", 0.55, 0.04, 26),
+        ("sparkle_gold", 0.82, 0.12, 30),
+        ("sparkle_blue", 0.28, 0.14, 24),
+        ("sparkle_gold", 0.48, 0.16, 32),
+        ("sparkle_blue", 0.05, 0.18, 28),
+        // Mid area - sparser
+        ("sparkle_gold", 0.65, 0.30, 24),
+        ("sparkle_blue", 0.15, 0.38, 26),
+        ("sparkle_gold", 0.85, 0.42, 22),
+        ("sparkle_blue", 0.40, 0.50, 24),
+    ]
+
     private let starColor = Color(hex: "#FFE566")
 
     var body: some View {
@@ -45,7 +65,7 @@ struct PixelStarsView: View {
                     .position(x: size.width * pos.xFrac, y: size.height * pos.yFrac)
             }
 
-            // Pixel art sparkles
+            // Pixel art sparkles (small)
             ForEach(0..<assetStars.count, id: \.self) { i in
                 let star = assetStars[i]
                 Image(star.name)
@@ -54,6 +74,17 @@ struct PixelStarsView: View {
                     .frame(width: star.sz, height: star.sz)
                     .opacity(i < twinkle.count ? twinkle[i] : 0.5)
                     .position(x: size.width * star.xFrac, y: size.height * star.yFrac)
+            }
+
+            // Big sparkles
+            ForEach(0..<bigSparkles.count, id: \.self) { i in
+                let spark = bigSparkles[i]
+                Image(spark.name)
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: spark.sz, height: spark.sz)
+                    .opacity(i < twinkle.count ? twinkle[i] * 0.8 : 0.4)
+                    .position(x: size.width * spark.xFrac, y: size.height * spark.yFrac)
             }
         }
         .onAppear {
