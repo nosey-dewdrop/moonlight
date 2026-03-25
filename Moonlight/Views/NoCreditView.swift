@@ -12,6 +12,12 @@ struct NoCreditView: View {
 
     private let moonService = MoonService()
 
+    @State private var saturnOffset: CGFloat = 0
+    @State private var venusOffset: CGFloat = 0
+    @State private var marsRotation: Double = 0
+    @State private var sparkleOpacity1: Double = 0.3
+    @State private var sparkleOpacity2: Double = 0.6
+
     var body: some View {
         ZStack {
             bg.ignoresSafeArea()
@@ -22,14 +28,116 @@ struct NoCreditView: View {
                     .allowsHitTesting(false)
             }
 
-            VStack(spacing: 24) {
+            // Floating planets
+            GeometryReader { geo in
+                // Saturn top-right (star of the show)
+                Image("planet_saturn")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 128, height: 128)
+                    .opacity(0.8)
+                    .offset(y: saturnOffset)
+                    .position(x: geo.size.width * 0.78, y: geo.size.height * 0.06)
+
+                // Jupiter top-left
+                Image("planet_jupiter")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 72, height: 72)
+                    .opacity(0.6)
+                    .position(x: geo.size.width * 0.08, y: geo.size.height * 0.08)
+
+                // Venus bottom-right
+                Image("planet_venus")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 52, height: 52)
+                    .opacity(0.65)
+                    .offset(y: venusOffset)
+                    .position(x: geo.size.width * 0.88, y: geo.size.height * 0.82)
+
+                // Mars bottom-left
+                Image("planet_mars")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 56, height: 56)
+                    .opacity(0.55)
+                    .rotationEffect(.degrees(marsRotation))
+                    .position(x: geo.size.width * 0.1, y: geo.size.height * 0.88)
+
+                // Neptune mid-left
+                Image("planet_neptune")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 44, height: 44)
+                    .opacity(0.5)
+                    .position(x: geo.size.width * 0.05, y: geo.size.height * 0.5)
+
+                // Sparkles - top area only
+                Image("sparkle_gold")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 36, height: 36)
+                    .opacity(sparkleOpacity1)
+                    .position(x: geo.size.width * 0.35, y: geo.size.height * 0.05)
+
+                Image("sparkle_blue")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 48, height: 48)
+                    .opacity(sparkleOpacity2)
+                    .position(x: geo.size.width * 0.5, y: geo.size.height * 0.14)
+
+                Image("sparkle_gold")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 28, height: 28)
+                    .opacity(sparkleOpacity2)
+                    .position(x: geo.size.width * 0.15, y: geo.size.height * 0.18)
+
+                Image("sparkle_blue")
+                    .interpolation(.none)
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .opacity(sparkleOpacity1)
+                    .position(x: geo.size.width * 0.7, y: geo.size.height * 0.9)
+
+            }
+            .allowsHitTesting(false)
+
+            // Content
+            VStack(spacing: 20) {
                 Spacer()
 
-                Text("No Credits")
-                    .font(.custom(titleFont, size: 14))
-                    .foregroundColor(accent)
+                // Coin icon
+                ZStack {
+                    VStack(spacing: 0) {
+                        Rectangle().fill(accent).frame(width: 20, height: 4)
+                        Rectangle().fill(accent).frame(width: 28, height: 4)
+                        Rectangle().fill(accent).frame(width: 28, height: 4)
+                        Rectangle().fill(accent).frame(width: 28, height: 4)
+                        Rectangle().fill(accent).frame(width: 28, height: 4)
+                        Rectangle().fill(accent).frame(width: 28, height: 4)
+                        Rectangle().fill(accent).frame(width: 20, height: 4)
+                    }
+                    VStack(spacing: 0) {
+                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 12, height: 4)
+                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 20, height: 4)
+                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 20, height: 4)
+                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 12, height: 4)
+                    }
+                    Rectangle().fill(accent).frame(width: 12, height: 4)
+                    Rectangle().fill(accent).frame(width: 4, height: 12)
+                }
+                .frame(width: 28, height: 28)
+                .shadow(color: accent.opacity(0.4), radius: 8)
 
-                Text("Your daily credits are used up.\nGet more to continue reading.")
+                Text("No Credits")
+                    .font(.custom(titleFont, size: 16))
+                    .foregroundColor(accent)
+                    .shadow(color: accent.opacity(0.5), radius: 6)
+
+                Text("The stars await your return.\nUnlock more readings.")
                     .font(.custom(bodyFont, size: 11))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -57,7 +165,7 @@ struct NoCreditView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 20)
 
                 if creditManager.purchaseInProgress {
                     HStack(spacing: 8) {
@@ -97,6 +205,21 @@ struct NoCreditView: View {
         }
         .task {
             await creditManager.loadProducts()
+            withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
+                saturnOffset = 8
+            }
+            withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)) {
+                venusOffset = -6
+            }
+            withAnimation(.linear(duration: 20).repeatForever(autoreverses: false)) {
+                marsRotation = 360
+            }
+            withAnimation(.easeInOut(duration: 2).repeatForever(autoreverses: true)) {
+                sparkleOpacity1 = 0.8
+            }
+            withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true)) {
+                sparkleOpacity2 = 0.9
+            }
         }
     }
 
