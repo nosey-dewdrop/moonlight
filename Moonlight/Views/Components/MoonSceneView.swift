@@ -79,6 +79,7 @@ struct DriftingCloud: View {
     let startX: CGFloat
     let endX: CGFloat
     let duration: Double
+    let containerWidth: CGFloat
 
     @State private var atEnd = false
 
@@ -89,7 +90,7 @@ struct DriftingCloud: View {
             .frame(width: width, height: width * 0.4)
             .opacity(0.8)
             .position(
-                x: (atEnd ? endX : startX) + UIScreen.main.bounds.width / 2,
+                x: (atEnd ? endX : startX) + containerWidth / 2,
                 y: y
             )
             .animation(.linear(duration: duration).repeatForever(autoreverses: true), value: atEnd)
@@ -111,8 +112,8 @@ struct MoonSceneView: View {
                 PixelStarsView(size: geometry.size)
 
                 // Back clouds
-                DriftingCloud(name: "cloud_1", width: 280, y: geometry.size.height * 0.25, startX: -200, endX: 200, duration: 25)
-                DriftingCloud(name: "cloud_2", width: 240, y: geometry.size.height * 0.45, startX: 300, endX: -300, duration: 35)
+                DriftingCloud(name: "cloud_1", width: 280, y: geometry.size.height * 0.25, startX: -200, endX: 200, duration: 25, containerWidth: geometry.size.width)
+                DriftingCloud(name: "cloud_2", width: 240, y: geometry.size.height * 0.45, startX: 300, endX: -300, duration: 35, containerWidth: geometry.size.width)
 
                 // Moon character
                 if showMoon {
@@ -121,10 +122,10 @@ struct MoonSceneView: View {
                 }
 
                 // Front clouds
-                DriftingCloud(name: "cloud_3", width: 320, y: geometry.size.height * 0.55, startX: -100, endX: 100, duration: 20)
-                DriftingCloud(name: "cloud_4", width: 260, y: geometry.size.height * 0.68, startX: 200, endX: -200, duration: 40)
-                DriftingCloud(name: "cloud_5", width: 350, y: geometry.size.height * 0.80, startX: -300, endX: 300, duration: 30)
-                DriftingCloud(name: "cloud_6", width: 300, y: geometry.size.height * 0.92, startX: 100, endX: -100, duration: 20)
+                DriftingCloud(name: "cloud_3", width: 320, y: geometry.size.height * 0.55, startX: -100, endX: 100, duration: 20, containerWidth: geometry.size.width)
+                DriftingCloud(name: "cloud_4", width: 260, y: geometry.size.height * 0.68, startX: 200, endX: -200, duration: 40, containerWidth: geometry.size.width)
+                DriftingCloud(name: "cloud_5", width: 350, y: geometry.size.height * 0.80, startX: -300, endX: 300, duration: 30, containerWidth: geometry.size.width)
+                DriftingCloud(name: "cloud_6", width: 300, y: geometry.size.height * 0.92, startX: 100, endX: -100, duration: 20, containerWidth: geometry.size.width)
             }
         }
     }
