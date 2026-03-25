@@ -28,7 +28,7 @@ struct HoraryView: View {
                 VStack(spacing: 20) {
                     Spacer().frame(height: 60)
 
-                    Text("Soru")
+                    Text("Horary")
                         .font(.custom(titleFont, size: 16))
                         .foregroundColor(accent)
                         .shadow(color: accent.opacity(0.5), radius: 4)

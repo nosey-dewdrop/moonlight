@@ -57,8 +57,8 @@ class AstrologyService {
 
         // Major phases at these ages: New=0, First Quarter=7.38, Full=14.77, Last Quarter=22.15
         let phases: [(name: String, age: Double, icon: String, desc: String)] = [
-            ("New Moon", 0, "new_moon", "New cycle begins, set intentions"),
-            ("Full Moon", 14.77, "full_moon", "Harvest, clarity, release"),
+            ("Yeni Ay", 0, "new_moon", "Yeni döngü başlıyor, niyet zamanı"),
+            ("Dolunay", 14.77, "full_moon", "Hasat, netlik, bırakma zamanı"),
         ]
 
         var events: [AstroEvent] = []
@@ -91,23 +91,30 @@ class AstrologyService {
             let chart = try await chartService.fetchChart(latitude: lat, longitude: lon)
 
             let retrogradeDescriptions: [String: String] = [
-                "Mercury": "Communication and travel may be disrupted",
-                "Venus": "Love and relationships under review",
-                "Mars": "Energy and motivation may feel blocked",
-                "Jupiter": "Growth and expansion slow down for reflection",
-                "Saturn": "Time to revisit structures and responsibilities",
-                "Uranus": "Inner rebellion, rethinking freedom",
-                "Neptune": "Spiritual fog, illusions dissolving",
-                "Pluto": "Deep transformation beneath the surface",
+                "Mercury": "İletişim ve seyahat aksaklıkları olabilir",
+                "Venus": "Aşk ve ilişkiler gözden geçiriliyor",
+                "Mars": "Enerji ve motivasyon bloke hissedebilir",
+                "Jupiter": "Büyüme ve genişleme yavaşlıyor",
+                "Saturn": "Sorumlulukları ve yapıları gözden geçirme zamanı",
+                "Uranus": "İçsel isyan, özgürlüğü yeniden düşünme",
+                "Neptune": "Ruhani sis, illüzyonlar çözülüyor",
+                "Pluto": "Yüzeyin altında derin dönüşüm",
+            ]
+
+            let planetNamesTR: [String: String] = [
+                "Mercury": "Merkür", "Venus": "Venüs", "Mars": "Mars",
+                "Jupiter": "Jüpiter", "Saturn": "Satürn", "Uranus": "Uranüs",
+                "Neptune": "Neptün", "Pluto": "Plüton",
             ]
 
             return chart.planets
                 .filter { $0.isRetro && retrogradeDescriptions.keys.contains($0.name) }
                 .map { planet in
-                    AstroEvent(
+                    let trName = planetNamesTR[planet.name] ?? planet.name
+                    return AstroEvent(
                         type: .retrograde,
-                        title: "\(planet.name) Retrograde",
-                        description: retrogradeDescriptions[planet.name] ?? "Planet in retrograde motion",
+                        title: "\(trName) Retrograd",
+                        description: retrogradeDescriptions[planet.name] ?? "Gezegen geri hareket ediyor",
                         startDate: Date(),
                         endDate: nil
                     )
@@ -126,52 +133,52 @@ class AstrologyService {
         f.dateFormat = "yyyy-MM-dd"
 
         return [
-            // Solar Eclipses 2025
-            AstroEvent(type: .eclipse, title: "Partial Solar Eclipse",
-                       description: "Solar eclipse, new beginnings",
+            // Güneş Tutulmaları 2025
+            AstroEvent(type: .eclipse, title: "Kısmi Güneş Tutulması",
+                       description: "Yeni başlangıçlar zamanı",
                        startDate: f.date(from: "2025-03-29"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Partial Solar Eclipse",
-                       description: "Solar eclipse, fresh starts",
+            AstroEvent(type: .eclipse, title: "Kısmi Güneş Tutulması",
+                       description: "Taze bir sayfa açılıyor",
                        startDate: f.date(from: "2025-09-21"), endDate: nil),
 
-            // Lunar Eclipses 2025
-            AstroEvent(type: .eclipse, title: "Total Lunar Eclipse",
-                       description: "Full moon eclipse, emotional release",
+            // Ay Tutulmaları 2025
+            AstroEvent(type: .eclipse, title: "Tam Ay Tutulması",
+                       description: "Duygusal arınma zamanı",
                        startDate: f.date(from: "2025-03-14"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Total Lunar Eclipse",
-                       description: "Full moon eclipse, inner transformation",
+            AstroEvent(type: .eclipse, title: "Tam Ay Tutulması",
+                       description: "İçsel dönüşüm başlıyor",
                        startDate: f.date(from: "2025-09-07"), endDate: nil),
 
-            // Solar Eclipses 2026
-            AstroEvent(type: .eclipse, title: "Annular Solar Eclipse",
-                       description: "Ring of fire eclipse, powerful new cycle",
+            // Güneş Tutulmaları 2026
+            AstroEvent(type: .eclipse, title: "Halkalı Güneş Tutulması",
+                       description: "Ateş halkası, güçlü yeni döngü",
                        startDate: f.date(from: "2026-02-17"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Total Solar Eclipse",
-                       description: "Total solar eclipse, major transformation",
+            AstroEvent(type: .eclipse, title: "Tam Güneş Tutulması",
+                       description: "Büyük dönüşüm zamanı",
                        startDate: f.date(from: "2026-08-12"), endDate: nil),
 
-            // Lunar Eclipses 2026
-            AstroEvent(type: .eclipse, title: "Total Lunar Eclipse",
-                       description: "Full moon eclipse, deep emotional shifts",
+            // Ay Tutulmaları 2026
+            AstroEvent(type: .eclipse, title: "Tam Ay Tutulması",
+                       description: "Derin duygusal değişimler",
                        startDate: f.date(from: "2026-03-03"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Partial Lunar Eclipse",
-                       description: "Partial eclipse, subtle inner changes",
+            AstroEvent(type: .eclipse, title: "Kısmi Ay Tutulması",
+                       description: "İnce içsel değişimler",
                        startDate: f.date(from: "2026-08-28"), endDate: nil),
 
-            // Solar Eclipses 2027
-            AstroEvent(type: .eclipse, title: "Total Solar Eclipse",
-                       description: "Total solar eclipse, major life shift",
+            // Güneş Tutulmaları 2027
+            AstroEvent(type: .eclipse, title: "Tam Güneş Tutulması",
+                       description: "Hayatında büyük değişim",
                        startDate: f.date(from: "2027-02-06"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Annular Solar Eclipse",
-                       description: "Ring of fire, new cycles begin",
+            AstroEvent(type: .eclipse, title: "Halkalı Güneş Tutulması",
+                       description: "Ateş halkası, yeni döngüler",
                        startDate: f.date(from: "2027-08-02"), endDate: nil),
 
-            // Lunar Eclipses 2027
-            AstroEvent(type: .eclipse, title: "Penumbral Lunar Eclipse",
-                       description: "Subtle shifts in emotional landscape",
+            // Ay Tutulmaları 2027
+            AstroEvent(type: .eclipse, title: "Yarıgölge Ay Tutulması",
+                       description: "Duygusal manzarada ince değişimler",
                        startDate: f.date(from: "2027-02-20"), endDate: nil),
-            AstroEvent(type: .eclipse, title: "Penumbral Lunar Eclipse",
-                       description: "Inner tides gently turning",
+            AstroEvent(type: .eclipse, title: "Yarıgölge Ay Tutulması",
+                       description: "İç gelgitler yavaşça dönüyor",
                        startDate: f.date(from: "2027-07-18"), endDate: nil),
         ]
     }
