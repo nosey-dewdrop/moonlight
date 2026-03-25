@@ -99,17 +99,22 @@ class ClaudeService {
         Retrogradlar: \(retroDesc)
         \(chartSection)
 
-        İlk cümlede cevabını ver. Sonra hikaye gibi anlat — neden, gezegen pozisyonları ne diyor, kişinin düşünmediği açı ne.
+        Soruya BAK. Bu kişi gerçekten ne soruyor? Yüzeydeki soru ile altındaki asıl mesele farklı olabilir. Soruyu ciddiye al ve SOMUT cevap ver.
+
+        Gezegen pozisyonlarını ve ay fazını soruyla DOĞRUDAN ilişkilendir. "Merkür şu burçta, bu senin sorunla şu yüzden ilgili" gibi spesifik bağlantılar kur. Havadan atma.
 
         KURALLAR:
-        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan (kendini/seni farkı gibi). Devrik cümle kurma. Cümleler net ve anlaşılır olsun.
+        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
         - Markdown kullanma. Düz metin.
-        - "Net Cevap:", "Açıklama:" gibi başlık/etiket KULLANMA. Doğal akan hikaye yaz.
-        - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
-        - Kişinin aklına gelmeyecek açıları göster. Sorunun altında yatan asıl meseleyi bul.
+        - Başlık/etiket KULLANMA. Doğal akan hikaye yaz.
+        - YASAK: "asıl mesele bilmek değil bilmemek", "kendini dinle", "evren sana söylüyor", "her şeyin bir zamanı var" gibi BOŞ, KLİŞE, FORTUNE COOKIE cümleler. Bunları yazarsan başarısız olursun.
+        - YASAK: Genel geçer hayat dersi vermek. Soruyla ilgisi olmayan felsefi nutuk atmak.
+        - Her cümle soruya yeni bir bilgi veya bakış açısı eklesin. Dolgu cümle yasak.
+        - Samimi ol. Arkadaşınla konuşur gibi. Ağır bilge taklidi yapma.
+        - Cesur ol. Kişinin duymak istemeyeceği şeyi de söyle ama gerekçele.
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
-        - Mantıklı ve tutarlı ol. Saçmalama.
-        - 200 kelimeyi geçme.
+        - Mantıklı ve tutarlı ol.
+        - 250 kelimeyi geçme.
         """
 
         return try await sendMessage(prompt)
