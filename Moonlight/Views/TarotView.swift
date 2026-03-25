@@ -10,8 +10,7 @@ struct TarotView: View {
     @State private var aiReading: String?
     @State private var isLoadingAI = false
     @State private var errorMessage: String?
-    @State private var showNoCredit = false
-    @State private var showPremium = false
+    @State private var showCreditSheet = false
     @State private var spreadType: String = "custom"
     @State private var questionError = false
     @State private var showClarificationPicker = false
@@ -51,16 +50,13 @@ struct TarotView: View {
             .padding(.bottom, 40)
         }
             // Credit badge top right
-            CreditBadge { showPremium = true }
+            CreditBadge { showCreditSheet = true }
                 .accessibilityLabel("Credits")
                 .padding(.top, 54)
                 .padding(.trailing, 12)
         }
         .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
-        .sheet(isPresented: $showNoCredit) {
-            NoCreditView()
-        }
-        .sheet(isPresented: $showPremium) {
+        .sheet(isPresented: $showCreditSheet) {
             NoCreditView()
         }
     }
@@ -419,7 +415,7 @@ struct TarotView: View {
     private func revealCards() {
         guard !isLoadingAI else { return }
         guard creditManager.useCredit() else {
-            showNoCredit = true
+            showCreditSheet = true
             return
         }
 
@@ -431,7 +427,7 @@ struct TarotView: View {
 
     private func drawClarificationCard() {
         guard creditManager.hasCredits else {
-            showNoCredit = true
+            showCreditSheet = true
             return
         }
         showClarificationPicker = true
@@ -440,7 +436,7 @@ struct TarotView: View {
     private func submitClarification(card: TarotCard) {
         guard !isLoadingClarification else { return }
         guard creditManager.useCredit() else {
-            showNoCredit = true
+            showCreditSheet = true
             return
         }
 
@@ -505,7 +501,7 @@ struct TarotView: View {
         }
 
         guard creditManager.useCredits(credits) else {
-            showNoCredit = true
+            showCreditSheet = true
             return
         }
 
