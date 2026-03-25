@@ -112,11 +112,7 @@ struct SettingsView: View {
 
                 if let time = userProfile.birthTime {
                     HStack {
-                        Text({
-                            let f = DateFormatter()
-                            f.dateFormat = "HH:mm"
-                            return f.string(from: time)
-                        }())
+                        Text(Theme.timeFormatter.string(from: time))
                             .font(.custom(bodyBoldFont, size: 15))
                             .foregroundColor(.white)
 

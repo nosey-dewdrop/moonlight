@@ -3,6 +3,12 @@ import Foundation
 class ClaudeService {
     private let maxTokens = 1024
 
+    private static let dateTimeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd HH:mm"
+        return f
+    }()
+
     // MARK: - Tarot Reading
 
     private func positionNames(for spreadType: String, count: Int) -> [String] {
@@ -75,9 +81,7 @@ class ClaudeService {
         let retroDesc = activeRetrogrades.isEmpty ? "None" : activeRetrogrades.joined(separator: ", ")
 
         let now = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let timeStr = formatter.string(from: now)
+        let timeStr = Self.dateTimeFormatter.string(from: now)
 
         var chartSection = ""
         if let chart = chartData {

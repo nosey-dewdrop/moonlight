@@ -29,15 +29,18 @@ struct AstroEvent: Identifiable {
         }
     }
 
-    var dateRangeText: String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        formatter.dateFormat = "d MMM"
+    private static let shortDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.locale = Locale.current
+        f.dateFormat = "d MMM"
+        return f
+    }()
 
+    var dateRangeText: String {
         if let start = startDate, let end = endDate {
-            return "\(formatter.string(from: start)) - \(formatter.string(from: end))"
+            return "\(Self.shortDateFormatter.string(from: start)) - \(Self.shortDateFormatter.string(from: end))"
         } else if let start = startDate {
-            return formatter.string(from: start)
+            return Self.shortDateFormatter.string(from: start)
         }
         return ""
     }

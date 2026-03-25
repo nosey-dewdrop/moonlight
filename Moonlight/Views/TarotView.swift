@@ -21,15 +21,12 @@ struct TarotView: View {
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
 
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let bodyBoldFont = "PixelifySans-SemiBold"
-    private let readingFont = "PixelifySans-Regular"
-    private let readingBoldFont = "PixelifySans-SemiBold"
-    private let accent = Color(hex: "#FFE566")
-    private let bg = Color(hex: "#0b0b2e")
+    private var availableCards: [TarotCard] {
+        let usedIds = Set(selectedCards.map { $0.card.id })
+        return shuffledDeck.filter { !usedIds.contains($0.id) }
+    }
 
-    private let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
+    private static let columns = Array(repeating: GridItem(.flexible(), spacing: 8), count: 5)
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -38,9 +35,9 @@ struct TarotView: View {
                     Spacer().frame(height: 60)
 
                     Text("Tarot")
-                        .font(.custom(titleFont, size: 16))
-                        .foregroundColor(accent)
-                        .shadow(color: accent.opacity(0.5), radius: 4)
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(Theme.accent)
+                        .shadow(color: Theme.accent.opacity(0.5), radius: 4)
 
                 if showReading {
                     readingView
@@ -68,16 +65,16 @@ struct TarotView: View {
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
             Text("3'e kadar kart seç (okuma başı 1 kredi)")
-                .font(.custom(bodyFont, size: 15))
+                .font(.custom(Theme.bodyFont, size: 15))
                 .foregroundColor(.white.opacity(0.5))
 
             // Credits display
             HStack(spacing: 4) {
                 Text("\(creditManager.totalCredits)")
-                    .font(.custom(titleFont, size: 10))
-                    .foregroundColor(accent)
+                    .font(.custom(Theme.titleFont, size: 10))
+                    .foregroundColor(Theme.accent)
                 Text("kredi")
-                    .font(.custom(bodyFont, size: 13))
+                    .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.4))
             }
 
@@ -85,16 +82,16 @@ struct TarotView: View {
             TextField("", text: $question, prompt:
                 Text("Sorun ne?")
                     .foregroundColor(.white.opacity(0.3))
-                    .font(.custom(bodyFont, size: 15))
+                    .font(.custom(Theme.bodyFont, size: 15))
             )
-            .font(.custom(bodyFont, size: 15))
+            .font(.custom(Theme.bodyFont, size: 15))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
+                    .fill(Theme.bg.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -108,8 +105,8 @@ struct TarotView: View {
 
             if questionError {
                 Text("Önce bir soru yaz")
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(Color(hex: "#FF6B6B"))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(Theme.error)
             }
 
             // Reveal button
@@ -124,7 +121,7 @@ struct TarotView: View {
             .disabled(selectedCards.isEmpty || isLoadingAI)
 
             // 78 cards grid
-            LazyVGrid(columns: columns, spacing: 8) {
+            LazyVGrid(columns: Self.columns, spacing: 8) {
                 ForEach(shuffledDeck) { card in
                     let isSelected = selectedCards.contains(where: { $0.card.id == card.id })
 
@@ -132,16 +129,16 @@ struct TarotView: View {
                         ZStack {
                             // Solid opaque background
                             RoundedRectangle(cornerRadius: 2)
-                                .fill(Color(hex: "#12123a"))
+                                .fill(Theme.cardBg)
 
                             // Inner border
                             RoundedRectangle(cornerRadius: 2)
-                                .stroke(isSelected ? accent : Color(hex: "#2a2a5e"), lineWidth: 1)
+                                .stroke(isSelected ? Theme.accent : Theme.cardBorder, lineWidth: 1)
                                 .padding(3)
 
                             // Outer border
                             RoundedRectangle(cornerRadius: 2)
-                                .stroke(isSelected ? accent : Color(hex: "#1e1e4e"), lineWidth: isSelected ? 2 : 1)
+                                .stroke(isSelected ? Theme.accent : Theme.cardOuterBorder, lineWidth: isSelected ? 2 : 1)
 
                             // Corner dots
                             VStack {
@@ -161,8 +158,8 @@ struct TarotView: View {
 
                             // Center symbol
                             Text(isSelected ? "*" : "?")
-                                .font(.custom(titleFont, size: 12))
-                                .foregroundColor(isSelected ? accent : Color(hex: "#2a2a5e"))
+                                .font(.custom(Theme.titleFont, size: 12))
+                                .foregroundColor(isSelected ? Theme.accent : Theme.cardBorder)
                         }
                         .frame(height: 90)
                     }
@@ -172,7 +169,7 @@ struct TarotView: View {
             }
 
             Text("\(selectedCards.count)/3 seçildi")
-                .font(.custom(bodyFont, size: 13))
+                .font(.custom(Theme.bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.3))
 
             // Premium spreads
@@ -185,7 +182,7 @@ struct TarotView: View {
     private var premiumSpreadsSection: some View {
         VStack(spacing: 12) {
             Text("Premium Açılımlar")
-                .font(.custom(titleFont, size: 16))
+                .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.6))
                 .padding(.top, 20)
 
@@ -201,23 +198,23 @@ struct TarotView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
-                        .font(.custom(bodyBoldFont, size: 15))
+                        .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("\(cards) kart")
-                        .font(.custom(bodyFont, size: 13))
+                        .font(.custom(Theme.bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 Spacer()
 
                 Text("\(credits) kredi")
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(accent)
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(Theme.accent)
             }
             .padding(12)
             .background(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
+                    .fill(Theme.bg.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -232,7 +229,7 @@ struct TarotView: View {
         VStack(spacing: 16) {
             // Question
             Text("\"\(question)\"")
-                .font(.custom(bodyFont, size: 15))
+                .font(.custom(Theme.bodyFont, size: 15))
                 .foregroundColor(.white.opacity(0.5))
                 .italic()
 
@@ -241,19 +238,19 @@ struct TarotView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 6) {
                         Text(positionName(for: index))
-                            .font(.custom(bodyFont, size: 13))
-                            .foregroundColor(accent.opacity(0.5))
+                            .font(.custom(Theme.bodyFont, size: 13))
+                            .foregroundColor(Theme.accent.opacity(0.5))
                         Text(drawn.card.name)
-                            .font(.custom(readingBoldFont, size: 14))
+                            .font(.custom(Theme.bodyBoldFont, size: 14))
                             .foregroundColor(.white)
                     }
 
                     Text(drawn.card.keywords.joined(separator: " · "))
-                        .font(.custom(readingFont, size: 13))
-                        .foregroundColor(accent.opacity(0.7))
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(Theme.accent.opacity(0.7))
 
                     Text(drawn.card.meaning)
-                        .font(.custom(readingFont, size: 13))
+                        .font(.custom(Theme.bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.6))
 
                     Spacer(minLength: 0)
@@ -263,7 +260,7 @@ struct TarotView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
+                        .fill(Theme.bg.opacity(0.85))
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -274,9 +271,9 @@ struct TarotView: View {
             // AI Reading
             if isLoadingAI {
                 HStack(spacing: 8) {
-                    PixelLoading(color: accent)
+                    PixelLoading(color: Theme.accent)
                     Text("Yıldızlar okunuyor...")
-                        .font(.custom(bodyFont, size: 14))
+                        .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
                 .padding(12)
@@ -285,30 +282,30 @@ struct TarotView: View {
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Yorum")
-                        .font(.custom(titleFont, size: 16))
-                        .foregroundColor(accent)
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(Theme.accent)
 
                     Text(reading)
-                        .font(.custom(readingFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.85))
                         .lineSpacing(5)
                 }
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
+                        .fill(Theme.bg.opacity(0.85))
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
-                                .stroke(accent.opacity(0.3), lineWidth: 1)
+                                .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
                         )
                 )
 
                 // Two buttons side by side
                 if isLoadingClarification {
                     HStack(spacing: 8) {
-                        PixelLoading(color: accent)
+                        PixelLoading(color: Theme.accent)
                         Text("Açıklama kartı çekiliyor...")
-                            .font(.custom(bodyFont, size: 14))
+                            .font(.custom(Theme.bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
                     .padding(12)
@@ -328,30 +325,30 @@ struct TarotView: View {
 
             if let error = errorMessage {
                 Text(error)
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(Theme.error.opacity(0.7))
             }
 
             // Clarification picker
             if showClarificationPicker {
                 VStack(spacing: 12) {
                     Text("Takip sorusu (isteğe bağlı)")
-                        .font(.custom(bodyFont, size: 14))
+                        .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
 
                     TextField("", text: $clarificationQuestion, prompt:
                         Text("Neyi daha çok merak ediyorsun?")
                             .foregroundColor(.white.opacity(0.3))
-                            .font(.custom(bodyFont, size: 15))
+                            .font(.custom(Theme.bodyFont, size: 15))
                     )
-                    .font(.custom(bodyFont, size: 15))
+                    .font(.custom(Theme.bodyFont, size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 4)
-                            .fill(bg.opacity(0.85))
+                            .fill(Theme.bg.opacity(0.85))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 4)
                                     .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -359,21 +356,20 @@ struct TarotView: View {
                     )
 
                     Text("Açıklama kartı seç (1 kredi)")
-                        .font(.custom(bodyFont, size: 14))
-                        .foregroundColor(accent.opacity(0.7))
+                        .font(.custom(Theme.bodyFont, size: 14))
+                        .foregroundColor(Theme.accent.opacity(0.7))
 
-                    LazyVGrid(columns: columns, spacing: 8) {
-                        let usedIds = Set(selectedCards.map { $0.card.id })
-                        ForEach(shuffledDeck.filter { !usedIds.contains($0.id) }) { card in
+                    LazyVGrid(columns: Self.columns, spacing: 8) {
+                        ForEach(availableCards) { card in
                             Button(action: { submitClarification(card: card) }) {
                                 ZStack {
                                     RoundedRectangle(cornerRadius: 2)
-                                        .fill(Color(hex: "#12123a"))
+                                        .fill(Theme.cardBg)
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color(hex: "#1e1e4e"), lineWidth: 1)
+                                        .stroke(Theme.cardOuterBorder, lineWidth: 1)
                                         .padding(3)
                                     RoundedRectangle(cornerRadius: 2)
-                                        .stroke(Color(hex: "#1e1e4e"), lineWidth: 1)
+                                        .stroke(Theme.cardOuterBorder, lineWidth: 1)
                                     VStack {
                                         HStack {
                                             pixelDot(false); Spacer(); pixelDot(false)
@@ -385,8 +381,8 @@ struct TarotView: View {
                                     }
                                     .padding(6)
                                     Text("?")
-                                        .font(.custom(titleFont, size: 12))
-                                        .foregroundColor(Color(hex: "#2a2a5e"))
+                                        .font(.custom(Theme.titleFont, size: 12))
+                                        .foregroundColor(Theme.cardBorder)
                                 }
                                 .frame(height: 90)
                             }
@@ -401,7 +397,7 @@ struct TarotView: View {
 
     private func pixelDot(_ active: Bool) -> some View {
         Rectangle()
-            .fill(active ? accent : Color(hex: "#2a2a5e"))
+            .fill(active ? Theme.accent : Theme.cardBorder)
             .frame(width: 3, height: 3)
     }
 
@@ -509,14 +505,14 @@ struct TarotView: View {
 
         currentSpreadCredits = credits
 
-        // Determine spread type
-        if name.contains("Celtic") {
+        // Determine spread type (Turkish labels)
+        if name.contains("Kelt") {
             spreadType = "celtic_cross"
-        } else if name.contains("Five") {
+        } else if name.contains("Beş") {
             spreadType = "five_card"
-        } else if name.contains("Relationship") {
+        } else if name.contains("İlişki") {
             spreadType = "relationship"
-        } else if name.contains("Career") {
+        } else if name.contains("Kariyer") {
             spreadType = "career"
         }
 

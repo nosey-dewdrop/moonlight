@@ -153,7 +153,7 @@ class CreditManager: ObservableObject {
             products = try await Product.products(for: productIds)
                 .sorted { $0.price < $1.price }
         } catch {
-            print("Failed to load products: \(error)")
+            // StoreKit product load failed — products array stays empty, UI shows fallback
         }
     }
 

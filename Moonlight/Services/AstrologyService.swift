@@ -120,17 +120,21 @@ class AstrologyService {
                     )
                 }
         } catch {
-            print("Failed to fetch live retrogrades: \(error)")
             return []
         }
     }
 
     // MARK: - Verified Eclipse Dates (NASA/USNO data — fixed predictions)
 
-    private static func verifiedEclipses() -> [AstroEvent] {
+    private static let eclipseDateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "en_US_POSIX")
         f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+
+    private static func verifiedEclipses() -> [AstroEvent] {
+        let f = eclipseDateFormatter
 
         return [
             // Güneş Tutulmaları 2025

@@ -42,6 +42,12 @@ enum ZodiacSign: String, CaseIterable, Codable {
 class UserProfile: ObservableObject {
     static let shared = UserProfile()
 
+    private static let birthTimeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm"
+        return f
+    }()
+
     @Published var sunSign: ZodiacSign? {
         didSet { save() }
     }
@@ -83,9 +89,7 @@ class UserProfile: ObservableObject {
         if let rising = risingSign { parts.append("Rising sign: \(rising.displayName)") }
         if let moon = moonSign { parts.append("Moon sign: \(moon.displayName)") }
         if let time = birthTime {
-            let f = DateFormatter()
-            f.dateFormat = "HH:mm"
-            parts.append("Birth time: \(f.string(from: time))")
+            parts.append("Birth time: \(Self.birthTimeFormatter.string(from: time))")
         }
         return parts.isEmpty ? "No birth chart info provided" : parts.joined(separator: ", ")
     }

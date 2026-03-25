@@ -136,10 +136,7 @@ struct ReadingHistoryView: View {
     }
 
     private func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = Locale.current
-        formatter.dateFormat = "d MMM, HH:mm"
-        return formatter.string(from: date)
+        Theme.historyDateFormatter.string(from: date)
     }
 }
 

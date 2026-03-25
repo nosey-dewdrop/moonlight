@@ -5,10 +5,14 @@ class MoonService {
     private let baseURL = "https://aa.usno.navy.mil/api/rstt/oneday"
 
     /// Fetch real moon data from USNO API
+    private static let dateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+
     func fetchMoonData(latitude: Double, longitude: Double) async throws -> MoonData {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateStr = dateFormatter.string(from: Date())
+        let dateStr = Self.dateFormatter.string(from: Date())
 
         let coordStr = String(format: "%.2f,%.2f", latitude, longitude)
         guard let url = URL(string: "\(baseURL)?date=\(dateStr)&coords=\(coordStr)") else {
