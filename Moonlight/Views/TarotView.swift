@@ -17,12 +17,19 @@ struct TarotView: View {
     @State private var clarificationQuestion = ""
     @State private var isLoadingClarification = false
     @State private var currentSpreadCredits = 1
+    @State private var activeAITask: Task<Void, Never>?
+    @State private var selectedCardDetail: TarotCard?
 
     private let claudeService = ClaudeService()
     private let astrologyService = AstrologyService()
 
+    /// Cached set of selected card IDs for O(1) lookup in ForEach
+    private var selectedCardIds: Set<Int> {
+        Set(selectedCards.map { $0.card.id })
+    }
+
     private var availableCards: [TarotCard] {
-        let usedIds = Set(selectedCards.map { $0.card.id })
+        let usedIds = selectedCardIds
         return shuffledDeck.filter { !usedIds.contains($0.id) }
     }
 
@@ -55,8 +62,14 @@ struct TarotView: View {
                 .padding(.trailing, 12)
         }
         .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
+        .onDisappear {
+            activeAITask?.cancel()
+        }
         .sheet(isPresented: $showCreditSheet) {
             NoCreditView()
+        }
+        .sheet(item: $selectedCardDetail) { card in
+            CardDetailView(card: card)
         }
     }
 
@@ -121,9 +134,10 @@ struct TarotView: View {
             .disabled(selectedCards.isEmpty || isLoadingAI)
 
             // 78 cards grid
+            let selectedIds = selectedCardIds
             LazyVGrid(columns: Self.columns, spacing: 8) {
                 ForEach(shuffledDeck) { card in
-                    let isSelected = selectedCards.contains(where: { $0.card.id == card.id })
+                    let isSelected = selectedIds.contains(card.id)
 
                     Button(action: { toggleCard(card) }) {
                         ZStack {
@@ -233,39 +247,46 @@ struct TarotView: View {
                 .foregroundColor(.white.opacity(0.5))
                 .italic()
 
-            // Revealed cards
+            // Revealed cards - tappable for details
             ForEach(Array(selectedCards.enumerated()), id: \.element.id) { index, drawn in
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(spacing: 6) {
-                        Text(positionName(for: index))
+                Button(action: { selectedCardDetail = drawn.card }) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 6) {
+                            Text(positionName(for: index))
+                                .font(.custom(Theme.bodyFont, size: 13))
+                                .foregroundColor(Theme.accent.opacity(0.5))
+                            Text(drawn.card.name)
+                                .font(.custom(Theme.bodyBoldFont, size: 14))
+                                .foregroundColor(.white)
+                            Spacer()
+                            Text(">")
+                                .font(.custom(Theme.titleFont, size: 8))
+                                .foregroundColor(.white.opacity(0.2))
+                        }
+
+                        Text(drawn.card.keywords.joined(separator: " · "))
                             .font(.custom(Theme.bodyFont, size: 13))
-                            .foregroundColor(Theme.accent.opacity(0.5))
-                        Text(drawn.card.name)
-                            .font(.custom(Theme.bodyBoldFont, size: 14))
-                            .foregroundColor(.white)
+                            .foregroundColor(Theme.accent.opacity(0.7))
+
+                        Text(drawn.card.meaning)
+                            .font(.custom(Theme.bodyFont, size: 13))
+                            .foregroundColor(.white.opacity(0.6))
+                            .multilineTextAlignment(.leading)
+
+                        Spacer(minLength: 0)
                     }
-
-                    Text(drawn.card.keywords.joined(separator: " · "))
-                        .font(.custom(Theme.bodyFont, size: 13))
-                        .foregroundColor(Theme.accent.opacity(0.7))
-
-                    Text(drawn.card.meaning)
-                        .font(.custom(Theme.bodyFont, size: 13))
-                        .foregroundColor(.white.opacity(0.6))
-
-                    Spacer(minLength: 0)
-                }
-                .padding(12)
-                .frame(minHeight: 90)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Theme.bg.opacity(0.85))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 4)
+                    .padding(12)
+                    .frame(minHeight: 90)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Theme.bg.opacity(0.85))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 4)
                                 .stroke(Color.white.opacity(0.15), lineWidth: 1)
                         )
-                )
+                    )
+                }
             }
 
             // AI Reading
@@ -289,6 +310,11 @@ struct TarotView: View {
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.85))
                         .lineSpacing(5)
+
+                    Text("Bu yorum yalnızca eğlence amacıyladır!")
+                        .font(.custom(Theme.bodyFont, size: 11))
+                        .foregroundColor(.white.opacity(0.2))
+                        .padding(.top, 6)
                 }
                 .padding(12)
                 .background(
@@ -443,12 +469,15 @@ struct TarotView: View {
         showClarificationPicker = false
         isLoadingClarification = true
         errorMessage = nil
+        activeAITask?.cancel()
 
-        Task {
+        activeAITask = Task {
             do {
                 let moonData = MoonService().calculateMoonPhase(date: Date())
                 let previousReading = aiReading ?? ""
                 let fullQuestion = clarificationQuestion.isEmpty ? question : "\(question) — Follow-up: \(clarificationQuestion)"
+
+                try Task.checkCancellation()
 
                 let reading = try await claudeService.tarotClarification(
                     question: fullQuestion,
@@ -464,6 +493,8 @@ struct TarotView: View {
                     isLoadingClarification = false
                     clarificationQuestion = ""
                 }
+            } catch is CancellationError {
+                // Task cancelled, no action needed
             } catch {
                 await MainActor.run {
                     errorMessage = userFriendlyError(error)
@@ -551,13 +582,16 @@ struct TarotView: View {
     private func requestAIReading() {
         isLoadingAI = true
         errorMessage = nil
+        activeAITask?.cancel()
 
-        Task {
+        activeAITask = Task {
             do {
                 let moonData = MoonService().calculateMoonPhase(date: Date())
                 let events = try await astrologyService.fetchEvents()
                 let activeRetros = events.filter { $0.isActive && $0.type == .retrograde }.map { $0.title }
                 let energies = Element.adjustedEnergies(for: moonData.phase, activeRetrogrades: activeRetros)
+
+                try Task.checkCancellation()
 
                 let reading = try await claudeService.tarotReading(
                     question: question,
@@ -574,6 +608,8 @@ struct TarotView: View {
                     isLoadingAI = false
                     ReadingHistory.shared.add(question: question, type: .tarot)
                 }
+            } catch is CancellationError {
+                // Task cancelled, no action needed
             } catch {
                 await MainActor.run {
                     errorMessage = userFriendlyError(error)
@@ -600,7 +636,7 @@ struct TarotView: View {
 
 #Preview {
     ZStack {
-        Color(hex: "#0b0b2e").ignoresSafeArea()
+        Theme.bg.ignoresSafeArea()
         TarotView()
     }
 }

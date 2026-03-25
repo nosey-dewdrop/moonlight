@@ -7,13 +7,9 @@ struct PixelButton: View {
     let action: () -> Void
     let style: PixelButtonStyle
 
-    private let bodyBoldFont = "Silkscreen-Bold"
-    private let accent = Color(hex: "#FFE566")
-    private let bg = Color(hex: "#0b0b2e")
-
     enum PixelButtonStyle {
-        case primary   // gold bg, dark text
-        case secondary // outline only
+        case primary
+        case secondary
     }
 
     init(_ title: String, style: PixelButtonStyle = .primary, action: @escaping () -> Void) {
@@ -25,30 +21,29 @@ struct PixelButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .font(.custom(bodyBoldFont, size: 12))
-                .foregroundColor(style == .primary ? bg : accent)
+                .font(.custom(Theme.buttonFont, size: 12))
+                .foregroundColor(style == .primary ? Theme.bg : Theme.accent)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 10)
                 .background(
                     ZStack {
                         if style == .primary {
-                            accent
+                            Theme.accent
                         } else {
-                            bg.opacity(0.9)
+                            Theme.bg.opacity(0.9)
                         }
-                        // Pixel border: 2px solid lines
                         VStack(spacing: 0) {
-                            Rectangle().fill(style == .primary ? accent.opacity(0.8) : accent.opacity(0.5))
+                            Rectangle().fill(style == .primary ? Theme.accent.opacity(0.8) : Theme.accent.opacity(0.5))
                                 .frame(height: 2)
                             Spacer()
-                            Rectangle().fill(style == .primary ? accent.opacity(0.8) : accent.opacity(0.5))
+                            Rectangle().fill(style == .primary ? Theme.accent.opacity(0.8) : Theme.accent.opacity(0.5))
                                 .frame(height: 2)
                         }
                         HStack(spacing: 0) {
-                            Rectangle().fill(style == .primary ? accent.opacity(0.8) : accent.opacity(0.5))
+                            Rectangle().fill(style == .primary ? Theme.accent.opacity(0.8) : Theme.accent.opacity(0.5))
                                 .frame(width: 2)
                             Spacer()
-                            Rectangle().fill(style == .primary ? accent.opacity(0.8) : accent.opacity(0.5))
+                            Rectangle().fill(style == .primary ? Theme.accent.opacity(0.8) : Theme.accent.opacity(0.5))
                                 .frame(width: 2)
                         }
                     }

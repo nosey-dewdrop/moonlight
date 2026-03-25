@@ -10,18 +10,12 @@ struct HoraryView: View {
     @State private var errorMessage: String?
     @State private var hasAsked = false
     @State private var showNoCredit = false
+    @State private var activeAITask: Task<Void, Never>?
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
     private let claudeService = ClaudeService()
     private let chartService = HoraryChartService()
-
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let bodyBoldFont = "PixelifySans-SemiBold"
-    private let readingFont = "PixelifySans-Regular"
-    private let accent = Color(hex: "#FFE566")
-    private let bg = Color(hex: "#0b0b2e")
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -30,12 +24,12 @@ struct HoraryView: View {
                     Spacer().frame(height: 60)
 
                     Text("Horary")
-                        .font(.custom(titleFont, size: 16))
-                        .foregroundColor(accent)
-                        .shadow(color: accent.opacity(0.5), radius: 4)
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(Theme.accent)
+                        .shadow(color: Theme.accent.opacity(0.5), radius: 4)
 
                     Text("Ay'a Bir Soru Sor")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.5))
 
                 // Question input
@@ -46,21 +40,26 @@ struct HoraryView: View {
                     if let reading = aiReading {
                         VStack(alignment: .leading, spacing: 8) {
                             Text("Yorum")
-                                .font(.custom(titleFont, size: 16))
-                                .foregroundColor(accent)
+                                .font(.custom(Theme.titleFont, size: 16))
+                                .foregroundColor(Theme.accent)
 
                             Text(reading)
-                                .font(.custom(readingFont, size: 15))
+                                .font(.custom(Theme.bodyFont, size: 15))
                                 .foregroundColor(.white.opacity(0.85))
                                 .lineSpacing(5)
+
+                            Text("Bu yorum yalnızca eğlence amacıyladır!")
+                                .font(.custom(Theme.bodyFont, size: 11))
+                                .foregroundColor(.white.opacity(0.2))
+                                .padding(.top, 6)
                         }
                         .padding(12)
                         .background(
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(bg.opacity(0.85))
+                                .fill(Theme.bg.opacity(0.85))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 4)
-                                        .stroke(accent.opacity(0.3), lineWidth: 1)
+                                        .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
                                 )
                         )
 
@@ -79,9 +78,9 @@ struct HoraryView: View {
 
                     if isLoading {
                         HStack(spacing: 8) {
-                            PixelLoading(color: accent)
+                            PixelLoading(color: Theme.accent)
                             Text("Yıldızlara danışılıyor...")
-                                .font(.custom(bodyFont, size: 14))
+                                .font(.custom(Theme.bodyFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         .padding(12)
@@ -89,8 +88,8 @@ struct HoraryView: View {
 
                     if let error = errorMessage {
                         Text(error)
-                            .font(.custom(bodyFont, size: 13))
-                            .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                            .font(.custom(Theme.bodyFont, size: 13))
+                            .foregroundColor(Theme.error.opacity(0.7))
                     }
                 }
             }
@@ -104,6 +103,9 @@ struct HoraryView: View {
                 .padding(.trailing, 12)
         }
         .onTapGesture { UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil) }
+        .onDisappear {
+            activeAITask?.cancel()
+        }
         .sheet(isPresented: $showNoCredit) {
             NoCreditView()
         }
@@ -119,16 +121,16 @@ struct HoraryView: View {
             TextField("", text: $question, prompt:
                 Text("Aklından ne geçiyor?")
                     .foregroundColor(.white.opacity(0.3))
-                    .font(.custom(bodyFont, size: 15))
+                    .font(.custom(Theme.bodyFont, size: 15))
             )
-            .font(.custom(bodyFont, size: 15))
+            .font(.custom(Theme.bodyFont, size: 15))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 20)
             .padding(.vertical, 14)
             .background(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(bg.opacity(0.85))
+                    .fill(Theme.bg.opacity(0.85))
                     .overlay(
                         RoundedRectangle(cornerRadius: 4)
                             .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -162,8 +164,9 @@ struct HoraryView: View {
         isLoading = true
         errorMessage = nil
         withAnimation { hasAsked = true }
+        activeAITask?.cancel()
 
-        Task {
+        activeAITask = Task {
             do {
                 let moonData = moonService.calculateMoonPhase(date: Date())
                 let events = try await astrologyService.fetchEvents()
@@ -174,6 +177,8 @@ struct HoraryView: View {
                 let lat = locationManager.latitude
                 let lon = locationManager.longitude
                 let chartData = try? await chartService.fetchChart(latitude: lat, longitude: lon)
+
+                try Task.checkCancellation()
 
                 let reading = try await claudeService.horaryReading(
                     question: question,
@@ -189,6 +194,8 @@ struct HoraryView: View {
                     isLoading = false
                     ReadingHistory.shared.add(question: question, type: .horary)
                 }
+            } catch is CancellationError {
+                // Task cancelled, no action needed
             } catch {
                 await MainActor.run {
                     errorMessage = userFriendlyError(error)
@@ -213,8 +220,9 @@ struct HoraryView: View {
 
         isLoading = true
         errorMessage = nil
+        activeAITask?.cancel()
 
-        Task {
+        activeAITask = Task {
             do {
                 let moonData = moonService.calculateMoonPhase(date: Date())
 
@@ -229,6 +237,8 @@ struct HoraryView: View {
                     aiReading = (aiReading ?? "") + "\n\n" + followUp
                     isLoading = false
                 }
+            } catch is CancellationError {
+                // Task cancelled, no action needed
             } catch {
                 await MainActor.run {
                     errorMessage = userFriendlyError(error)
@@ -264,7 +274,7 @@ struct HoraryView: View {
 
 #Preview {
     ZStack {
-        Color(hex: "#0b0b2e").ignoresSafeArea()
+        Theme.bg.ignoresSafeArea()
         HoraryView()
     }
 }

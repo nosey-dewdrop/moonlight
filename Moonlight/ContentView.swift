@@ -1,23 +1,17 @@
 import SwiftUI
 
-let moonlightBg = Color(hex: "#0b0b2e")
-
 struct ContentView: View {
     @State private var selectedTab = 1
     @State private var moonData: MoonData?
     @State private var showWelcome = false
     @ObservedObject private var creditManager = CreditManager.shared
 
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let accent = Color(hex: "#FFE566")
     private let moonService = MoonService()
 
     var body: some View {
         ZStack {
-            moonlightBg.ignoresSafeArea()
+            Theme.bg.ignoresSafeArea()
 
-            // Shared sky background behind all tabs
             if let moonData = moonData {
                 MoonSceneView(moonData: moonData, showMoon: false)
                     .ignoresSafeArea()
@@ -25,7 +19,6 @@ struct ContentView: View {
             }
 
             VStack(spacing: 0) {
-                // Page-style swipe tabs (transparent background)
                 TabView(selection: $selectedTab) {
                     TarotView()
                         .tag(0)
@@ -38,7 +31,6 @@ struct ContentView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
 
-                // Custom pixel tab bar
                 HStack(spacing: 0) {
                     tabButton(asset: "tab_tarot", label: "Tarot", tag: 0)
                     tabButton(asset: "waxing_crescent", label: "Ay", tag: 1)
@@ -46,7 +38,7 @@ struct ContentView: View {
                 }
                 .padding(.top, 6)
                 .padding(.bottom, 24)
-                .background(moonlightBg.opacity(0.95))
+                .background(Theme.bg.opacity(0.95))
             }
         }
         .ignoresSafeArea()
@@ -75,8 +67,8 @@ struct ContentView: View {
                     .opacity(selectedTab == tag ? 1.0 : 0.35)
 
                 Text(label)
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(selectedTab == tag ? accent : .white.opacity(0.3))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(selectedTab == tag ? Theme.accent : .white.opacity(0.3))
             }
             .frame(maxWidth: .infinity)
         }

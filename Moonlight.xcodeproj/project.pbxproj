@@ -37,6 +37,8 @@
 		EF824263791A4FF7961B8074 /* TarotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6764A0D5ABCA78B21A676E /* TarotView.swift */; };
 		FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66558B03446532A322AE0CD1 /* UserProfile.swift */; };
 		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
+		AA11BB22CC33DD44EE55FF66 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF660011 /* Theme.swift */; };
+		CC33DD44EE55FF6600112233 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF660011CC334455 /* CardDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonlightApp.swift; sourceTree = "<group>"; };
 		F6438C64DC422B5996CFAB10 /* NoCreditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCreditView.swift; sourceTree = "<group>"; };
 		FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PressStart2P-Regular.ttf"; sourceTree = "<group>"; };
+		BB22CC33DD44EE55FF660011 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		DD44EE55FF660011CC334455 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -82,6 +86,7 @@
 				2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */,
 				19995CEC35295A5B5DB698F5 /* Info.plist */,
 				EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */,
+				BB22CC33DD44EE55FF660011 /* Theme.swift */,
 				7989B6912C2049F9727D35B9 /* Fonts */,
 				B2B1D38287E417C20315C6A8 /* Models */,
 				927C5F3477864EB02C8A5B43 /* Services */,
@@ -154,6 +159,7 @@
 		EA952D15568B504D1432B35F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				DD44EE55FF660011CC334455 /* CardDetailView.swift */,
 				4B500BB010C598B1A61627FA /* CreditBadge.swift */,
 				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
 				4F71EF318F8BE609DABC579B /* PixelUI.swift */,
@@ -263,6 +269,8 @@
 				AB12CD34EF56789012345678 /* WelcomeView.swift in Sources */,
 				DE45FA67BC23890123456780 /* ReadingHistory.swift in Sources */,
 				FA67BC89DE45012345678902 /* ReadingHistoryView.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* Theme.swift in Sources */,
+				CC33DD44EE55FF6600112233 /* CardDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

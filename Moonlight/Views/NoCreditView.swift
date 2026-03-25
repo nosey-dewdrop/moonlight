@@ -4,13 +4,8 @@ struct NoCreditView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var creditManager = CreditManager.shared
 
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let bodyBoldFont = "PixelifySans-SemiBold"
-    private let accent = Color(hex: "#FFE566")
-    private let bg = Color(hex: "#0b0b2e")
-
     private let moonService = MoonService()
+    @State private var moonData: MoonData?
 
     @State private var saturnOffset: CGFloat = 0
     @State private var venusOffset: CGFloat = 0
@@ -20,9 +15,9 @@ struct NoCreditView: View {
 
     var body: some View {
         ZStack {
-            bg.ignoresSafeArea()
+            Theme.bg.ignoresSafeArea()
 
-            if let moonData = moonService.calculateMoonPhase(date: Date()) as MoonData? {
+            if let moonData = moonData {
                 MoonSceneView(moonData: moonData, showMoon: false)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
@@ -112,33 +107,33 @@ struct NoCreditView: View {
                 // Coin icon
                 ZStack {
                     VStack(spacing: 0) {
-                        Rectangle().fill(accent).frame(width: 20, height: 4)
-                        Rectangle().fill(accent).frame(width: 28, height: 4)
-                        Rectangle().fill(accent).frame(width: 28, height: 4)
-                        Rectangle().fill(accent).frame(width: 28, height: 4)
-                        Rectangle().fill(accent).frame(width: 28, height: 4)
-                        Rectangle().fill(accent).frame(width: 28, height: 4)
-                        Rectangle().fill(accent).frame(width: 20, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 20, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 28, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 28, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 28, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 28, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 28, height: 4)
+                        Rectangle().fill(Theme.accent).frame(width: 20, height: 4)
                     }
                     VStack(spacing: 0) {
-                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 12, height: 4)
-                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 20, height: 4)
-                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 20, height: 4)
-                        Rectangle().fill(Color(hex: "#D4A017")).frame(width: 12, height: 4)
+                        Rectangle().fill(Theme.coinInner).frame(width: 12, height: 4)
+                        Rectangle().fill(Theme.coinInner).frame(width: 20, height: 4)
+                        Rectangle().fill(Theme.coinInner).frame(width: 20, height: 4)
+                        Rectangle().fill(Theme.coinInner).frame(width: 12, height: 4)
                     }
-                    Rectangle().fill(accent).frame(width: 12, height: 4)
-                    Rectangle().fill(accent).frame(width: 4, height: 12)
+                    Rectangle().fill(Theme.accent).frame(width: 12, height: 4)
+                    Rectangle().fill(Theme.accent).frame(width: 4, height: 12)
                 }
                 .frame(width: 28, height: 28)
-                .shadow(color: accent.opacity(0.4), radius: 8)
+                .shadow(color: Theme.accent.opacity(0.4), radius: 8)
 
                 Text("Kredin Bitti")
-                    .font(.custom(titleFont, size: 16))
-                    .foregroundColor(accent)
-                    .shadow(color: accent.opacity(0.5), radius: 6)
+                    .font(.custom(Theme.titleFont, size: 16))
+                    .foregroundColor(Theme.accent)
+                    .shadow(color: Theme.accent.opacity(0.5), radius: 6)
 
                 Text("Yıldızlar seni bekliyor.\nOkumaya devam et.")
-                    .font(.custom(bodyFont, size: 15))
+                    .font(.custom(Theme.bodyFont, size: 15))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -151,7 +146,7 @@ struct NoCreditView: View {
                         }
 
                         Text("Mağaza yükleniyor...")
-                            .font(.custom(bodyFont, size: 13))
+                            .font(.custom(Theme.bodyFont, size: 13))
                             .foregroundColor(.white.opacity(0.3))
                     } else {
                         ForEach(creditManager.products, id: \.id) { product in
@@ -169,17 +164,17 @@ struct NoCreditView: View {
 
                 if creditManager.purchaseInProgress {
                     HStack(spacing: 8) {
-                        PixelLoading(color: accent)
+                        PixelLoading(color: Theme.accent)
                         Text("İşleniyor...")
-                            .font(.custom(bodyFont, size: 14))
+                            .font(.custom(Theme.bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
                 }
 
                 if let error = creditManager.purchaseError {
                     Text(error)
-                        .font(.custom(bodyFont, size: 13))
-                        .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(Theme.error.opacity(0.7))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }
@@ -192,7 +187,7 @@ struct NoCreditView: View {
 
                 Button(action: { dismiss() }) {
                     Text("Kapat")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.bottom, 40)
                 }
@@ -200,6 +195,7 @@ struct NoCreditView: View {
             }
         }
         .task {
+            moonData = moonService.calculateMoonPhase(date: Date())
             await creditManager.loadProducts()
             withAnimation(.easeInOut(duration: 3).repeatForever(autoreverses: true)) {
                 saturnOffset = 8
@@ -222,22 +218,22 @@ struct NoCreditView: View {
     private func purchaseRow(name: String, price: String, credits: Int, isAvailable: Bool) -> some View {
         HStack {
             Text(name)
-                .font(.custom(bodyBoldFont, size: 15))
+                .font(.custom(Theme.bodyBoldFont, size: 15))
                 .foregroundColor(.white)
 
             Spacer()
 
             Text(price)
-                .font(.custom(bodyBoldFont, size: 15))
-                .foregroundColor(accent)
+                .font(.custom(Theme.bodyBoldFont, size: 15))
+                .foregroundColor(Theme.accent)
         }
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
+                .fill(Theme.bg.opacity(0.85))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
-                        .stroke(accent.opacity(0.3), lineWidth: 1)
+                        .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
                 )
         )
         .opacity(isAvailable ? 1.0 : 0.5)

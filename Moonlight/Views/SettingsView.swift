@@ -5,21 +5,16 @@ struct SettingsView: View {
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
     @State private var showHistory = false
-
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let bodyBoldFont = "PixelifySans-SemiBold"
-    private let accent = Color(hex: "#FFE566")
-    private let bg = Color(hex: "#0b0b2e")
+    @State private var moonData: MoonData?
 
     private let moonService = MoonService()
 
     var body: some View {
         ZStack {
-            bg.ignoresSafeArea()
+            Theme.bg.ignoresSafeArea()
 
             // Pixel art sky background
-            if let moonData = moonService.calculateMoonPhase(date: Date()) as MoonData? {
+            if let moonData = moonData {
                 MoonSceneView(moonData: moonData, showMoon: false)
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
@@ -31,15 +26,15 @@ struct SettingsView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Text("X")
-                                .font(.custom(titleFont, size: 10))
+                                .font(.custom(Theme.titleFont, size: 10))
                                 .foregroundColor(.white.opacity(0.7))
                                 .padding(8)
                         }
                         .accessibilityLabel("Close")
                         Spacer()
                         Text("Ayarlar")
-                            .font(.custom(titleFont, size: 24))
-                            .foregroundColor(accent)
+                            .font(.custom(Theme.titleFont, size: 24))
+                            .foregroundColor(Theme.accent)
                         Spacer()
                         Color.clear.frame(width: 28)
                     }
@@ -58,17 +53,17 @@ struct SettingsView: View {
                     Button(action: { showHistory = true }) {
                         HStack {
                             Text("Okuma Geçmişi")
-                                .font(.custom(bodyFont, size: 15))
+                                .font(.custom(Theme.bodyFont, size: 15))
                                 .foregroundColor(.white.opacity(0.6))
                             Spacer()
                             Text(">")
-                                .font(.custom(titleFont, size: 16))
+                                .font(.custom(Theme.titleFont, size: 16))
                                 .foregroundColor(.white.opacity(0.3))
                         }
                         .padding(12)
                         .background(
                             RoundedRectangle(cornerRadius: 4)
-                                .fill(bg.opacity(0.85))
+                                .fill(Theme.bg.opacity(0.85))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 4)
                                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -85,6 +80,7 @@ struct SettingsView: View {
             }
         }
         .task {
+            moonData = moonService.calculateMoonPhase(date: Date())
             await creditManager.loadProducts()
         }
         .sheet(isPresented: $showHistory) {
@@ -97,7 +93,7 @@ struct SettingsView: View {
     private var birthChartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text("Doğum Haritası")
-                .font(.custom(titleFont, size: 16))
+                .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             zodiacPicker("Güneş Burcu", selection: $userProfile.sunSign)
@@ -107,21 +103,21 @@ struct SettingsView: View {
             // Birth time
             VStack(alignment: .leading, spacing: 4) {
                 Text("Doğum Saati")
-                    .font(.custom(bodyFont, size: 14))
+                    .font(.custom(Theme.bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.5))
 
                 if let time = userProfile.birthTime {
                     HStack {
                         Text(Theme.timeFormatter.string(from: time))
-                            .font(.custom(bodyBoldFont, size: 15))
+                            .font(.custom(Theme.bodyBoldFont, size: 15))
                             .foregroundColor(.white)
 
                         Spacer()
 
                         Button(action: { userProfile.birthTime = nil }) {
                             Text("x")
-                                .font(.custom(titleFont, size: 16))
-                                .foregroundColor(Color(hex: "#FF6B6B"))
+                                .font(.custom(Theme.titleFont, size: 16))
+                                .foregroundColor(Theme.error)
                         }
                     }
                 } else {
@@ -137,7 +133,7 @@ struct SettingsView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
+                .fill(Theme.bg.opacity(0.85))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -148,7 +144,7 @@ struct SettingsView: View {
     private func zodiacPicker(_ label: String, selection: Binding<ZodiacSign?>) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
-                .font(.custom(bodyFont, size: 14))
+                .font(.custom(Theme.bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.5))
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -164,10 +160,10 @@ struct SettingsView: View {
                                 .padding(6)
                                 .background(
                                     RoundedRectangle(cornerRadius: 2)
-                                        .fill(isSelected ? accent.opacity(0.3) : Color.clear)
+                                        .fill(isSelected ? Theme.accent.opacity(0.3) : Color.clear)
                                         .overlay(
                                             RoundedRectangle(cornerRadius: 2)
-                                                .stroke(isSelected ? accent : Color.white.opacity(0.1), lineWidth: 1)
+                                                .stroke(isSelected ? Theme.accent : Color.white.opacity(0.1), lineWidth: 1)
                                         )
                                 )
                         }
@@ -178,8 +174,8 @@ struct SettingsView: View {
 
             if let sign = selection.wrappedValue {
                 Text(sign.displayName)
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(accent.opacity(0.7))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(Theme.accent.opacity(0.7))
             }
         }
     }
@@ -189,30 +185,30 @@ struct SettingsView: View {
     private var creditsSection: some View {
         VStack(spacing: 8) {
             Text("Krediler")
-                .font(.custom(titleFont, size: 16))
+                .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             Text("\(creditManager.totalCredits)")
-                .font(.custom(titleFont, size: 24))
-                .foregroundColor(accent)
-                .shadow(color: accent.opacity(0.5), radius: 6)
+                .font(.custom(Theme.titleFont, size: 24))
+                .foregroundColor(Theme.accent)
+                .shadow(color: Theme.accent.opacity(0.5), radius: 6)
 
             HStack(spacing: 16) {
                 VStack(spacing: 2) {
                     Text("\(creditManager.dailyCreditsRemaining)")
-                        .font(.custom(bodyBoldFont, size: 15))
+                        .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("günlük ücretsiz")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 VStack(spacing: 2) {
                     Text("\(creditManager.purchasedCredits)")
-                        .font(.custom(bodyBoldFont, size: 15))
+                        .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("satın alınan")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
             }
@@ -221,10 +217,10 @@ struct SettingsView: View {
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
+                .fill(Theme.bg.opacity(0.85))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
-                        .stroke(accent.opacity(0.2), lineWidth: 1)
+                        .stroke(Theme.accent.opacity(0.2), lineWidth: 1)
                 )
         )
     }
@@ -234,7 +230,7 @@ struct SettingsView: View {
     private var purchaseSection: some View {
         VStack(spacing: 10) {
             Text("Kredi Al")
-                .font(.custom(titleFont, size: 16))
+                .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
             if creditManager.products.isEmpty {
@@ -243,7 +239,7 @@ struct SettingsView: View {
                 }
 
                 Text("Mağaza yükleniyor...")
-                    .font(.custom(bodyFont, size: 13))
+                    .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             } else {
                 ForEach(creditManager.products) { product in
@@ -259,17 +255,17 @@ struct SettingsView: View {
 
             if creditManager.purchaseInProgress {
                 HStack(spacing: 8) {
-                    PixelLoading(color: accent)
+                    PixelLoading(color: Theme.accent)
                     Text("İşleniyor...")
-                        .font(.custom(bodyFont, size: 14))
+                        .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
             }
 
             if let error = creditManager.purchaseError {
                 Text(error)
-                    .font(.custom(bodyFont, size: 13))
-                    .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(Theme.error.opacity(0.7))
                     .multilineTextAlignment(.center)
             }
 
@@ -282,19 +278,19 @@ struct SettingsView: View {
     private func purchaseRow(name: String, price: String, credits: Int) -> some View {
         HStack {
             Text(name)
-                .font(.custom(bodyBoldFont, size: 15))
+                .font(.custom(Theme.bodyBoldFont, size: 15))
                 .foregroundColor(.white)
 
             Spacer()
 
             Text(price)
-                .font(.custom(bodyBoldFont, size: 15))
-                .foregroundColor(accent)
+                .font(.custom(Theme.bodyBoldFont, size: 15))
+                .foregroundColor(Theme.accent)
         }
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(bg.opacity(0.85))
+                .fill(Theme.bg.opacity(0.85))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -313,17 +309,17 @@ struct SettingsView: View {
             }) {
                 HStack {
                     Text("Gizlilik Politikası")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
-                        .font(.custom(titleFont, size: 16))
+                        .font(.custom(Theme.titleFont, size: 16))
                         .foregroundColor(.white.opacity(0.3))
                 }
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
+                        .fill(Theme.bg.opacity(0.85))
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -338,17 +334,17 @@ struct SettingsView: View {
             }) {
                 HStack {
                     Text("Kullanım Koşulları")
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
-                        .font(.custom(titleFont, size: 16))
+                        .font(.custom(Theme.titleFont, size: 16))
                         .foregroundColor(.white.opacity(0.3))
                 }
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 4)
-                        .fill(bg.opacity(0.85))
+                        .fill(Theme.bg.opacity(0.85))
                         .overlay(
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -357,7 +353,7 @@ struct SettingsView: View {
             }
 
             Text("Moonlight v1.0")
-                .font(.custom(bodyFont, size: 13))
+                .font(.custom(Theme.bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.2))
                 .padding(.top, 4)
         }

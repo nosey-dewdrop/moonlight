@@ -53,18 +53,25 @@ class ClaudeService {
 
         Türkçe kart isimleri: Pentacles=Tılsımlar, Cups=Kupalar, Wands=Asalar, Swords=Kılıçlar, Page=Uşak, Knight=Şövalye, Queen=Kraliçe, King=Kral, Ace=As, Two=İki, Three=Üç, Four=Dört, Five=Beş, Six=Altı, Seven=Yedi, Eight=Sekiz, Nine=Dokuz, Ten=On.
 
+        ÖNCELİKLİ — SORUYU DOĞRU OKU:
+        Soruyu cevaplamadan önce Türkçe gramerini dikkatle analiz et. Kim özne, kim nesne, kim hakkında sorulmuş — bunları doğru anla.
+        Örnek: "Gürkan beni mi sevdi onu mu?" → Burada soran kişi kendinden "ben" diye bahsediyor. "Onu" diye bahsettiği üçüncü bir kişi var. Soru: Gürkan'ın sevgisi kime yönelik? Soran kişiye mi, yoksa o üçüncü kişiye mi? Bunu doğru anla ve BUNA cevap ver.
+        Türkçe'de "-i/ı/u/ü" ekleri, "beni/seni/onu" zamirleri, "mi/mı/mu/mü" soru ekleri cümlenin anlamını belirler. Bunları yanlış okuma. Kimin kimden bahsettiğini, kimin kimi sorduğunu doğru çöz.
+
         Kartları hikaye gibi birbirine bağla. Her kartın soruyla ilişkisini göster. Ay fazını ve gezegen etkilerini kat. Kişinin düşünmediği açıyı bul.
 
         KURALLAR:
+        - Soruyu cevaplamadan önce sorunun ne sorduğunu kendi kendine tekrar et. Yanlış anladıysan yanlış cevap verirsin.
         - Soranın dilinde yaz.
         - Markdown kullanma. Düz metin.
         - "Net Cevap:", "Açıklama:" gibi başlık/etiket KULLANMA. Doğal akan hikaye yaz.
         - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
-        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan (kendini/seni farkı gibi). Devrik cümle kurma. Cümleler net ve anlaşılır olsun.
+        - Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan (kendini/seni farkı gibi). Devrik cümle kurma. Cümleler net ve anlaşılır olsun.
         - Kişinin aklına gelmeyecek açıları göster. Sorunun altında yatan asıl meseleyi bul.
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
         - Gezegen pozisyonlarına ve burçlara spesifik değin.
         - Mantıklı ve tutarlı ol. Saçmalama.
+        - Sonunda kişiye sıcak, samimi bir kapanış yap. "Umarım keyfin yerine gelir", "Yıldızlar seninle", "Kendine iyi bak" gibi doğal, içten bir cümleyle bitir. Klişe olmasın, o anki yoruma uygun olsun.
         - \(cards.count > 3 ? 400 : 200) kelimeyi geçme.
         """
 
@@ -103,11 +110,17 @@ class ClaudeService {
         Retrogradlar: \(retroDesc)
         \(chartSection)
 
+        ÖNCELİKLİ — SORUYU DOĞRU OKU:
+        Soruyu cevaplamadan önce Türkçe gramerini dikkatle analiz et. Kim özne, kim nesne, kim hakkında sorulmuş — bunları doğru anla.
+        Örnek: "Gürkan beni mi sevdi onu mu?" → Soran kişi kendinden "ben" diye bahsediyor. "Onu" diye bahsettiği üçüncü bir kişi var. Soru: Gürkan'ın sevgisi kime yönelik?
+        Türkçe'de "-i/ı/u/ü" ekleri, "beni/seni/onu" zamirleri, "mi/mı/mu/mü" soru ekleri cümlenin anlamını belirler. Bunları yanlış okuma. Kimin kimden bahsettiğini, kimin kimi sorduğunu doğru çöz.
+
         İlk cümlede cevabını ver. Sonra soruya BAK. Bu kişi gerçekten ne soruyor? Yüzeydeki soru ile altındaki asıl mesele farklı olabilir. Soruyu ciddiye al ve SOMUT cevap ver.
 
         Gezegen pozisyonlarını ve ay fazını soruyla DOĞRUDAN ilişkilendir. "Merkür şu burçta, bu senin sorunla şu yüzden ilgili" gibi spesifik bağlantılar kur. Havadan atma.
 
         KURALLAR:
+        - Soruyu cevaplamadan önce sorunun ne sorduğunu kendi kendine tekrar et. Yanlış anladıysan yanlış cevap verirsin.
         - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA. Doğal akan hikaye yaz.
@@ -118,6 +131,7 @@ class ClaudeService {
         - Cesur ol. Kişinin duymak istemeyeceği şeyi de söyle ama gerekçele.
         - Genel geçer yorum yapma. Bu soruya, bu zamana, bu gezegen dizilimine özel yorum yap.
         - Mantıklı ve tutarlı ol.
+        - Sonunda kişiye sıcak, samimi bir kapanış yap. "Umarım keyfin yerine gelir", "Yıldızlar seninle", "Kendine iyi bak" gibi doğal, içten bir cümleyle bitir. Klişe olmasın, o anki yoruma uygun olsun.
         - 250 kelimeyi geçme.
         """
 
@@ -140,6 +154,7 @@ class ClaudeService {
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA.
         - Önceki yorumu tekrarlama. Tamamen farklı bir bakış açısı sun.
+        - Sonunda sıcak, samimi bir kapanış cümlesi ekle. Yoruma uygun, içten bir şey.
         - 150 kelimeyi geçme.
         """
 
@@ -168,6 +183,7 @@ class ClaudeService {
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA.
         - Önceki yorumu tekrarlama. Yeni kartın getirdiği farklı açıyı anlat.
+        - Sonunda sıcak, samimi bir kapanış cümlesi ekle. Yoruma uygun, içten bir şey.
         - 150 kelimeyi geçme.
         """
 

@@ -26,13 +26,18 @@ class ReadingHistory {
     private let key = "com.damla.moonlight.readingHistory"
     private let maxRecords = 50
 
+    /// In-memory cache — avoids decoding from UserDefaults on every access
+    private var cachedRecords: [ReadingRecord]?
+
     private init() {}
 
     var records: [ReadingRecord] {
+        if let cached = cachedRecords { return cached }
         guard let data = UserDefaults.standard.data(forKey: key),
               let decoded = try? JSONDecoder().decode([ReadingRecord].self, from: data) else {
             return []
         }
+        cachedRecords = decoded
         return decoded
     }
 
@@ -41,6 +46,7 @@ class ReadingHistory {
     }
 
     func clear() {
+        cachedRecords = nil
         UserDefaults.standard.removeObject(forKey: key)
     }
 
@@ -66,6 +72,7 @@ class ReadingHistory {
     }
 
     private func save(_ records: [ReadingRecord]) {
+        cachedRecords = records
         if let data = try? JSONEncoder().encode(records) {
             UserDefaults.standard.set(data, forKey: key)
         }

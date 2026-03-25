@@ -2,8 +2,18 @@ import SwiftUI
 
 struct PixelStarsView: View {
     let size: CGSize
-    @State private var twinkle: [Double] = (0..<20).map { _ in Double.random(in: 0.3...0.8) }
-    @State private var timer: Timer?
+    @State private var phase = false
+
+    // Pre-computed opacity pairs: no randomness in body, computed once as static
+    private static let dotOpacities: [(lo: Double, hi: Double)] = (0..<20).map { _ in
+        (Double.random(in: 0.2...0.4), Double.random(in: 0.6...0.9))
+    }
+    private static let assetOpacities: [(lo: Double, hi: Double)] = (0..<12).map { _ in
+        (Double.random(in: 0.2...0.4), Double.random(in: 0.6...0.9))
+    }
+    private static let sparkleOpacities: [(lo: Double, hi: Double)] = (0..<14).map { _ in
+        (Double.random(in: 0.15...0.35), Double.random(in: 0.5...0.75))
+    }
 
     // Hand-placed stars scattered across the sky, no lines, no patterns
     private let positions: [(xFrac: CGFloat, yFrac: CGFloat, px: CGFloat)] = [
@@ -51,54 +61,49 @@ struct PixelStarsView: View {
         ("sparkle_blue", 0.40, 0.50, 24),
     ]
 
-    private let starColor = Color(hex: "#FFE566")
+    private let starColor = Theme.accent
 
     var body: some View {
         ZStack {
             // Tiny yellow dots
             ForEach(0..<positions.count, id: \.self) { i in
                 let pos = positions[i]
+                let pair = Self.dotOpacities[i]
                 Rectangle()
                     .fill(starColor)
                     .frame(width: pos.px, height: pos.px)
-                    .opacity(i < twinkle.count ? twinkle[i] : 0.5)
+                    .opacity(phase ? pair.hi : pair.lo)
                     .position(x: size.width * pos.xFrac, y: size.height * pos.yFrac)
             }
 
             // Pixel art sparkles (small)
             ForEach(0..<assetStars.count, id: \.self) { i in
                 let star = assetStars[i]
+                let pair = Self.assetOpacities[i]
                 Image(star.name)
                     .interpolation(.none)
                     .resizable()
                     .frame(width: star.sz, height: star.sz)
-                    .opacity(i < twinkle.count ? twinkle[i] : 0.5)
+                    .opacity(phase ? pair.hi : pair.lo)
                     .position(x: size.width * star.xFrac, y: size.height * star.yFrac)
             }
 
             // Big sparkles
             ForEach(0..<bigSparkles.count, id: \.self) { i in
                 let spark = bigSparkles[i]
+                let pair = Self.sparkleOpacities[i]
                 Image(spark.name)
                     .interpolation(.none)
                     .resizable()
                     .frame(width: spark.sz, height: spark.sz)
-                    .opacity(i < twinkle.count ? twinkle[i] * 0.8 : 0.4)
+                    .opacity(phase ? pair.hi : pair.lo)
                     .position(x: size.width * spark.xFrac, y: size.height * spark.yFrac)
             }
         }
         .onAppear {
-            timer = Timer.scheduledTimer(withTimeInterval: 2.5, repeats: true) { _ in
-                withAnimation(.easeInOut(duration: 2.0)) {
-                    for i in 0..<twinkle.count {
-                        twinkle[i] = Double.random(in: 0.2...0.9)
-                    }
-                }
+            withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true)) {
+                phase = true
             }
-        }
-        .onDisappear {
-            timer?.invalidate()
-            timer = nil
         }
     }
 }
@@ -133,12 +138,10 @@ struct MoonSceneView: View {
     let moonData: MoonData
     var showMoon: Bool = true
 
-    private let bgColor = Color(hex: "#0b0b2e")
-
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                bgColor
+                Theme.bg
 
                 PixelStarsView(size: geometry.size)
 
@@ -172,30 +175,3 @@ struct MoonSceneView: View {
     }
 }
 
-// MARK: - Color Extension
-
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3:
-            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6:
-            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        case 8:
-            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
-        default:
-            (a, r, g, b) = (255, 0, 0, 0)
-        }
-        self.init(
-            .sRGB,
-            red: Double(r) / 255,
-            green: Double(g) / 255,
-            blue: Double(b) / 255,
-            opacity: Double(a) / 255
-        )
-    }
-}

@@ -6,22 +6,38 @@ struct HoraryChartData {
     let aspects: [ChartAspect]
     let queriedAt: Date
 
+    private static let degreeFormatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.numberStyle = .decimal
+        f.minimumFractionDigits = 1
+        f.maximumFractionDigits = 1
+        return f
+    }()
+
     var promptDescription: String {
-        var desc = "Planets:\n"
+        let fmt = Self.degreeFormatter
+        var parts: [String] = []
+        parts.reserveCapacity(planets.count + houses.count + 13)
+
+        parts.append("Planets:")
         for p in planets {
-            desc += "  \(p.name) in \(p.sign) at \(String(format: "%.1f", p.degree))°\(p.isRetro ? " (retrograde)" : "")\n"
+            let deg = fmt.string(from: NSNumber(value: p.degree)) ?? "\(p.degree)"
+            parts.append("  \(p.name) in \(p.sign) at \(deg)°\(p.isRetro ? " (retrograde)" : "")")
         }
-        desc += "\nHouses:\n"
+
+        parts.append("\nHouses:")
         for h in houses {
-            desc += "  House \(h.number): \(h.sign) at \(String(format: "%.1f", h.degree))°\n"
+            let deg = fmt.string(from: NSNumber(value: h.degree)) ?? "\(h.degree)"
+            parts.append("  House \(h.number): \(h.sign) at \(deg)°")
         }
+
         if !aspects.isEmpty {
-            desc += "\nKey aspects:\n"
+            parts.append("\nKey aspects:")
             for a in aspects.prefix(10) {
-                desc += "  \(a.planet1) \(a.aspect) \(a.planet2)\n"
+                parts.append("  \(a.planet1) \(a.aspect) \(a.planet2)")
             }
         }
-        return desc
+        return parts.joined(separator: "\n")
     }
 }
 

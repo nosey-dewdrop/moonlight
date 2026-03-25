@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 function getMoonPhase() {
   const now = new Date();
   const year = now.getFullYear();
@@ -36,39 +32,23 @@ function getMoonPhase() {
   return phases[b];
 }
 
-function Stars() {
-  const [stars, setStars] = useState([]);
+function seededRandom(seed) {
+  let s = seed;
+  return function () {
+    s = (s * 16807 + 0) % 2147483647;
+    return s / 2147483647;
+  };
+}
 
-  useEffect(() => {
-    const generated = Array.from({ length: 120 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 2.5 + 1,
-      delay: Math.random() * 4,
-      duration: Math.random() * 3 + 2,
-    }));
-    setStars(generated);
-  }, []);
-
-  return (
-    <div className="fixed inset-0 pointer-events-none">
-      {stars.map((star) => (
-        <div
-          key={star.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${star.x}%`,
-            top: `${star.y}%`,
-            width: `${star.size}px`,
-            height: `${star.size}px`,
-            backgroundColor: "#fffbe6",
-            animation: `twinkle ${star.duration}s ${star.delay}s infinite`,
-          }}
-        />
-      ))}
-    </div>
-  );
+function generateStarShadows(count, seed) {
+  const rand = seededRandom(seed);
+  const shadows = [];
+  for (let i = 0; i < count; i++) {
+    const x = Math.round(rand() * 2000);
+    const y = Math.round(rand() * 2000);
+    shadows.push(`${x}px ${y}px #fffbe6`);
+  }
+  return shadows.join(",");
 }
 
 const NAV_ITEMS = [
@@ -80,13 +60,44 @@ const NAV_ITEMS = [
 
 export default function Home() {
   const moon = getMoonPhase();
+  const smallStars = generateStarShadows(80, 111);
+  const mediumStars = generateStarShadows(30, 222);
+  const largeStars = generateStarShadows(10, 333);
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center px-4">
-      <Stars />
+      {/* Stars - pure CSS, zero JS on client */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div
+          className="absolute"
+          style={{
+            width: "1px",
+            height: "1px",
+            boxShadow: smallStars,
+            animation: "twinkle 4s infinite",
+          }}
+        />
+        <div
+          className="absolute"
+          style={{
+            width: "2px",
+            height: "2px",
+            boxShadow: mediumStars,
+            animation: "twinkle 3s 1s infinite",
+          }}
+        />
+        <div
+          className="absolute"
+          style={{
+            width: "3px",
+            height: "3px",
+            boxShadow: largeStars,
+            animation: "twinkle 5s 2s infinite",
+          }}
+        />
+      </div>
 
       <div className="relative z-10 flex flex-col items-center gap-8">
-        {/* Moon */}
         <div
           className="text-7xl sm:text-8xl"
           style={{ animation: "float 4s ease-in-out infinite" }}
@@ -94,7 +105,6 @@ export default function Home() {
           {moon.emoji}
         </div>
 
-        {/* Title */}
         <h1
           className="text-2xl sm:text-3xl tracking-widest text-center"
           style={{ fontFamily: "var(--font-pixel)", color: "var(--accent)" }}
@@ -102,12 +112,10 @@ export default function Home() {
           moonlight
         </h1>
 
-        {/* Moon phase */}
         <p className="text-xl sm:text-2xl opacity-70" style={{ fontFamily: "var(--font-vt323)" }}>
           {moon.name}
         </p>
 
-        {/* Navigation */}
         <nav className="flex flex-wrap justify-center gap-4 mt-6">
           {NAV_ITEMS.map((item) => (
             <a

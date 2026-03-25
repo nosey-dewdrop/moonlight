@@ -12,36 +12,24 @@ struct HomeView: View {
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
 
-    private let titleFont = "PressStart2P-Regular"
-    private let bodyFont = "PixelifySans-Regular"
-    private let bodyBoldFont = "PixelifySans-SemiBold"
-    private let readingFont = "PixelifySans-Regular"
-
     var body: some View {
         ZStack {
             if let moonData = moonData {
-                // Scrollable content on top of shared sky background
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 16) {
-                        // Moon character at the top
                         moonCharacter(moonData: moonData)
                             .padding(.top, 100)
-
-                        // Moon info - no card bg, just text floating
                         moonInfo(moonData: moonData)
-
-                        // Astro events
                         astroEventsList
                     }
                 }
                 .ignoresSafeArea(edges: .top)
 
-                // Top bar: menu left, credits right
                 VStack {
                     HStack {
                         Button(action: { showMenu = true }) {
                             Text("=")
-                                .font(.custom(titleFont, size: 24))
+                                .font(.custom(Theme.titleFont, size: 24))
                                 .foregroundColor(.white.opacity(0.5))
                                 .padding(12)
                         }
@@ -61,7 +49,7 @@ struct HomeView: View {
                         .scaleEffect(1.5)
                     Text("yıldızlar okunuyor...")
                         .foregroundColor(.white.opacity(0.6))
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                 }
             }
         }
@@ -76,22 +64,22 @@ struct HomeView: View {
         }
     }
 
-    // MARK: - Moon Info (no card, just text)
+    // MARK: - Moon Info
 
     private func moonInfo(moonData: MoonData) -> some View {
         VStack(spacing: 10) {
             Text(moonData.phase.displayName)
-                .font(.custom(titleFont, size: 12))
-                .foregroundColor(Color(hex: "#FFE566"))
-                .shadow(color: Color(hex: "#FFE566").opacity(0.5), radius: 4)
+                .font(.custom(Theme.titleFont, size: 12))
+                .foregroundColor(Theme.accent)
+                .shadow(color: Theme.accent.opacity(0.5), radius: 4)
 
             Text("%\(Int(moonData.illumination)) aydınlık")
-                .font(.custom(bodyFont, size: 14))
+                .font(.custom(Theme.bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.6))
 
             if usingLocalData {
                 Text("yaklaşık veri (bağlantı yok)")
-                    .font(.custom(bodyFont, size: 13))
+                    .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             }
 
@@ -99,13 +87,13 @@ struct HomeView: View {
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonrise", size: 18)
                     Text(moonData.moonrise)
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.7))
                 }
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonset", size: 18)
                     Text(moonData.moonset)
-                        .font(.custom(bodyFont, size: 15))
+                        .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.7))
                 }
             }
@@ -119,7 +107,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
                 Text("Gökyüzü Olayları")
-                    .font(.custom(bodyBoldFont, size: 16))
+                    .font(.custom(Theme.bodyBoldFont, size: 16))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
 
@@ -129,19 +117,19 @@ struct HomeView: View {
             } else if eventsError {
                 VStack(spacing: 8) {
                     Text("Gökyüzü olayları yüklenemedi")
-                        .font(.custom(bodyFont, size: 14))
+                        .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.4))
                     Button(action: { Task { await retryEvents() } }) {
                         Text("Tekrar dene")
-                            .font(.custom(bodyFont, size: 13))
-                            .foregroundColor(Color(hex: "#FFE566").opacity(0.6))
+                            .font(.custom(Theme.bodyFont, size: 13))
+                            .foregroundColor(Theme.accent.opacity(0.6))
                     }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             } else {
                 Text("Aktif gökyüzü olayı yok")
-                    .font(.custom(bodyFont, size: 14))
+                    .font(.custom(Theme.bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.3))
                     .frame(maxWidth: .infinity)
                     .padding(.top, 8)
@@ -157,23 +145,23 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
                     Text(event.title)
-                        .font(.custom(bodyBoldFont, size: 16))
+                        .font(.custom(Theme.bodyBoldFont, size: 16))
                         .foregroundColor(.white)
 
                     if event.isActive {
                         Text("aktif")
-                            .font(.custom(bodyFont, size: 15))
-                            .foregroundColor(Color(hex: "#34D399"))
+                            .font(.custom(Theme.bodyFont, size: 15))
+                            .foregroundColor(Theme.green)
                     }
                 }
 
                 Text(event.description)
-                    .font(.custom(readingFont, size: 15))
+                    .font(.custom(Theme.bodyFont, size: 15))
                     .foregroundColor(.white.opacity(0.4))
 
                 if !event.dateRangeText.isEmpty {
                     Text(event.dateRangeText)
-                        .font(.custom(bodyFont, size: 13))
+                        .font(.custom(Theme.bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.3))
                 }
             }
@@ -183,7 +171,7 @@ struct HomeView: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 4)
-                .fill(Color(hex: "#0b0b2e").opacity(0.85))
+                .fill(Theme.bg.opacity(0.85))
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
@@ -202,8 +190,6 @@ struct HomeView: View {
             .shadow(color: .yellow.opacity(0.2), radius: 20)
     }
 
-    // MARK: - Helpers
-
     private func pixelIcon(_ name: String, size: CGFloat) -> some View {
         Image(name)
             .interpolation(.none)
@@ -211,30 +197,45 @@ struct HomeView: View {
             .frame(width: size, height: size)
     }
 
+    // MARK: - Data Loading
+
     private func loadData() async {
         locationManager.requestLocation()
-
-        // Quick local fallback while API loads
         moonData = moonService.calculateMoonPhase(date: Date())
 
-        // Load events
-        await retryEvents()
+        async let eventsTask: () = retryEvents()
 
-        // Wait for location (max 5 seconds), then fetch real API data
-        var waitAttempts = 0
-        while !locationManager.hasLocation && waitAttempts < 50 {
-            try? await Task.sleep(nanoseconds: 100_000_000)
-            waitAttempts += 1
+        // Wait for location with timeout, no busy-wait polling
+        let locationReady = await withTaskGroup(of: Bool.self) { group in
+            group.addTask {
+                while !locationManager.hasLocation {
+                    try? await Task.sleep(nanoseconds: 200_000_000)
+                }
+                return true
+            }
+            group.addTask {
+                try? await Task.sleep(nanoseconds: 5_000_000_000)
+                return false
+            }
+            let result = await group.next() ?? false
+            group.cancelAll()
+            return result
         }
 
-        do {
-            let apiData = try await moonService.fetchMoonData(
-                latitude: locationManager.latitude,
-                longitude: locationManager.longitude
-            )
-            moonData = apiData
-            usingLocalData = false
-        } catch {
+        await eventsTask
+
+        if locationReady || locationManager.hasLocation {
+            do {
+                let apiData = try await moonService.fetchMoonData(
+                    latitude: locationManager.latitude,
+                    longitude: locationManager.longitude
+                )
+                moonData = apiData
+                usingLocalData = false
+            } catch {
+                usingLocalData = true
+            }
+        } else {
             usingLocalData = true
         }
     }
