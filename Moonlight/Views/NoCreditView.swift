@@ -132,12 +132,12 @@ struct NoCreditView: View {
                 .frame(width: 28, height: 28)
                 .shadow(color: accent.opacity(0.4), radius: 8)
 
-                Text("No Credits")
+                Text("Kredin Bitti")
                     .font(.custom(titleFont, size: 16))
                     .foregroundColor(accent)
                     .shadow(color: accent.opacity(0.5), radius: 6)
 
-                Text("The stars await your return.\nUnlock more readings.")
+                Text("Yıldızlar seni bekliyor.\nOkumaya devam et.")
                     .font(.custom(bodyFont, size: 11))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -150,7 +150,7 @@ struct NoCreditView: View {
                             purchaseRow(name: product.name, price: product.price, credits: product.credits, isAvailable: false)
                         }
 
-                        Text("Loading store...")
+                        Text("Mağaza yükleniyor...")
                             .font(.custom(bodyFont, size: 9))
                             .foregroundColor(.white.opacity(0.3))
                     } else {
@@ -170,7 +170,7 @@ struct NoCreditView: View {
                 if creditManager.purchaseInProgress {
                     HStack(spacing: 8) {
                         PixelLoading(color: accent)
-                        Text("Processing...")
+                        Text("İşleniyor...")
                             .font(.custom(bodyFont, size: 10))
                             .foregroundColor(.white.opacity(0.5))
                     }
@@ -187,7 +187,7 @@ struct NoCreditView: View {
                 Button(action: {
                     Task { await creditManager.restorePurchases() }
                 }) {
-                    Text("Restore Purchases")
+                    Text("Satın Alımları Geri Yükle")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -195,7 +195,7 @@ struct NoCreditView: View {
                 Spacer()
 
                 Button(action: { dismiss() }) {
-                    Text("Close")
+                    Text("Kapat")
                         .font(.custom(bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.bottom, 40)
@@ -229,7 +229,7 @@ struct NoCreditView: View {
                 Text(name)
                     .font(.custom(bodyBoldFont, size: 12))
                     .foregroundColor(.white)
-                Text("\(credits) readings")
+                Text("\(credits) okuma")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(.white.opacity(0.4))
             }

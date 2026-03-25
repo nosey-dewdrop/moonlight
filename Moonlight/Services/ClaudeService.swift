@@ -201,11 +201,11 @@ class ClaudeService {
         guard httpResponse.statusCode == 200 else {
             switch httpResponse.statusCode {
             case 401:
-                throw ClaudeError.apiError(statusCode: 401, message: "Cannot connect to the reading service.")
+                throw ClaudeError.apiError(statusCode: 401, message: "Okuma servisine bağlanılamadı.")
             case 429:
-                throw ClaudeError.apiError(statusCode: 429, message: "Too many requests. Please wait a moment.")
+                throw ClaudeError.apiError(statusCode: 429, message: "Çok fazla istek. Biraz bekle.")
             default:
-                throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: "Something went wrong. Please try again.")
+                throw ClaudeError.apiError(statusCode: httpResponse.statusCode, message: "Bir şeyler ters gitti. Tekrar dene.")
             }
         }
 
@@ -229,11 +229,11 @@ enum ClaudeError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .noBackend: return "Cannot connect to the reading service. Please try again later."
-        case .invalidURL: return "Something went wrong. Please try again."
-        case .invalidResponse: return "Could not get a reading. Please try again."
+        case .noBackend: return "Okuma servisine bağlanılamadı. Daha sonra tekrar dene."
+        case .invalidURL: return "Bir şeyler ters gitti. Tekrar dene."
+        case .invalidResponse: return "Okuma alınamadı. Tekrar dene."
         case .apiError(_, let msg): return msg
-        case .parseError: return "Could not read the response. Please try again."
+        case .parseError: return "Yanıt okunamadı. Tekrar dene."
         }
     }
 }

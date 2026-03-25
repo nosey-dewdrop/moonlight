@@ -20,7 +20,7 @@ struct WelcomeView: View {
                 Spacer()
 
                 if showContent {
-                    Text("Welcome to")
+                    Text("Hoş geldin")
                         .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.6))
                         .transition(.opacity)
@@ -31,7 +31,7 @@ struct WelcomeView: View {
                         .shadow(color: accent.opacity(0.6), radius: 8)
                         .transition(.opacity)
 
-                    Text("The moon is listening.")
+                    Text("Ay seni dinliyor.")
                         .font(.custom(bodyFont, size: 12))
                         .foregroundColor(.white.opacity(0.4))
                         .transition(.opacity)
@@ -44,11 +44,11 @@ struct WelcomeView: View {
                             .foregroundColor(accent)
                             .shadow(color: accent.opacity(0.5), radius: 10)
 
-                        Text("free credits to start")
+                        Text("başlangıç kredisi")
                             .font(.custom(bodyFont, size: 12))
                             .foregroundColor(.white.opacity(0.6))
 
-                        Text("+ 3 daily credits every day")
+                        Text("+ her gün 3 ücretsiz kredi")
                             .font(.custom(bodyFont, size: 10))
                             .foregroundColor(.white.opacity(0.3))
                     }
@@ -67,7 +67,7 @@ struct WelcomeView: View {
                 Spacer()
 
                 if showButton {
-                    PixelButton("Begin") {
+                    PixelButton("Başla") {
                         dismiss()
                     }
                     .transition(.opacity)

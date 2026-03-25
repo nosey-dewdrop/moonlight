@@ -41,8 +41,8 @@ struct ContentView: View {
                 // Custom pixel tab bar
                 HStack(spacing: 0) {
                     tabButton(asset: "tab_tarot", label: "Tarot", tag: 0)
-                    tabButton(asset: "waxing_crescent", label: "Moon", tag: 1)
-                    tabButton(asset: "tab_horary", label: "Horary", tag: 2)
+                    tabButton(asset: "waxing_crescent", label: "Ay", tag: 1)
+                    tabButton(asset: "tab_horary", label: "Soru", tag: 2)
                 }
                 .padding(.top, 6)
                 .padding(.bottom, 24)

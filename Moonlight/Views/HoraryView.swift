@@ -28,12 +28,12 @@ struct HoraryView: View {
                 VStack(spacing: 20) {
                     Spacer().frame(height: 60)
 
-                    Text("Horary")
+                    Text("Soru")
                         .font(.custom(titleFont, size: 16))
                         .foregroundColor(accent)
                         .shadow(color: accent.opacity(0.5), radius: 4)
 
-                    Text("Ask the Moon a Question")
+                    Text("Ay'a Bir Soru Sor")
                         .font(.custom(bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.5))
 
@@ -44,7 +44,7 @@ struct HoraryView: View {
                     // AI reading
                     if let reading = aiReading {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Horary Reading")
+                            Text("Yorum")
                                 .font(.custom(titleFont, size: 8))
                                 .foregroundColor(accent)
 
@@ -65,11 +65,11 @@ struct HoraryView: View {
 
                         // Two buttons side by side
                         HStack(spacing: 10) {
-                            PixelButton("More") {
+                            PixelButton("Devam") {
                                 requestFollowUp()
                             }
                             .disabled(isLoading)
-                            PixelButton("Ask Again", style: .secondary) {
+                            PixelButton("Tekrar Sor", style: .secondary) {
                                 resetQuestion()
                             }
                             .disabled(isLoading)
@@ -79,7 +79,7 @@ struct HoraryView: View {
                     if isLoading {
                         HStack(spacing: 8) {
                             PixelLoading(color: accent)
-                            Text("Consulting the stars...")
+                            Text("Yıldızlara danışılıyor...")
                                 .font(.custom(bodyFont, size: 10))
                                 .foregroundColor(.white.opacity(0.5))
                         }
@@ -116,7 +116,7 @@ struct HoraryView: View {
     private var questionInput: some View {
         VStack(spacing: 12) {
             TextField("", text: $question, prompt:
-                Text("What does your heart seek?")
+                Text("Aklından ne geçiyor?")
                     .foregroundColor(.white.opacity(0.3))
                     .font(.custom(bodyFont, size: 12))
             )
@@ -141,7 +141,7 @@ struct HoraryView: View {
                 }
             }
 
-            PixelButton("Ask the Stars (1 credit)") {
+            PixelButton("Yıldızlara Sor (1 kredi)") {
                 askQuestion()
             }
             .accessibilityLabel("Ask the stars")
@@ -252,12 +252,12 @@ struct HoraryView: View {
             return claudeError.localizedDescription
         }
         if (error as NSError).code == NSURLErrorTimedOut {
-            return "Request timed out. Please try again."
+            return "İstek zaman aşımına uğradı. Tekrar dene."
         }
         if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-            return "No internet connection. Please check your network."
+            return "İnternet bağlantısı yok. Ağını kontrol et."
         }
-        return "Something went wrong. Please try again."
+        return "Bir şeyler ters gitti. Tekrar dene."
     }
 }
 

@@ -39,7 +39,7 @@ struct ReadingHistoryView: View {
                             .padding(8)
                     }
                     Spacer()
-                    Text("History")
+                    Text("Geçmiş")
                         .font(.custom(titleFont, size: 14))
                         .foregroundColor(accent)
                     Spacer()
@@ -50,10 +50,10 @@ struct ReadingHistoryView: View {
 
                 if sortedRecords.isEmpty {
                     Spacer()
-                    Text("No readings yet")
+                    Text("Henüz okuma yok")
                         .font(.custom(bodyFont, size: 12))
                         .foregroundColor(.white.opacity(0.3))
-                    Text("Your questions will appear here")
+                    Text("Soruların burada görünecek")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.2))
                     Spacer()

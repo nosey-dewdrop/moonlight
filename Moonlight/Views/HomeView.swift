@@ -58,7 +58,7 @@ struct HomeView: View {
                     ProgressView()
                         .tint(.white)
                         .scaleEffect(1.5)
-                    Text("reading the stars...")
+                    Text("yıldızlar okunuyor...")
                         .foregroundColor(.white.opacity(0.6))
                         .font(.custom(bodyFont, size: 12))
                 }
@@ -84,12 +84,12 @@ struct HomeView: View {
                 .foregroundColor(Color(hex: "#FFE566"))
                 .shadow(color: Color(hex: "#FFE566").opacity(0.5), radius: 4)
 
-            Text("\(Int(moonData.illumination))% illuminated")
+            Text("%\(Int(moonData.illumination)) aydınlık")
                 .font(.custom(bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.6))
 
             if usingLocalData {
-                Text("approximate data (no connection)")
+                Text("yaklaşık veri (bağlantı yok)")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(.white.opacity(0.3))
             }
@@ -117,7 +117,7 @@ struct HomeView: View {
     private var astroEventsList: some View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
-                Text("Cosmic Events")
+                Text("Kozmik Olaylar")
                     .font(.custom(titleFont, size: 8))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
@@ -127,11 +127,11 @@ struct HomeView: View {
                 }
             } else if eventsError {
                 VStack(spacing: 8) {
-                    Text("Could not load cosmic events")
+                    Text("Kozmik olaylar yüklenemedi")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.4))
                     Button(action: { Task { await retryEvents() } }) {
-                        Text("Tap to retry")
+                        Text("Tekrar dene")
                             .font(.custom(bodyFont, size: 9))
                             .foregroundColor(Color(hex: "#FFE566").opacity(0.6))
                     }
@@ -139,7 +139,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             } else {
-                Text("No active cosmic events")
+                Text("Aktif kozmik olay yok")
                     .font(.custom(bodyFont, size: 10))
                     .foregroundColor(.white.opacity(0.3))
                     .frame(maxWidth: .infinity)
@@ -160,7 +160,7 @@ struct HomeView: View {
                         .foregroundColor(.white)
 
                     if event.isActive {
-                        Text("active")
+                        Text("aktif")
                             .font(.custom(bodyFont, size: 8))
                             .foregroundColor(Color(hex: "#34D399"))
                     }

@@ -65,7 +65,7 @@ struct TarotView: View {
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
-            Text("Pick up to 3 cards (1 credit per reading)")
+            Text("3'e kadar kart seç (okuma başı 1 kredi)")
                 .font(.custom(bodyFont, size: 11))
                 .foregroundColor(.white.opacity(0.5))
 
@@ -74,14 +74,14 @@ struct TarotView: View {
                 Text("\(creditManager.totalCredits)")
                     .font(.custom(titleFont, size: 10))
                     .foregroundColor(accent)
-                Text("credits")
+                Text("kredi")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(.white.opacity(0.4))
             }
 
             // Question input
             TextField("", text: $question, prompt:
-                Text("What is your question?")
+                Text("Sorun ne?")
                     .foregroundColor(.white.opacity(0.3))
                     .font(.custom(bodyFont, size: 12))
             )
@@ -105,13 +105,13 @@ struct TarotView: View {
             }
 
             if questionError {
-                Text("Please enter a question first")
+                Text("Önce bir soru yaz")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(Color(hex: "#FF6B6B"))
             }
 
             // Reveal button
-            PixelButton(selectedCards.isEmpty ? "Select Cards Below" : "Reveal \(selectedCards.count) Card\(selectedCards.count > 1 ? "s" : "")") {
+            PixelButton(selectedCards.isEmpty ? "Aşağıdan Kart Seç" : "\(selectedCards.count) Kart Aç") {
                 if question.trimmingCharacters(in: .whitespaces).isEmpty {
                     questionError = true
                 } else {
@@ -169,7 +169,7 @@ struct TarotView: View {
                 }
             }
 
-            Text("\(selectedCards.count)/3 selected")
+            Text("\(selectedCards.count)/3 seçildi")
                 .font(.custom(bodyFont, size: 9))
                 .foregroundColor(.white.opacity(0.3))
 
@@ -182,15 +182,15 @@ struct TarotView: View {
 
     private var premiumSpreadsSection: some View {
         VStack(spacing: 12) {
-            Text("Premium Spreads")
+            Text("Premium Açılımlar")
                 .font(.custom(titleFont, size: 8))
                 .foregroundColor(.white.opacity(0.6))
                 .padding(.top, 20)
 
-            premiumSpreadRow("Celtic Cross", cards: 10, credits: 10)
-            premiumSpreadRow("Five Card Spread", cards: 5, credits: 5)
-            premiumSpreadRow("Relationship Spread", cards: 7, credits: 7)
-            premiumSpreadRow("Career Path", cards: 9, credits: 9)
+            premiumSpreadRow("Kelt Haçı", cards: 10, credits: 10)
+            premiumSpreadRow("Beş Kart Açılımı", cards: 5, credits: 5)
+            premiumSpreadRow("İlişki Açılımı", cards: 7, credits: 7)
+            premiumSpreadRow("Kariyer Yolu", cards: 9, credits: 9)
         }
     }
 
@@ -201,14 +201,14 @@ struct TarotView: View {
                     Text(name)
                         .font(.custom(bodyBoldFont, size: 11))
                         .foregroundColor(.white)
-                    Text("\(cards) cards")
+                    Text("\(cards) kart")
                         .font(.custom(bodyFont, size: 9))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 Spacer()
 
-                Text("\(credits) credits")
+                Text("\(credits) kredi")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(accent)
             }
@@ -273,7 +273,7 @@ struct TarotView: View {
             if isLoadingAI {
                 HStack(spacing: 8) {
                     PixelLoading(color: accent)
-                    Text("Reading the stars...")
+                    Text("Yıldızlar okunuyor...")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -282,7 +282,7 @@ struct TarotView: View {
 
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Reading")
+                    Text("Yorum")
                         .font(.custom(titleFont, size: 8))
                         .foregroundColor(accent)
 
@@ -305,7 +305,7 @@ struct TarotView: View {
                 if isLoadingClarification {
                     HStack(spacing: 8) {
                         PixelLoading(color: accent)
-                        Text("Drawing clarification...")
+                        Text("Açıklama kartı çekiliyor...")
                             .font(.custom(bodyFont, size: 10))
                             .foregroundColor(.white.opacity(0.5))
                     }
@@ -313,11 +313,11 @@ struct TarotView: View {
                 }
 
                 HStack(spacing: 10) {
-                    PixelButton("More") {
+                    PixelButton("Devam") {
                         drawClarificationCard()
                     }
                     .disabled(isLoadingAI || isLoadingClarification || showClarificationPicker)
-                    PixelButton("Draw Again", style: .secondary) {
+                    PixelButton("Tekrar Çek", style: .secondary) {
                         resetDraw()
                     }
                     .disabled(isLoadingAI || isLoadingClarification)
@@ -333,12 +333,12 @@ struct TarotView: View {
             // Clarification picker
             if showClarificationPicker {
                 VStack(spacing: 12) {
-                    Text("Follow-up question (optional)")
+                    Text("Takip sorusu (isteğe bağlı)")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.5))
 
                     TextField("", text: $clarificationQuestion, prompt:
-                        Text("What do you want to know more about?")
+                        Text("Neyi daha çok merak ediyorsun?")
                             .foregroundColor(.white.opacity(0.3))
                             .font(.custom(bodyFont, size: 11))
                     )
@@ -356,7 +356,7 @@ struct TarotView: View {
                             )
                     )
 
-                    Text("Pick a clarification card (1 credit)")
+                    Text("Açıklama kartı seç (1 kredi)")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(accent.opacity(0.7))
 
@@ -534,20 +534,20 @@ struct TarotView: View {
         let names: [String]
         switch spreadType {
         case "celtic_cross":
-            names = ["Situation", "Challenge", "Past", "Future", "Above", "Below", "Advice", "External", "Hopes", "Outcome"]
+            names = ["Durum", "Engel", "Geçmiş", "Gelecek", "Üst", "Alt", "Tavsiye", "Dış Etki", "Umutlar", "Sonuç"]
         case "five_card":
-            names = ["Past", "Present", "Hidden", "Advice", "Outcome"]
+            names = ["Geçmiş", "Şimdi", "Gizli", "Tavsiye", "Sonuç"]
         case "relationship":
-            names = ["You", "Partner", "Connection", "Challenge", "Strength", "Advice", "Outcome"]
+            names = ["Sen", "Partner", "Bağ", "Engel", "Güç", "Tavsiye", "Sonuç"]
         case "career":
-            names = ["Current", "Obstacle", "Strength", "Weakness", "Goal", "Path", "Environment", "Hopes", "Outcome"]
+            names = ["Şimdi", "Engel", "Güç", "Zayıflık", "Hedef", "Yol", "Çevre", "Umutlar", "Sonuç"]
         default:
-            names = ["Past", "Present", "Future"]
+            names = ["Geçmiş", "Şimdi", "Gelecek"]
         }
         if index < names.count {
             return names[index]
         }
-        return "Clarification"
+        return "Açıklama"
     }
 
     private func requestAIReading() {
@@ -588,15 +588,15 @@ struct TarotView: View {
 
     private func userFriendlyError(_ error: Error) -> String {
         if let claudeError = error as? ClaudeError {
-            return claudeError.errorDescription ?? "Something went wrong. Please try again."
+            return claudeError.errorDescription ?? "Bir şeyler ters gitti. Tekrar dene."
         }
         if (error as NSError).code == NSURLErrorTimedOut {
-            return "Request timed out. Please try again."
+            return "İstek zaman aşımına uğradı. Tekrar dene."
         }
         if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-            return "No internet connection. Please check your network."
+            return "İnternet bağlantısı yok. Ağını kontrol et."
         }
-        return "Something went wrong. Please try again."
+        return "Bir şeyler ters gitti. Tekrar dene."
     }
 }
 

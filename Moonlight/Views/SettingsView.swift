@@ -37,7 +37,7 @@ struct SettingsView: View {
                         }
                         .accessibilityLabel("Close")
                         Spacer()
-                        Text("Settings")
+                        Text("Ayarlar")
                             .font(.custom(titleFont, size: 14))
                             .foregroundColor(accent)
                         Spacer()
@@ -57,7 +57,7 @@ struct SettingsView: View {
                     // Reading History
                     Button(action: { showHistory = true }) {
                         HStack {
-                            Text("Reading History")
+                            Text("Okuma Geçmişi")
                                 .font(.custom(bodyFont, size: 11))
                                 .foregroundColor(.white.opacity(0.6))
                             Spacer()
@@ -96,17 +96,17 @@ struct SettingsView: View {
 
     private var birthChartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Birth Chart")
+            Text("Doğum Haritası")
                 .font(.custom(titleFont, size: 8))
                 .foregroundColor(.white.opacity(0.8))
 
-            zodiacPicker("Sun Sign", selection: $userProfile.sunSign)
-            zodiacPicker("Rising Sign", selection: $userProfile.risingSign)
-            zodiacPicker("Moon Sign", selection: $userProfile.moonSign)
+            zodiacPicker("Güneş Burcu", selection: $userProfile.sunSign)
+            zodiacPicker("Yükselen Burç", selection: $userProfile.risingSign)
+            zodiacPicker("Ay Burcu", selection: $userProfile.moonSign)
 
             // Birth time
             VStack(alignment: .leading, spacing: 4) {
-                Text("Birth Time")
+                Text("Doğum Saati")
                     .font(.custom(bodyFont, size: 10))
                     .foregroundColor(.white.opacity(0.5))
 
@@ -192,7 +192,7 @@ struct SettingsView: View {
 
     private var creditsSection: some View {
         VStack(spacing: 8) {
-            Text("Credits")
+            Text("Krediler")
                 .font(.custom(titleFont, size: 8))
                 .foregroundColor(.white.opacity(0.8))
 
@@ -206,7 +206,7 @@ struct SettingsView: View {
                     Text("\(creditManager.dailyCreditsRemaining)")
                         .font(.custom(bodyBoldFont, size: 12))
                         .foregroundColor(.white)
-                    Text("daily free")
+                    Text("günlük ücretsiz")
                         .font(.custom(bodyFont, size: 8))
                         .foregroundColor(.white.opacity(0.4))
                 }
@@ -215,7 +215,7 @@ struct SettingsView: View {
                     Text("\(creditManager.purchasedCredits)")
                         .font(.custom(bodyBoldFont, size: 12))
                         .foregroundColor(.white)
-                    Text("purchased")
+                    Text("satın alınan")
                         .font(.custom(bodyFont, size: 8))
                         .foregroundColor(.white.opacity(0.4))
                 }
@@ -237,7 +237,7 @@ struct SettingsView: View {
 
     private var purchaseSection: some View {
         VStack(spacing: 10) {
-            Text("Buy Credits")
+            Text("Kredi Al")
                 .font(.custom(titleFont, size: 8))
                 .foregroundColor(.white.opacity(0.8))
 
@@ -246,7 +246,7 @@ struct SettingsView: View {
                     purchaseRow(name: product.name, price: product.price, credits: product.credits)
                 }
 
-                Text("Loading store...")
+                Text("Mağaza yükleniyor...")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(.white.opacity(0.3))
             } else {
@@ -264,7 +264,7 @@ struct SettingsView: View {
             if creditManager.purchaseInProgress {
                 HStack(spacing: 8) {
                     PixelLoading(color: accent)
-                    Text("Processing...")
+                    Text("İşleniyor...")
                         .font(.custom(bodyFont, size: 10))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -280,7 +280,7 @@ struct SettingsView: View {
             Button(action: {
                 Task { await creditManager.restorePurchases() }
             }) {
-                Text("Restore Purchases")
+                Text("Satın Alımları Geri Yükle")
                     .font(.custom(bodyFont, size: 10))
                     .foregroundColor(.white.opacity(0.5))
                     .padding(.top, 8)
@@ -294,7 +294,7 @@ struct SettingsView: View {
                 Text(name)
                     .font(.custom(bodyBoldFont, size: 12))
                     .foregroundColor(.white)
-                Text("\(credits) readings")
+                Text("\(credits) okuma")
                     .font(.custom(bodyFont, size: 9))
                     .foregroundColor(.white.opacity(0.4))
             }
@@ -326,7 +326,7 @@ struct SettingsView: View {
                 }
             }) {
                 HStack {
-                    Text("Privacy Policy")
+                    Text("Gizlilik Politikası")
                         .font(.custom(bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
@@ -351,7 +351,7 @@ struct SettingsView: View {
                 }
             }) {
                 HStack {
-                    Text("Terms of Service")
+                    Text("Kullanım Koşulları")
                         .font(.custom(bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()

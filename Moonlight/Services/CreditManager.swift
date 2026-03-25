@@ -175,13 +175,13 @@ class CreditManager: ObservableObject {
                 break
 
             case .pending:
-                purchaseError = "Purchase is pending. Check your Apple ID payment settings."
+                purchaseError = "Satın alma beklemede. Apple ID ödeme ayarlarını kontrol et."
 
             @unknown default:
                 break
             }
         } catch {
-            purchaseError = "Purchase failed. Please try again."
+            purchaseError = "Satın alma başarısız. Tekrar dene."
         }
     }
 
@@ -242,9 +242,9 @@ class CreditManager: ObservableObject {
     }
 
     static let fallbackProducts = [
-        FallbackProduct(id: "credits5", name: "5 Credits", price: "₺79,99", credits: 5),
-        FallbackProduct(id: "credits10", name: "10 Credits", price: "₺109,99", credits: 10),
-        FallbackProduct(id: "credits15", name: "15 Credits", price: "₺139,99", credits: 15),
+        FallbackProduct(id: "credits5", name: "5 Kredi", price: "₺79,99", credits: 5),
+        FallbackProduct(id: "credits10", name: "10 Kredi", price: "₺109,99", credits: 10),
+        FallbackProduct(id: "credits15", name: "15 Kredi", price: "₺139,99", credits: 15),
     ]
 }
 
@@ -252,6 +252,6 @@ enum StoreError: LocalizedError {
     case verificationFailed
 
     var errorDescription: String? {
-        "Purchase verification failed"
+        "Satın alma doğrulaması başarısız"
     }
 }
