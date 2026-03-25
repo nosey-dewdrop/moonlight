@@ -27,9 +27,9 @@ class CreditManager: ObservableObject {
     private let welcomeBonusAmount = 10
 
     private let productIds = [
+        "com.damla.moonlight.credits5",
         "com.damla.moonlight.credits10",
-        "com.damla.moonlight.credits30",
-        "com.damla.moonlight.credits75",
+        "com.damla.moonlight.credits15",
     ]
 
     private var transactionTask: Task<Void, Never>?
@@ -45,9 +45,9 @@ class CreditManager: ObservableObject {
         giveWelcomeBonus()
 
         #if DEBUG
-        if purchasedCredits == 0 && !UserDefaults.standard.bool(forKey: "debugCreditsGiven") {
-            purchasedCredits = 200
-            UserDefaults.standard.set(true, forKey: "debugCreditsGiven")
+        if !UserDefaults.standard.bool(forKey: "debugCredits500") {
+            purchasedCredits = 500
+            UserDefaults.standard.set(true, forKey: "debugCredits500")
         }
         #endif
     }
@@ -225,9 +225,9 @@ class CreditManager: ObservableObject {
 
     static func creditsForProduct(_ productId: String) -> Int {
         switch productId {
+        case "com.damla.moonlight.credits5": return 5
         case "com.damla.moonlight.credits10": return 10
-        case "com.damla.moonlight.credits30": return 30
-        case "com.damla.moonlight.credits75": return 75
+        case "com.damla.moonlight.credits15": return 15
         default: return 0
         }
     }
@@ -242,9 +242,9 @@ class CreditManager: ObservableObject {
     }
 
     static let fallbackProducts = [
-        FallbackProduct(id: "credits10", name: "10 Credits", price: "₺14,99", credits: 10),
-        FallbackProduct(id: "credits30", name: "30 Credits", price: "₺34,99", credits: 30),
-        FallbackProduct(id: "credits75", name: "75 Credits", price: "₺59,99", credits: 75),
+        FallbackProduct(id: "credits5", name: "5 Credits", price: "₺79,99", credits: 5),
+        FallbackProduct(id: "credits10", name: "10 Credits", price: "₺109,99", credits: 10),
+        FallbackProduct(id: "credits15", name: "15 Credits", price: "₺139,99", credits: 15),
     ]
 }
 
