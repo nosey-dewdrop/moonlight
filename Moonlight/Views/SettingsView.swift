@@ -58,7 +58,7 @@ struct SettingsView: View {
                     Button(action: { showHistory = true }) {
                         HStack {
                             Text("Okuma Geçmişi")
-                                .font(.custom(bodyFont, size: 11))
+                                .font(.custom(bodyFont, size: 15))
                                 .foregroundColor(.white.opacity(0.6))
                             Spacer()
                             Text(">")
@@ -107,7 +107,7 @@ struct SettingsView: View {
             // Birth time
             VStack(alignment: .leading, spacing: 4) {
                 Text("Doğum Saati")
-                    .font(.custom(bodyFont, size: 10))
+                    .font(.custom(bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.5))
 
                 if let time = userProfile.birthTime {
@@ -117,7 +117,7 @@ struct SettingsView: View {
                             f.dateFormat = "HH:mm"
                             return f.string(from: time)
                         }())
-                            .font(.custom(bodyBoldFont, size: 12))
+                            .font(.custom(bodyBoldFont, size: 15))
                             .foregroundColor(.white)
 
                         Spacer()
@@ -152,7 +152,7 @@ struct SettingsView: View {
     private func zodiacPicker(_ label: String, selection: Binding<ZodiacSign?>) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(label)
-                .font(.custom(bodyFont, size: 10))
+                .font(.custom(bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.5))
 
             ScrollView(.horizontal, showsIndicators: false) {
@@ -182,7 +182,7 @@ struct SettingsView: View {
 
             if let sign = selection.wrappedValue {
                 Text(sign.displayName)
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(accent.opacity(0.7))
             }
         }
@@ -204,19 +204,19 @@ struct SettingsView: View {
             HStack(spacing: 16) {
                 VStack(spacing: 2) {
                     Text("\(creditManager.dailyCreditsRemaining)")
-                        .font(.custom(bodyBoldFont, size: 12))
+                        .font(.custom(bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("günlük ücretsiz")
-                        .font(.custom(bodyFont, size: 8))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 VStack(spacing: 2) {
                     Text("\(creditManager.purchasedCredits)")
-                        .font(.custom(bodyBoldFont, size: 12))
+                        .font(.custom(bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("satın alınan")
-                        .font(.custom(bodyFont, size: 8))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
             }
@@ -247,7 +247,7 @@ struct SettingsView: View {
                 }
 
                 Text("Mağaza yükleniyor...")
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             } else {
                 ForEach(creditManager.products) { product in
@@ -265,44 +265,34 @@ struct SettingsView: View {
                 HStack(spacing: 8) {
                     PixelLoading(color: accent)
                     Text("İşleniyor...")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
             }
 
             if let error = creditManager.purchaseError {
                 Text(error)
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
                     .multilineTextAlignment(.center)
             }
 
-            Button(action: {
+            PixelButton("Satın Alımları Geri Yükle", style: .secondary) {
                 Task { await creditManager.restorePurchases() }
-            }) {
-                Text("Satın Alımları Geri Yükle")
-                    .font(.custom(bodyFont, size: 10))
-                    .foregroundColor(.white.opacity(0.5))
-                    .padding(.top, 8)
             }
         }
     }
 
     private func purchaseRow(name: String, price: String, credits: Int) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(.white)
-                Text("\(credits) okuma")
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
-            }
+            Text(name)
+                .font(.custom(bodyBoldFont, size: 15))
+                .foregroundColor(.white)
 
             Spacer()
 
             Text(price)
-                .font(.custom(bodyBoldFont, size: 12))
+                .font(.custom(bodyBoldFont, size: 15))
                 .foregroundColor(accent)
         }
         .padding(12)
@@ -327,7 +317,7 @@ struct SettingsView: View {
             }) {
                 HStack {
                     Text("Gizlilik Politikası")
-                        .font(.custom(bodyFont, size: 11))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
@@ -352,7 +342,7 @@ struct SettingsView: View {
             }) {
                 HStack {
                     Text("Kullanım Koşulları")
-                        .font(.custom(bodyFont, size: 11))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
                     Text(">")
@@ -371,7 +361,7 @@ struct SettingsView: View {
             }
 
             Text("Moonlight v1.0")
-                .font(.custom(bodyFont, size: 9))
+                .font(.custom(bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.2))
                 .padding(.top, 4)
         }

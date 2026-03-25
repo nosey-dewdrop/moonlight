@@ -75,7 +75,7 @@ struct ContentView: View {
                     .opacity(selectedTab == tag ? 1.0 : 0.35)
 
                 Text(label)
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(selectedTab == tag ? accent : .white.opacity(0.3))
             }
             .frame(maxWidth: .infinity)

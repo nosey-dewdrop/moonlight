@@ -138,7 +138,7 @@ struct NoCreditView: View {
                     .shadow(color: accent.opacity(0.5), radius: 6)
 
                 Text("Yıldızlar seni bekliyor.\nOkumaya devam et.")
-                    .font(.custom(bodyFont, size: 11))
+                    .font(.custom(bodyFont, size: 15))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -151,7 +151,7 @@ struct NoCreditView: View {
                         }
 
                         Text("Mağaza yükleniyor...")
-                            .font(.custom(bodyFont, size: 9))
+                            .font(.custom(bodyFont, size: 13))
                             .foregroundColor(.white.opacity(0.3))
                     } else {
                         ForEach(creditManager.products, id: \.id) { product in
@@ -171,32 +171,28 @@ struct NoCreditView: View {
                     HStack(spacing: 8) {
                         PixelLoading(color: accent)
                         Text("İşleniyor...")
-                            .font(.custom(bodyFont, size: 10))
+                            .font(.custom(bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
                 }
 
                 if let error = creditManager.purchaseError {
                     Text(error)
-                        .font(.custom(bodyFont, size: 9))
+                        .font(.custom(bodyFont, size: 13))
                         .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
                 }
 
-                Button(action: {
+                PixelButton("Satın Alımları Geri Yükle", style: .secondary) {
                     Task { await creditManager.restorePurchases() }
-                }) {
-                    Text("Satın Alımları Geri Yükle")
-                        .font(.custom(bodyFont, size: 10))
-                        .foregroundColor(.white.opacity(0.5))
                 }
 
                 Spacer()
 
                 Button(action: { dismiss() }) {
                     Text("Kapat")
-                        .font(.custom(bodyFont, size: 11))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.bottom, 40)
                 }
@@ -225,19 +221,14 @@ struct NoCreditView: View {
 
     private func purchaseRow(name: String, price: String, credits: Int, isAvailable: Bool) -> some View {
         HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(.custom(bodyBoldFont, size: 12))
-                    .foregroundColor(.white)
-                Text("\(credits) okuma")
-                    .font(.custom(bodyFont, size: 9))
-                    .foregroundColor(.white.opacity(0.4))
-            }
+            Text(name)
+                .font(.custom(bodyBoldFont, size: 15))
+                .foregroundColor(.white)
 
             Spacer()
 
             Text(price)
-                .font(.custom(bodyBoldFont, size: 12))
+                .font(.custom(bodyBoldFont, size: 15))
                 .foregroundColor(accent)
         }
         .padding(12)

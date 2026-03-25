@@ -51,10 +51,10 @@ struct ReadingHistoryView: View {
                 if sortedRecords.isEmpty {
                     Spacer()
                     Text("Henüz okuma yok")
-                        .font(.custom(bodyFont, size: 12))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.3))
                     Text("Soruların burada görünecek")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.2))
                     Spacer()
                 } else {
@@ -112,13 +112,13 @@ struct ReadingHistoryView: View {
                             .foregroundColor(accent)
                     }
                     Text(record.question)
-                        .font(.custom(bodyFont, size: 11))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.8))
                         .lineLimit(2)
                 }
 
                 Text(formatDate(record.date))
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             }
 

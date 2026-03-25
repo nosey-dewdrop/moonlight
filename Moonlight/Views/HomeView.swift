@@ -61,7 +61,7 @@ struct HomeView: View {
                         .scaleEffect(1.5)
                     Text("yıldızlar okunuyor...")
                         .foregroundColor(.white.opacity(0.6))
-                        .font(.custom(bodyFont, size: 12))
+                        .font(.custom(bodyFont, size: 15))
                 }
             }
         }
@@ -91,7 +91,7 @@ struct HomeView: View {
 
             if usingLocalData {
                 Text("yaklaşık veri (bağlantı yok)")
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             }
 
@@ -99,13 +99,13 @@ struct HomeView: View {
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonrise", size: 18)
                     Text(moonData.moonrise)
-                        .font(.custom(bodyFont, size: 12))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.7))
                 }
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonset", size: 18)
                     Text(moonData.moonset)
-                        .font(.custom(bodyFont, size: 12))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.7))
                 }
             }
@@ -119,7 +119,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
                 Text("Gökyüzü Olayları")
-                    .font(.custom(titleFont, size: 16))
+                    .font(.custom(bodyBoldFont, size: 16))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
 
@@ -129,11 +129,11 @@ struct HomeView: View {
             } else if eventsError {
                 VStack(spacing: 8) {
                     Text("Gökyüzü olayları yüklenemedi")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.4))
                     Button(action: { Task { await retryEvents() } }) {
                         Text("Tekrar dene")
-                            .font(.custom(bodyFont, size: 9))
+                            .font(.custom(bodyFont, size: 13))
                             .foregroundColor(Color(hex: "#FFE566").opacity(0.6))
                     }
                 }
@@ -141,7 +141,7 @@ struct HomeView: View {
                 .padding(.top, 8)
             } else {
                 Text("Aktif gökyüzü olayı yok")
-                    .font(.custom(bodyFont, size: 10))
+                    .font(.custom(bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.3))
                     .frame(maxWidth: .infinity)
                     .padding(.top, 8)
@@ -157,23 +157,23 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 3) {
                 HStack(spacing: 6) {
                     Text(event.title)
-                        .font(.custom(bodyBoldFont, size: 13))
+                        .font(.custom(bodyBoldFont, size: 16))
                         .foregroundColor(.white)
 
                     if event.isActive {
                         Text("aktif")
-                            .font(.custom(bodyFont, size: 8))
+                            .font(.custom(bodyFont, size: 15))
                             .foregroundColor(Color(hex: "#34D399"))
                     }
                 }
 
                 Text(event.description)
-                    .font(.custom(readingFont, size: 13))
+                    .font(.custom(readingFont, size: 15))
                     .foregroundColor(.white.opacity(0.4))
 
                 if !event.dateRangeText.isEmpty {
                     Text(event.dateRangeText)
-                        .font(.custom(bodyFont, size: 9))
+                        .font(.custom(bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.3))
                 }
             }

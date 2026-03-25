@@ -35,7 +35,7 @@ struct HoraryView: View {
                         .shadow(color: accent.opacity(0.5), radius: 4)
 
                     Text("Ay'a Bir Soru Sor")
-                        .font(.custom(bodyFont, size: 11))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.5))
 
                 // Question input
@@ -81,7 +81,7 @@ struct HoraryView: View {
                         HStack(spacing: 8) {
                             PixelLoading(color: accent)
                             Text("Yıldızlara danışılıyor...")
-                                .font(.custom(bodyFont, size: 10))
+                                .font(.custom(bodyFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
                         }
                         .padding(12)
@@ -89,7 +89,7 @@ struct HoraryView: View {
 
                     if let error = errorMessage {
                         Text(error)
-                            .font(.custom(bodyFont, size: 9))
+                            .font(.custom(bodyFont, size: 13))
                             .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
                     }
                 }
@@ -119,9 +119,9 @@ struct HoraryView: View {
             TextField("", text: $question, prompt:
                 Text("Aklından ne geçiyor?")
                     .foregroundColor(.white.opacity(0.3))
-                    .font(.custom(bodyFont, size: 12))
+                    .font(.custom(bodyFont, size: 15))
             )
-            .font(.custom(bodyFont, size: 12))
+            .font(.custom(bodyFont, size: 15))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 20)

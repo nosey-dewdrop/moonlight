@@ -68,7 +68,7 @@ struct TarotView: View {
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
             Text("3'e kadar kart seç (okuma başı 1 kredi)")
-                .font(.custom(bodyFont, size: 11))
+                .font(.custom(bodyFont, size: 15))
                 .foregroundColor(.white.opacity(0.5))
 
             // Credits display
@@ -77,7 +77,7 @@ struct TarotView: View {
                     .font(.custom(titleFont, size: 10))
                     .foregroundColor(accent)
                 Text("kredi")
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.4))
             }
 
@@ -85,9 +85,9 @@ struct TarotView: View {
             TextField("", text: $question, prompt:
                 Text("Sorun ne?")
                     .foregroundColor(.white.opacity(0.3))
-                    .font(.custom(bodyFont, size: 12))
+                    .font(.custom(bodyFont, size: 15))
             )
-            .font(.custom(bodyFont, size: 12))
+            .font(.custom(bodyFont, size: 15))
             .foregroundColor(.white)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 20)
@@ -108,7 +108,7 @@ struct TarotView: View {
 
             if questionError {
                 Text("Önce bir soru yaz")
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(Color(hex: "#FF6B6B"))
             }
 
@@ -172,7 +172,7 @@ struct TarotView: View {
             }
 
             Text("\(selectedCards.count)/3 seçildi")
-                .font(.custom(bodyFont, size: 9))
+                .font(.custom(bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.3))
 
             // Premium spreads
@@ -201,17 +201,17 @@ struct TarotView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
-                        .font(.custom(bodyBoldFont, size: 11))
+                        .font(.custom(bodyBoldFont, size: 15))
                         .foregroundColor(.white)
                     Text("\(cards) kart")
-                        .font(.custom(bodyFont, size: 9))
+                        .font(.custom(bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 Spacer()
 
                 Text("\(credits) kredi")
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(accent)
             }
             .padding(12)
@@ -232,7 +232,7 @@ struct TarotView: View {
         VStack(spacing: 16) {
             // Question
             Text("\"\(question)\"")
-                .font(.custom(bodyFont, size: 11))
+                .font(.custom(bodyFont, size: 15))
                 .foregroundColor(.white.opacity(0.5))
                 .italic()
 
@@ -241,7 +241,7 @@ struct TarotView: View {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 6) {
                         Text(positionName(for: index))
-                            .font(.custom(bodyFont, size: 9))
+                            .font(.custom(bodyFont, size: 13))
                             .foregroundColor(accent.opacity(0.5))
                         Text(drawn.card.name)
                             .font(.custom(readingBoldFont, size: 14))
@@ -276,7 +276,7 @@ struct TarotView: View {
                 HStack(spacing: 8) {
                     PixelLoading(color: accent)
                     Text("Yıldızlar okunuyor...")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
                 .padding(12)
@@ -308,7 +308,7 @@ struct TarotView: View {
                     HStack(spacing: 8) {
                         PixelLoading(color: accent)
                         Text("Açıklama kartı çekiliyor...")
-                            .font(.custom(bodyFont, size: 10))
+                            .font(.custom(bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
                     .padding(12)
@@ -328,7 +328,7 @@ struct TarotView: View {
 
             if let error = errorMessage {
                 Text(error)
-                    .font(.custom(bodyFont, size: 9))
+                    .font(.custom(bodyFont, size: 13))
                     .foregroundColor(Color(hex: "#FF6B6B").opacity(0.7))
             }
 
@@ -336,15 +336,15 @@ struct TarotView: View {
             if showClarificationPicker {
                 VStack(spacing: 12) {
                     Text("Takip sorusu (isteğe bağlı)")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
 
                     TextField("", text: $clarificationQuestion, prompt:
                         Text("Neyi daha çok merak ediyorsun?")
                             .foregroundColor(.white.opacity(0.3))
-                            .font(.custom(bodyFont, size: 11))
+                            .font(.custom(bodyFont, size: 15))
                     )
-                    .font(.custom(bodyFont, size: 11))
+                    .font(.custom(bodyFont, size: 15))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 16)
@@ -359,7 +359,7 @@ struct TarotView: View {
                     )
 
                     Text("Açıklama kartı seç (1 kredi)")
-                        .font(.custom(bodyFont, size: 10))
+                        .font(.custom(bodyFont, size: 14))
                         .foregroundColor(accent.opacity(0.7))
 
                     LazyVGrid(columns: columns, spacing: 8) {

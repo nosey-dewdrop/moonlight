@@ -32,7 +32,7 @@ struct WelcomeView: View {
                         .transition(.opacity)
 
                     Text("Ay seni dinliyor.")
-                        .font(.custom(bodyFont, size: 12))
+                        .font(.custom(bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                         .transition(.opacity)
                 }
@@ -45,11 +45,11 @@ struct WelcomeView: View {
                             .shadow(color: accent.opacity(0.5), radius: 10)
 
                         Text("başlangıç kredisi")
-                            .font(.custom(bodyFont, size: 12))
+                            .font(.custom(bodyFont, size: 15))
                             .foregroundColor(.white.opacity(0.6))
 
                         Text("+ her gün 3 ücretsiz kredi")
-                            .font(.custom(bodyFont, size: 10))
+                            .font(.custom(bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.3))
                     }
                     .padding(20)
