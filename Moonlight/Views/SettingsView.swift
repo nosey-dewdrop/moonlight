@@ -5,6 +5,7 @@ struct SettingsView: View {
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
     @ObservedObject private var loc = LocalizationManager.shared
+    @ObservedObject private var notif = NotificationManager.shared
     @State private var showHistory = false
     @State private var moonData: MoonData?
 
@@ -43,6 +44,9 @@ struct SettingsView: View {
 
                     // Language section
                     languageSection
+
+                    // Notifications section
+                    notificationsSection
 
                     // Birth chart section
                     birthChartSection
@@ -86,6 +90,7 @@ struct SettingsView: View {
         .task {
             moonData = moonService.calculateMoonPhase(date: Date())
             await creditManager.loadProducts()
+            await notif.refreshAuthorizationStatus()
         }
         .sheet(isPresented: $showHistory) {
             ReadingHistoryView()
@@ -140,6 +145,66 @@ struct SettingsView: View {
                         .stroke(Color.white.opacity(0.15), lineWidth: 1)
                 )
         )
+    }
+
+    // MARK: - Notifications
+
+    private var notificationsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L("Bildirimler", "Notifications"))
+                .font(.custom(Theme.titleFont, size: 16))
+                .foregroundColor(.white.opacity(0.8))
+
+            if notif.authorizationStatus == .denied {
+                Text(L("Bildirimler kapalı. Açmak için telefon ayarlarından izin ver.",
+                       "Notifications are off. Enable them in your phone settings."))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(.white.opacity(0.5))
+                Button(action: {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }) {
+                    Text(L("Ayarları Aç", "Open Settings"))
+                        .font(.custom(Theme.bodyBoldFont, size: 14))
+                        .foregroundColor(Theme.accent)
+                }
+            } else if !notif.masterEnabled {
+                Button(action: {
+                    Task { await notif.requestAuthorization() }
+                }) {
+                    Text(L("Bildirimleri Aç", "Turn On Notifications"))
+                        .font(.custom(Theme.bodyBoldFont, size: 15))
+                        .foregroundColor(Theme.bg)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(RoundedRectangle(cornerRadius: 4).fill(Theme.accent))
+                }
+            } else {
+                notifToggle(L("Ay fazı değişimi", "Moon phase changes"), isOn: $notif.phaseChanges)
+                notifToggle(L("Günlük hatırlatma", "Daily reminder"), isOn: $notif.dailyReminder)
+                notifToggle(L("Özel gökyüzü olayları", "Special sky events"), isOn: $notif.astroEvents)
+                notifToggle(L("Krediler yenilenince", "When credits refresh"), isOn: $notif.creditsRefresh)
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Theme.bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
+    }
+
+    private func notifToggle(_ label: String, isOn: Binding<Bool>) -> some View {
+        Toggle(isOn: isOn) {
+            Text(label)
+                .font(.custom(Theme.bodyFont, size: 15))
+                .foregroundColor(.white.opacity(0.7))
+        }
+        .tint(Theme.accent)
     }
 
     // MARK: - Birth Chart

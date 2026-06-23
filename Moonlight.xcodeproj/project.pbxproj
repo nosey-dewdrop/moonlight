@@ -25,6 +25,7 @@
 		831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */; };
 		89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */; };
 		8A596E8B77644487FD4817B3 /* ReadingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A065B67910D41525629EB6 /* ReadingHistoryView.swift */; };
+		9CA9D0ACE48CEABDFB215382 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81D892F63B65D7E0438265D /* NotificationManager.swift */; };
 		9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5001853B051008B1080534 /* MoonService.swift */; };
 		A48483E2DFAE6F9151117837 /* ClaudeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */; };
 		B36869F4F35B1ED88BBA9DC5 /* ReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E321A27B1DCD88555DF2 /* ReadingHistory.swift */; };
@@ -71,6 +72,7 @@
 		A6008195D2E90A69B2C63950 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B5203CA177AA14629615143B /* HoraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryView.swift; sourceTree = "<group>"; };
 		BABEC394334C45AD267B4510 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		C81D892F63B65D7E0438265D /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		CF22F9D3E5FFAC7E13DB4C08 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Regular.ttf"; sourceTree = "<group>"; };
 		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				121A290F3D58439CB39C8B24 /* Localization.swift */,
 				A6008195D2E90A69B2C63950 /* LocationManager.swift */,
 				2B5001853B051008B1080534 /* MoonService.swift */,
+				C81D892F63B65D7E0438265D /* NotificationManager.swift */,
 				9DDD9AF05C9FED66463F1672 /* Secrets.swift */,
 			);
 			path = Services;
@@ -274,6 +277,7 @@
 				9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */,
 				FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */,
 				CE4926201673B62C2C319E84 /* NoCreditView.swift in Sources */,
+				9CA9D0ACE48CEABDFB215382 /* NotificationManager.swift in Sources */,
 				58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */,
 				B36869F4F35B1ED88BBA9DC5 /* ReadingHistory.swift in Sources */,
 				8A596E8B77644487FD4817B3 /* ReadingHistoryView.swift in Sources */,
