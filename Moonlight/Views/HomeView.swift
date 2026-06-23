@@ -208,7 +208,7 @@ struct HomeView: View {
         // Wait for location with timeout, no busy-wait polling
         let locationReady = await withTaskGroup(of: Bool.self) { group in
             group.addTask {
-                while !locationManager.hasLocation {
+                while !(await locationManager.hasLocation) {
                     try? await Task.sleep(nanoseconds: 200_000_000)
                 }
                 return true
