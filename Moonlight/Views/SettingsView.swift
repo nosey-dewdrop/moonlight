@@ -4,6 +4,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
+    @ObservedObject private var loc = LocalizationManager.shared
     @State private var showHistory = false
     @State private var moonData: MoonData?
 
@@ -32,13 +33,16 @@ struct SettingsView: View {
                         }
                         .accessibilityLabel("Close")
                         Spacer()
-                        Text("Ayarlar")
+                        Text(L("Ayarlar", "Settings"))
                             .font(.custom(Theme.titleFont, size: 24))
                             .foregroundColor(Theme.accent)
                         Spacer()
                         Color.clear.frame(width: 28)
                     }
                     .padding(.top, 60)
+
+                    // Language section
+                    languageSection
 
                     // Birth chart section
                     birthChartSection
@@ -52,7 +56,7 @@ struct SettingsView: View {
                     // Reading History
                     Button(action: { showHistory = true }) {
                         HStack {
-                            Text("Okuma Geçmişi")
+                            Text(L("Okuma Geçmişi", "Reading History"))
                                 .font(.custom(Theme.bodyFont, size: 15))
                                 .foregroundColor(.white.opacity(0.6))
                             Spacer()
@@ -88,21 +92,71 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Language
+
+    private var languageSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(L("Dil", "Language"))
+                .font(.custom(Theme.titleFont, size: 16))
+                .foregroundColor(.white.opacity(0.8))
+
+            HStack(spacing: 10) {
+                ForEach(AppLanguage.allCases, id: \.self) { lang in
+                    let isSelected = loc.language == lang
+
+                    Button(action: {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            loc.language = lang
+                        }
+                    }) {
+                        HStack(spacing: 6) {
+                            Text(lang.flag)
+                                .font(.system(size: 18))
+                            Text(lang.displayName)
+                                .font(.custom(Theme.bodyBoldFont, size: 15))
+                                .foregroundColor(isSelected ? Theme.bg : .white.opacity(0.7))
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(isSelected ? Theme.accent : Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .stroke(isSelected ? Theme.accent : Color.white.opacity(0.15), lineWidth: 1)
+                                )
+                        )
+                    }
+                    .accessibilityLabel(lang.displayName)
+                }
+            }
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Theme.bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                )
+        )
+    }
+
     // MARK: - Birth Chart
 
     private var birthChartSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Doğum Haritası")
+            Text(L("Doğum Haritası", "Birth Chart"))
                 .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
-            zodiacPicker("Güneş Burcu", selection: $userProfile.sunSign)
-            zodiacPicker("Yükselen Burç", selection: $userProfile.risingSign)
-            zodiacPicker("Ay Burcu", selection: $userProfile.moonSign)
+            zodiacPicker(L("Güneş Burcu", "Sun Sign"), selection: $userProfile.sunSign)
+            zodiacPicker(L("Yükselen Burç", "Rising Sign"), selection: $userProfile.risingSign)
+            zodiacPicker(L("Ay Burcu", "Moon Sign"), selection: $userProfile.moonSign)
 
             // Birth time
             VStack(alignment: .leading, spacing: 4) {
-                Text("Doğum Saati")
+                Text(L("Doğum Saati", "Birth Time"))
                     .font(.custom(Theme.bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.5))
 
@@ -184,7 +238,7 @@ struct SettingsView: View {
 
     private var creditsSection: some View {
         VStack(spacing: 8) {
-            Text("Krediler")
+            Text(L("Krediler", "Credits"))
                 .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
@@ -198,7 +252,7 @@ struct SettingsView: View {
                     Text("\(creditManager.dailyCreditsRemaining)")
                         .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
-                    Text("günlük ücretsiz")
+                    Text(L("günlük ücretsiz", "daily free"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
@@ -207,7 +261,7 @@ struct SettingsView: View {
                     Text("\(creditManager.purchasedCredits)")
                         .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
-                    Text("satın alınan")
+                    Text(L("satın alınan", "purchased"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                 }
@@ -229,7 +283,7 @@ struct SettingsView: View {
 
     private var purchaseSection: some View {
         VStack(spacing: 10) {
-            Text("Kredi Al")
+            Text(L("Kredi Al", "Get Credits"))
                 .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.8))
 
@@ -238,7 +292,7 @@ struct SettingsView: View {
                     purchaseRow(name: product.name, price: product.price, credits: product.credits)
                 }
 
-                Text("Mağaza yükleniyor...")
+                Text(L("Mağaza yükleniyor...", "Loading store..."))
                     .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             } else {
@@ -247,7 +301,7 @@ struct SettingsView: View {
                     Button(action: {
                         Task { await creditManager.purchase(product) }
                     }) {
-                        purchaseRow(name: "\(credits) Credits", price: product.displayPrice, credits: credits)
+                        purchaseRow(name: L("\(credits) Kredi", "\(credits) Credits"), price: product.displayPrice, credits: credits)
                     }
                     .disabled(creditManager.purchaseInProgress)
                 }
@@ -256,7 +310,7 @@ struct SettingsView: View {
             if creditManager.purchaseInProgress {
                 HStack(spacing: 8) {
                     PixelLoading(color: Theme.accent)
-                    Text("İşleniyor...")
+                    Text(L("İşleniyor...", "Processing..."))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -269,7 +323,7 @@ struct SettingsView: View {
                     .multilineTextAlignment(.center)
             }
 
-            PixelButton("Satın Alımları Geri Yükle", style: .secondary) {
+            PixelButton(L("Satın Alımları Geri Yükle", "Restore Purchases"), style: .secondary) {
                 Task { await creditManager.restorePurchases() }
             }
         }
@@ -308,7 +362,7 @@ struct SettingsView: View {
                 }
             }) {
                 HStack {
-                    Text("Gizlilik Politikası")
+                    Text(L("Gizlilik Politikası", "Privacy Policy"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()
@@ -333,7 +387,7 @@ struct SettingsView: View {
                 }
             }) {
                 HStack {
-                    Text("Kullanım Koşulları")
+                    Text(L("Kullanım Koşulları", "Terms of Use"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.6))
                     Spacer()

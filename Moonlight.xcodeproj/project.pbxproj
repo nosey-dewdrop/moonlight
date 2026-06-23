@@ -11,37 +11,42 @@
 		1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4983831EA7FFB894E1923A2D /* TarotCard.swift */; };
 		1E0805DF8DEF824EB8518ED1 /* PixelifySans[wght].ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */; };
 		23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6008195D2E90A69B2C63950 /* LocationManager.swift */; };
+		2B15BC647EA0B8E478CD6AAF /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121A290F3D58439CB39C8B24 /* Localization.swift */; };
 		43E4544F730203A4BECC0B56 /* HoraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203CA177AA14629615143B /* HoraryView.swift */; };
 		4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */; };
 		53AC9DD551A0998E154521EB /* HoraryChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */; };
 		5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E18E5FDBEB132B038DC644 /* Assets.xcassets */; };
+		56C8F6B4521C1108D52BB27E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9996A2EC73C842148406878 /* Theme.swift */; };
+		579623B1D3FDFB3A7050EA4C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6FEB32CB6A42ABEEC16D9F18 /* PrivacyInfo.xcprivacy */; };
 		58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71EF318F8BE609DABC579B /* PixelUI.swift */; };
 		5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F87798DD5D3A852D01EA71C /* CreditManager.swift */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
 		8025825C15665681A55657FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42137A85229E7DD13F9060 /* SettingsView.swift */; };
 		831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441AC15450134FEA9561C0C8 /* Silkscreen-Bold.ttf */; };
 		89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */; };
+		8A596E8B77644487FD4817B3 /* ReadingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A065B67910D41525629EB6 /* ReadingHistoryView.swift */; };
 		9CF4AB8CE4F7687A847B0F4D /* MoonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5001853B051008B1080534 /* MoonService.swift */; };
 		A48483E2DFAE6F9151117837 /* ClaudeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */; };
-		AB12CD34EF56789012345678 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD34EF56AB12789012345679 /* WelcomeView.swift */; };
-		DE45FA67BC23890123456780 /* ReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF56AB78CD34901234567891 /* ReadingHistory.swift */; };
-		FA67BC89DE45012345678902 /* ReadingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB89CD01EF23456789012345 /* ReadingHistoryView.swift */; };
+		B36869F4F35B1ED88BBA9DC5 /* ReadingHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854E321A27B1DCD88555DF2 /* ReadingHistory.swift */; };
+		B570D42A8ABF792CEE7E2428 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF22F9D3E5FFAC7E13DB4C08 /* WelcomeView.swift */; };
 		BC5EACC33421E9B33442F477 /* Silkscreen-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */; };
 		C4FC5B141D935DB72FF3CAB8 /* CreditBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B500BB010C598B1A61627FA /* CreditBadge.swift */; };
 		C919808FAEF89D87299B1CCF /* PressStart2P-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */; };
 		CE4926201673B62C2C319E84 /* NoCreditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6438C64DC422B5996CFAB10 /* NoCreditView.swift */; };
 		D5C448D8C1CF23859254CE61 /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDE2E825A08BF3BA6846D11 /* Element.swift */; };
+		D93B0F8C5E816FD0F3F6633D /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BABEC394334C45AD267B4510 /* CardDetailView.swift */; };
 		DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A177BFEF279100594D6CA762 /* MoonPhase.swift */; };
 		E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1DEF9A28050196370B3771 /* AstroEvent.swift */; };
 		E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDD9AF05C9FED66463F1672 /* Secrets.swift */; };
 		EF824263791A4FF7961B8074 /* TarotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6764A0D5ABCA78B21A676E /* TarotView.swift */; };
 		FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66558B03446532A322AE0CD1 /* UserProfile.swift */; };
 		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
-		AA11BB22CC33DD44EE55FF66 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF660011 /* Theme.swift */; };
-		CC33DD44EE55FF6600112233 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF660011CC334455 /* CardDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		121A290F3D58439CB39C8B24 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		1854E321A27B1DCD88555DF2 /* ReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistory.swift; sourceTree = "<group>"; };
+		18A065B67910D41525629EB6 /* ReadingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistoryView.swift; sourceTree = "<group>"; };
 		19995CEC35295A5B5DB698F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E1DEF9A28050196370B3771 /* AstroEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstroEvent.swift; sourceTree = "<group>"; };
 		1F87798DD5D3A852D01EA71C /* CreditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditManager.swift; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		4F71EF318F8BE609DABC579B /* PixelUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelUI.swift; sourceTree = "<group>"; };
 		582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonSceneView.swift; sourceTree = "<group>"; };
 		66558B03446532A322AE0CD1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		6FEB32CB6A42ABEEC16D9F18 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7CDE2E825A08BF3BA6846D11 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		8C3E9B22DA4E47403B59CC05 /* PixelifySans[wght].ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PixelifySans[wght].ttf"; sourceTree = "<group>"; };
 		9DDD9AF05C9FED66463F1672 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
@@ -64,18 +70,16 @@
 		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6008195D2E90A69B2C63950 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		B5203CA177AA14629615143B /* HoraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryView.swift; sourceTree = "<group>"; };
-		CD34EF56AB12789012345679 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
-		EF56AB78CD34901234567891 /* ReadingHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistory.swift; sourceTree = "<group>"; };
-		AB89CD01EF23456789012345 /* ReadingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingHistoryView.swift; sourceTree = "<group>"; };
+		BABEC394334C45AD267B4510 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		CF22F9D3E5FFAC7E13DB4C08 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		D15C885BD683C2077A1A0D79 /* Silkscreen-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Silkscreen-Regular.ttf"; sourceTree = "<group>"; };
 		E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstrologyService.swift; sourceTree = "<group>"; };
+		E9996A2EC73C842148406878 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
-		EFA55BE42FBF2AF83406468B /* Moonlight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Moonlight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFA55BE42FBF2AF83406468B /* Moonlight.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Moonlight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonlightApp.swift; sourceTree = "<group>"; };
 		F6438C64DC422B5996CFAB10 /* NoCreditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoCreditView.swift; sourceTree = "<group>"; };
 		FBE58AC97F4697E0A53B962A /* PressStart2P-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PressStart2P-Regular.ttf"; sourceTree = "<group>"; };
-		BB22CC33DD44EE55FF660011 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		DD44EE55FF660011CC334455 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -86,7 +90,8 @@
 				2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */,
 				19995CEC35295A5B5DB698F5 /* Info.plist */,
 				EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */,
-				BB22CC33DD44EE55FF660011 /* Theme.swift */,
+				6FEB32CB6A42ABEEC16D9F18 /* PrivacyInfo.xcprivacy */,
+				E9996A2EC73C842148406878 /* Theme.swift */,
 				7989B6912C2049F9727D35B9 /* Fonts */,
 				B2B1D38287E417C20315C6A8 /* Models */,
 				927C5F3477864EB02C8A5B43 /* Services */,
@@ -101,10 +106,10 @@
 				3D65D3A67C777D1FC0524B73 /* HomeView.swift */,
 				B5203CA177AA14629615143B /* HoraryView.swift */,
 				F6438C64DC422B5996CFAB10 /* NoCreditView.swift */,
+				18A065B67910D41525629EB6 /* ReadingHistoryView.swift */,
 				2A42137A85229E7DD13F9060 /* SettingsView.swift */,
 				2B6764A0D5ABCA78B21A676E /* TarotView.swift */,
-				AB89CD01EF23456789012345 /* ReadingHistoryView.swift */,
-				CD34EF56AB12789012345679 /* WelcomeView.swift */,
+				CF22F9D3E5FFAC7E13DB4C08 /* WelcomeView.swift */,
 				EA952D15568B504D1432B35F /* Components */,
 			);
 			path = Views;
@@ -136,6 +141,7 @@
 				EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */,
 				1F87798DD5D3A852D01EA71C /* CreditManager.swift */,
 				A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */,
+				121A290F3D58439CB39C8B24 /* Localization.swift */,
 				A6008195D2E90A69B2C63950 /* LocationManager.swift */,
 				2B5001853B051008B1080534 /* MoonService.swift */,
 				9DDD9AF05C9FED66463F1672 /* Secrets.swift */,
@@ -149,7 +155,7 @@
 				1E1DEF9A28050196370B3771 /* AstroEvent.swift */,
 				7CDE2E825A08BF3BA6846D11 /* Element.swift */,
 				A177BFEF279100594D6CA762 /* MoonPhase.swift */,
-				EF56AB78CD34901234567891 /* ReadingHistory.swift */,
+				1854E321A27B1DCD88555DF2 /* ReadingHistory.swift */,
 				4983831EA7FFB894E1923A2D /* TarotCard.swift */,
 				66558B03446532A322AE0CD1 /* UserProfile.swift */,
 			);
@@ -159,7 +165,7 @@
 		EA952D15568B504D1432B35F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				DD44EE55FF660011CC334455 /* CardDetailView.swift */,
+				BABEC394334C45AD267B4510 /* CardDetailView.swift */,
 				4B500BB010C598B1A61627FA /* CreditBadge.swift */,
 				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
 				4F71EF318F8BE609DABC579B /* PixelUI.swift */,
@@ -204,6 +210,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					32E0C782E89DEB4606415314 = {
+						DevelopmentTeam = "";
+					};
+				};
 			};
 			buildConfigurationList = 32414954D1DFD94977C19662 /* Build configuration list for PBXProject "Moonlight" */;
 			developmentRegion = en;
@@ -232,6 +243,7 @@
 				5484D7D7EEC39CE252E48CD7 /* Assets.xcassets in Resources */,
 				1E0805DF8DEF824EB8518ED1 /* PixelifySans[wght].ttf in Resources */,
 				C919808FAEF89D87299B1CCF /* PressStart2P-Regular.ttf in Resources */,
+				579623B1D3FDFB3A7050EA4C /* PrivacyInfo.xcprivacy in Resources */,
 				831A9AD200157256E5EBF4F1 /* Silkscreen-Bold.ttf in Resources */,
 				BC5EACC33421E9B33442F477 /* Silkscreen-Regular.ttf in Resources */,
 			);
@@ -246,6 +258,7 @@
 			files = (
 				E145A373EA800EB5AF2F9E7D /* AstroEvent.swift in Sources */,
 				078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */,
+				D93B0F8C5E816FD0F3F6633D /* CardDetailView.swift in Sources */,
 				A48483E2DFAE6F9151117837 /* ClaudeService.swift in Sources */,
 				4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */,
 				C4FC5B141D935DB72FF3CAB8 /* CreditBadge.swift in Sources */,
@@ -254,6 +267,7 @@
 				77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */,
 				53AC9DD551A0998E154521EB /* HoraryChartService.swift in Sources */,
 				43E4544F730203A4BECC0B56 /* HoraryView.swift in Sources */,
+				2B15BC647EA0B8E478CD6AAF /* Localization.swift in Sources */,
 				23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */,
 				DCA6C472E742133815A7A9EA /* MoonPhase.swift in Sources */,
 				89CD8FB9C5040B18C9E2E762 /* MoonSceneView.swift in Sources */,
@@ -261,16 +275,15 @@
 				FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */,
 				CE4926201673B62C2C319E84 /* NoCreditView.swift in Sources */,
 				58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */,
+				B36869F4F35B1ED88BBA9DC5 /* ReadingHistory.swift in Sources */,
+				8A596E8B77644487FD4817B3 /* ReadingHistoryView.swift in Sources */,
 				E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */,
 				8025825C15665681A55657FC /* SettingsView.swift in Sources */,
 				1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */,
 				EF824263791A4FF7961B8074 /* TarotView.swift in Sources */,
+				56C8F6B4521C1108D52BB27E /* Theme.swift in Sources */,
 				FC6198F90F81D9D2C661A063 /* UserProfile.swift in Sources */,
-				AB12CD34EF56789012345678 /* WelcomeView.swift in Sources */,
-				DE45FA67BC23890123456780 /* ReadingHistory.swift in Sources */,
-				FA67BC89DE45012345678902 /* ReadingHistoryView.swift in Sources */,
-				AA11BB22CC33DD44EE55FF66 /* Theme.swift in Sources */,
-				CC33DD44EE55FF6600112233 /* CardDetailView.swift in Sources */,
+				B570D42A8ABF792CEE7E2428 /* WelcomeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +296,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 687K7458JY;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moonlight/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Moonlight needs your location to show accurate moon phase and astrology data for where you are.";
@@ -307,7 +320,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 687K7458JY;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Moonlight/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Moonlight needs your location to show accurate moon phase and astrology data for where you are.";

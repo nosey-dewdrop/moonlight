@@ -3,6 +3,12 @@ import Foundation
 class ClaudeService {
     private let maxTokens = 1024
 
+    /// Forces the model to answer in the language the user picked in Settings.
+    private var languageDirective: String {
+        let lang = LocalizationManager.shared.language.promptName
+        return "Write your ENTIRE answer in \(lang). Do not mix languages."
+    }
+
     private static let dateTimeFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd HH:mm"
@@ -62,7 +68,7 @@ class ClaudeService {
 
         KURALLAR:
         - Soruyu cevaplamadan önce sorunun ne sorduğunu kendi kendine tekrar et. Yanlış anladıysan yanlış cevap verirsin.
-        - Soranın dilinde yaz.
+        - \(languageDirective) Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz; ekleri doğru kullan.
         - Markdown kullanma. Düz metin.
         - "Net Cevap:", "Açıklama:" gibi başlık/etiket KULLANMA. Doğal akan hikaye yaz.
         - Dolgu cümle yasak. Her cümle yeni bir şey söylesin.
@@ -121,7 +127,7 @@ class ClaudeService {
 
         KURALLAR:
         - Soruyu cevaplamadan önce sorunun ne sorduğunu kendi kendine tekrar et. Yanlış anladıysan yanlış cevap verirsin.
-        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
+        - \(languageDirective) Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA. Doğal akan hikaye yaz.
         - YASAK: "asıl mesele bilmek değil bilmemek", "kendini dinle", "evren sana söylüyor", "her şeyin bir zamanı var" gibi BOŞ, KLİŞE, FORTUNE COOKIE cümleler. Bunları yazarsan başarısız olursun.
@@ -150,7 +156,7 @@ class ClaudeService {
         Önceki yorumda DEĞİNMEDİĞİN farklı bir açı bul. Başka bir perspektif sun. Tekrar etme, yeni bir şey söyle.
 
         KURALLAR:
-        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
+        - \(languageDirective) Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA.
         - Önceki yorumu tekrarlama. Tamamen farklı bir bakış açısı sun.
@@ -179,7 +185,7 @@ class ClaudeService {
         Açıklama kartının önceki okumaya ne eklediğini anlat. Önceki yorumda değinilmeyen farklı bir bakış açısı sun. Yeni kartın eski kartlarla ilişkisini göster.
 
         KURALLAR:
-        - Soranın dilinde yaz. Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
+        - \(languageDirective) Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz. Ekleri doğru kullan. Devrik cümle kurma.
         - Markdown kullanma. Düz metin.
         - Başlık/etiket KULLANMA.
         - Önceki yorumu tekrarlama. Yeni kartın getirdiği farklı açıyı anlat.
