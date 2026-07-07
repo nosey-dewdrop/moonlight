@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CardDetailView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var loc = LocalizationManager.shared
     let card: TarotCard
 
     private var turkishName: String {
@@ -80,14 +81,14 @@ struct CardDetailView: View {
                     }
                     .padding(.top, 50)
 
-                    // Card name
-                    Text(turkishName)
+                    // Card name — primary in the current language, original underneath
+                    Text(L(turkishName, card.name))
                         .font(.custom(Theme.titleFont, size: 14))
                         .foregroundColor(Theme.accent)
                         .shadow(color: Theme.accent.opacity(0.5), radius: 4)
                         .multilineTextAlignment(.center)
 
-                    Text(card.name)
+                    Text(L(card.name, turkishName))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.3))
 
@@ -108,7 +109,7 @@ struct CardDetailView: View {
 
                     // Meaning
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Anlam")
+                        Text(L("Anlam", "Meaning"))
                             .font(.custom(Theme.titleFont, size: 10))
                             .foregroundColor(.white.opacity(0.5))
 
@@ -130,7 +131,7 @@ struct CardDetailView: View {
 
                     // Lore / History
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Tarihçe")
+                        Text(L("Tarihçe", "History"))
                             .font(.custom(Theme.titleFont, size: 10))
                             .foregroundColor(.white.opacity(0.5))
 
@@ -153,7 +154,7 @@ struct CardDetailView: View {
                     // Arcana & Suit info
                     if let suit = card.suit {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Element")
+                            Text(L("Element", "Element"))
                                 .font(.custom(Theme.titleFont, size: 10))
                                 .foregroundColor(.white.opacity(0.5))
 
@@ -186,13 +187,17 @@ struct CardDetailView: View {
     private func suitDescription(_ suit: Suit) -> String {
         switch suit {
         case .wands:
-            return "Asalar ateş elementini temsil eder. Tutku, yaratıcılık, irade gücü ve ilham ile ilgilidir. Ateş enerjisi harekete geçirir ve motive eder."
+            return L("Asalar ateş elementini temsil eder. Tutku, yaratıcılık, irade gücü ve ilham ile ilgilidir. Ateş enerjisi harekete geçirir ve motive eder.",
+                     "Wands represent the element of fire. They relate to passion, creativity, willpower and inspiration. Fire energy sparks action and motivation.")
         case .cups:
-            return "Kupalar su elementini temsil eder. Duygular, ilişkiler, sezgi ve ruhani bağlantılarla ilgilidir. Su enerjisi hissetmeyi ve empatiyi güçlendirir."
+            return L("Kupalar su elementini temsil eder. Duygular, ilişkiler, sezgi ve ruhani bağlantılarla ilgilidir. Su enerjisi hissetmeyi ve empatiyi güçlendirir.",
+                     "Cups represent the element of water. They relate to emotions, relationships, intuition and spiritual connection. Water energy deepens feeling and empathy.")
         case .swords:
-            return "Kılıçlar hava elementini temsil eder. Düşünce, iletişim, mantık ve zihinsel netlikle ilgilidir. Hava enerjisi analiz ve karar vermeyi keskinleştirir."
+            return L("Kılıçlar hava elementini temsil eder. Düşünce, iletişim, mantık ve zihinsel netlikle ilgilidir. Hava enerjisi analiz ve karar vermeyi keskinleştirir.",
+                     "Swords represent the element of air. They relate to thought, communication, logic and mental clarity. Air energy sharpens analysis and decision-making.")
         case .pentacles:
-            return "Tılsımlar toprak elementini temsil eder. Maddi dünya, para, sağlık ve somut sonuçlarla ilgilidir. Toprak enerjisi sabır ve istikrar getirir."
+            return L("Tılsımlar toprak elementini temsil eder. Maddi dünya, para, sağlık ve somut sonuçlarla ilgilidir. Toprak enerjisi sabır ve istikrar getirir.",
+                     "Pentacles represent the element of earth. They relate to the material world, money, health and tangible results. Earth energy brings patience and stability.")
         }
     }
 

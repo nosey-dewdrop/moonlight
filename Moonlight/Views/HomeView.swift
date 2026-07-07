@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject private var locationManager = LocationManager.shared
+    @ObservedObject private var loc = LocalizationManager.shared
     @State private var moonData: MoonData?
     @State private var events: [AstroEvent] = []
     @State private var showMenu = false
@@ -47,7 +48,7 @@ struct HomeView: View {
                     ProgressView()
                         .tint(.white)
                         .scaleEffect(1.5)
-                    Text("yıldızlar okunuyor...")
+                    Text(L("yıldızlar okunuyor...", "reading the stars..."))
                         .foregroundColor(.white.opacity(0.6))
                         .font(.custom(Theme.bodyFont, size: 15))
                 }
@@ -73,12 +74,12 @@ struct HomeView: View {
                 .foregroundColor(Theme.accent)
                 .shadow(color: Theme.accent.opacity(0.5), radius: 4)
 
-            Text("%\(Int(moonData.illumination)) aydınlık")
+            Text(L("%\(Int(moonData.illumination)) aydınlık", "\(Int(moonData.illumination))% illuminated"))
                 .font(.custom(Theme.bodyFont, size: 14))
                 .foregroundColor(.white.opacity(0.6))
 
             if usingLocalData {
-                Text("yaklaşık veri (bağlantı yok)")
+                Text(L("yaklaşık veri (bağlantı yok)", "approximate data (offline)"))
                     .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.3))
             }
@@ -106,7 +107,7 @@ struct HomeView: View {
     private var astroEventsList: some View {
         VStack(alignment: .leading, spacing: 10) {
             if !events.isEmpty {
-                Text("Gökyüzü Olayları")
+                Text(L("Gökyüzü Olayları", "Sky Events"))
                     .font(.custom(Theme.bodyBoldFont, size: 16))
                     .foregroundColor(.white.opacity(0.8))
                     .padding(.horizontal, 20)
@@ -116,11 +117,11 @@ struct HomeView: View {
                 }
             } else if eventsError {
                 VStack(spacing: 8) {
-                    Text("Gökyüzü olayları yüklenemedi")
+                    Text(L("Gökyüzü olayları yüklenemedi", "Couldn't load sky events"))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.4))
                     Button(action: { Task { await retryEvents() } }) {
-                        Text("Tekrar dene")
+                        Text(L("Tekrar dene", "Try again"))
                             .font(.custom(Theme.bodyFont, size: 13))
                             .foregroundColor(Theme.accent.opacity(0.6))
                     }
@@ -128,7 +129,7 @@ struct HomeView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             } else {
-                Text("Aktif gökyüzü olayı yok")
+                Text(L("Aktif gökyüzü olayı yok", "No active sky events"))
                     .font(.custom(Theme.bodyFont, size: 14))
                     .foregroundColor(.white.opacity(0.3))
                     .frame(maxWidth: .infinity)
@@ -149,7 +150,7 @@ struct HomeView: View {
                         .foregroundColor(.white)
 
                     if event.isActive {
-                        Text("aktif")
+                        Text(L("aktif", "active"))
                             .font(.custom(Theme.bodyFont, size: 15))
                             .foregroundColor(Theme.green)
                     }

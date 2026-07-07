@@ -3,6 +3,7 @@ import SwiftUI
 struct NoCreditView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var creditManager = CreditManager.shared
+    @ObservedObject private var loc = LocalizationManager.shared
 
     private let moonService = MoonService()
     @State private var moonData: MoonData?
@@ -127,12 +128,12 @@ struct NoCreditView: View {
                 .frame(width: 28, height: 28)
                 .shadow(color: Theme.accent.opacity(0.4), radius: 8)
 
-                Text("Kredin Bitti")
+                Text(L("Kredin Bitti", "Out of Credits"))
                     .font(.custom(Theme.titleFont, size: 16))
                     .foregroundColor(Theme.accent)
                     .shadow(color: Theme.accent.opacity(0.5), radius: 6)
 
-                Text("Yıldızlar seni bekliyor.\nOkumaya devam et.")
+                Text(L("Yıldızlar seni bekliyor.\nOkumaya devam et.", "The stars are waiting for you.\nKeep reading."))
                     .font(.custom(Theme.bodyFont, size: 15))
                     .foregroundColor(.white.opacity(0.6))
                     .multilineTextAlignment(.center)
@@ -142,10 +143,10 @@ struct NoCreditView: View {
                 VStack(spacing: 10) {
                     if creditManager.products.isEmpty {
                         ForEach(CreditManager.fallbackProducts) { product in
-                            purchaseRow(name: product.name, price: product.price, credits: product.credits, isAvailable: false)
+                            purchaseRow(name: L("\(product.credits) Kredi", "\(product.credits) Credits"), price: product.price, credits: product.credits, isAvailable: false)
                         }
 
-                        Text("Mağaza yükleniyor...")
+                        Text(L("Mağaza yükleniyor...", "Loading store..."))
                             .font(.custom(Theme.bodyFont, size: 13))
                             .foregroundColor(.white.opacity(0.3))
                     } else {
@@ -154,7 +155,7 @@ struct NoCreditView: View {
                             Button(action: {
                                 Task { await creditManager.purchase(product) }
                             }) {
-                                purchaseRow(name: "\(credits) Credits", price: product.displayPrice, credits: credits, isAvailable: true)
+                                purchaseRow(name: L("\(credits) Kredi", "\(credits) Credits"), price: product.displayPrice, credits: credits, isAvailable: true)
                             }
                             .disabled(creditManager.purchaseInProgress)
                         }
@@ -165,7 +166,7 @@ struct NoCreditView: View {
                 if creditManager.purchaseInProgress {
                     HStack(spacing: 8) {
                         PixelLoading(color: Theme.accent)
-                        Text("İşleniyor...")
+                        Text(L("İşleniyor...", "Processing..."))
                             .font(.custom(Theme.bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
@@ -179,14 +180,14 @@ struct NoCreditView: View {
                         .padding(.horizontal, 16)
                 }
 
-                PixelButton("Satın Alımları Geri Yükle", style: .secondary) {
+                PixelButton(L("Satın Alımları Geri Yükle", "Restore Purchases"), style: .secondary) {
                     Task { await creditManager.restorePurchases() }
                 }
 
                 Spacer()
 
                 Button(action: { dismiss() }) {
-                    Text("Kapat")
+                    Text(L("Kapat", "Close"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.bottom, 40)

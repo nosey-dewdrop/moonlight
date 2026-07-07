@@ -14,14 +14,14 @@ enum MoonPhase: String, CaseIterable, Identifiable {
 
     var displayName: String {
         switch self {
-        case .newMoon: return "Yeni Ay"
-        case .waxingCrescent: return "İlk Hilal"
-        case .firstQuarter: return "İlk Dördün"
-        case .waxingGibbous: return "Şişkin Ay"
-        case .fullMoon: return "Dolunay"
-        case .waningGibbous: return "Küçülen Ay"
-        case .lastQuarter: return "Son Dördün"
-        case .waningCrescent: return "Son Hilal"
+        case .newMoon: return L("Yeni Ay", "New Moon")
+        case .waxingCrescent: return L("İlk Hilal", "Waxing Crescent")
+        case .firstQuarter: return L("İlk Dördün", "First Quarter")
+        case .waxingGibbous: return L("Şişkin Ay", "Waxing Gibbous")
+        case .fullMoon: return L("Dolunay", "Full Moon")
+        case .waningGibbous: return L("Küçülen Ay", "Waning Gibbous")
+        case .lastQuarter: return L("Son Dördün", "Last Quarter")
+        case .waningCrescent: return L("Son Hilal", "Waning Crescent")
         }
     }
 

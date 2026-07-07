@@ -3,6 +3,7 @@ import SwiftUI
 struct TarotView: View {
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
+    @ObservedObject private var loc = LocalizationManager.shared
     @State private var question = ""
     @State private var selectedCards: [DrawnCard] = []
     @State private var shuffledDeck: [TarotCard] = TarotCard.allCards.shuffled()
@@ -77,7 +78,7 @@ struct TarotView: View {
 
     private var cardSelectionView: some View {
         VStack(spacing: 16) {
-            Text("3'e kadar kart seç (okuma başı 1 kredi)")
+            Text(L("3'e kadar kart seç (okuma başı 1 kredi)", "Pick up to 3 cards (1 credit per reading)"))
                 .font(.custom(Theme.bodyFont, size: 15))
                 .foregroundColor(.white.opacity(0.5))
 
@@ -86,14 +87,14 @@ struct TarotView: View {
                 Text("\(creditManager.totalCredits)")
                     .font(.custom(Theme.titleFont, size: 10))
                     .foregroundColor(Theme.accent)
-                Text("kredi")
+                Text(L("kredi", "credits"))
                     .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(.white.opacity(0.4))
             }
 
             // Question input
             TextField("", text: $question, prompt:
-                Text("Sorun ne?")
+                Text(L("Sorun ne?", "What's your question?"))
                     .foregroundColor(.white.opacity(0.3))
                     .font(.custom(Theme.bodyFont, size: 15))
             )
@@ -117,13 +118,13 @@ struct TarotView: View {
             }
 
             if questionError {
-                Text("Önce bir soru yaz")
+                Text(L("Önce bir soru yaz", "Write a question first"))
                     .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(Theme.error)
             }
 
             // Reveal button
-            PixelButton(selectedCards.isEmpty ? "Aşağıdan Kart Seç" : "\(selectedCards.count) Kart Aç") {
+            PixelButton(selectedCards.isEmpty ? L("Aşağıdan Kart Seç", "Select Cards Below") : L("\(selectedCards.count) Kart Aç", "Reveal \(selectedCards.count) Cards")) {
                 if question.trimmingCharacters(in: .whitespaces).isEmpty {
                     questionError = true
                 } else {
@@ -182,7 +183,7 @@ struct TarotView: View {
                 }
             }
 
-            Text("\(selectedCards.count)/3 seçildi")
+            Text(L("\(selectedCards.count)/3 seçildi", "\(selectedCards.count)/3 selected"))
                 .font(.custom(Theme.bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.3))
 
@@ -195,33 +196,33 @@ struct TarotView: View {
 
     private var premiumSpreadsSection: some View {
         VStack(spacing: 12) {
-            Text("Premium Açılımlar")
+            Text(L("Premium Açılımlar", "Premium Spreads"))
                 .font(.custom(Theme.titleFont, size: 16))
                 .foregroundColor(.white.opacity(0.6))
                 .padding(.top, 20)
 
-            premiumSpreadRow("Kelt Haçı", cards: 10, credits: 10)
-            premiumSpreadRow("Beş Kart Açılımı", cards: 5, credits: 5)
-            premiumSpreadRow("İlişki Açılımı", cards: 7, credits: 7)
-            premiumSpreadRow("Kariyer Yolu", cards: 9, credits: 9)
+            premiumSpreadRow(L("Kelt Haçı", "Celtic Cross"), type: "celtic_cross", cards: 10, credits: 10)
+            premiumSpreadRow(L("Beş Kart Açılımı", "Five Card Spread"), type: "five_card", cards: 5, credits: 5)
+            premiumSpreadRow(L("İlişki Açılımı", "Relationship Spread"), type: "relationship", cards: 7, credits: 7)
+            premiumSpreadRow(L("Kariyer Yolu", "Career Path"), type: "career", cards: 9, credits: 9)
         }
     }
 
-    private func premiumSpreadRow(_ name: String, cards: Int, credits: Int) -> some View {
-        Button(action: { activatePremiumSpread(name, cards: cards, credits: credits) }) {
+    private func premiumSpreadRow(_ name: String, type: String, cards: Int, credits: Int) -> some View {
+        Button(action: { activatePremiumSpread(type, cards: cards, credits: credits) }) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(name)
                         .font(.custom(Theme.bodyBoldFont, size: 15))
                         .foregroundColor(.white)
-                    Text("\(cards) kart")
+                    Text(L("\(cards) kart", "\(cards) cards"))
                         .font(.custom(Theme.bodyFont, size: 13))
                         .foregroundColor(.white.opacity(0.4))
                 }
 
                 Spacer()
 
-                Text("\(credits) kredi")
+                Text(L("\(credits) kredi", "\(credits) credits"))
                     .font(.custom(Theme.bodyFont, size: 13))
                     .foregroundColor(Theme.accent)
             }
@@ -258,10 +259,6 @@ struct TarotView: View {
                             Text(drawn.card.name)
                                 .font(.custom(Theme.bodyBoldFont, size: 14))
                                 .foregroundColor(.white)
-                            Spacer()
-                            Text(">")
-                                .font(.custom(Theme.titleFont, size: 8))
-                                .foregroundColor(.white.opacity(0.2))
                         }
 
                         Text(drawn.card.keywords.joined(separator: " · "))
@@ -293,7 +290,7 @@ struct TarotView: View {
             if isLoadingAI {
                 HStack(spacing: 8) {
                     PixelLoading(color: Theme.accent)
-                    Text("Yıldızlar okunuyor...")
+                    Text(L("Yıldızlar okunuyor...", "Reading the stars..."))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
                 }
@@ -302,7 +299,7 @@ struct TarotView: View {
 
             if let reading = aiReading {
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Yorum")
+                    Text(L("Yorum", "Reading"))
                         .font(.custom(Theme.titleFont, size: 16))
                         .foregroundColor(Theme.accent)
 
@@ -311,7 +308,7 @@ struct TarotView: View {
                         .foregroundColor(.white.opacity(0.85))
                         .lineSpacing(5)
 
-                    Text("Bu yorum yalnızca eğlence amacıyladır!")
+                    Text(L("Bu yorum yalnızca eğlence amacıyladır!", "This reading is for entertainment only!"))
                         .font(.custom(Theme.bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.2))
                         .padding(.top, 6)
@@ -330,7 +327,7 @@ struct TarotView: View {
                 if isLoadingClarification {
                     HStack(spacing: 8) {
                         PixelLoading(color: Theme.accent)
-                        Text("Açıklama kartı çekiliyor...")
+                        Text(L("Açıklama kartı çekiliyor...", "Drawing a clarification card..."))
                             .font(.custom(Theme.bodyFont, size: 14))
                             .foregroundColor(.white.opacity(0.5))
                     }
@@ -338,11 +335,11 @@ struct TarotView: View {
                 }
 
                 HStack(spacing: 10) {
-                    PixelButton("Devam") {
+                    PixelButton(L("Devam", "Continue")) {
                         drawClarificationCard()
                     }
                     .disabled(isLoadingAI || isLoadingClarification || showClarificationPicker)
-                    PixelButton("Tamam", style: .secondary) {
+                    PixelButton(L("Tamam", "Done"), style: .secondary) {
                         resetDraw()
                     }
                     .disabled(isLoadingAI || isLoadingClarification)
@@ -358,12 +355,12 @@ struct TarotView: View {
             // Clarification picker
             if showClarificationPicker {
                 VStack(spacing: 12) {
-                    Text("Takip sorusu (isteğe bağlı)")
+                    Text(L("Takip sorusu (isteğe bağlı)", "Follow-up question (optional)"))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.5))
 
                     TextField("", text: $clarificationQuestion, prompt:
-                        Text("Neyi daha çok merak ediyorsun?")
+                        Text(L("Neyi daha çok merak ediyorsun?", "What are you most curious about?"))
                             .foregroundColor(.white.opacity(0.3))
                             .font(.custom(Theme.bodyFont, size: 15))
                     )
@@ -381,7 +378,7 @@ struct TarotView: View {
                             )
                     )
 
-                    Text("Açıklama kartı seç (1 kredi)")
+                    Text(L("Açıklama kartı seç (1 kredi)", "Pick a clarification card (1 credit)"))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(Theme.accent.opacity(0.7))
 
@@ -522,7 +519,7 @@ struct TarotView: View {
         }
     }
 
-    private func activatePremiumSpread(_ name: String, cards: Int, credits: Int) {
+    private func activatePremiumSpread(_ type: String, cards: Int, credits: Int) {
         guard !isLoadingAI else { return }
         guard !question.trimmingCharacters(in: .whitespaces).isEmpty else {
             questionError = true
@@ -535,17 +532,7 @@ struct TarotView: View {
         }
 
         currentSpreadCredits = credits
-
-        // Determine spread type (Turkish labels)
-        if name.contains("Kelt") {
-            spreadType = "celtic_cross"
-        } else if name.contains("Beş") {
-            spreadType = "five_card"
-        } else if name.contains("İlişki") {
-            spreadType = "relationship"
-        } else if name.contains("Kariyer") {
-            spreadType = "career"
-        }
+        spreadType = type
 
         // Auto-select random cards from shuffled deck
         let deck = TarotCard.allCards.shuffled()
@@ -563,20 +550,29 @@ struct TarotView: View {
         let names: [String]
         switch spreadType {
         case "celtic_cross":
-            names = ["Durum", "Engel", "Geçmiş", "Gelecek", "Üst", "Alt", "Tavsiye", "Dış Etki", "Umutlar", "Sonuç"]
+            names = L("Durum, Engel, Geçmiş, Gelecek, Üst, Alt, Tavsiye, Dış Etki, Umutlar, Sonuç",
+                      "Situation, Obstacle, Past, Future, Above, Below, Advice, External, Hopes, Outcome")
+                .components(separatedBy: ", ")
         case "five_card":
-            names = ["Geçmiş", "Şimdi", "Gizli", "Tavsiye", "Sonuç"]
+            names = L("Geçmiş, Şimdi, Gizli, Tavsiye, Sonuç",
+                      "Past, Present, Hidden, Advice, Outcome")
+                .components(separatedBy: ", ")
         case "relationship":
-            names = ["Sen", "Partner", "Bağ", "Engel", "Güç", "Tavsiye", "Sonuç"]
+            names = L("Sen, Partner, Bağ, Engel, Güç, Tavsiye, Sonuç",
+                      "You, Partner, Bond, Obstacle, Strength, Advice, Outcome")
+                .components(separatedBy: ", ")
         case "career":
-            names = ["Şimdi", "Engel", "Güç", "Zayıflık", "Hedef", "Yol", "Çevre", "Umutlar", "Sonuç"]
+            names = L("Şimdi, Engel, Güç, Zayıflık, Hedef, Yol, Çevre, Umutlar, Sonuç",
+                      "Now, Obstacle, Strength, Weakness, Goal, Path, Environment, Hopes, Outcome")
+                .components(separatedBy: ", ")
         default:
-            names = ["Geçmiş", "Şimdi", "Gelecek"]
+            names = L("Geçmiş, Şimdi, Gelecek", "Past, Present, Future")
+                .components(separatedBy: ", ")
         }
         if index < names.count {
             return names[index]
         }
-        return "Açıklama"
+        return L("Açıklama", "Clarification")
     }
 
     private func requestAIReading() {
@@ -622,15 +618,15 @@ struct TarotView: View {
 
     private func userFriendlyError(_ error: Error) -> String {
         if let claudeError = error as? ClaudeError {
-            return claudeError.errorDescription ?? "Bir şeyler ters gitti. Tekrar dene."
+            return claudeError.errorDescription ?? L("Bir şeyler ters gitti. Tekrar dene.", "Something went wrong. Please try again.")
         }
         if (error as NSError).code == NSURLErrorTimedOut {
-            return "İstek zaman aşımına uğradı. Tekrar dene."
+            return L("İstek zaman aşımına uğradı. Tekrar dene.", "The request timed out. Please try again.")
         }
         if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-            return "İnternet bağlantısı yok. Ağını kontrol et."
+            return L("İnternet bağlantısı yok. Ağını kontrol et.", "No internet connection. Check your network.")
         }
-        return "Bir şeyler ters gitti. Tekrar dene."
+        return L("Bir şeyler ters gitti. Tekrar dene.", "Something went wrong. Please try again.")
     }
 }
 

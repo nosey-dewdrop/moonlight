@@ -4,6 +4,7 @@ struct HoraryView: View {
     @ObservedObject private var creditManager = CreditManager.shared
     @ObservedObject private var userProfile = UserProfile.shared
     @ObservedObject private var locationManager = LocationManager.shared
+    @ObservedObject private var loc = LocalizationManager.shared
     @State private var question = ""
     @State private var aiReading: String?
     @State private var isLoading = false
@@ -28,7 +29,7 @@ struct HoraryView: View {
                         .foregroundColor(Theme.accent)
                         .shadow(color: Theme.accent.opacity(0.5), radius: 4)
 
-                    Text("Ay'a Bir Soru Sor")
+                    Text(L("Ay'a Bir Soru Sor", "Ask the Moon a Question"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.5))
 
@@ -39,7 +40,7 @@ struct HoraryView: View {
                     // AI reading
                     if let reading = aiReading {
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("Yorum")
+                            Text(L("Yorum", "Reading"))
                                 .font(.custom(Theme.titleFont, size: 16))
                                 .foregroundColor(Theme.accent)
 
@@ -48,7 +49,7 @@ struct HoraryView: View {
                                 .foregroundColor(.white.opacity(0.85))
                                 .lineSpacing(5)
 
-                            Text("Bu yorum yalnızca eğlence amacıyladır!")
+                            Text(L("Bu yorum yalnızca eğlence amacıyladır!", "This reading is for entertainment only!"))
                                 .font(.custom(Theme.bodyFont, size: 11))
                                 .foregroundColor(.white.opacity(0.2))
                                 .padding(.top, 6)
@@ -65,11 +66,11 @@ struct HoraryView: View {
 
                         // Two buttons side by side
                         HStack(spacing: 10) {
-                            PixelButton("Devam") {
+                            PixelButton(L("Devam", "Continue")) {
                                 requestFollowUp()
                             }
                             .disabled(isLoading)
-                            PixelButton("Tamam", style: .secondary) {
+                            PixelButton(L("Tamam", "Done"), style: .secondary) {
                                 resetQuestion()
                             }
                             .disabled(isLoading)
@@ -79,7 +80,7 @@ struct HoraryView: View {
                     if isLoading {
                         HStack(spacing: 8) {
                             PixelLoading(color: Theme.accent)
-                            Text("Yıldızlara danışılıyor...")
+                            Text(L("Yıldızlara danışılıyor...", "Consulting the stars..."))
                                 .font(.custom(Theme.bodyFont, size: 14))
                                 .foregroundColor(.white.opacity(0.5))
                         }
@@ -119,7 +120,7 @@ struct HoraryView: View {
     private var questionInput: some View {
         VStack(spacing: 12) {
             TextField("", text: $question, prompt:
-                Text("Aklından ne geçiyor?")
+                Text(L("Aklından ne geçiyor?", "What's on your mind?"))
                     .foregroundColor(.white.opacity(0.3))
                     .font(.custom(Theme.bodyFont, size: 15))
             )
@@ -144,7 +145,7 @@ struct HoraryView: View {
                 }
             }
 
-            PixelButton("Yıldızlara Sor (1 kredi)") {
+            PixelButton(L("Yıldızlara Sor (1 kredi)", "Ask the Stars (1 credit)")) {
                 askQuestion()
             }
             .accessibilityLabel("Ask the stars")
@@ -263,12 +264,12 @@ struct HoraryView: View {
             return claudeError.localizedDescription
         }
         if (error as NSError).code == NSURLErrorTimedOut {
-            return "İstek zaman aşımına uğradı. Tekrar dene."
+            return L("İstek zaman aşımına uğradı. Tekrar dene.", "The request timed out. Please try again.")
         }
         if (error as NSError).code == NSURLErrorNotConnectedToInternet {
-            return "İnternet bağlantısı yok. Ağını kontrol et."
+            return L("İnternet bağlantısı yok. Ağını kontrol et.", "No internet connection. Check your network.")
         }
-        return "Bir şeyler ters gitti. Tekrar dene."
+        return L("Bir şeyler ters gitti. Tekrar dene.", "Something went wrong. Please try again.")
     }
 }
 

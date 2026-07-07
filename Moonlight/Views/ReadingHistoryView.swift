@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReadingHistoryView: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var loc = LocalizationManager.shared
     @State private var records: [ReadingRecord] = []
     @State private var sortedRecords: [ReadingRecord] = []
     @State private var moonData: MoonData?
@@ -35,7 +36,7 @@ struct ReadingHistoryView: View {
                             .padding(8)
                     }
                     Spacer()
-                    Text("Geçmiş")
+                    Text(L("Geçmiş", "History"))
                         .font(.custom(Theme.titleFont, size: 24))
                         .foregroundColor(Theme.accent)
                     Spacer()
@@ -46,10 +47,10 @@ struct ReadingHistoryView: View {
 
                 if sortedRecords.isEmpty {
                     Spacer()
-                    Text("Henüz okuma yok")
+                    Text(L("Henüz okuma yok", "No readings yet"))
                         .font(.custom(Theme.bodyFont, size: 15))
                         .foregroundColor(.white.opacity(0.3))
-                    Text("Soruların burada görünecek")
+                    Text(L("Soruların burada görünecek", "Your questions will appear here"))
                         .font(.custom(Theme.bodyFont, size: 14))
                         .foregroundColor(.white.opacity(0.2))
                     Spacer()
