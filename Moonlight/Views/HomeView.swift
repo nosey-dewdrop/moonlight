@@ -209,7 +209,11 @@ struct HomeView: View {
         let locationReady = await withTaskGroup(of: Bool.self) { group in
             group.addTask {
                 while !(await locationManager.hasLocation) {
-                    try? await Task.sleep(nanoseconds: 200_000_000)
+                    do {
+                        try await Task.sleep(nanoseconds: 200_000_000)
+                    } catch {
+                        return false // cancelled by timeout — stop polling
+                    }
                 }
                 return true
             }
