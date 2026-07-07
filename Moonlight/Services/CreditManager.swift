@@ -7,7 +7,8 @@ class CreditManager: ObservableObject {
 
     @Published var purchasedCredits: Int {
         didSet {
-            UserDefaults.standard.set(purchasedCredits, forKey: purchasedKey)
+            // Purchased balance lives in the Keychain so it survives reinstall.
+            KeychainHelper.saveInt(purchasedCredits, key: purchasedCreditsKeychainKey)
         }
     }
     @Published var dailyCreditsUsed: Int {
@@ -20,6 +21,7 @@ class CreditManager: ObservableObject {
     @Published var purchaseError: String?
 
     private let purchasedKey = "com.damla.moonlight.purchasedCredits"
+    private let purchasedCreditsKeychainKey = "com.damla.moonlight.purchasedCredits"
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
     private let lastResetKey = "com.damla.moonlight.lastDailyReset"
     private let welcomeKey = "com.damla.moonlight.welcomeBonusGiven"
@@ -38,7 +40,15 @@ class CreditManager: ObservableObject {
     @Published var isFirstLaunch: Bool = false
 
     private init() {
-        self.purchasedCredits = UserDefaults.standard.integer(forKey: purchasedKey)
+        if let stored = KeychainHelper.loadInt(key: purchasedCreditsKeychainKey) {
+            self.purchasedCredits = stored
+        } else {
+            // One-time migration: move the existing UserDefaults balance into the
+            // Keychain so current users keep every purchased credit.
+            let legacy = UserDefaults.standard.integer(forKey: purchasedKey)
+            KeychainHelper.saveInt(legacy, key: purchasedCreditsKeychainKey)
+            self.purchasedCredits = legacy
+        }
         self.dailyCreditsUsed = UserDefaults.standard.integer(forKey: dailyUsedKey)
         resetDailyIfNeeded()
         listenForTransactions()
@@ -175,13 +185,14 @@ class CreditManager: ObservableObject {
                 break
 
             case .pending:
-                purchaseError = "Satın alma beklemede. Apple ID ödeme ayarlarını kontrol et."
+                purchaseError = L("Satın alma beklemede. Apple ID ödeme ayarlarını kontrol et.",
+                                  "Purchase pending. Check your Apple ID payment settings.")
 
             @unknown default:
                 break
             }
         } catch {
-            purchaseError = "Satın alma başarısız. Tekrar dene."
+            purchaseError = L("Satın alma başarısız. Tekrar dene.", "Purchase failed. Please try again.")
         }
     }
 
@@ -252,6 +263,6 @@ enum StoreError: LocalizedError {
     case verificationFailed
 
     var errorDescription: String? {
-        "Satın alma doğrulaması başarısız"
+        L("Satın alma doğrulaması başarısız", "Purchase verification failed")
     }
 }
