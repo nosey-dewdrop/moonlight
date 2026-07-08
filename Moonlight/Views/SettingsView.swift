@@ -353,13 +353,12 @@ struct SettingsView: View {
                 .foregroundColor(.white.opacity(0.8))
 
             if creditManager.products.isEmpty {
-                ForEach(CreditManager.fallbackProducts) { product in
-                    purchaseRow(name: product.name, price: product.price, credits: product.credits)
-                }
-
-                Text(L("Mağaza yükleniyor...", "Loading store..."))
-                    .font(.custom(Theme.bodyFont, size: 13))
-                    .foregroundColor(.white.opacity(0.3))
+                Text(L("Mağaza şu an kullanılamıyor. Lütfen daha sonra tekrar dene.",
+                       "The store is unavailable right now. Please try again later."))
+                    .font(.custom(Theme.bodyFont, size: 14))
+                    .foregroundColor(.white.opacity(0.5))
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical, 8)
             } else {
                 ForEach(creditManager.products) { product in
                     let credits = CreditManager.creditsForProduct(product.id)

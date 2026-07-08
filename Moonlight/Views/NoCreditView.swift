@@ -142,20 +142,19 @@ struct NoCreditView: View {
                 // Purchase options
                 VStack(spacing: 10) {
                     if creditManager.products.isEmpty {
-                        ForEach(CreditManager.fallbackProducts) { product in
-                            purchaseRow(name: L("\(product.credits) Kredi", "\(product.credits) Credits"), price: product.price, credits: product.credits, isAvailable: false)
-                        }
-
-                        Text(L("Mağaza yükleniyor...", "Loading store..."))
-                            .font(.custom(Theme.bodyFont, size: 13))
-                            .foregroundColor(.white.opacity(0.3))
+                        Text(L("Mağaza şu an kullanılamıyor. Lütfen daha sonra tekrar dene.",
+                               "The store is unavailable right now. Please try again later."))
+                            .font(.custom(Theme.bodyFont, size: 14))
+                            .foregroundColor(.white.opacity(0.5))
+                            .multilineTextAlignment(.center)
+                            .padding(.vertical, 12)
                     } else {
                         ForEach(creditManager.products, id: \.id) { product in
                             let credits = CreditManager.creditsForProduct(product.id)
                             Button(action: {
                                 Task { await creditManager.purchase(product) }
                             }) {
-                                purchaseRow(name: L("\(credits) Kredi", "\(credits) Credits"), price: product.displayPrice, credits: credits, isAvailable: true)
+                                purchaseRow(name: L("\(credits) Kredi", "\(credits) Credits"), price: product.displayPrice, credits: credits)
                             }
                             .disabled(creditManager.purchaseInProgress)
                         }
@@ -216,7 +215,7 @@ struct NoCreditView: View {
         }
     }
 
-    private func purchaseRow(name: String, price: String, credits: Int, isAvailable: Bool) -> some View {
+    private func purchaseRow(name: String, price: String, credits: Int) -> some View {
         HStack {
             Text(name)
                 .font(.custom(Theme.bodyBoldFont, size: 15))
@@ -237,7 +236,6 @@ struct NoCreditView: View {
                         .stroke(Theme.accent.opacity(0.3), lineWidth: 1)
                 )
         )
-        .opacity(isAvailable ? 1.0 : 0.5)
     }
 }
 

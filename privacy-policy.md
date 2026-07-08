@@ -4,8 +4,8 @@
 
 ## What we collect
 
-- **Birth chart info** (sun sign, rising sign, moon sign, birth time): Stored locally on your device only. Never sent to our servers.
-- **Location**: Used to calculate accurate moon phase data for your area. Not stored or shared.
+- **Birth chart info** (sun sign, rising sign, moon sign, birth time): Stored locally on your device. When you request a reading, this info is included with your question and sent to our AI service so the reading can reflect your chart. It is not stored on our servers after the reading is delivered.
+- **Location**: Your approximate location is used to calculate accurate moon phase and planetary data for your area. It is sent to the astrology data service for that calculation and is not stored or shared for any other purpose.
 - **Questions you ask**: Sent to our AI service to generate readings. Not stored after the reading is delivered.
 
 ## What we don't collect

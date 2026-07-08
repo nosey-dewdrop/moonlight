@@ -242,21 +242,6 @@ class CreditManager: ObservableObject {
         default: return 0
         }
     }
-
-    // MARK: - Shared Fallback Products (when StoreKit fails to load)
-
-    struct FallbackProduct: Identifiable {
-        let id: String
-        let name: String
-        let price: String
-        let credits: Int
-    }
-
-    static let fallbackProducts = [
-        FallbackProduct(id: "credits5", name: "5 Kredi", price: "₺79,99", credits: 5),
-        FallbackProduct(id: "credits10", name: "10 Kredi", price: "₺109,99", credits: 10),
-        FallbackProduct(id: "credits15", name: "15 Kredi", price: "₺139,99", credits: 15),
-    ]
 }
 
 enum StoreError: LocalizedError {
