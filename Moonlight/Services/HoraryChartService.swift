@@ -1,6 +1,6 @@
 import Foundation
 
-struct HoraryChartData {
+struct HoraryChartData: Codable {
     let planets: [PlanetPosition]
     let houses: [HousePosition]
     let aspects: [ChartAspect]
@@ -41,32 +41,126 @@ struct HoraryChartData {
     }
 }
 
-struct PlanetPosition {
+struct PlanetPosition: Codable {
     let name: String
     let sign: String
     let degree: Double
     let isRetro: Bool
 }
 
-struct HousePosition {
+struct HousePosition: Codable {
     let number: Int
     let sign: String
     let degree: Double
 }
 
-struct ChartAspect {
+struct ChartAspect: Codable {
     let planet1: String
     let aspect: String
     let planet2: String
 }
 
+// MARK: - Chart cache
+
+/// One chart = three upstream calls, and the astrology API is intermittently
+/// slow. Identical concurrent requests are coalesced into a single fetch, and
+/// results are kept in memory + UserDefaults: "now" charts for 10 minutes,
+/// natal charts forever (a birth chart never changes). On a failed refresh a
+/// stale chart is served instead of an error — old positions beat a spinner.
+actor ChartCache {
+    static let shared = ChartCache()
+
+    private struct Entry: Codable {
+        let data: HoraryChartData
+        let fetchedAt: Date
+    }
+
+    private var memory: [String: Entry] = [:]
+    private var inFlight: [String: Task<HoraryChartData, Error>] = [:]
+
+    func chart(key: String, maxAge: TimeInterval,
+               fetch: @escaping @Sendable () async throws -> HoraryChartData) async throws -> HoraryChartData {
+        if let entry = entry(for: key), Date().timeIntervalSince(entry.fetchedAt) < maxAge {
+            return entry.data
+        }
+        if let running = inFlight[key] {
+            return try await running.value
+        }
+        let task = Task { try await fetch() }
+        inFlight[key] = task
+        defer { inFlight[key] = nil }
+        do {
+            let data = try await task.value
+            store(Entry(data: data, fetchedAt: Date()), for: key)
+            return data
+        } catch {
+            if let stale = entry(for: key) { return stale.data }
+            throw error
+        }
+    }
+
+    private func entry(for key: String) -> Entry? {
+        if let entry = memory[key] { return entry }
+        guard let raw = UserDefaults.standard.data(forKey: "chartCache.\(key)"),
+              let entry = try? JSONDecoder().decode(Entry.self, from: raw) else { return nil }
+        memory[key] = entry
+        return entry
+    }
+
+    private func store(_ entry: Entry, for key: String) {
+        memory[key] = entry
+        if let raw = try? JSONEncoder().encode(entry) {
+            UserDefaults.standard.set(raw, forKey: "chartCache.\(key)")
+        }
+    }
+}
+
 class HoraryChartService {
     private var baseURL: String { "\(Secrets.backendURL)/api/astrology" }
 
+    /// Horary / "right now" chart for the user's current location.
+    /// Cached for 10 minutes — planetary positions barely move in that window,
+    /// and it collapses the repeat fetches from Home/Tarot/Horary into one call.
     func fetchChart(latitude: Double, longitude: Double) async throws -> HoraryChartData {
-        let now = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents(in: TimeZone.current, from: now)
+        let tz = Double(TimeZone.current.secondsFromGMT()) / 3600.0
+        let key = String(format: "now:%.2f,%.2f", latitude, longitude)
+        return try await ChartCache.shared.chart(key: key, maxAge: 10 * 60) { [self] in
+            try await fetchRemoteChart(date: Date(),
+                                       latitude: latitude,
+                                       longitude: longitude,
+                                       timezoneHours: tz,
+                                       timezone: .current)
+        }
+    }
+
+    /// General chart for any moment — used for natal (birth) and transit charts.
+    /// `timezoneHours` is the UTC offset in hours at the given place/time.
+    /// A fixed moment's chart never changes, so it is cached indefinitely —
+    /// the natal chart hits the network exactly once per birth data.
+    func fetchChart(date: Date,
+                    latitude: Double,
+                    longitude: Double,
+                    timezoneHours: Double,
+                    timezone: TimeZone = .current) async throws -> HoraryChartData {
+        let key = String(format: "moment:%.0f:%.2f,%.2f:%.1f",
+                         date.timeIntervalSince1970, latitude, longitude, timezoneHours)
+        return try await ChartCache.shared.chart(key: key, maxAge: .greatestFiniteMagnitude) { [self] in
+            try await fetchRemoteChart(date: date,
+                                       latitude: latitude,
+                                       longitude: longitude,
+                                       timezoneHours: timezoneHours,
+                                       timezone: timezone)
+        }
+    }
+
+    private func fetchRemoteChart(date: Date,
+                                  latitude: Double,
+                                  longitude: Double,
+                                  timezoneHours: Double,
+                                  timezone: TimeZone) async throws -> HoraryChartData {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timezone
+        let components = calendar.dateComponents(in: timezone, from: date)
 
         guard let year = components.year,
               let month = components.month,
@@ -76,7 +170,7 @@ class HoraryChartService {
             throw ChartError.invalidDate
         }
 
-        let tz = Double(TimeZone.current.secondsFromGMT()) / 3600.0
+        let tz = timezoneHours
 
         let body: [String: Any] = [
             "year": year,
@@ -109,7 +203,11 @@ class HoraryChartService {
         let houses = parseHouses(housesData)
         let aspects = parseAspects(aspectsData)
 
-        return HoraryChartData(planets: planets, houses: houses, aspects: aspects, queriedAt: now)
+        // An empty planet list means the upstream returned garbage — throwing
+        // here keeps it out of the cache and lets callers fall back cleanly.
+        guard !planets.isEmpty else { throw ChartError.parseError }
+
+        return HoraryChartData(planets: planets, houses: houses, aspects: aspects, queriedAt: date)
     }
 
     // MARK: - Network
@@ -121,7 +219,7 @@ class HoraryChartService {
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 20
+        request.timeoutInterval = 15
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(Secrets.appToken, forHTTPHeaderField: "x-app-token")
         request.httpBody = try JSONSerialization.data(withJSONObject: body)

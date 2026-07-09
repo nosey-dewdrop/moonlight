@@ -19,16 +19,16 @@ targets:
       path: Moonlight/Info.plist
       properties:
         UILaunchScreen:
-          UIColorName: ""
+          UIColorName: "LaunchBg"
+          UIImageName: "app_icon_large"
+          UIImageRespectsSafeAreaInsets: true
         NSLocationWhenInUseUsageDescription: "Moonlight needs your location to show accurate moon phase and astrology data for where you are."
         CFBundleDisplayName: Moonlight
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIAppFonts:
-          - PressStart2P-Regular.ttf
-          - Silkscreen-Regular.ttf
-          - Silkscreen-Bold.ttf
-          - PixelifySans[wght].ttf
+          - PixelifySans-Regular.ttf
+          - PixelifySans-SemiBold.ttf
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.damla.moonlight

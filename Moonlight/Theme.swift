@@ -28,29 +28,123 @@ extension Color {
     }
 }
 
-// MARK: - Theme Constants
+// MARK: - Theme (fab.bio-style cosmic-minimal system)
+//
+// The visual language: flat editorial ink (near-black), generous whitespace,
+// hairline borders, one restrained champagne-gold accent, and a small lilac/
+// teal reserved for chart data (planets, aspects). No heavy gradients — this is
+// a serious astrology instrument, not a purple fortune-toy. Type is system-
+// native: New York (serif) for editorial display moments, SF Pro for UI, so it
+// scales with Dynamic Type and the TR locale with zero bundled assets. Damla's
+// hand-drawn illustrations layer on top later; nothing here waits on them.
 
 enum Theme {
-    // Colors - cached static, no repeated hex parsing
+
+    // MARK: Palette
+
+    // Original pixel-era palette (restored — pixel art assets live on this)
     static let bg = Color(hex: "#0b0b2e")
+    static let bgDeep = Color(hex: "#08081F")      // gradient stop for new screens
+    static let bgRaised = Color(hex: "#131336")    // raised surface for new screens
+    static let bgViolet = Color(hex: "#1A1145")
+    static let bgPlum = Color(hex: "#2D1B54")
+
     static let accent = Color(hex: "#FFE566")
+    static let accentDeep = Color(hex: "#E6C878")
+    static let lilac = Color(hex: "#C9B6FF")
+    static let rose = Color(hex: "#F5B8D0")
+    static let aurora = Color(hex: "#8FE3D0")
     static let error = Color(hex: "#FF6B6B")
+
+    static let text = Color(hex: "#F4F1FF")
+    static let textMuted = Color(hex: "#B8B0D8")
+    static let textFaint = Color(hex: "#7A749C")
+
     static let cardBg = Color(hex: "#12123a")
     static let cardBorder = Color(hex: "#2a2a5e")
     static let cardOuterBorder = Color(hex: "#1e1e4e")
     static let badgeBg = Color(hex: "#1a1a4a")
     static let badgeBorder = Color(hex: "#2a2a6e")
+    static let hairline = Color.white.opacity(0.10)
     static let coinInner = Color(hex: "#D4A017")
     static let purpleAccent = Color(hex: "#A78BFA")
     static let green = Color(hex: "#34D399")
 
-    // Fonts
-    static let titleFont = "PressStart2P-Regular"
+    // MARK: Gradients (used sparingly)
+
+    /// Very subtle top-down deepening — almost flat, just avoids a dead-flat wall.
+    static let skyGradient = LinearGradient(
+        colors: [bgDeep, bg],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+
+    /// Champagne fill for the single primary CTA.
+    static let goldGradient = LinearGradient(
+        colors: [Color(hex: "#F0E4C4"), accent, accentDeep],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    /// Reserved lilac→rose for premium / love surfaces (synastry).
+    static let auraGradient = LinearGradient(
+        colors: [lilac, rose],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
+    // MARK: Fonts (Pixelify Sans — readable pixel type with full Turkish glyphs)
+    //
+    // Pixelify Sans is the one bundled pixel font that stays legible at body
+    // sizes AND covers ğşıİöüç — Silkscreen and Press Start 2P render tofu on
+    // Turkish text. Two static instances are bundled (generated from the
+    // variable font, since iOS can't resolve variable-font named instances by
+    // name): Regular 400 for body, SemiBold 600 for titles/buttons.
+    static let titleFont = "PixelifySans-SemiBold"
     static let bodyFont = "PixelifySans-Regular"
     static let bodyBoldFont = "PixelifySans-SemiBold"
-    static let buttonFont = "Silkscreen-Bold"
+    static let buttonFont = "PixelifySans-SemiBold"
 
-    // Shared DateFormatters - NEVER create in body or computed properties
+    private static let heavyWeights: Set<Font.Weight> = [.semibold, .bold, .heavy, .black]
+
+    private static func pixel(_ size: CGFloat, _ weight: Font.Weight) -> Font {
+        .custom(heavyWeights.contains(weight) ? bodyBoldFont : bodyFont, size: size)
+    }
+
+    /// Display — big moments: chart headline, degrees, reveals.
+    static func display(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        pixel(size, weight)
+    }
+
+    /// Body — the default UI voice.
+    static func body(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        pixel(size, weight)
+    }
+
+    /// UI — buttons, tab labels, badges (tight, confident).
+    static func ui(_ size: CGFloat, _ weight: Font.Weight = .semibold) -> Font {
+        pixel(size, weight)
+    }
+
+    // MARK: Layout tokens
+
+    enum Radius {
+        static let sm: CGFloat = 12
+        static let md: CGFloat = 18
+        static let lg: CGFloat = 26
+        static let pill: CGFloat = 100
+    }
+
+    enum Space {
+        static let xs: CGFloat = 6
+        static let sm: CGFloat = 12
+        static let md: CGFloat = 18
+        static let lg: CGFloat = 28
+        static let xl: CGFloat = 40
+    }
+
+    // MARK: Shared DateFormatters — NEVER create in body or computed properties
+
     static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
