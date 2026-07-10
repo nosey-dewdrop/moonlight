@@ -73,7 +73,7 @@ struct CardDetailView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Text("X")
-                                .font(.custom(Theme.titleFont, size: 10))
+                                .font(.custom(Theme.titleFont, size: 11))
                                 .foregroundColor(.white.opacity(0.7))
                                 .padding(8)
                         }
@@ -110,7 +110,7 @@ struct CardDetailView: View {
                     // Meaning
                     VStack(alignment: .leading, spacing: 8) {
                         Text(L("Anlam", "Meaning"))
-                            .font(.custom(Theme.titleFont, size: 10))
+                            .font(.custom(Theme.titleFont, size: 11))
                             .foregroundColor(.white.opacity(0.5))
 
                         Text(card.meaning)
@@ -132,7 +132,7 @@ struct CardDetailView: View {
                     // Lore / History
                     VStack(alignment: .leading, spacing: 8) {
                         Text(L("Tarihçe", "History"))
-                            .font(.custom(Theme.titleFont, size: 10))
+                            .font(.custom(Theme.titleFont, size: 11))
                             .foregroundColor(.white.opacity(0.5))
 
                         Text(cardLore)
@@ -155,7 +155,7 @@ struct CardDetailView: View {
                     if let suit = card.suit {
                         VStack(alignment: .leading, spacing: 8) {
                             Text(L("Element", "Element"))
-                                .font(.custom(Theme.titleFont, size: 10))
+                                .font(.custom(Theme.titleFont, size: 11))
                                 .foregroundColor(.white.opacity(0.5))
 
                             Text(suitDescription(suit))

@@ -31,7 +31,7 @@ struct ReadingHistoryView: View {
                 HStack {
                     Button(action: { dismiss() }) {
                         Text("X")
-                            .font(.custom(Theme.titleFont, size: 10))
+                            .font(.custom(Theme.titleFont, size: 11))
                             .foregroundColor(.white.opacity(0.7))
                             .padding(8)
                     }
@@ -97,7 +97,7 @@ struct ReadingHistoryView: View {
     private func historyRow(_ record: ReadingRecord) -> some View {
         HStack(spacing: 10) {
             Text(record.type == .tarot ? "T" : "H")
-                .font(.custom(Theme.titleFont, size: 9))
+                .font(.custom(Theme.titleFont, size: 11))
                 .foregroundColor(record.type == .tarot ? Theme.accent : Theme.purpleAccent)
                 .frame(width: 24, height: 24)
                 .background(

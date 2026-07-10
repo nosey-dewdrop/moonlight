@@ -85,7 +85,7 @@ struct TarotView: View {
             // Credits display
             HStack(spacing: 4) {
                 Text("\(creditManager.totalCredits)")
-                    .font(.custom(Theme.titleFont, size: 10))
+                    .font(.custom(Theme.titleFont, size: 11))
                     .foregroundColor(Theme.accent)
                 Text(L("kredi", "credits"))
                     .font(.custom(Theme.bodyFont, size: 13))

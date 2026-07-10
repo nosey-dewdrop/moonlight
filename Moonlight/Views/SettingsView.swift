@@ -30,7 +30,7 @@ struct SettingsView: View {
                     HStack {
                         Button(action: { dismiss() }) {
                             Text("X")
-                                .font(.custom(Theme.titleFont, size: 10))
+                                .font(.custom(Theme.titleFont, size: 11))
                                 .foregroundColor(.white.opacity(0.7))
                                 .padding(8)
                         }
@@ -457,6 +457,12 @@ struct SettingsView: View {
                 Text(L("Doğum bilgilerin ve okuma geçmişin bu cihazdan silinir. Satın alınan kredilerin korunur.",
                        "Your birth data and reading history are removed from this device. Purchased credits are kept."))
             }
+
+            Text(.init("Fonts: [Inter](https://fonts.google.com/specimen/Inter) · [Fraunces](https://fonts.google.com/specimen/Fraunces) (SIL Open Font License)"))
+                .font(.custom(Theme.bodyFont, size: 12))
+                .foregroundColor(.white.opacity(0.25))
+                .tint(.white.opacity(0.4))
+                .padding(.top, 2)
 
             Text("Moonlight v1.0")
                 .font(.custom(Theme.bodyFont, size: 13))

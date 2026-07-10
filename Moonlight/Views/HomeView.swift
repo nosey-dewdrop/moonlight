@@ -84,6 +84,12 @@ struct HomeView: View {
                     .foregroundColor(.white.opacity(0.3))
             }
 
+            if locationManager.usingDefaultLocation {
+                Text(L("varsayılan konum kullanılıyor", "using default location"))
+                    .font(.custom(Theme.bodyFont, size: 13))
+                    .foregroundColor(.white.opacity(0.3))
+            }
+
             HStack(spacing: 32) {
                 HStack(spacing: 6) {
                     pixelIcon("icon_moonrise", size: 18)

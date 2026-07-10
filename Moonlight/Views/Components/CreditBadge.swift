@@ -30,11 +30,11 @@ struct CreditBadge: View {
                 .frame(width: 14, height: 14)
 
                 Text("\(creditManager.totalCredits)")
-                    .font(.custom(Theme.titleFont, size: 10))
+                    .font(.custom(Theme.titleFont, size: 11))
                     .foregroundColor(.white)
 
                 Text("+")
-                    .font(.custom(Theme.titleFont, size: 10))
+                    .font(.custom(Theme.titleFont, size: 11))
                     .foregroundColor(Theme.accent)
             }
             .padding(.horizontal, 10)

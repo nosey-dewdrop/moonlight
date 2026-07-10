@@ -58,7 +58,7 @@ enum Theme {
 
     static let text = Color(hex: "#F4F1FF")
     static let textMuted = Color(hex: "#B8B0D8")
-    static let textFaint = Color(hex: "#7A749C")
+    static let textFaint = Color(hex: "#928CB8")   // >=4.5:1 on bg (WCAG AA)
 
     static let cardBg = Color(hex: "#12123a")
     static let cardBorder = Color(hex: "#2a2a5e")
