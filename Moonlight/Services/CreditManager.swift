@@ -25,7 +25,8 @@ class CreditManager: ObservableObject {
     private let dailyUsedKey = "com.damla.moonlight.dailyCreditsUsed"
     private let lastResetKey = "com.damla.moonlight.lastDailyReset"
     private let welcomeKey = "com.damla.moonlight.welcomeBonusGiven"
-    private let dailyFreeAmount = 3
+    private var dailyFreeAmount: Int { isPlus ? plusDailyAmount : 3 }
+    private let plusDailyAmount = 10
     private let welcomeBonusAmount = 10
 
     private let productIds = [
@@ -33,6 +34,15 @@ class CreditManager: ObservableObject {
         "com.damla.moonlight.credits10",
         "com.damla.moonlight.credits15",
     ]
+    static let plusProductId = "com.damla.moonlight.plus.monthly"
+
+    /// Moonlight+ subscriber — daily free credits are boosted. Entitlement is
+    /// re-checked from StoreKit on every launch and on every transaction
+    /// update, so cancellations take effect at the next open.
+    @Published var isPlus: Bool = UserDefaults.standard.bool(forKey: "com.damla.moonlight.isPlus") {
+        didSet { UserDefaults.standard.set(isPlus, forKey: "com.damla.moonlight.isPlus") }
+    }
+    @Published var plusProduct: Product?
 
     private var transactionTask: Task<Void, Never>?
 
@@ -53,6 +63,7 @@ class CreditManager: ObservableObject {
         resetDailyIfNeeded()
         listenForTransactions()
         giveWelcomeBonus()
+        Task { await refreshSubscriptionStatus() }
 
         #if DEBUG
         if !UserDefaults.standard.bool(forKey: "debugCredits500") {
@@ -86,6 +97,7 @@ class CreditManager: ObservableObject {
                 if let transaction = try? await self?.checkVerified(result) {
                     await self?.addCredits(for: transaction.productID)
                     await transaction.finish()
+                    await self?.refreshSubscriptionStatus()
                 }
             }
         }
@@ -160,11 +172,24 @@ class CreditManager: ObservableObject {
 
     func loadProducts() async {
         do {
-            products = try await Product.products(for: productIds)
-                .sorted { $0.price < $1.price }
+            let all = try await Product.products(for: productIds + [Self.plusProductId])
+            products = all.filter { $0.id != Self.plusProductId }.sorted { $0.price < $1.price }
+            plusProduct = all.first { $0.id == Self.plusProductId }
         } catch {
             // StoreKit product load failed — products array stays empty, UI shows fallback
         }
+    }
+
+    /// True when an auto-renewable Moonlight+ transaction is currently entitled.
+    func refreshSubscriptionStatus() async {
+        var active = false
+        for await result in Transaction.currentEntitlements {
+            if let t = try? checkVerified(result), t.productID == Self.plusProductId,
+               t.revocationDate == nil {
+                active = true
+            }
+        }
+        isPlus = active
     }
 
     func purchase(_ product: Product) async {
@@ -180,6 +205,7 @@ class CreditManager: ObservableObject {
                 let transaction = try checkVerified(verification)
                 addCredits(for: product.id)
                 await transaction.finish()
+                await refreshSubscriptionStatus()
 
             case .userCancelled:
                 break
@@ -214,6 +240,7 @@ class CreditManager: ObservableObject {
         // Save processed transaction IDs
         let allFinished = alreadyFinished.union(processedIds)
         UserDefaults.standard.set(Array(allFinished), forKey: finishedKey)
+        await refreshSubscriptionStatus()
     }
 
     // MARK: - Helpers

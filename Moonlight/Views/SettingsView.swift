@@ -316,6 +316,40 @@ struct SettingsView: View {
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 8)
             } else {
+                if let plus = creditManager.plusProduct {
+                    Button(action: {
+                        Task { await creditManager.purchase(plus) }
+                    }) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            HStack {
+                                Text("Moonlight+")
+                                    .font(.custom(Theme.bodyBoldFont, size: 15))
+                                    .foregroundColor(Theme.bg)
+                                Spacer()
+                                Text(L("\(plus.displayPrice)/ay", "\(plus.displayPrice)/mo"))
+                                    .font(.custom(Theme.bodyBoldFont, size: 15))
+                                    .foregroundColor(Theme.bg)
+                            }
+                            Text(L("Her gün 10 ücretsiz okuma hakkı", "10 free readings every day"))
+                                .font(.custom(Theme.bodyFont, size: 12))
+                                .foregroundColor(Theme.bg.opacity(0.7))
+                        }
+                        .padding(12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Theme.goldGradient)
+                        )
+                    }
+                    .disabled(creditManager.purchaseInProgress || creditManager.isPlus)
+                    .opacity(creditManager.isPlus ? 0.6 : 1)
+                }
+
+                if creditManager.isPlus {
+                    Text(L("Moonlight+ aktif ✨", "Moonlight+ is active ✨"))
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(Theme.accent)
+                }
+
                 ForEach(creditManager.products) { product in
                     let credits = CreditManager.creditsForProduct(product.id)
                     Button(action: {
