@@ -61,11 +61,21 @@ struct WelcomeView: View {
                 Spacer()
 
                 if showButton {
-                    PixelButton(L("Başla", "Begin")) {
-                        dismiss()
+                    VStack(spacing: 10) {
+                        PixelButton(L("Başla", "Begin")) {
+                            dismiss()
+                        }
+                        Text(.init(L(
+                            "Devam ederek [Gizlilik Politikası](https://damlahelloworld.github.io/moonlight/privacy-policy.html)'nı ve [Kullanım Koşulları](https://damlahelloworld.github.io/moonlight/terms.html)'nı kabul etmiş olursun.",
+                            "By continuing you accept the [Privacy Policy](https://damlahelloworld.github.io/moonlight/privacy-policy.html) and [Terms of Use](https://damlahelloworld.github.io/moonlight/terms.html)."
+                        )))
+                            .font(Theme.body(11))
+                            .foregroundColor(Theme.textMuted)
+                            .tint(Theme.accent)
+                            .multilineTextAlignment(.center)
                     }
                     .transition(.opacity)
-                    .padding(.bottom, 60)
+                    .padding(.bottom, 48)
                 }
             }
             .padding(.horizontal, 32)

@@ -7,7 +7,9 @@ struct SettingsView: View {
     @ObservedObject private var loc = LocalizationManager.shared
     @ObservedObject private var notif = NotificationManager.shared
     @State private var showHistory = false
+    @State private var showBirthChart = false
     @State private var moonData: MoonData?
+    @State private var showDeleteConfirm = false
 
     private let moonService = MoonService()
 
@@ -94,6 +96,9 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showHistory) {
             ReadingHistoryView()
+        }
+        .fullScreenCover(isPresented: $showBirthChart) {
+            BirthChartView()
         }
     }
 
@@ -210,93 +215,44 @@ struct SettingsView: View {
     // MARK: - Birth Chart
 
     private var birthChartSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(L("Doğum Haritası", "Birth Chart"))
-                .font(.custom(Theme.titleFont, size: 16))
-                .foregroundColor(.white.opacity(0.8))
-
-            zodiacPicker(L("Güneş Burcu", "Sun Sign"), selection: $userProfile.sunSign)
-            zodiacPicker(L("Yükselen Burç", "Rising Sign"), selection: $userProfile.risingSign)
-            zodiacPicker(L("Ay Burcu", "Moon Sign"), selection: $userProfile.moonSign)
-
-            // Birth time
-            VStack(alignment: .leading, spacing: 4) {
-                Text(L("Doğum Saati", "Birth Time"))
-                    .font(.custom(Theme.bodyFont, size: 14))
-                    .foregroundColor(.white.opacity(0.5))
-
-                if let time = userProfile.birthTime {
-                    HStack {
-                        Text(Theme.timeFormatter.string(from: time))
-                            .font(.custom(Theme.bodyBoldFont, size: 15))
-                            .foregroundColor(.white)
-
-                        Spacer()
-
-                        Button(action: { userProfile.birthTime = nil }) {
-                            Text("x")
-                                .font(.custom(Theme.titleFont, size: 16))
-                                .foregroundColor(Theme.error)
-                        }
-                    }
-                } else {
-                    DatePicker("", selection: Binding(
-                        get: { userProfile.birthTime ?? Date() },
-                        set: { userProfile.birthTime = $0 }
-                    ), displayedComponents: .hourAndMinute)
-                    .labelsHidden()
-                    .colorScheme(.dark)
+        Button(action: { showBirthChart = true }) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L("Doğum Haritam", "My Birth Chart"))
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(.white.opacity(0.8))
+                    Text(birthChartSubtitle)
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(.white.opacity(0.4))
                 }
+                Spacer()
+                Text(">")
+                    .font(.custom(Theme.titleFont, size: 16))
+                    .foregroundColor(.white.opacity(0.3))
             }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Theme.bg.opacity(0.85))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.white.opacity(0.15), lineWidth: 1)
+                    )
+            )
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Theme.bg.opacity(0.85))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.white.opacity(0.15), lineWidth: 1)
-                )
-        )
     }
 
-    private func zodiacPicker(_ label: String, selection: Binding<ZodiacSign?>) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(label)
-                .font(.custom(Theme.bodyFont, size: 14))
-                .foregroundColor(.white.opacity(0.5))
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
-                    ForEach(ZodiacSign.allCases, id: \.self) { sign in
-                        let isSelected = selection.wrappedValue == sign
-
-                        Button(action: {
-                            selection.wrappedValue = isSelected ? nil : sign
-                        }) {
-                            Text(sign.emoji)
-                                .font(.system(size: 18))
-                                .padding(6)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 2)
-                                        .fill(isSelected ? Theme.accent.opacity(0.3) : Color.clear)
-                                        .overlay(
-                                            RoundedRectangle(cornerRadius: 2)
-                                                .stroke(isSelected ? Theme.accent : Color.white.opacity(0.1), lineWidth: 1)
-                                        )
-                                )
-                        }
-                        .accessibilityLabel(sign.displayName)
-                    }
-                }
-            }
-
-            if let sign = selection.wrappedValue {
-                Text(sign.displayName)
-                    .font(.custom(Theme.bodyFont, size: 13))
-                    .foregroundColor(Theme.accent.opacity(0.7))
-            }
+    /// Shows the real big-three once computed, or a prompt to add birth info.
+    private var birthChartSubtitle: String {
+        if userProfile.isOnboarded {
+            let parts = [userProfile.sunSign, userProfile.moonSign, userProfile.risingSign]
+                .compactMap { $0?.localizedName }
+            return parts.isEmpty
+                ? L("haritanı gör", "view your chart")
+                : parts.joined(separator: " · ")
         }
+        return L("doğum bilgini gir, gerçek haritanı çıkar",
+                 "add your birth info for your real chart")
     }
 
     // MARK: - Credits
@@ -421,7 +377,7 @@ struct SettingsView: View {
     private var legalSection: some View {
         VStack(spacing: 10) {
             Button(action: {
-                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/privacy-policy.html") {
+                if let url = URL(string: "https://damlahelloworld.github.io/moonlight/privacy-policy.html") {
                     UIApplication.shared.open(url)
                 }
             }) {
@@ -446,7 +402,7 @@ struct SettingsView: View {
             }
 
             Button(action: {
-                if let url = URL(string: "https://nosey-dewdrop.github.io/moonlight/terms.html") {
+                if let url = URL(string: "https://damlahelloworld.github.io/moonlight/terms.html") {
                     UIApplication.shared.open(url)
                 }
             }) {
@@ -470,11 +426,51 @@ struct SettingsView: View {
                 )
             }
 
+            Button(action: { showDeleteConfirm = true }) {
+                HStack {
+                    Text(L("Verilerimi Sil", "Delete My Data"))
+                        .font(.custom(Theme.bodyFont, size: 15))
+                        .foregroundColor(Theme.error.opacity(0.85))
+                    Spacer()
+                    Text(">")
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(.white.opacity(0.3))
+                }
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Theme.bg.opacity(0.85))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 4)
+                                .stroke(Theme.error.opacity(0.25), lineWidth: 1)
+                        )
+                )
+            }
+            .confirmationDialog(
+                L("Tüm kişisel verilerin silinsin mi?", "Delete all your personal data?"),
+                isPresented: $showDeleteConfirm,
+                titleVisibility: .visible
+            ) {
+                Button(L("Sil", "Delete"), role: .destructive) { deleteAllData() }
+                Button(L("Vazgeç", "Cancel"), role: .cancel) {}
+            } message: {
+                Text(L("Doğum bilgilerin ve okuma geçmişin bu cihazdan silinir. Satın alınan kredilerin korunur.",
+                       "Your birth data and reading history are removed from this device. Purchased credits are kept."))
+            }
+
             Text("Moonlight v1.0")
                 .font(.custom(Theme.bodyFont, size: 13))
                 .foregroundColor(.white.opacity(0.2))
                 .padding(.top, 4)
         }
+    }
+
+    /// KVKK/GDPR erasure: wipes birth data, reading history and cached charts.
+    /// Purchased credits are paid property and deliberately survive.
+    private func deleteAllData() {
+        userProfile.reset()
+        ReadingHistory.shared.clear()
+        Task { await ChartCache.shared.clear() }
     }
 
 }

@@ -113,6 +113,17 @@ actor ChartCache {
             UserDefaults.standard.set(raw, forKey: "chartCache.\(key)")
         }
     }
+
+    /// Wipes every cached chart (memory + disk). Cached natal charts are
+    /// derived from birth data, so "delete my data" must reach here too.
+    func clear() {
+        memory.removeAll()
+        inFlight.removeAll()
+        let defaults = UserDefaults.standard
+        for key in defaults.dictionaryRepresentation().keys where key.hasPrefix("chartCache.") {
+            defaults.removeObject(forKey: key)
+        }
+    }
 }
 
 class HoraryChartService {
