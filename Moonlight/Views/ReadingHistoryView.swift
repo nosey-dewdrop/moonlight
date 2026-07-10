@@ -174,12 +174,6 @@ private struct ReadingDetailSheet: View {
                             .font(.custom(Theme.bodyFont, size: 15))
                             .foregroundColor(.white.opacity(0.85))
                             .lineSpacing(5)
-
-                        ShareReadingButton(question: record.question,
-                                           reading: reading,
-                                           moonPhaseName: MoonService().calculateMoonPhase(date: record.date).phase.displayName)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.top, 8)
                     }
                 }
                 .padding(20)

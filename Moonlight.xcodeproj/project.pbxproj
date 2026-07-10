@@ -24,7 +24,6 @@
 		579623B1D3FDFB3A7050EA4C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6FEB32CB6A42ABEEC16D9F18 /* PrivacyInfo.xcprivacy */; };
 		58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71EF318F8BE609DABC579B /* PixelUI.swift */; };
 		5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F87798DD5D3A852D01EA71C /* CreditManager.swift */; };
-		5EA65A7104695750BC095BCD /* ShareCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AD085A0792CADAE2DAE88C /* ShareCardView.swift */; };
 		6B8EB2F9550305884F41A453 /* Fraunces-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C4DDE3819D7981D68D5FB9E /* Fraunces-SemiBold.ttf */; };
 		6CB849A88C1AAE49BD430700 /* MoonlightWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD71888DCA6F276B1E668B /* MoonlightWidget.swift */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
@@ -88,7 +87,6 @@
 		19995CEC35295A5B5DB698F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1E1DEF9A28050196370B3771 /* AstroEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstroEvent.swift; sourceTree = "<group>"; };
 		1F87798DD5D3A852D01EA71C /* CreditManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreditManager.swift; sourceTree = "<group>"; };
-		25AD085A0792CADAE2DAE88C /* ShareCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareCardView.swift; sourceTree = "<group>"; };
 		2A42137A85229E7DD13F9060 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2B5001853B051008B1080534 /* MoonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonService.swift; sourceTree = "<group>"; };
 		2B6764A0D5ABCA78B21A676E /* TarotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarotView.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 				582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */,
 				F738BE878E84A285286F33EA /* MysticLoadingText.swift */,
 				4F71EF318F8BE609DABC579B /* PixelUI.swift */,
-				25AD085A0792CADAE2DAE88C /* ShareCardView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -392,7 +389,6 @@
 				8A596E8B77644487FD4817B3 /* ReadingHistoryView.swift in Sources */,
 				E450CCB4D31C21166C571BD4 /* Secrets.swift in Sources */,
 				8025825C15665681A55657FC /* SettingsView.swift in Sources */,
-				5EA65A7104695750BC095BCD /* ShareCardView.swift in Sources */,
 				A92886635C37B435D117A6E4 /* SplashView.swift in Sources */,
 				1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */,
 				EF824263791A4FF7961B8074 /* TarotView.swift in Sources */,

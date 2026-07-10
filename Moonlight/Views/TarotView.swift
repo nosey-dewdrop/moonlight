@@ -307,12 +307,6 @@ struct TarotView: View {
                         .font(.custom(Theme.bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.2))
                         .padding(.top, 6)
-
-                    ShareReadingButton(question: question,
-                                       reading: reading,
-                                       moonPhaseName: MoonService().calculateMoonPhase(date: Date()).phase.displayName)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 4)
                 }
                 .padding(12)
                 .background(
