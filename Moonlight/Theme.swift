@@ -93,37 +93,31 @@ enum Theme {
         endPoint: .bottomTrailing
     )
 
-    // MARK: Fonts (Pixelify Sans — readable pixel type with full Turkish glyphs)
+    // MARK: Fonts (Fraunces serif titles + Inter body — no pixel type)
     //
-    // Pixelify Sans is the one bundled pixel font that stays legible at body
-    // sizes AND covers ğşıİöüç — Silkscreen and Press Start 2P render tofu on
-    // Turkish text. Two static instances are bundled (generated from the
-    // variable font, since iOS can't resolve variable-font named instances by
-    // name): Regular 400 for body, SemiBold 600 for titles/buttons.
-    static let titleFont = "PixelifySans-SemiBold"
-    static let bodyFont = "PixelifySans-Regular"
-    static let bodyBoldFont = "PixelifySans-SemiBold"
-    static let buttonFont = "PixelifySans-SemiBold"
+    // Readable, non-pixel typography per Damla's call: Fraunces SemiBold gives
+    // titles editorial character, Inter carries body and buttons. All three
+    // files are static instances generated from the Google Fonts variable
+    // fonts (iOS can't resolve variable-font named instances by name), full
+    // Turkish glyph coverage verified. Pixel fonts are gone from the bundle.
+    static let titleFont = "Fraunces-SemiBold"
+    static let bodyFont = "Inter-Regular"
+    static let bodyBoldFont = "Inter-SemiBold"
+    static let buttonFont = "Inter-SemiBold"
 
-    private static let heavyWeights: Set<Font.Weight> = [.semibold, .bold, .heavy, .black]
-
-    private static func pixel(_ size: CGFloat, _ weight: Font.Weight) -> Font {
-        .custom(heavyWeights.contains(weight) ? bodyBoldFont : bodyFont, size: size)
-    }
-
-    /// Display — big moments: chart headline, degrees, reveals.
+    /// Serif display — big editorial moments: chart headline, degrees, reveals.
     static func display(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        pixel(size, weight)
+        .system(size: size, weight: weight, design: .serif)
     }
 
-    /// Body — the default UI voice.
+    /// Clean sans body — the default UI voice.
     static func body(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
-        pixel(size, weight)
+        .system(size: size, weight: weight, design: .default)
     }
 
-    /// UI — buttons, tab labels, badges (tight, confident).
+    /// Sans UI — buttons, tab labels, badges (tight, confident).
     static func ui(_ size: CGFloat, _ weight: Font.Weight = .semibold) -> Font {
-        pixel(size, weight)
+        .system(size: size, weight: weight, design: .default)
     }
 
     // MARK: Layout tokens

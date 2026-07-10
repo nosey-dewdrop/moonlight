@@ -27,8 +27,9 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIAppFonts:
-          - PixelifySans-Regular.ttf
-          - PixelifySans-SemiBold.ttf
+          - Inter-Regular.ttf
+          - Inter-SemiBold.ttf
+          - Fraunces-SemiBold.ttf
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.damla.moonlight

@@ -24,8 +24,9 @@
 	<string>Moonlight needs your location to show accurate moon phase and astrology data for where you are.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>PixelifySans-Regular.ttf</string>
-		<string>PixelifySans-SemiBold.ttf</string>
+		<string>Inter-Regular.ttf</string>
+		<string>Inter-SemiBold.ttf</string>
+		<string>Fraunces-SemiBold.ttf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict>
