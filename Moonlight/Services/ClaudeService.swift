@@ -196,6 +196,21 @@ class ClaudeService {
         return try await sendMessage(prompt)
     }
 
+    /// Short shared "today's sky" text for the Home card. Compact prompt,
+    /// small token cap — this runs once per user per day, free of credits.
+    func dailySkyReading(moonPhase: MoonPhase, illumination: Double, activeRetrogrades: [String]) async throws -> String {
+        let retroLine = activeRetrogrades.isEmpty
+            ? "No planets are retrograde."
+            : "Retrograde right now: \(activeRetrogrades.joined(separator: ", "))."
+        let prompt = """
+        You write the daily sky note for an astrology app. Today: moon phase \(moonPhase.rawValue), \(Int(illumination))% illuminated. \(retroLine)
+
+        Write 3-4 warm sentences about today's overall energy and one gentle suggestion for the day. No greetings, no headers, no emojis, no bullet points. Do not mention percentages or technical terms.
+        - \(languageDirective) Türkçe yazıyorsan eksiksiz, doğru Türkçe yaz; ekleri doğru kullan.
+        """
+        return try await sendMessage(prompt, maxTokens: 300)
+    }
+
     // MARK: - API Call (via backend proxy)
 
     private func sendMessage(_ userMessage: String, maxTokens: Int? = nil) async throws -> String {

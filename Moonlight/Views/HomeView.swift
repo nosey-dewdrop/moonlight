@@ -9,6 +9,7 @@ struct HomeView: View {
     @State private var showPremium = false
     @State private var usingLocalData = false
     @State private var eventsError = false
+    @ObservedObject private var daily = DailyReadingService.shared
 
     private let moonService = MoonService()
     private let astrologyService = AstrologyService()
@@ -21,6 +22,7 @@ struct HomeView: View {
                         moonCharacter(moonData: moonData)
                             .padding(.top, 100)
                         moonInfo(moonData: moonData)
+                        dailyReadingCard
                         astroEventsList
                     }
                 }
@@ -62,6 +64,9 @@ struct HomeView: View {
         }
         .task {
             await loadData()
+        }
+        .task {
+            await daily.load()
         }
     }
 
@@ -109,6 +114,51 @@ struct HomeView: View {
     }
 
     // MARK: - Astro Events
+
+    private var dailyReadingCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(L("BUGÜNÜN GÖKYÜZÜ", "TODAY'S SKY"))
+                .font(.custom(Theme.titleFont, size: 12))
+                .foregroundColor(Theme.accent)
+                .tracking(2)
+
+            if let text = daily.reading {
+                Text(text)
+                    .font(.custom(Theme.bodyFont, size: 14))
+                    .foregroundColor(.white.opacity(0.85))
+                    .lineSpacing(5)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else if daily.isLoading {
+                HStack(spacing: 8) {
+                    PixelLoading(color: Theme.accent)
+                    Text(L("gökyüzü okunuyor...", "reading the sky..."))
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(.white.opacity(0.4))
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.vertical, 8)
+            } else if daily.failed {
+                Button(action: { Task { await daily.load() } }) {
+                    Text(L("Yüklenemedi — tekrar dene", "Couldn't load — try again"))
+                        .font(.custom(Theme.bodyFont, size: 13))
+                        .foregroundColor(Theme.accent.opacity(0.8))
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.vertical, 8)
+            }
+        }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Theme.bg.opacity(0.85))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 4)
+                        .stroke(Theme.accent.opacity(0.25), lineWidth: 1)
+                )
+        )
+        .padding(.horizontal, 20)
+    }
 
     private var astroEventsList: some View {
         VStack(alignment: .leading, spacing: 10) {
