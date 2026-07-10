@@ -10,6 +10,9 @@ targets:
   Moonlight:
     type: application
     platform: iOS
+    dependencies:
+      - target: MoonlightWidget
+        embed: true
     sources:
       - path: Moonlight
     resources:
@@ -43,3 +46,25 @@ targets:
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: "Moonlight needs your location to show accurate moon phase and astrology data for where you are."
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+
+  MoonlightWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: MoonlightWidget
+    info:
+      path: MoonlightWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Moonlight
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.damla.moonlight.MoonlightWidget
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: 1
+        SWIFT_VERSION: "5.9"
+        DEVELOPMENT_TEAM: ""
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: MoonlightWidget/Info.plist
+        SKIP_INSTALL: YES

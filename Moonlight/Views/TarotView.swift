@@ -603,6 +603,7 @@ struct TarotView: View {
                     aiReading = reading
                     isLoadingAI = false
                     ReadingHistory.shared.add(question: question, type: .tarot)
+                    EngagementPrompts.readingCompleted()
                 }
             } catch is CancellationError {
                 // Task cancelled, no action needed

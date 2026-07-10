@@ -194,6 +194,7 @@ struct HoraryView: View {
                     aiReading = reading
                     isLoading = false
                     ReadingHistory.shared.add(question: question, type: .horary)
+                    EngagementPrompts.readingCompleted()
                 }
             } catch is CancellationError {
                 // Task cancelled, no action needed

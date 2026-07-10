@@ -8,11 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		078D21E7A54C4FBAD0543746 /* AstrologyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */; };
+		0B6EACA7BAEC2D55F99E9533 /* MoonlightWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 9613B96A0EE50A2BC11B7F93 /* MoonlightWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		12B477B0C64D04340CA1C3EB /* BirthChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AC379E477DE98DAF8FFFF1 /* BirthChartView.swift */; };
 		1D7CD370C1528A8FF8C0F305 /* TarotCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4983831EA7FFB894E1923A2D /* TarotCard.swift */; };
 		1E11480182B9271E0B48EE35 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06549FA82552B6D6E3DEE21E /* Inter-SemiBold.ttf */; };
 		23345FB932129A66A18C3AAF /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6008195D2E90A69B2C63950 /* LocationManager.swift */; };
 		2B15BC647EA0B8E478CD6AAF /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121A290F3D58439CB39C8B24 /* Localization.swift */; };
+		3C22B9E45538E7ED37CB9E39 /* EngagementPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F80F5299B70DC340A4CBDDF /* EngagementPrompts.swift */; };
 		43E4544F730203A4BECC0B56 /* HoraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5203CA177AA14629615143B /* HoraryView.swift */; };
 		4C7CC64FAB07BC2C6C4C3F7D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC274D14F4C5F5F5EAAD27 /* ContentView.swift */; };
 		53AC9DD551A0998E154521EB /* HoraryChartService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */; };
@@ -22,6 +24,7 @@
 		58F3A3DF9CEE8E17D71137F3 /* PixelUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F71EF318F8BE609DABC579B /* PixelUI.swift */; };
 		5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F87798DD5D3A852D01EA71C /* CreditManager.swift */; };
 		6B8EB2F9550305884F41A453 /* Fraunces-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8C4DDE3819D7981D68D5FB9E /* Fraunces-SemiBold.ttf */; };
+		6CB849A88C1AAE49BD430700 /* MoonlightWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AD71888DCA6F276B1E668B /* MoonlightWidget.swift */; };
 		77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D65D3A67C777D1FC0524B73 /* HomeView.swift */; };
 		8025825C15665681A55657FC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A42137A85229E7DD13F9060 /* SettingsView.swift */; };
 		877793026CCB7A0EE06F6722 /* GeocodingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300AE9AC13326E62D9B46876 /* GeocodingService.swift */; };
@@ -50,6 +53,30 @@
 		FD4B2DD2267E5B28B903727B /* MoonlightApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDDF1651AB806A4B15D577A /* MoonlightApp.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		75C2375C6B5F11F6BD6F3BA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6C354F13E10A5D493C1E7372 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9C7C8EE8266A9AD0D0D480B8;
+			remoteInfo = MoonlightWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A0C414232EED36306576E328 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				0B6EACA7BAEC2D55F99E9533 /* MoonlightWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		06549FA82552B6D6E3DEE21E /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		121A290F3D58439CB39C8B24 /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
@@ -71,11 +98,15 @@
 		582A6F4DA976BDF13886CE2F /* MoonSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonSceneView.swift; sourceTree = "<group>"; };
 		66558B03446532A322AE0CD1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		6FEB32CB6A42ABEEC16D9F18 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		71AD71888DCA6F276B1E668B /* MoonlightWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonlightWidget.swift; sourceTree = "<group>"; };
 		7CDE2E825A08BF3BA6846D11 /* Element.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
 		8C4DDE3819D7981D68D5FB9E /* Fraunces-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fraunces-SemiBold.ttf"; sourceTree = "<group>"; };
+		8D90625C33662036D69BC265 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9613B96A0EE50A2BC11B7F93 /* MoonlightWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = MoonlightWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		98E99E5FA8BC781ABC031ED3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		9B2A85D8E9AC29F0D82C444A /* NatalChartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NatalChartService.swift; sourceTree = "<group>"; };
 		9DDD9AF05C9FED66463F1672 /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		9F80F5299B70DC340A4CBDDF /* EngagementPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngagementPrompts.swift; sourceTree = "<group>"; };
 		A177BFEF279100594D6CA762 /* MoonPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoonPhase.swift; sourceTree = "<group>"; };
 		A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoraryChartService.swift; sourceTree = "<group>"; };
 		A5E18E5FDBEB132B038DC644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +163,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		24BAEFCC3C77D25B10A84E7A /* MoonlightWidget */ = {
+			isa = PBXGroup;
+			children = (
+				8D90625C33662036D69BC265 /* Info.plist */,
+				71AD71888DCA6F276B1E668B /* MoonlightWidget.swift */,
+			);
+			path = MoonlightWidget;
+			sourceTree = "<group>";
+		};
 		7989B6912C2049F9727D35B9 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -146,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				EFA55BE42FBF2AF83406468B /* Moonlight.app */,
+				9613B96A0EE50A2BC11B7F93 /* MoonlightWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -156,6 +197,7 @@
 				E2EEAAF9AFC07DC4D209468B /* AstrologyService.swift */,
 				EE77E6A44F612FF5AD1DDAD1 /* ClaudeService.swift */,
 				1F87798DD5D3A852D01EA71C /* CreditManager.swift */,
+				9F80F5299B70DC340A4CBDDF /* EngagementPrompts.swift */,
 				300AE9AC13326E62D9B46876 /* GeocodingService.swift */,
 				A3DECB9D82A35D19DFF4C96B /* HoraryChartService.swift */,
 				B3821B75EA4F9D80CE049289 /* KeychainHelper.swift */,
@@ -198,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				043597F0272E407B96FF04F9 /* Moonlight */,
+				24BAEFCC3C77D25B10A84E7A /* MoonlightWidget */,
 				7ED7D4A73297A981E1C10746 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -211,10 +254,12 @@
 			buildPhases = (
 				C9591E77DCBD8DF21510A041 /* Sources */,
 				F579A6091F1CD0FA6AC9A1AD /* Resources */,
+				A0C414232EED36306576E328 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8892A194290FC527CD306E0B /* PBXTargetDependency */,
 			);
 			name = Moonlight;
 			packageProductDependencies = (
@@ -222,6 +267,23 @@
 			productName = Moonlight;
 			productReference = EFA55BE42FBF2AF83406468B /* Moonlight.app */;
 			productType = "com.apple.product-type.application";
+		};
+		9C7C8EE8266A9AD0D0D480B8 /* MoonlightWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC11FEDA70DC26F8C0654C41 /* Build configuration list for PBXNativeTarget "MoonlightWidget" */;
+			buildPhases = (
+				7F11BC412151C89C0CBE98DB /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MoonlightWidget;
+			packageProductDependencies = (
+			);
+			productName = MoonlightWidget;
+			productReference = 9613B96A0EE50A2BC11B7F93 /* MoonlightWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -233,6 +295,9 @@
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					32E0C782E89DEB4606415314 = {
+						DevelopmentTeam = "";
+					};
+					9C7C8EE8266A9AD0D0D480B8 = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -252,6 +317,7 @@
 			projectRoot = "";
 			targets = (
 				32E0C782E89DEB4606415314 /* Moonlight */,
+				9C7C8EE8266A9AD0D0D480B8 /* MoonlightWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -272,6 +338,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7F11BC412151C89C0CBE98DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CB849A88C1AAE49BD430700 /* MoonlightWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9591E77DCBD8DF21510A041 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -286,6 +360,7 @@
 				C4FC5B141D935DB72FF3CAB8 /* CreditBadge.swift in Sources */,
 				5C08B6BA2009D67EC9F3A7D4 /* CreditManager.swift in Sources */,
 				D5C448D8C1CF23859254CE61 /* Element.swift in Sources */,
+				3C22B9E45538E7ED37CB9E39 /* EngagementPrompts.swift in Sources */,
 				877793026CCB7A0EE06F6722 /* GeocodingService.swift in Sources */,
 				77D914B8E2E58B41D83DC348 /* HomeView.swift in Sources */,
 				53AC9DD551A0998E154521EB /* HoraryChartService.swift in Sources */,
@@ -316,6 +391,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8892A194290FC527CD306E0B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9C7C8EE8266A9AD0D0D480B8 /* MoonlightWidget */;
+			targetProxy = 75C2375C6B5F11F6BD6F3BA3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		14CEECD87CF3B6852561AF49 /* Debug */ = {
@@ -365,6 +448,27 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		222CB454C35D354D6F57B139 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoonlightWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.damla.moonlight.MoonlightWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
 		};
 		6C25C59050785C6E4EA7020E /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -428,6 +532,27 @@
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
+		};
+		8350F32BEC3E8F3CA0007B6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MoonlightWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.damla.moonlight.MoonlightWidget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
 		};
 		A33F5CB6A6BDD6AB4CA7CFB8 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -493,6 +618,15 @@
 			buildConfigurations = (
 				6C25C59050785C6E4EA7020E /* Debug */,
 				A33F5CB6A6BDD6AB4CA7CFB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AC11FEDA70DC26F8C0654C41 /* Build configuration list for PBXNativeTarget "MoonlightWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				222CB454C35D354D6F57B139 /* Debug */,
+				8350F32BEC3E8F3CA0007B6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
