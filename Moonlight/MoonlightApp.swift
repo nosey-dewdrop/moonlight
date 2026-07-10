@@ -6,6 +6,9 @@ struct MoonlightApp: App {
         WindowGroup {
             ContentView()
                 .preferredColorScheme(.dark)
+                .task {
+                    await NotificationManager.shared.refreshOnLaunch()
+                }
         }
     }
 }

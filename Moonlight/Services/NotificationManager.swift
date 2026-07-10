@@ -100,11 +100,12 @@ final class NotificationManager: ObservableObject {
         )
     }
 
-    // Daily free credits refresh at local midnight.
+    // Credits refresh at midnight, but the nudge fires at 11:00 — late enough
+    // to be seen, early enough to shape the day (Damla's call).
     private func scheduleCreditsRefresh() {
         var c = DateComponents()
-        c.hour = 0
-        c.minute = 1
+        c.hour = 11
+        c.minute = 0
         let trigger = UNCalendarNotificationTrigger(dateMatching: c, repeats: true)
         add(
             id: "credits_refresh",
@@ -139,6 +140,39 @@ final class NotificationManager: ObservableObject {
             let comps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start)
             let trigger = UNCalendarNotificationTrigger(dateMatching: comps, repeats: false)
             add(id: "event_\(event.id.uuidString)", title: "\(event.title) ✨", body: event.description, trigger: trigger)
+        }
+    }
+
+    // MARK: - Launch refresh
+
+    /// Called on every app launch: re-schedules the event calendar (it goes
+    /// stale if the app isn't opened for a while) and fires an immediate
+    /// notification when a retrograde has started since the last check —
+    /// the API only reports "retro now", so launch-time diffing is the only
+    /// way to announce one.
+    func refreshOnLaunch() async {
+        await rescheduleAll()
+        guard masterEnabled, astroEvents, authorizationStatus == .authorized else { return }
+
+        guard let events = try? await astrologyService.fetchEvents() else { return }
+        let current = Set(events.filter { $0.type == .retrograde }.map { $0.title })
+        let knownKey = "notif.knownRetrogrades"
+        let known = Set(UserDefaults.standard.stringArray(forKey: knownKey) ?? [])
+        UserDefaults.standard.set(Array(current), forKey: knownKey)
+
+        // First run just records the baseline — announcing years-old retros
+        // as "just started" would be wrong.
+        guard UserDefaults.standard.bool(forKey: "notif.retroBaselineSet") else {
+            UserDefaults.standard.set(true, forKey: "notif.retroBaselineSet")
+            return
+        }
+
+        for title in current.subtracting(known) {
+            guard let event = events.first(where: { $0.title == title }) else { continue }
+            add(id: "retro_start_\(title)",
+                title: "\(title) \u{2728}",
+                body: event.description,
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false))
         }
     }
 
