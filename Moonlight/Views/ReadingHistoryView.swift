@@ -4,6 +4,7 @@ struct ReadingHistoryView: View {
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var loc = LocalizationManager.shared
     @State private var records: [ReadingRecord] = []
+    @State private var selectedRecord: ReadingRecord?
     @State private var sortedRecords: [ReadingRecord] = []
     @State private var moonData: MoonData?
 
@@ -58,6 +59,10 @@ struct ReadingHistoryView: View {
                     List {
                         ForEach(sortedRecords) { record in
                             historyRow(record)
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    if record.reading != nil { selectedRecord = record }
+                                }
                                 .listRowBackground(Color.clear)
                                 .listRowSeparator(.hidden)
                                 .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
@@ -91,6 +96,9 @@ struct ReadingHistoryView: View {
             moonData = moonService.calculateMoonPhase(date: Date())
             records = ReadingHistory.shared.records
             updateSortedRecords()
+        }
+        .sheet(item: $selectedRecord) { record in
+            ReadingDetailSheet(record: record)
         }
     }
 
@@ -138,6 +146,54 @@ struct ReadingHistoryView: View {
 
     private func formatDate(_ date: Date) -> String {
         Theme.historyDateFormatter.string(from: date)
+    }
+}
+
+/// Full saved reading — history rows were dead records before this; now a tap
+/// reopens the whole text, shareable again.
+private struct ReadingDetailSheet: View {
+    let record: ReadingRecord
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ZStack {
+            Theme.bg.ignoresSafeArea()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 14) {
+                    Text(record.question)
+                        .font(.custom(Theme.titleFont, size: 16))
+                        .foregroundColor(Theme.accent)
+                        .padding(.top, 30)
+
+                    Text(Theme.historyDateFormatter.string(from: record.date))
+                        .font(.custom(Theme.bodyFont, size: 12))
+                        .foregroundColor(.white.opacity(0.35))
+
+                    if let reading = record.reading {
+                        Text(reading)
+                            .font(.custom(Theme.bodyFont, size: 15))
+                            .foregroundColor(.white.opacity(0.85))
+                            .lineSpacing(5)
+
+                        ShareReadingButton(question: record.question,
+                                           reading: reading,
+                                           moonPhaseName: MoonService().calculateMoonPhase(date: record.date).phase.displayName)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.top, 8)
+                    }
+                }
+                .padding(20)
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            Button(action: { dismiss() }) {
+                Text("X")
+                    .font(.custom(Theme.titleFont, size: 12))
+                    .foregroundColor(.white.opacity(0.5))
+                    .padding(14)
+            }
+            .accessibilityLabel("Close")
+        }
     }
 }
 

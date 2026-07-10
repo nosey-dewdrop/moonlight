@@ -288,13 +288,8 @@ struct TarotView: View {
 
             // AI Reading
             if isLoadingAI {
-                HStack(spacing: 8) {
-                    PixelLoading(color: Theme.accent)
-                    Text(L("Yıldızlar okunuyor...", "Reading the stars..."))
-                        .font(.custom(Theme.bodyFont, size: 14))
-                        .foregroundColor(.white.opacity(0.5))
-                }
-                .padding(12)
+                MysticLoadingText()
+                    .padding(12)
             }
 
             if let reading = aiReading {
@@ -312,6 +307,12 @@ struct TarotView: View {
                         .font(.custom(Theme.bodyFont, size: 11))
                         .foregroundColor(.white.opacity(0.2))
                         .padding(.top, 6)
+
+                    ShareReadingButton(question: question,
+                                       reading: reading,
+                                       moonPhaseName: MoonService().calculateMoonPhase(date: Date()).phase.displayName)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 4)
                 }
                 .padding(12)
                 .background(
@@ -602,7 +603,7 @@ struct TarotView: View {
                 await MainActor.run {
                     aiReading = reading
                     isLoadingAI = false
-                    ReadingHistory.shared.add(question: question, type: .tarot)
+                    ReadingHistory.shared.add(question: question, type: .tarot, reading: reading)
                     EngagementPrompts.readingCompleted()
                 }
             } catch is CancellationError {

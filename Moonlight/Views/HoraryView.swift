@@ -53,6 +53,12 @@ struct HoraryView: View {
                                 .font(.custom(Theme.bodyFont, size: 11))
                                 .foregroundColor(.white.opacity(0.2))
                                 .padding(.top, 6)
+
+                            ShareReadingButton(question: question,
+                                               reading: reading,
+                                               moonPhaseName: moonService.calculateMoonPhase(date: Date()).phase.displayName)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .padding(.top, 4)
                         }
                         .padding(12)
                         .background(
@@ -78,13 +84,8 @@ struct HoraryView: View {
                     }
 
                     if isLoading {
-                        HStack(spacing: 8) {
-                            PixelLoading(color: Theme.accent)
-                            Text(L("Yıldızlara danışılıyor...", "Consulting the stars..."))
-                                .font(.custom(Theme.bodyFont, size: 14))
-                                .foregroundColor(.white.opacity(0.5))
-                        }
-                        .padding(12)
+                        MysticLoadingText()
+                            .padding(12)
                     }
 
                     if let error = errorMessage {
@@ -193,7 +194,7 @@ struct HoraryView: View {
                 await MainActor.run {
                     aiReading = reading
                     isLoading = false
-                    ReadingHistory.shared.add(question: question, type: .horary)
+                    ReadingHistory.shared.add(question: question, type: .horary, reading: reading)
                     EngagementPrompts.readingCompleted()
                 }
             } catch is CancellationError {

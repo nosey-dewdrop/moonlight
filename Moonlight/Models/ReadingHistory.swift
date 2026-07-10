@@ -6,18 +6,21 @@ struct ReadingRecord: Codable, Identifiable {
     let question: String
     let type: ReadingType
     var isFavorite: Bool
+    // Optional so records saved before this field existed still decode.
+    var reading: String?
 
     enum ReadingType: String, Codable {
         case tarot
         case horary
     }
 
-    init(question: String, type: ReadingType) {
+    init(question: String, type: ReadingType, reading: String? = nil) {
         self.id = UUID()
         self.date = Date()
         self.question = question
         self.type = type
         self.isFavorite = false
+        self.reading = reading
     }
 }
 
@@ -50,9 +53,9 @@ class ReadingHistory {
         UserDefaults.standard.removeObject(forKey: key)
     }
 
-    func add(question: String, type: ReadingRecord.ReadingType) {
+    func add(question: String, type: ReadingRecord.ReadingType, reading: String? = nil) {
         var all = records
-        all.insert(ReadingRecord(question: question, type: type), at: 0)
+        all.insert(ReadingRecord(question: question, type: type, reading: reading), at: 0)
         if all.count > maxRecords { all = Array(all.prefix(maxRecords)) }
         save(all)
     }
