@@ -66,8 +66,8 @@ struct WelcomeView: View {
                             dismiss()
                         }
                         Text(.init(L(
-                            "Devam ederek [Gizlilik Politikası](https://damlahelloworld.github.io/moonlight/privacy-policy.html)'nı ve [Kullanım Koşulları](https://damlahelloworld.github.io/moonlight/terms.html)'nı kabul etmiş olursun.",
-                            "By continuing you accept the [Privacy Policy](https://damlahelloworld.github.io/moonlight/privacy-policy.html) and [Terms of Use](https://damlahelloworld.github.io/moonlight/terms.html)."
+                            "Devam ederek [Gizlilik Politikası](https://nosey-dewdrop.github.io/moonlight/privacy-policy.html)'nı ve [Kullanım Koşulları](https://nosey-dewdrop.github.io/moonlight/terms.html)'nı kabul etmiş olursun.",
+                            "By continuing you accept the [Privacy Policy](https://nosey-dewdrop.github.io/moonlight/privacy-policy.html) and [Terms of Use](https://nosey-dewdrop.github.io/moonlight/terms.html)."
                         )))
                             .font(Theme.body(11))
                             .foregroundColor(Theme.textMuted)
