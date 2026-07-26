@@ -20,3 +20,6 @@ an iOS app for people who glance at the moon before making plans. it tracks moon
 
 ## where this is going
 nearly at the App Store — icon, store products and a final check stand between here and submit.
+
+---
+built by [Damla Su Bilge](https://noseydewdrop.com)
