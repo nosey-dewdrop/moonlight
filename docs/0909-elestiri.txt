@@ -1,0 +1,80 @@
+MOONLIGHT 0909 ELEŞTİRİ — dış göz (kurucu + CTO + içerikçi), 9 Eyl 2026
+Okunan: 0809-kosu.md A/B (ölçü), 0909-spec/faz/reels. Kod açıldı: ClaudeService, worker.js, wrangler.toml, TarotView, CreditManager, HoraryView, ContentView, UserProfile.
+
+KARAR: BİR TUR DAHA. Üç belge çalışkan ama dört yerde Damla'yı yanlış yola sokar: (1) R4 yorum reels'i AdMob hesabına bağlanmış, (2) A'daki "webden okunur" sözünün planı yok, (3) hiç kimse bir yorumun kaça mal olup reklamdan kaç kuruş geldiğini hesaplamamış, (4) reels'in yasal bölümü "ne yapma" listesi vermiyor. Detay aşağıda.
+
+1. A ile örtüşüyor mu?
+- Büyük çizgi örtüşüyor: fiyatlar (1/2/3 KH, horary 1 KH, 3 coin, 15 coin, 4+1, 24 sa), ters kart yok, pozisyon adı yok, Sonnet, resimlere dokunulmaz, şablon günlük kart — hepsi birebir.
+- Kayma 1: A "kombinasyon yorumu" = hikâye. Spec 1:8-13 bunu beş sayaca çevirmiş (majör sayısı, element, eksik takım, tekrar sayı, saray) ve 1:27 "önce dağılımı söyle" diyor. Bugünkü prompt (ClaudeService:70) zaten "kartları hikâye gibi birbirine bağla" der. Yeni kural her yorumu istatistik cümlesiyle açtırır; R4 hook'unun istediği tek çarpıcı cümle bu değil.
+- Kayma 2: A "İsmi soracağız". Spec 1:23 ve T02 bunu "isim yoksa yorum yok" kapısına çevirmiş, hesapsız ilk falda da. Damla bunu söylemedi; ilk fal huni kapısı ürün kararıdır, ona sorulmalı.
+- Kayma 3: A:10 "Golden Dawn katmanı burada YOK" der; T33 "astro alanı (Golden Dawn eşlemesi)" der. Eşleme standart, ama A'nın yasakladığı kelimeyle geri gelmiş.
+- Kayma 4: A'da tarot prompt'unun sunucuya taşınması yok. Faz §3 bunu cüzdan atomikliğiyle gerekçeliyor; gerekçe doğru, ama sonucu şu: R4 (yorum kalitesi reels'i) K2'ye, K2 de AdMob hesabı + DeviceCheck .p8 + ASC ürünlerine bağlı. Yorumun iyileşmesi Damla'nın AdMob açmasını bekler mi?
+- Sulanan: A "aynı hesap webden de okunabilir". Spec 5:125-126 nasılını yazıyor, faz'da tek görev yok; faz §Sorulmamış:170 "web okuması için altyapı, plan dışı". Söz verildi, planlanmadı.
+- Sulanan: A "insanlar bunu tarot rehberi gibi kullanacak". T27 yalnız çekilmiş karttan detay açar; 78 kartı gezen bir rehber ekranı yok.
+
+2. Üç belge birbirini tutuyor mu?
+- Spec 4:86 "A'ya göre yalnız tarot sayar" + 4:87 "Karar: horary girer" alt alta. Spec 1:15 "3 kart Geçmiş/Şimdi/Gelecek" + 1:16 "Karar: pozisyon yok" alt alta. Reddedilen araştırma kararın yanında duruyor; Damla hangisi geçerli anlamaz.
+- Faz §Sorulmamış:166 "spec 8:179 çelişiyor" der; spec 8:179 düzeltilmiş, not bayat.
+- Reels R2 ekran metni "Ay Yengeç'te, yorum ona göre değişiyor"; spec 1:32 "ay burcu prompt'a girmiyor", R2 hafta 1'de T05'ten önce çekiliyor. Ekranda yorumun kullanmadığı bir şey gösteriliyor.
+- Reels R1 "ismini bilmeden yorum yok" ve R10 "giriş yaptım, ismimi sordu": isim R1'de zaten sorulmuş, R10 ikinci kez soruyor.
+- Reels §4 "faz 2 = 20 alt görev", faz §6 faz 2 = 21 adım (K2 dahil). Küçük ama sayı.
+- Spec 4:93 DeviceCheck "aynı günse vermez" (ret); faz §4f "DeviceCheck yalnız ölçer, ret yok". İki belge iki davranış; K2 yine de .p8 istiyor.
+- Faz T10b StoreKit → /wallet/iap; JWS doğrulaması T30a'da (faz 7). Arada makbuz doğrulanmadan KH yazılıyor mu?
+- Faz T25 "her yorumdan sonra 1 küçük LLM çağrısı" (konu çıkarımı); spec 5'te bu çağrı yok, maliyete girmemiş.
+
+3. Wrapper mı?
+- Damla'nın iki sorusuna düz cevap: (1) "Tarot + LLM yorum + cüzdan"ı biri 1 günde yapar mı? Evet. (2) "3 kart çektim: X, Y, Z, adım Damla, Ay Yengeç'te, yorumla" diye ChatGPT'ye yazarım mı? Evet. Yorum katmanı wrapper'dır, beş sayaç da prompt cümlesidir, kahve hakkı monetizasyondur, fark değil.
+- Wrapper'dan çıkaran üç şey planda GERÇEK olarak var: (a) horary = soruyu sorduğun saniyenin, bulunduğun yerin haritası (T18a/b; ChatGPT harita hesaplayamaz, uydurur), (b) cihazda efemeris (T16-17: ay burcu, boş seyir, geçişler, tutulma), (c) hafıza (bu kart sende 4 kez geldi, sık konular, gündem birikimi).
+- Ama görünürlükte ters: cüzdan 11 alt görev, horary 2; reels'te horary'nin kendi bölümü yok ("harita ekranı 1 sn"). SF sorusuna dürüst cevap: bu uygulama AI-infra ürünü değil; buradan seyahat edebilecek tek parça SkyEngine + HoraryFacts'in açık bir Swift paketi olması. Plan onu yan ürün gibi tutuyor. Omurga cüzdan mı, harita mı?
+
+4. Faz planı gerçekçi mi?
+- 44 sayısı doğru (35 numara + 9 bölünme). Bir ajan şurada batar:
+  T05 (girdi 700 satır; Worker ucu + şablon + ReadingAPI.swift + call-site + model + node test + 6 örnek tek oturumda). T26b (56 minör × 2 dil ≈ 900 satır JSON, tavan 300; tek oturumda yazılan 56 metin jenerik çıkar, kim okur?). T18a (6 "sabit chart" vakası: beklenen göstergeleri kim biliyor? Kaynak yoksa ajan beklenen değeri uydurur, test hiçbir şeyi test etmez). T22 (anon→hesap birleşme: iki cüzdan toplanır mı, 4+1 sayacı hangisi, aynı gün iki günlük KH?). T19a (seçilmemiş bir mock'a bağlı; boy tahmin edilemez). T13 (AdMob hesap onayı günler sürer; EEA için UMP izin formu yazılmamış; SPM 8 GB makinede).
+- Gereksiz veya erken: K2'de DeviceCheck .p8 (sadece logluyor), T23b e-posta+şifre + K4 Resend/SPF/DKIM (kullanıcı yokken üç servis), T14 davet kodu (kullanıcı yok; reels §7 bunu "hizmete yönlendirme" riski sayıyor), T21 widget'ı SkyEngine'e taşıma (widget çalışıyor, fark kozmetik).
+- İlk 5'i ajan olarak alsam anlamadığım: T02: kapı kart çekmeden mi, açmadan mı? T01: project.yml'den xcodegen çalıştırmak Damla'nın elle düzenlediği .xcodeproj'u ezer mi, xcodegen kurulu mu? K2: sıralama ne, AdMob onayı gelmezse T03-T12 bekler mi? T15: 3 kalıp gerçek ekranlarla mı, gri kutuyla mı; "harita" kalıbında 4 fal yeri neye benziyor? T03: eski kayıtların cards alanı boş kalınca "kaç kez geldi" eksik sayar, kabul mü; 24 adım sonraki senkron için dirty/updatedAt şemasını şimdi kim doğrular?
+
+5. Reels?
+- 21 hook'un hepsi "ben yaptım" bildirimi. Belgenin kendi araştırması (pick-a-card, "bu video sana geldiyse") izleyiciyi içeri çağıran mekaniği tarif ediyor, 21 hook'un hiçbiri onu kullanmıyor; CTA5 riskli diye tümü kapatılmış. 22 yaşındaki fal izleyicisi R1, R3, R5, R9, R12, R21'i izler; gerisini kaydırır.
+- Zayıf 5: R2 (iki cümle, gerilim yok, ekran yorumda olmayanı gösteriyor). R6 (kullanıcı senin para birimini umursamaz; "reklam izle → fal" kamerada hizmete yönlendirme kokar). R7 (belgenin kendi kuralı: "çıktı yoksa reels sadece builder'a gider"; R7'de çıktı yok). R10 (bir giriş ekranı, hiçbir şey olmuyor). R20 (TR IG fal izleyicisine gecikme sayısı; LinkedIn malzemesi).
+- Yasal bölüm 15 satır, iki hukuk sitesi birbirini tutmuyor, emsal yok. Damla'ya net söylediği tek şey §7'nin dibinde: "vaat yok, 'ücretsiz bakıyorum' yok, hizmete yönlendirme yok, hukukçu görüşü alınmadan 21 reels karar ister". "Kamerada 'fal' kelimesini söyleyeyim mi?" sorusu cevapsız. Bir "söyle / söyleme" listesi yok.
+- Belge kendisi söylüyor: faz 2'de 21 adıma 3 reels düşer, seri orada ölür; yedek diye önerdiği R7 builder-only.
+
+6. Boşluklar?
+- A'da var, hiçbirinde yok: web okuma görevi; 78 kartı gezen rehber ekranı; "burç yorumu" (A BELKİ dedi, R18 doğum haritası oldu, burç yorumu yok); birim ekonomi (Sonnet yorumu başına maliyet, uzun reklam başına gelir, hesapsız herkese günlük 1 KH — bu üçü yan yana konmadı; büyüklük sırası olarak bir yorum bir reklamdan pahalı görünüyor, sayı DOĞRULANMADI, hesaplanmalı).
+- Üçünde var, A'da yok (şişme): boş seyir, tekrar eden sayı, saray kuralları; PBKDF2/Resend/MailChannels; App Attest; Google JWKS; topocentric notu; KVKK 2026/347; 13 satırlık navigasyon tablosu (Damla "Spotify, Instagram gibi" dedi); reels §1'de Pew/Co-Star/Pattern tarihçesi; ceza tavanı tartışması.
+
+7. Damla okuyabilir mi?
+- Hayır. 551 satır, 80 kaynak numarası, satır referanslı tablolar. Damla'nın ihtiyacı tek sayfa: sırada ne var, elle ne yapacak, neye karar verecek, faz sonunda ekranda ne görecek. Üç belgenin hiçbiri bu değil.
+- Kayıpsız atılır: spec 1:14-17 (pozisyon tarihçesi), spec 4:95-104 (AdMob/ATT/StoreKit → T13 ajan brifingi), spec 5:117-119 (şifre/mail → T23b brifingi), spec 7 tablosunun 8 satırı; faz §1 "Değişen" sütunu (§2'nin tekrarı), faz §7 (§4e'nin tekrarı); reels §1'in 7 satırı, §5'in 9 satırı. Kalan hiçbir bilgi kaybolmaz.
+
+DÜZELTMELER — 0909-spec.txt (8)
+1. 1:15-16 → araştırma satırı silinir, kalır: "3 ve 5 kart pozisyonsuz; Kelt pozisyonlu (9 Eyl)".
+2. 4:86 → silinir; 4:87 kalır.
+3. 1:27 → "Sayımlar hikâyeye yedirilir; ilk cümle isim + soruya cevap; sayım cümlesi tek başına paragraf olmaz."
+4. 1:23 → "KARAR DAMLA'NIN: hesapsız ilk falda isim kapısı mı, isimsiz yorum + 'ismini yaz, daha iyi olur' mu?"
+5. 4:93 → tek satır: "DeviceCheck sadece sayar (faz §4f)". Ret davranışı yok.
+6. 4:95-104 ve 5:117-119 → T13/T23b ajan brifingine taşınır; spec'te birer satır kalır.
+7. 7 tablosu → Spotify, Instagram, Co-Star, Arc, Zenly kalır (5 satır); gerisi dipnot.
+8. Eklenir: "Web okuma: hangi ekranlar, repodaki Next.js mi?" ve "Birim ekonomi: 1 Sonnet yorumu kaç kuruş, 1 uzun reklam kaç kuruş?" — DOĞRULANMADI etiketiyle bile olsa iki sayı.
+
+DÜZELTMELER — 0909-faz.txt (8)
+1. K2 → K2a (wrangler login + d1 create, T03'ten önce) / K2b (AdMob + ASC kh1/3/10, T13'ten önce); DeviceCheck .p8 → T30a. R4 artık AdMob'u beklemez.
+2. T05 → T05a (Worker ucu + prompts/tarot.txt + node test) / T05b (ReadingAPI.swift + TarotView call-site + Haiku/Sonnet 6 örnek).
+3. T26b → takım başına 4 alt görev (14 kart) ya da Damla kararı: minör metinler kamu malı kaynaktan (Waite 1910 çevirisi), ajan yalnız anahtar kelime yazar. Kanıt: "Damla 5 rastgele kartı okur".
+4. T18a → "6 vaka = yayınlanmış horary örnekleri (tarih/saat/yer + kitaptaki gösterge sonucu), beklenen değer kaynaktan" satırı eklenir.
+5. Eklenir T34 (R11): web okuma — /api/readings GET + Apple JS giriş + repodaki Next.js'te geçmiş sayfası; ya da Damla "web bu turda yok" der, A'dan düşülür.
+6. T22 → birleşme kuralı yazılır: anon cüzdan + hesap cüzdanı toplanır; 4+1 sayacı büyük olan; aynı gün ikinci günlük KH yok.
+7. T13 → "AdMob hesap onayı (günler) K2b'de erken başlar; UMP izin formu; ilk ekran kaydı test ad unit ile" eklenir.
+8. Dosya başına 15 satır "Damla'nın gördüğü": elle yapacakları (K2a, K2b, K4, mock kararı, Haiku/Sonnet kararı, çizimler) ve her faz sonunda ekranda ne var. §1 "Değişen" sütunu ve §7 atılır.
+
+DÜZELTMELER — 0909-reels.txt (8)
+1. R2 ekran metni → "Bugün dolunay, Merkür retro" (ay burcu T05'e kadar yorumda yok) ya da R2 T05 sonrası çekilir.
+2. R7 → ekranda gerçek bir fal çıktısı olacak şekilde yeniden yazılır ("sekmeli app / evren" 10 sn karşılaştırma); yoksa F serisinden çıkar, hikâyeye gider.
+3. R10 → R11 ile birleşir ("Telefon değiştirdim, falım orada."). Boşalan slot → horary: "Soruyu sorduğun saniyenin haritası." (T18b sonrası). Wrapper olmayan çekirdeğin reels'i olur.
+4. R6 → hook "Bugünkü kahve hakkını almadıysan gece yanıyor." (24 sa kayıp); satıra "kamerada reklam izle → fal göstermek §5 riski" notu.
+5. R20 → LinkedIn'e (App Store sonrası); TR IG'de yerine R17/horary.
+6. §5 → 6 satırlık "kamerada söyle / söyleme" listesi + 1 satır "seri öncesi 1 hukukçu görüşü (karar Damla'nın)"; "fal kelimesi" için net cevap. §7'deki "seri faz 2'de ölür" ve "organik güvenli değil" dosyanın başına.
+7. §1 → 3 satır (kim, neden, mekanik); kaynaklar §6'da kalır.
+8. Faz 2 boşluğu → öneri tablosu: R4 ikiye (T04 ekranı "üç kartın elementi", T05 ekranı yorum) ya da hikâye kesitleri; "not" değil karar maddesi, Damla seçer.
+
+Görmediklerim: simülatör çalıştırmadım; mock HTML'i açmadım; hakem dosyalarının yalnız sonlarını okudum; reklam ve model fiyatlarını kaynaktan çekmedim (bu yüzden ekonomi satırı DOĞRULANMADI).
