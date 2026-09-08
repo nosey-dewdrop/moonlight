@@ -33,3 +33,13 @@ KARAR: DÜZELT (9 madde; hiçbiri planı yeniden yazdırmaz, satır düzeltmesi)
 - Ücretli yaratıcı: önerilmemiş, yalnız §7'de gözlem. Yeni özellik vaadi: yalnız R8 "yakında" (madde 1).
 
 GEÇEN: ton, yasak özellikler, 19/21 faz uyumu, CTA sıralama, Apple kaynakları, organik emsal işareti.
+
+İKİNCİ TUR — 9 Eyl 2026 (0909-reels.txt 145 satır)
+1 R2 "?" ✓ (satır 29) · 2 R8 "2 boş yer", A cümlesi ✓ (35) · 3 R6 "Uzun reklam → 1 KH" ✓ (33)
+4 R6 çekim T14 sonrası, gerekçeli ✓ (33, 74) · 5 R4 tarot-only notu ✓ (31)
+6 Yasal: Eki 2023 ve 16 Oca 2025 ayrı satır, ADC Boru Metal / @astrocenterturkiye, "birebir emsal DEĞİL" ✓ (83-84)
+7 R19 Taşdelen → [12] + "güvensizlik yüksek" DOĞRULANMADI ✓ (46) · 8 "Önerilmez"/"tek CTA" kalktı, risk notu ✓ (57, 138); R13-15 "kamera" kalktı ✓ (40-42)
+9 §3b "A DIŞI ÖNERİLER" başlığı, CTA2-4 oraya işaretli, Trial Reels, 22. reels, çizim kesitleri ✓ (54-66)
+"10 Dakika Ücretsiz Danışmanlık!": YAZAR HAKLI. Sayfayı üçüncü kez çektim, alıntı var ("10 Dakika Ücretsiz Danışmanlık! Hayatında yön bulmak mı istiyorsun?", "İlk 10 dakikan ücretsiz!", "10 dk bedava sonra 1€/dk"). İlk turdaki "yok" benim hatam (özet ilk çekimde eksik döndü). Satır 84'e alıntı geri konabilir; satır 136'daki hakem notu düzeltilsin ("hakem ikinci turda doğruladı").
+Ek: ceza tavanı iki kaynak çelişkisi DOĞRULANMADI işaretli ✓ (88). RG 33297 hâlâ ntv üzerinden, RG açılmadı diye yazılmış ✓.
+KARAR: GEÇTİ. Tek kalan iş düzeltme değil geri alma: 84'e "10 Dakika Ücretsiz Danışmanlık!" alıntısı geri, 136 güncellensin.
