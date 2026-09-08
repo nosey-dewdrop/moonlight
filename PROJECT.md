@@ -3,7 +3,7 @@
 Moon phases / horary / astrology tracking iOS app (Swift/SwiftUI, Cloudflare Worker proxy). Damla does not write code; she directs and uses AI.
 
 ## Status
-Current phase: Launch
+Current phase: 0809 koşusu — spec + faz planı docs/0809-kosu.md
 Last session: 2026-07-10 — widget extension + engagement prompts shipped, ship-check blockers fixed (privacy page live, birth data edit/delete, consent, privacy manifest), daily sky reading card, Moonlight+ monthly sub, history detail sheets, notification schedule.
 
 ## Roadmap
