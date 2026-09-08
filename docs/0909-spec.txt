@@ -176,7 +176,7 @@ Para kuralları (Wallet saf Swift model, sunucu taklidi ile)?
 - KH süre: süreli KH 24 sa sonra düşer; 23:59'da düşmez, 24:01'de düşer. Süresiz KH hiç düşmez.
 - Harcama sırası: süreli+süresiz varken önce en erken sönecek süreli; 5 kart = 2 KH, süreli 1 + süresiz 1 doğru düşer; yetersiz bakiyede bakiye değişmez.
 - 15 coin çevirme: 15 → coin 0, kh_perm +1; 14 coin'de reddedilir; 30 coin'de tek basışta tek dönüşüm.
-- 4+1 sayacı: 4 tarot açılımı → kh_perm +1 ve sayaç 0; Kelt tek açılım sayar; ek kart saymaz; iade edilen açılım saymaz.
+- 4+1 sayacı: 4 fal (tarot veya horary, KH harcanan her fal) → kh_perm +1 ve sayaç 0; Kelt tek açılım sayar; ek kart saymaz; iade edilen açılım saymaz.
 - Günlük KH reset: aynı gün ikinci talep reddedilir; yerel gece yarısı sonrası kabul; reinstall taklidinde (DeviceCheck damgası aynı gün) reddedilir.
 - Davet çift ödeme: arkadaşın 2. falında ödül tekrar verilmez; kendi kodu reddedilir; ödül tam 5+5.
 Yorum girdisi (prompt string üstünde)?

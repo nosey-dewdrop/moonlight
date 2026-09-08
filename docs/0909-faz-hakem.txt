@@ -1,0 +1,75 @@
+0909-faz HAKEM — 9 Eyl 2026 (tarafsız; CTO gerekçeleri görülmedi, A + spec + kod okundu)
+
+1. GÖSTERİM SIRASI R1..R21?
+Bozulmamış: §6 faz kapanışları 1→7 sırayla, iş sırası yalnız faz içinde kayıyor (B buna izin veriyor).
+R→T bağı: R1 T02 · R2/R3 iş 0 · R4 T04,T05,T18a/b · R5 T06,T07 · R6 T01,T08-T14 · R7 T15 · R8 T19a/b · R9 T16,T17,T20,T21 ·
+R10 T22,T23a/b · R11 T03,T24,T25 · R12 T03,T26,T27 · R13-15 T28a/b/c · R16-17 YOK · R18 T29 · R19 T30a/b · R20 T31 · R21 T32.
+Bağlanmayan alt görev yok (39/39). Boş R: R16-R17 "plan yok" — astro katman (faz 6) buraya oturur, bağlanmamış. T01 faz 1'de kuruluyor; A "faz 2" der.
+
+2. A KARARLARI PLANDA?
+Yerinde: KH 1/2/3 + horary 1 KH (T08,T12) · coin 3/15/5 (T08,T11,T14) · 24 sa (T08) · günde 3 kısa reklam (T13) · paket 1/3/10 (T10,T32) ·
+Plus/credits kalkar + geçiş yok (T10) · hesapsız (T09,§4f) · Apple/Google/e-posta (T22,T23a/b) · ters kart yok + şarkı/kitap yok (T26,§5 grep) ·
+gündem serbest metin API'ye + sık konu LLM (T24,T25) · davet ilk fal +5 sunucu (T14) · AdMob (T13) · cihaz kütüphane + API /houses (§4a,T16-18) · XCTest (T01,§4c) · kanıt = Damla sim (§6).
+Eksik/çelişen:
+- 3/5 kartta sabit pozisyon YOK kararı uygulanmamış: T06 "pozisyon adları tek yerde", spec 1:23 "pozisyon adları prompt'a", S2 hâlâ soruyor ve varsayılanı kararın tersi.
+- Astro katman faz 6 kararı: S1 hâlâ soruyor, varsayılan "hayır"; faz 6'da görevi yok.
+- Horary 4+1 sayar: T08/T12 hakem satırında yazmıyor; plan spec 8'e referans veriyor, spec 8:179 hâlâ "4 tarot açılımı".
+
+3. A'DA OLMAYAN EKLEMELER
+- Prompt Worker'a (T05,T18b,§4d): gerekli altyapı — cüzdan sunucuda ise borç+yorum aynı uçta; token ipa'da açık. Kabul.
+- /api/anon + DeviceCheck (T09,§4f): A "hesapsız + silip yükleyen KH almasın" → gerekli. daily_blocked kuralı yeni ürün kuralı, S3 ile Damla'ya sorulmuş. Kabul.
+- /api/daily-sky KV (T20,§4e): DailyReadingService A'da yok (spec de "sapma sayılabilir" der); plan "KALIR" diye kendi karar vermiş + KV altyapısı ekliyor = şişme.
+- Asset/dosya silme: T28 "ölü setler kalkar", §4e Element.swift "silinir", T29 BugunView "silinir ya da hakem", §7:153 "T28'de silinir" — hiçbiri Damla kararı olarak işaretli DEĞİL; hakem silme kararı veremez.
+- Next.js sitesi eklenmemiş (doğru). CORS/App Attest/JWS/Google JWKS/Resend: güvenlik + e-posta girişinin altyapısı. Kabul. Model (S5): ölçüm, kabul.
+
+4. BOY + BAĞIMLILIK
+Kod iddiaları doğrulandı (8+): TarotView:431-432 revealCards, :425 <3, :206-207 ilişki/kariyer · HoraryView:153 askQuestion, :175 try? · ClaudeService:53-55 Ay fazı/Element/Retro ·
+ContentView:23 TabView · CreditManager:68-73 DEBUG 500 · worker.js:57 /api/claude, :288 haiku, :289 2048 · wrangler.toml:20 REPLACE · MoonlightWidget:17 compute ·
+BugunView referanssız · mock 268 satır · blink_* 32, glow_* 32 · MoonlightTests yok.
+Yanlış: R9 kanıt "2026-09-07 tutulma" — kodda 2025-09-07; 2026 ay tutulmaları 03-03 ve 08-28 (T17 doğru). bg_full_moon v4 yok (v2,3,5,6,7 = 5 set).
+Boy: "≤300 satır" iddiası kendi tablosuyla çelişiyor — T23 "L", T26 "L" (>500); T09 (schema+anon+4 uç) ve T10-T12 ("tek commit dizisi", 6 view + 3 yeni dosya) fiilen tek büyük oturum.
+Bağımlılık: §6 sırasında döngü yok; "önce yapılmalı ama sonra" yok (T03<T04/T05, T08<T09, T16-17<T18a, T05<T18b, T15<T19a, T09<T22, T22<T24<T25 hepsi tutuyor).
+Görünmeyen kritik yol: worker deploy'u Damla yapıyor; T05,T07,T09,T13,T14,T18b,T22,T23a/b,T24,T30a = 10+ deploy. S4 yalnız D1'i sayıyor.
+
+5. FAZ 1 = 2 ADIM
+Sayılır: R1 isim kapısı + isim zaten prompt'ta (:52); R2 olay listesi kodda; R3 çalışıyor. Üçü simülatörde çekilebilir. T01 çıkarsa faz 1 = T02, yine yeter.
+Şerh: R2'de prompt'a Element "%" uydurma değerleri de giriyor (R4'e kadar) — reels ekranı gösterir, prompt'u değil; sorun yok.
+
+6. 9 EYL CEVAPLARINI GÖRMÜŞ MÜ?
+Hayır. S1 (astro katman) ve S2 (5 kart pozisyon) 0809-kosu.md A "9 Eyl kararları"nda ve spec 1:10/1:16/6:138'de cevaplı. Plan ikisini tekrar soruyor,
+S2 varsayılanı ("koddaki kalır") Damla'nın kararının tersi. Spec'e referans verip spec'teki karar satırlarını okumamış.
+Bu hakem turu sırasında A'ya 3 satır daha girdi (0809-kosu.md:76-78): S3 (Keychain anon + sunucu, DeviceCheck ek güvence), S4 (elle kurulum = her fazın
+İLK alt görevi, ajan ekran ekran tarif eder), S5 (Sonnet varsayılan, faz 2'de Haiku/Sonnet karşılaştırma, Fable yok) da cevaplı. 5 sorunun 5'i kapandı; §7 tümüyle kalkar.
+
+KARAR: DÜZELT
+1. S1 ve S2'yi sil. T04/T05/T06'ya işle: 3 ve 5 kartta prompt'a pozisyon adı girmez, UI'da pozisyon etiketi yok; Kelt 10 pozisyon kalır. ClaudeService:20-34 positionNames yalnız Kelt için.
+2. R16 = astrolojik karşılık katmanı (kart → gezegen/burç), yeni T33 (yorum + rehber); T04/T26 alanı şimdiden bırakır. "plan yok" kalkar.
+3. T08 ve T12 hakem satırına "horary 4+1 sayacına girer" yaz; wallet vektörlerine horary vakası ekle.
+4. Silmeler (T28 ölü assetler, Element.swift, BugunView, MoonService USNO, AstrologyService sabit liste) → "Damla kararı" etiketi; karar gelene kadar kullanımdan kaldır, dosya silme.
+5. T20'den /api/daily-sky KV çıkar; DailyReadingService "kalsın mı" Damla kararı olarak §7'ye (A'da yok).
+6. T01'i iş sırasında T02'den sonraya al; faz 1 kapanışı = T02 sonrası (A: XCTest faz 2).
+7. Boy sınırını tabloya uydur: T26 veri dosyası (L) ve T09'u böl (T09a schema+anon, T09b cüzdan uçları); T10-T12'nin tek oturum olduğunu açık yaz ya da CreditManager'ı önce ince adaptörle sarıp üçe böl.
+8. R9 kanıt tarihini düzelt (2026-03-03 / 2026-08-28); bg_full_moon listesi 5 set.
+9. §7'yi sil; A:76-78'i işle: S4 varsayılanı ("D1 yoksa T09-T14 beklemez, AdMob yoksa T13 atlanır") kalkar → her fazın ilk alt görevi Damla'nın elle kurulumu
+   (faz 2: D1 + AdMob + DeviceCheck .p8 + ASC kh1/3/10; faz 4: mail servisi), ajan ekran ekran tarif eder. Worker deploy da bu satıra: 10+ deploy kim yapıyor?
+10. Model: A "Sonnet varsayılan" → T05'te worker.js:288 haiku sabiti Sonnet olur, "o ana kadar haiku" kalkar; Haiku/Sonnet 3 açılım karşılaştırması T05 kanıtına.
+    DeviceCheck ay çözünürlüğü DOĞRULANMADI (plan :159 itiraf ediyor); A artık "ek güvence" diyor → §4f'teki daily_blocked kuralı A'da yok, Damla kararı etiketi.
+
+SORULMAMIŞ AMA GÖRDÜKLERİM
+- 0809-kosu.md B R12'de "şarkı/kitap" hâlâ yazıyor; 9 Eyl kararıyla çelişiyor (Damla). Kelt + 2048 max_tokens tavanı: risk yazılmış, görev yok → T05'e.
+- privacy-policy.html R6'dan itibaren yanlış, düzeltme T30b (R19); R19 öncesi TestFlight dağıtılırsa metin yanlış gider.
+
+İKİNCİ TUR — 9 Eyl (düzeltilmiş 0909-faz.txt, 44 alt görev)
+1 ✓ §7 soruları gitti; T05 "3/5'te pozisyon adı YOK, positionNames yalnız Kelt", T06 "3/5'te etiket yok", §5 R4 kontrolü + "yapma" listesine girdi.
+2 ✓ R16 = T33 astro katman (T04 astro alanı boş, T26a astro:null, iş sırası 39, faz 6).
+3 ✓ T08 "4+1 (horary sayar)" + 13. vektör horary; T09b/T12 "horary dahil"; §5 R6 "4. fal (horary dahil)".
+4 ✓ §7 tablosu "silinmez"; T28/T29/§4e "dosya durur, asset dokunulmaz". A:75 ile birebir.
+5 ✓ KV/daily-sky ucu yok; T20 "şablon cümle, Claude yok" — A:77 ile birebir.
+6 ✓ T01 sıra 3, faz 1 kapanışı = T02 (§3 son satır, §6).
+7 ✓ T09a/b, T10a/b (ince adaptör, build kırılmaz), T26a/b bölündü. Kalan: R10 satırı "M+L" boyu, T23 zaten a/b — sadece etiket, iş değil.
+8 ✓ R9/T17 tarihleri 2026-03-03, 08-28, 08-12; bg_full_moon v2/3/5/6/7.
+9 ✓ K2 (faz 2 ilk) + K4 (faz 4 ilk) elle kurulum, ajan tarif eder; deploy ajanın (`wrangler deploy`), Damla bir kez login — A:76 ile uyumlu.
+10 ✓ worker:288 haiku → Sonnet (T05, §4d), aynı 3 açılım Haiku/Sonnet Damla'ya; daily_blocked kalktı, DeviceCheck yalnız ölçer, ay çözünürlüğü DOĞRULANMADI → T09a doğrular.
+A'nın son 3 kararı: resimlere dokunulmaz ✓ (T28, §7 son satır) · günlük kart şablon, LLM yok ✓ (T20, §7) · günlük KH hesapsıza da ✓ (T09a/b, §4f; davet + senkron + web yalnız hesaplı: T11, T14, T22).
+Not (blokaj değil): DeviceCheck yalnız logluyorsa K2'deki .p8 kurulumu faz 2 yerine T30a'ya kayabilir; Damla'nın faz 2 yükü 1 kalem azalır.
+KARAR: GEÇTİ
