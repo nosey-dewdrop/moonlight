@@ -1,5 +1,5 @@
 # rabadon devridaim — moonlight
-updated: 2026-09-08T21:49:24Z
+updated: 2026-09-08T22:34:55Z
 
 ## goal (as captured from the session)
 kısa keser misin napıyoruz?
@@ -11,17 +11,18 @@ not run this cycle
 - none
 
 ## last moves
-- bash: cat docs/0909-spec-hakem.txt; echo ----; find Moonlight -name '*.swift' | xargs 
-- bash: cat /Users/damummyphus/.claude/projects/-Users-damummyphus/fe304f13-954f-48bc-a2
-- Read: 0909-faz.txt
-- Read: 0909-spec.txt
-- AskUserQuestion: 
-- bash: cd /Users/damummyphus/damla_projects_2026/moonlight
-echo "== TarotView 183,206-2
-- bash: cd /Users/damummyphus/damla_projects_2026/moonlight
-echo "== TarotView 426-436";
+- bash: cd ~/damla_projects_2026/moonlight && git add docs && git commit -qm "0909: crit
+- SendMessage: 
+- bash: cd ~/damma 2>/dev/null; cd ~/damla_projects_2026/moonlight && echo "=== SPEC" &&
+- bash: cat >> ~/damla_projects_2026/moonlight/docs/0909-elestiri.txt <<'EOF'
+
+=========
+- bash: cd ~/damla_projects_2026/moonlight && grep -n "^| T02" docs/0909-faz.txt | head 
 - bash: cd ~/damla_projects_2026/moonlight && python3 - <<'EOF'
-p='docs/0809-kosu.md'; s
+p='docs/0909-faz.txt'; s
+- bash: cd ~/damla_projects_2026/moonlight && awk '/5. KAMERADA/{f=1} f' docs/0909-reels
+- bash: cd ~/damla_projects_2026/moonlight && { cat <<'EOF'
+MOONLIGHT 0909 REELS — faz
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.

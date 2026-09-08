@@ -1,4 +1,5 @@
-MOONLIGHT 0909 REELS — faz başına 3 reels, her reels bir özellik (9 Eyl 2026)
+MOONLIGHT 0909 REELS — faz başına 3 reels (9 Eyl 2026)
+Çıkış noktası: uygulama VAR. Restore edip mağazaya koyuyorum. Her reels = mevcut uygulamada bir şeyi düzelttim / yeniledim / ekledim.
 Hook ve ne söyleyeceğin senin. Burada yalnız: hangi özellik, ekranda ne, hangi iş bitince çekilir (T = docs/0909-faz.txt).
 Bölüm 2 (söyle/söyleme) çekimden önce bir kez okunur.
 
@@ -6,39 +7,39 @@ Bölüm 2 (söyle/söyleme) çekimden önce bir kez okunur.
 1. FAZLAR
 =====================================================================
 FAZ 1 — Fallar (3 reels)
-  R1  Tarot ekledim. İsmimle yorum.        Ekran: isim ekranı → 3 kart → yorum.                          Çekim: T02 sonrası (isimsiz hali bugünkü build).
-  R2  Gökyüzünü bağladım.                   Ekran: anasayfa olaylar → yorumda ay evresi + ay burcu.        Çekim: T05b sonrası.
-  R3  Horary ekledim.                        Ekran: soru yaz → harita → cevap.                              Çekim: bugün.
+  R1  Tarot yorumu artık ismimi kullanıyor. Ekran: isim ekranı → 3 kart → yorum.                          Çekim: T02 sonrası (isimsiz hali bugünkü build).
+  R2  Gökyüzü verisi yoruma bağlandı.         Ekran: anasayfa olaylar → yorumda ay evresi + ay burcu.        Çekim: T05b sonrası.
+  R3  Horary çalışıyor, elden geçiyor.         Ekran: soru yaz → harita → cevap.                              Çekim: bugün.
 
 FAZ 2 — Yorumlar detaylandı, para (3 reels)
-  R4  Kombinasyon yorumu.                    Ekran: 3 kart → kartları birlikte okuyan yorum.                Çekim: T05b sonrası.
-  R5  Anlamadım butonu + 5 kart + Kelt.      Ekran: anlamadım → ek soru → ek kart; açılım seçimi.           Çekim: T07 sonrası.
-  R6  Coin ve kahve hakkı.                   Ekran: cüzdan, günlük KH, 4+1 sayacı, KH ile açılım.           Çekim: T13 sonrası.
+  R4  Yorum kart kart değil, kombinasyon.      Ekran: 3 kart → kartları birlikte okuyan yorum.                Çekim: T05b sonrası.
+  R5  Anlamadım butonu; 5 kart ve Kelt kaldı, ilişki/kariyer gitti. Ekran: anlamadım → ek soru → ek kart; açılım seçimi.           Çekim: T07 sonrası.
+  R6  Eski kredi sistemi gitti; coin ve kahve hakkı geldi. Ekran: cüzdan, günlük KH, 4+1 sayacı, KH ile açılım.           Çekim: T13 sonrası.
 
 FAZ 3 — Navigasyon (3 reels)
-  R7  Navigasyon mock'ları.                  Ekran: mock/moonlight-mock.html, kalıplar yan yana.            Çekim: T15 sonrası (erken çekilir, R6'dan sonra yayınlanır).
-  R8  Evren navigasyonu.                     Ekran: yeni kabuk, tarot/horary/gökyüzü geçişi.                Çekim: T19 sonrası.
-  R9  Anasayfa gökyüzü.                      Ekran: ay gerçek evrede, -2 hafta / +1 ay olay çizgisi.        Çekim: T20-T21 sonrası.
+  R7  Tab bar yerine ne olacak: mock'lar.      Ekran: mock/moonlight-mock.html, kalıplar yan yana.            Çekim: T15 sonrası (erken çekilir, R6'dan sonra yayınlanır).
+  R8  Yeni navigasyon uygulamada.              Ekran: yeni kabuk, tarot/horary/gökyüzü geçişi.                Çekim: T19 sonrası.
+  R9  Anasayfa yenilendi: ay + olay çizgisi.   Ekran: ay gerçek evrede, -2 hafta / +1 ay olay çizgisi.        Çekim: T20-T21 sonrası.
 
 FAZ 4 — Üyelik (3 reels)
-  R10 Horary haritası.                       Ekran: soru → harita → gösterge cümlesi.                       Çekim: T18b sonrası.
-  R11 Giriş + profil.                        Ekran: Apple ile giriş → profil (gündem, sık konular, geçmiş) → iki cihazda aynı. Çekim: T25 sonrası.
-  R12 Kart rehberi.                          Ekran: karta tıkla → anlam → "bu kart sende N kez".            Çekim: T27 sonrası.
+  R10 Horary derinleşti: haritayı gösteriyor.  Ekran: soru → harita → gösterge cümlesi.                       Çekim: T18b sonrası.
+  R11 Üyelik geldi: giriş + profil.            Ekran: Apple ile giriş → profil (gündem, sık konular, geçmiş) → iki cihazda aynı. Çekim: T25 sonrası.
+  R12 Kart rehberi geldi.                      Ekran: karta tıkla → anlam → "bu kart sende N kez".            Çekim: T27 sonrası.
 
 FAZ 5 — Resimler (3 reels)
-  R13 Ay ve gökyüzü çizimleri.               Ekran: uygulamada yeni ay + sahne.                             Çekim: Damla çizince.
-  R14 Tarot destesi.                         Ekran: kartlar kaydırma → açılım.                              Çekim: Damla çizince.
-  R15 İkonlar, kedi helper, app icon.        Ekran: ikon seti, kedi bir fal ekranında.                      Çekim: Damla çizince.
+  R13 Pixel art gitti, sulu boya ay geldi.     Ekran: uygulamada yeni ay + sahne.                             Çekim: Damla çizince.
+  R14 Deste yenilendi.                         Ekran: kartlar kaydırma → açılım.                              Çekim: Damla çizince.
+  R15 İkonlar, kedi helper, app icon yenilendi. Ekran: ikon seti, kedi bir fal ekranında.                      Çekim: Damla çizince.
 
 FAZ 6 — Fikirler (3 reels)
-  R16 Astrolojik karşılık katmanı.           Ekran: yorumda gezegen cümlesi + rehberde alan.                Çekim: T33 sonrası.
+  R16 Astrolojik karşılık katmanı eklendi.     Ekran: yorumda gezegen cümlesi + rehberde alan.                Çekim: T33 sonrası.
   R17 Faz 5 sonunda belirlenir.
   R18 BELKİ doğum haritası.                  Ekran: evrenden haritaya.                                      Çekim: T29 sonrası.
 
 FAZ 7 — App Store'a hazır (3 reels)
-  R19 Güvenlik: KVKK, sil butonu.            Ekran: sil → hesap yok.                                        Çekim: T30 sonrası.
-  R20 Hız ölçümü.                            Ekran: önce/sonra sayılar.                                     Çekim: T31 sonrası.
-  R21 Gönderdim.                             Ekran: App Store Connect "Waiting for Review".                 Çekim: submit günü.
+  R19 Güvenlik elden geçti: KVKK, sil butonu.  Ekran: sil → hesap yok.                                        Çekim: T30 sonrası.
+  R20 Hız: önce/sonra.                         Ekran: önce/sonra sayılar.                                     Çekim: T31 sonrası.
+  R21 Mağazaya gönderdim.                      Ekran: App Store Connect "Waiting for Review".                 Çekim: submit günü.
 
 Sıra: reels, özellik çalışmadan çekilmez. Faz 2 uzun; boşlukta R7 ve çizim kesitleri (hikâye) kullanılabilir.
 Kanal: TR Instagram. EN sonra seslendirmeli. LinkedIn App Store sonrası.
