@@ -1,0 +1,35 @@
+0909 REELS HAKEM — 9 Eyl 2026 (tarafsız; reels ajanının gerekçesini görmedim)
+Okunan: 0809-kosu.md A+B, 0909-faz.txt, 0909-reels.txt. Doğrulama: [19] aserlegal, [22] ticaret.gov.tr, [27] Apple guidelines WebFetch ile.
+
+KARAR: DÜZELT (9 madde; hiçbiri planı yeniden yazdırmaz, satır düzeltmesi)
+
+1. HOOK'LAR (21/21 okundu)
+- Düz cümle: 21'i de düz, süs yok, tehdit/omen tonu yok (R6 "gider" cümlesi ilke sütununda, hook'ta değil).
+- "?": R19 doğru. R2 hook'u "Şu an gökyüzünde ne var, yorum ona göre değişiyor." soru içeriyor, "?" yok → "Şu an gökyüzünde ne var? Yorum ona göre değişiyor."
+- Yasak özellik vaadi: şarkı/kitap, ters kart, Plus, seçmeli gündem, 3/5 pozisyon adı → hiçbirinde yok. R11 "sık konular" LLM çıkarımı, A ile uyumlu.
+- R8 ekran metni "yakında 2 yer": A "iskambil, Lenormand eklenirse nasıl olacak belli değil" → "yakında" A'da olmayan vaat. "2 boş yer" yaz.
+- R6 ekran metni "Her gün 1 kahve hakkı": A'da günlük KH uzun reklam şartına bağlı; metin şartsız hediye gibi okunuyor. "Uzun reklam → 1 kahve hakkı" yaz.
+- R19 ilke sütunu "Taşdelen davası" kaynaksız; [n] yok → kaynak ekle ya da DOĞRULANMADI.
+
+2. FAZ PLANIYLA UYUM (0909-faz.txt §6 iş sırasına göre)
+- Uyan: R1(T02) R2 R3(kodda) R5(T07) R7(T15) R8(T19a/b) R9(T20-21; T16-17 önce) R10(T22; K4 önce) R11(T25; T24 önce) R12(T27) R13-15 R16(T33) R18(T29) R19(T30) R20(T31) R21.
+- ÇELİŞEN R6: reels "T11 sonrası" / "T11-T12 → R6" çekiyor. Ekranda coin, günlük KH, 15→1, 4+1 var: coin kaynağı T13 (AdMob) ve T14 (davet), günlük KH T13, 4+1 T12. Faz R6 kanıtı T11..T14'ün hepsini istiyor → R6 çekimi T14 sonrası (iş sırası 18).
+- ÇELİŞEN R4 (hafif): reels T05'te çekiyor; faz §3 "hakem faz 2 sonunda R4 reels metnini günceller" (T18 horary). Hook tarot-only olduğu için T05 yeter; faz §3'teki güncelleme notunu reels'e yaz ("R4 tarot-only; horary derinleşmesi reels'e girmez") ya da T18b sonrası çek.
+
+3. FORMAT / CTA
+- Format: tablo "Ekran kaydı" sütunu serbest işaretin sınırında; yüz önerisi yok. R13-15 "çizim kamera, sonuç simülatör" → "kamera" format önerisi sızıntısı; "ekran kaydıyla kısmen" bırak.
+- CTA: 6 seçenek sıralı, karar Damla'ya bırakılmış — doğru. İki cümle karar veriyor: CTA5 "Önerilmez" ve §7 "faz 2-6 boyunca tek CTA takip/hikâye". İkisini risk notuna çevir ("CTA5'te iki risk", "CTA3-4 faz 7 öncesi kapalı"), "önerilmez/tek CTA" kalksın.
+
+4. YASAL BÖLÜM (WebFetch)
+- 863.580 TL: [19] doğruluyor. AMA karar 16 Oca 2025, muhatap ADC Boru Metal Ltd. Şti., hesap @astrocenterturkiye. Plan bunu Eki 2023 "YouTube+Instagram+39 site" kararıyla aynı cümlede vermiş; [22] (10 Eki 2023, 338. toplantı) 39 site + YouTube/Instagram'ı doğruluyor, 863.580'i içermiyor. İki olay, iki tarih → ayır.
+- Planın alıntısı "10 dk ücretsiz danışmanlık" [19]'da yok; kaynakta "%50 indirim", "2025 Tarot Paketi", "Durugörü/Reiki". Alıntıyı düzelt.
+- "Kurul kendi hesabından tanıtımı reklam saydı": ceza bir şirketin hesabından üçüncü kişinin (Neslin Yazar) ücretli hizmet reklamına. Kurucunun kendi ürün sürecini anlatmasıyla birebir emsal değil; cümle bunu söylemeli.
+- "Organik süreç gösterme için emsal yok, DOĞRULANMADI" (§5 satır 4): doğru işaretli. §7'deki tekrarı da tutarlı.
+- Apple: 1.1.6 alıntısı birebir ("for entertainment purposes won't overcome"); 4.3(b) "fortune telling … well established … meaningfully different" birebir; "5.x disclaimer maddesi yok" doğru. 12+ DOĞRULANMADI işareti doğru.
+- Hakemce yeniden kontrol edilmedi: RG 33297 / 1 Ağu 2026 yürürlük [21] (ntv galeri), 8.635.800 TL tavan [22/23].
+
+5. A'DA OLMAYAN EKLEMELER (kanal/mekanizma; Damla karar)
+- Hikâye soru kutusu (CTA2), DM anahtar kelime bekleme listesi (CTA3), TestFlight herkese açık link (CTA4), Trial Reels (§4), Haiku/Sonnet karşılaştırması için 22. reels (§4), çizim kesitlerinin hikâyeye gitmesi (§7). Hepsi Instagram/Apple içinde ama A "TR Instagram reels" dedi; ayrı "A dışı" başlığı altına al.
+- Ücretli yaratıcı: önerilmemiş, yalnız §7'de gözlem. Yeni özellik vaadi: yalnız R8 "yakında" (madde 1).
+
+GEÇEN: ton, yasak özellikler, 19/21 faz uyumu, CTA sıralama, Apple kaynakları, organik emsal işareti.
