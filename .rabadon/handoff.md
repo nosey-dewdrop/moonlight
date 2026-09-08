@@ -1,5 +1,5 @@
 # rabadon devridaim — moonlight
-updated: 2026-09-08T22:37:03Z
+updated: 2026-09-08T22:45:10Z
 
 ## goal (as captured from the session)
 kısa keser misin napıyoruz?
@@ -11,20 +11,14 @@ not run this cycle
 - none
 
 ## last moves
-- SendMessage: 
-- bash: cd ~/damma 2>/dev/null; cd ~/damla_projects_2026/moonlight && echo "=== SPEC" &&
-- bash: cat >> ~/damla_projects_2026/moonlight/docs/0909-elestiri.txt <<'EOF'
-
-=========
-- bash: cd ~/damla_projects_2026/moonlight && grep -n "^| T02" docs/0909-faz.txt | head 
-- bash: cd ~/damla_projects_2026/moonlight && python3 - <<'EOF'
-p='docs/0909-faz.txt'; s
-- bash: cd ~/damla_projects_2026/moonlight && awk '/5. KAMERADA/{f=1} f' docs/0909-reels
-- bash: cd ~/damla_projects_2026/moonlight && { cat <<'EOF'
-MOONLIGHT 0909 REELS — faz
-- bash: cd ~/damla_projects_2026/moonlight && python3 - <<'EOF'
-import re
-p='docs/0909-r
+- bash: cat -n /Users/damummyphus/damla_projects_2026/moonlight/docs/0909-faz.txt; echo 
+- Read: bl7bqre5f.txt
+- Read: 0909-faz.txt
+- Read: 0909-reels.txt
+- bash: grep -n -i "isim" docs/0909-elestiri.txt | head -20; echo ====; grep -n -i "daml
+- bash: git log --oneline -12 -- docs/ ; echo ====; git log --oneline -3 -- docs/0909-re
+- Write: 0909-sapma.txt
+- bash: wc -l /Users/damummyphus/damla_projects_2026/moonlight/docs/0909-sapma.txt; grep
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
