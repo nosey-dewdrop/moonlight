@@ -1,0 +1,55 @@
+0909-spec HAKEM — 9 Eyl 2026 (tarafsız, spec ajanının gerekçesi görülmedi)
+
+1. A'DAKİ CÜMLELER SPEC'TE KARŞILANDI MI?
+Karşılandı (spec bölümü):
+- Üyelik amacı isim/burç/sık konu/gündem/geçmiş (5: users+name, agenda, readings). "durumun ne" alanı yok → küçük eksik.
+- İsim sorulur, çok şey değiştirir (1: isim zorunlu, yoksa yorum yok).
+- Cihaz + hesap, Apple, Worker, webden okuma (5). Apple/Google/e-posta/hesapsız (5, 4).
+- Coin hediye: reklam 1, davet 5 (4). Horary ek soru 3 coin (2, 4). Tarot "anlamadım" ek soru+ek kart 3 coin (1, 4).
+- 15 coin → süresiz KH (4). Günlük 1 KH uzun reklamla, 24 sa, satın alınan süresiz (4).
+- 1 KH 3 kart / 2 KH 5 kart / 3 KH Kelt / horary 1 KH (4). 4 açılım → 1 süresiz KH (4).
+- credits5/10/15 ve Plus kalkıyor (4: satıştan kaldır). Reklam SDK araştırması AdMob + App Store koşulu (4).
+- Horary soru→cevap (2). Tarot 3 kart kombinasyon + astroloji + isim (1). Kart rehberi (6). Şarkı/kitap yok (6).
+- Anasayfa gökyüzü, ay şekli evreye göre, -2 hafta/+1 ay (3). Cihaz kütüphane + FreeAstrologyAPI (3).
+- Navigasyon: iskambil/Lenormand yeri, Spotify/Instagram dahil referans, karar Damla (7).
+- Gündem serbest metin API'ye birikir, seçmeli yok; sık konu LLM çıkarır (1, 5 agenda.topic). Ters kart yok (6).
+- Silip yükleyen günlük KH'yi tekrar almamalı → DeviceCheck zaman damgası (4).
+- Davet kodu, arkadaş ilk fal, ikisine +5, sunucu doğrular (4).
+Karşılanmadı:
+- "XCTest: para kuralları ve yorum girdisi" → spec sadece "test hedefi yok" der; hangi kurallar test edilecek yazmıyor.
+- "Mevcut soru/niyet alanı gündem olur" → 5'te agenda tablosu var ama bugünkü alanın oraya nasıl bağlandığı yazmıyor.
+- Kanıt, reels, CTA, format, ajan boyu → spec dosyasının konusu değil, faz/reels dosyasına.
+
+2. SAPMA — A'DA OLMAYAN NE EKLENDİ?
+Geri gelenler (A satır 10 "LLM'in eklediği, burada YOK" listesinden):
+- Yargı öncesi kontrol (spec 2, satır 40: erken/geç yükselen, boş Ay, via combusta).
+- Golden Dawn katmanı (spec 1 satır 9 element düşman/dost kuralı; spec 6 satır 134 astrolojik karşılıklar).
+Geri gelmeyenler: ters kart yok, şarkı/kitap yok, Plus yok, ilişki/kariyer yok (spec "kalksın" diyor, doğru), seçmeli gündem yok, Barnum/uyarı kuralı yok, Expo yok.
+Yeni eklenenler (A'da yok, Damla kararı gerekir):
+- Horary'nin 4+1 sayacına girmesi (spec 4 satır 86, "öneri"). A'da "açılım" tarot terimi.
+- Plus abonesi için geçiş: dönem sonuna kadar günde 1 ek süresiz KH (satır 102).
+- Eski kredi → 1 kredi = 1 süresiz KH taşıma (satır 102).
+- Yeni IAP paketleri kh1/kh3/kh10 (satır 101) — A "satın alınmışsa" der, paket sayısı/adı uydurma.
+- "Gölge yüzü" kart katmanı (satır 134) — ters kart kapısı olabilir.
+- Ton kuralı "ismi en az 2 kez kullan" (satır 26) — A "mutlaka kullan" der, sayı yok.
+- Dış gezegen retroları yok sayılır (satır 20); ek kart pozisyonsuz (satır 28); günlük KH gece 00:00 yerel saat (satır 78). Makul ama Damla'ya sorulmadı.
+Sayılar: 1/2/3 KH, 3 coin, 15 coin, 5 coin, 24 saat, 4+1, horary 1 KH, reklam 1 coin → birebir. "Günde N kez" kısa reklam (satır 98) N belirsiz.
+
+3. KOD İDDİALARI VE DOĞRULANMADI KALEMLERİ
+Doğrulanan (13): ClaudeService :36 tarot, :40 keywords, :52 promptDescription (UserProfile:132 Name), :53 ay, :55 retro, :81 200/400, :172 clarification; TarotView :204-207 Kelt 10/beş 5/ilişki 7/kariyer 9, :425 <3; HoraryChartService :17, :186 body, :197 topocentric; HoraryView :155/:175 try?/:208; CreditManager :28 günlük 3, :30 hoş geldin 10, :32-37 ürünler, :42-45 Plus, :68-73 DEBUG 500; KeychainHelper :25-27; ReadingHistory :30 =50; ContentView :17/:23; AstrologyService :10 +14, :59-62, :86, :136; MoonPhase :43-56; TarotCard :19-26/:142; worker.js :37 30/dk, :43-54 uçlar, :147 purchased_credits, :222 HS256, :288 haiku-4-5, :289 max_tokens 2048; Info.plist SKAdNetwork 0; PrivacyInfo false; MoonlightTests yok.
+Yanlış/eksik: SettingsView silme :463-491 değil, asıl silme :512-513. Spec satır 201 "ChartCache clear() çağrılıyor mu kontrol edilmedi" → çağrılıyor (SettingsView:513), kalem kapanır.
+Kalan DOĞRULANMADI (bakılmadı, dış kaynak): Apple Music sekme adları, 5 kart pozisyonları, Co-Star sekme adları, Swiss Ephemeris fiyat, topocentric/geocentric farkı.
+
+EK: 209 satır (<250). Başlık soruları hepsi "?" ile bitiyor. Cümleler düz. Bölüm 7 tablosu geniş, telefonda okunmaz.
+
+KARAR: DÜZELT
+1. Spec 2 satır 40 yargı öncesi kontrolü çıkar ya da "Damla karar" diye işaretle (A satır 10).
+2. Golden Dawn kuralını (spec 1 satır 9, spec 6 satır 134) adıyla "Damla karar" kalemine al; ya da element kuralını kaynaksız düz kural olarak yaz.
+3. Horary 4+1 sayacı: A'ya göre sadece tarot açılımı sayar; horary'yi öneri olarak değil açık soru olarak ayrı satıra al.
+4. Plus geçiş kuralı ve eski kredi dönüşümü → "Damla karar" kalemi, spec kararı vermesin.
+5. IAP paketleri kh1/kh3/kh10 uydurma; "paket sayısı/fiyat Damla" yaz.
+6. "Gölge yüzü" katmanını çıkar ya da ters kartla ilgisiz olduğunu tek cümleyle yaz.
+7. "ismi en az 2 kez" → "ismi kullan" (A'daki hali).
+8. XCTest: hangi para kuralları ve hangi yorum girdileri test edilecek, 5 satır liste ekle.
+9. SettingsView satır numarası düzelt (:512-513); satır 201 kalemini "çağrılıyor" yap.
+10. Kısa reklam "günde N kez" → N'i yaz ya da "Damla karar".

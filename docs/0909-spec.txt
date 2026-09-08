@@ -1,0 +1,231 @@
+MOONLIGHT 0909 SPEC — A bölümündeki cümlelerin altı (9 Eyl 2026)
+Yasa: docs/0809-kosu.md A. Bu dosya A'yı değiştirmez, "nasıl" yazar. Kaynak numaraları [n] en sonda.
+
+=====================================================================
+1. TAROT KOMBİNASYON YORUMU  ("tek tek kart anlamı değil, kombinasyon + astrolojik durum, ismini mutlaka kullan")
+=====================================================================
+Okuyucu kombinasyonu nasıl okur (5 katman, prompt'a sırayla girer)?
+- Majör/minör oranı: 3 kartta 2+ majör = "hayat dönemeci, dış güçler"; hiç majör yok = "gündelik, kişinin elinde". Kelt'te 10 karttan 4+ majör aynı yorum. [31][32]
+- Element dağılımı: Asa=Ateş, Kupa=Su, Kılıç=Hava, Tılsım=Toprak. Ateş-Su ve Hava-Toprak birbirini zayıflatır; aynı element güçlendirir; diğer çiftler dost. [29]
+- Damla karar: astrolojik karşılık katmanı (kart → gezegen/burç) olsun mu?
+- Eksik takım: Asa yok = tutku eksik; Kupa yok = duygu eksik; Kılıç yok = net düşünce/iletişim eksik; Tılsım yok = pratik zemin yok. Majör telafi edebilir (Güneş, Asa yokluğunu kapatır). [30]
+- Tekrar eden sayı: aynı sayı 2+ kez = o sayının teması baskın (ör. iki "Beş" = çatışma dönemi); bazen zaman birimi. [31]
+- Saray kartları: 2+ saray = olayda başka insanlar var; tek saray = soranın kendi tavrı. Uşak=haber, Şövalye=hareket, Kraliçe=içselleştirme, Kral=yönetme. [31]
+Pozisyon anlamları (klasik kaynak)?
+- 3 kart: Geçmiş / Şimdi / Gelecek; 18. yy'dan gelir, Golden Dawn ve RWS ile yaygınlaşır. [33]
+- 5 kart: klasik tek kaynak yok. Kodda "Past, Present, Hidden, Advice, Outcome" var; yaygın alternatif "Durum / Engel / Tavsiye / Gizli etki / Sonuç". Hangisi? Damla seçer.
+- Kelt Haçı (Waite 1910, Pictorial Key): 1 Örten (durum), 2 Kesen (engel), 3 Taçlandıran (hedef/bilinç), 4 Altındaki (temel/bilinçaltı), 5 Arkasındaki (yakın geçmiş), 6 Önündeki (yakın gelecek), 7 Kendisi (tavır), 8 Evi (çevre), 9 Umut/Korku, 10 Sonuç. [28]
+Gökyüzü yoruma nasıl girer?
+- Ay evresi: Yeni Ay = başlangıç/niyet sorularına; Dolunay = açığa çıkma/bırakma; İlk Dördün = eylem; Son Dördün = bırakma. Yorum tonu buna göre. [34]
+- Ayın burcu: element olarak katılır (Ay Yengeç'te = Su vurgusu; açılımdaki Su kartlarını güçlendirir). Ay burcu bugün API'den geliyor, MoonService'ten değil.
+- Retro: sadece Merkür/Venüs/Mars retro yoruma girer; dış gezegen retroları yılın yarısı olduğu için yok sayılır (yoksa her yoruma "Plüton retro" giriyor).
+Prompt'a girecek girdi listesi (bu sırayla)?
+- İsim (zorunlu; yoksa yorum üretilmez, isim ekranı çıkar). Soru metni. Açılım tipi + pozisyon adları.
+- Her kart: ad (TR), arkana, takım/element, sayı, anahtar kelime.
+- Hesaplanmış katmanlar (cihazda, LLM'e hazır cümle olarak): majör sayısı, element sayımı + düşman/dost çiftler, eksik takım, tekrar eden sayı, saray sayısı.
+- Gökyüzü: Ay evresi + Ay burcu + aktif iç gezegen retroları. Gündem: son 5 sorunun konusu (LLM çıkardığı).
+- Kural: "Her kartı ayrı paragrafta anlatma; önce dağılımı söyle, sonra kartları birbirine bağla, ismi kullan."
+"Anlamadım" ek kartı önceki açılıma nasıl bağlanır?
+- Ek kart pozisyonsuzdur; "en belirsiz pozisyona ışık" olarak okunur. Prompt'a önceki kartlar + önceki yorum + ek soru + ek kart + aynı gökyüzü verilir (bugün gökyüzü verilmiyor).
+- Ek kart element sayımına dahil edilir; "ilk açılımda Su yoktu, ek kart Kupa geldi" tipi cümle üretilir. Ücret 3 coin (A).
+Mevcut kodda: Moonlight/Services/ClaudeService.swift:36-86 tarot prompt (isim :52 promptDescription ile giriyor, anahtar kelime :40, ay evresi :53, retro :55, 200/400 kelime :81); tarotClarification :172-197 (gökyüzü yok); TarotView.swift:425 max 3 kart, :204-207 Kelt 10 / beş 5 / ilişki 7 / kariyer 9 kredi.
+Eksik: element/majör/sayı/saray sayımı yok; ay burcu prompt'a girmiyor; ilişki ve kariyer açılımı A'da yok (hakem listesi "yapma"); 5 kart pozisyon adları karar bekliyor; isim boşsa yorum yine üretiliyor.
+
+=====================================================================
+2. HORARY  ("soru soruyoruz, soruya göre cevap veriliyor"; 1 KH, ek soru 3 coin)
+=====================================================================
+Yöntem (Lilly, Christian Astrology 1647) [25][26][27]?
+- Soran = 1. ev ve yöneticisi; Ay her zaman soranın eş-göstergesi. Sorulan şey = konu evi ve yöneticisi.
+- Cevap: iki gösterge arasında uygulayan (applying) kavuşum/üçgen/altmışlık = olur; kare/karşıt = zor olur; hiç açı yok = olmaz. Işık aktarımı/toplaması ara yol.
+- Zamanlama: açıya kalan derece = gün/hafta/ay (kadran ve burç türüne göre).
+Kategori → ev tablosu (LLM sorudan kategoriyi çıkarır, ev cihazda seçilir)?
+- Para/kazanç → 2. ev; kardeş/kısa yol/mesaj → 3; ev/aile/anne/"işin sonu" → 4; çocuk/aşk-flört/eğlence → 5; sağlık/iş yeri/evcil hayvan → 6.
+- Partner/evlilik/açık rakip/"o kişi" → 7; ölüm/miras/borç/partnerin parası → 8; uzak yol/eğitim/yurt dışı → 9; kariyer/patron/statü → 10; arkadaş/dilek/topluluk → 11; gizli düşman/hastane/sır → 12. [25]
+- Kayıp eşya → 2. ev + Ay; "beni seviyor mu" → 7 (o kişi) + Venüs/Ay; iş görüşmesi → 10 + 6.
+LLM'e verilecek chart verisi (hazır hesaplanmış, ham derece dökümü değil)?
+- Soran: Yükselen burcu, 1. ev yöneticisi ve hangi ev/burçta, Ay burcu/evi. Sorulan: konu evi, yöneticisi, yeri.
+- Bu iki gösterge + Ay arasındaki açılar: tür, orb, uygulayan/ayrılan, kaç derece kaldı. Ay'ın bir sonraki açısı ve boş seyir bayrağı.
+- Retro göstergeler (geri dönüş/gecikme okuması için).
+Mevcut kodda: HoraryChartService.swift:186-202 istek (Regiomontanus, topocentric, tropical); :17-41 promptDescription = tüm gezegenler derece+retro, 12 ev, ilk 10 açı (orb/uygulayan yok); ClaudeService.swift:90-145 horary prompt; HoraryView.swift:175 chart hata verirse chart'sız devam (try?); :155 1 kredi, :208 ek soru 1 kredi; horaryFollowUp :149-168 chart almıyor.
+Eksik: ev yöneticisi/gösterge seçimi yok; uygulayan-ayrılan ve orb yok (FreeAstrologyAPI /aspects verisi ham); boş seyir yok; kategori→ev eşlemesi yok; ek soru chart görmüyor; fiyat 1 KH / 3 coin değil.
+
+=====================================================================
+3. ANASAYFA GÖKYÜZÜ  (-2 hafta / +1 ay; cihazda kütüphane + FreeAstrologyAPI beraber)
+=====================================================================
+Gösterilecek olaylar?
+- Ay evreleri (yeni/ilk dördün/dolu/son dördün, saatli); Ay burç değişimi (~2,5 günde bir); boş seyir aralıkları; gezegen burç geçişi (Güneş dahil); retro başlangıç/bitiş (Merkür/Venüs/Mars öncelikli, dış gezegenler küçük etiket); tutulmalar.
+Hangi kütüphane?
+- astronomy-engine (MIT): tek dosya C (astronomy.c/.h), SPM'de C target olarak bağlanır; Swift portu YOK. Ay evresi/tutulma/gezegen ekliptik boylamı/ay-güneş açıları verir. Ay burcu = ekliptik boylam / 30. [10]
+- SwiftAA (MIT, SPM, v3.0.1): Meeus/VSOP87/ELP-MPP02, ay aydınlanma ve gezegen konumları; alttaki AA+ kaynak dağıtım kısıtı var, ikili dağıtım serbest. [11]
+- TinyMoon (MIT): sadece ay evresi/aydınlanma/yaş, gezegen yok. [12]
+- Swiss Ephemeris: AGPL → tüm uygulama AGPL olur (App Store'da fiilen imkânsız); Professional lisans 700 CHF tek sefer, 99 yıl. Kullanma. [8][9]
+Hangi olay nerede hesaplanır?
+- Cihaz (astronomy-engine): ay evreleri, aydınlanma yüzdesi, ay burcu ve değişim saati, gezegen burç geçişleri, retro (boylam türevinin işareti değişince), boş seyir (Ay'ın 0/60/90/120/180 açıları, son açıdan burç çıkışına), tutulmalar. Hepsi çevrimdışı, -2 hafta/+1 ay saniyeler içinde.
+- API (FreeAstrologyAPI): sadece ev sistemi ve horary chart (Regiomontanus evleri cihazda yok). API'de ay burcu/retro tarih/boş seyir endpoint'i YOK; /planets /houses /aspects /natal-wheel var. [15]
+- Kural: iki kaynak aynı şeyi söylerse cihaz kazanır; API yalnız evler için.
+Ay çizimi (sürekli aydınlanma)?
+- Yarım daire + elips terminatör: elips genişliği = cos(faz)·r; cos>0 ise çıkar, <0 ise birleştir. SwiftUI Path ile 20 satır. [13][14]
+- 8 statik asset ile bağdaşma: karakter (yüz, gölge) statik asset kalır; üstüne illumination'dan çizilen gölge maskesi biner. Faz eşiği geçince asset değişir, arada gölge sürekli kayar. Damla'nın çizim listesi "ay fazları statik" der, bu onunla çelişmez.
+Mevcut kodda: MoonService.swift:63-115 yerel hesap (saat çözünürlüklü JD, kosinüs aydınlanma, uydurma doğuş/batış :99-106); :14-60 USNO API; MoonPhase.swift:43-56 eşikler (%48-52 dördün); AstrologyService.swift:10 sadece +14 gün, :59-62 sadece yeni/dolu, :86-125 retro "şu an" chart'ından, tarihsiz, :136-188 tutulma sabit liste 2025-2027; HomeView.swift:163-196 liste, :259-302 yükleme; ContentView.swift:17 MoonSceneView arka plan.
+Eksik: -2 hafta yok; ay burç değişimi, boş seyir, gezegen geçişi, retro tarihleri yok; dördünler yok; tutulma 2028'de biter; illumination'dan çizim yok; astronomi kütüphanesi bağlı değil.
+
+=====================================================================
+4. COIN + KAHVE HAKKI — durum makinesi
+=====================================================================
+Cüzdan alanları (sunucu doğrusu, cihaz önbellek)?
+- coins:Int; kh_timed:[{expires_at}] (24 sa, hediye günlük); kh_perm:Int (süresiz: 15 coin dönüşümü, 4+1 hediye, IAP); daily_kh_claimed_on:date; spreads_since_gift:Int; invite_code; invited_by; first_reading_done:bool.
+Günlük KH?
+- Günde 1 kez "uzun reklam izle → 1 süreli KH" hakkı. Sayaç kullanıcının yerel saatiyle gece 00:00'da sıfırlanır (sunucu tz'yi profilden okur). Reklam izlenmeden verilmez; izlenmezse gün kaybolur, birikmez.
+- Süre 24 sa: verildiği andan itibaren; süresi dolunca kh_timed'dan düşer, bildirim yok.
+Harcama sırası?
+- Önce en erken sönecek süreli KH, sonra süresiz. Coin ile KH birbirine karışmaz: tarot açılımı coin'le ödenmez, ek soru KH ile ödenmez.
+- Fiyat: 3 kart 1 KH; 5 kart 2 KH; Kelt 3 KH; horary 1 KH; ek soru/ek kart 3 coin. Bakiye yetmiyorsa istek gitmez; hata olursa iade aynı kovaya (süreli iade eski expires_at ile).
+15 coin → süresiz KH?
+- Kullanıcı butona basar, sunucu 15 coin düşer, kh_perm+1. Otomatik değil. Coin bakiyesi 15'in altındaysa buton pasif.
+4 açılım → 1 süresiz KH: sayaç neyi sayar?
+- Açılım sayar, KH değil (Kelt 3 KH ama 1 açılım). A'ya göre yalnız tarot açılımı sayar. Ek kart/ek soru saymaz.
+- Karar (9 Eyl): horary 4+1 sayacına girer. KH harcanan her fal sayar.
+- 4. açılım tamamlanınca (yorum döndü, iade olmadı) kh_perm+1, sayaç 0. Hediye KH'nin harcandığı açılım da sayaca girer.
+Davet kodu?
+- Her hesabın 6 haneli kodu. Arkadaş kayıt olurken kodu girer (invited_by). Arkadaşın ilk yorumu sunucudan başarıyla dönünce ikisine +5 coin; sunucu first_reading_done ile tek sefer garanti eder. Kendi kodunu girme, aynı cihazdan çoklu hesap (DeviceCheck biti) reddedilir.
+Hesapsız kullanıcı?
+- Cüzdan Keychain'de (ThisDeviceOnly) durur; Keychain silme-yükleme sonrası kalır ama bu belgelenmemiş bir uygulama detayı, garanti değil. [17]
+- "Silip yükleyen günlük KH'yi tekrar almamalı": DeviceCheck 2 bit + zaman damgası Apple sunucusunda, reinstall ve "tüm içeriği sil"den sonra bile kalır. Bit0 = "bugün KH aldı" olamaz (gün bilgisi yok) ama zaman damgası var: sunucu son güncelleme tarihine bakar, aynı günse vermez. App Attest ise cihazı kimliklendirmez, sadece "gerçek uygulama" kanıtı; sahte istek engeli için ayrıca kullanılır. [16]
+- Hesapsız kullanıcı hesap açınca Keychain cüzdanı sunucuya taşınır, Keychain kopyası silinir.
+AdMob?
+- Politika: Google yayıncı yasak/kısıt listelerinde astroloji/fal/tarot YOK; ödül "doğrudan para" olamaz, coin/KH uygulama içi ve devredilemez olduğu için uygun. Kullanıcı reklamı açıkça seçmeli (opt-in), atlanabilir olmalı. [1][2][3]
+- Apple: ödüllü video ile uygulama içi para kazandırmak serbest; yasak olan puan/paylaşım karşılığı ödül. Asıl risk 4.3(b) "fal uygulaması doygun kategori" reddi; kombinasyon+horary+gökyüzü farkını App Review notuna yaz. [7][49]
+- ATT: AdMob ATT zorunlu tutmaz; istemezsen kişiselleştirilmemiş reklam, düşük eCPM. SKAdNetwork ID'leri Info.plist'e girer. ATT izni istenirse NSUserTrackingUsageDescription + PrivacyInfo "tracking: true" gerekir; şu an false. [5]
+- Kısa reklam +1 coin = rewarded (opt-in, AdMob frekans sınırı ile). Karar (9 Eyl): kısa reklam günde 3 kez. Uzun reklam günlük KH = rewarded interstitial (opt-in gerekmez, giriş ekranı zorunlu) DEĞİL; ikisi de rewarded olsun, ayrı ad unit, sunucu SSV callback'iyle ödül verilir. [4][6][50]
+- TR: uygulama içi reklam göstermek yasağa girmiyor; yasak fal hizmetinin reklamı (docs/0809-arastirma/rakipler.md).
+StoreKit?
+- KH tüketilebilir (consumable) IAP olarak tanımlanır, satın alınan KH süresiz. iOS 18+ SKIncludeConsumableInAppPurchaseHistory=true ile Transaction.all bitmiş consumable'ları da döner. [18]
+- Karar (9 Eyl): KH paketleri 1 / 3 / 10 KH. Fiyatı Damla App Store Connect'te girer.
+- credits5/10/15 ve plus.monthly App Store Connect'te "satıştan kaldır" (silme değil; eski işlemler kalsın). Plus aboneliği Apple kendiliğinden bitirmez, App Store Connect'ten kaldırılır.
+- Karar (9 Eyl): mevcut kullanıcı yok, geçiş kuralı yok. Plus ve credits plandan çıkar.
+Mevcut kodda: CreditManager.swift:28 günlük 3 kredi, :30 hoş geldin 10, :32-37 ürünler, :42-45 Plus, :108-114 takvim günü sıfırlama, :131-154 önce günlük sonra satın alınan, :157-169 iade, :8-13 Keychain, :68-73 DEBUG 500 kredi; KeychainHelper.swift:25-27 ThisDeviceOnly; worker.js:147 purchased_credits sütunu var ama endpoint yok; Info.plist'te SKAdNetworkItems/NSUserTracking yok; PrivacyInfo NSPrivacyTracking=false.
+Eksik: coin/KH ayrımı yok; süreli KH yok; sunucu cüzdanı yok; davet kodu yok; DeviceCheck yok; AdMob SDK yok; 4+1 sayacı yok; 15→1 dönüşüm yok; yeni IAP ürünleri yok; geçiş kodu yok; XCTest hedefi yok (MoonlightTests klasörü yok).
+
+=====================================================================
+5. ÜYELİK  (Apple, Google, e-posta+şifre, hesapsız; aynı hesap webden)
+=====================================================================
+Worker bugün ne yapıyor?
+- /api/auth/apple: identityToken'ı Apple JWKS ile doğrular (iss, aud=bundle, exp), users tablosuna upsert, 90 gün HS256 oturum JWT döner. E-posta yalnız ilk girişte gelir; isim hiç alınmıyor (Apple ismi sadece ilk yetkilendirmede verir, istemci hemen göndermeli). [19]
+- /api/auth/google: Google tokeninfo endpoint'iyle doğrular; Google bunu "debug için, üretimde kısıtlanabilir" der, üretimde JWKS ile yerel doğrulama gerekir. [20]
+- /api/me: oturumdan kullanıcı döner. /api/profile: yalnız sun/rising/moon/birth_time yazar. D1 şeması: users (id, apple_sub, google_sub, email, 3 burç, birth_time, purchased_credits, premium_until). wrangler.toml database_id hâlâ "REPLACE_WITH_D1_DATABASE_ID".
+- İstemcide ASAuthorization/GoogleSignIn kodu YOK; auth uçları çağrılmıyor.
+E-posta+şifre için ne gerekir?
+- Hash: PBKDF2-SHA256 WebCrypto ile Worker'da (bcrypt/argon2 native yok; PBKDF2 ≥600k iterasyon). Sütunlar: password_hash, email_verified_at, verify_token, reset_token+exp.
+- Doğrulama maili + sıfırlama linki: Cloudflare Email Sending (beta, Workers Paid, $0.35/1000) veya Resend (Cloudflare'in kendi tutorial'ı). MailChannels ücretsiz katman 2024'te bitti. Alan adı için SPF/DKIM zorunlu; damla@moonlight.app gerçek mi belirsiz (PROJECT.md açık). [21][22][23]
+- Hesap birleştirme: aynı e-posta Apple + Google + şifre ile gelirse tek users satırı (email UNIQUE).
+Senkronlanacak veri (yeni tablolar)?
+- users: + name, birth_date, birth_place, lat/lon, tz, invite_code, invited_by. wallets: coins, kh_perm, daily_kh_claimed_on, spreads_since_gift. kh_timed: user_id, expires_at.
+- readings: id, user_id, type, question, spread, cards(json), reading, sky(json), created_at — 50 sınırı kalkar. agenda: user_id, text, topic(LLM), created_at. card_notes: user_id, card_id, note.
+- Çakışma: son yazan kazanır, her satırda updated_at; cihaz çevrimdışı yazdıysa kuyruklar.
+Webden okuma?
+- Aynı Worker + Sign in with Apple JS / Google Identity web istemcisi; aynı JWT; sadece okuma (geçmiş, cüzdan, kart notları). Şifre girişi web'de doğrudan çalışır. CORS şu an "*", web alan adına daraltılır.
+KVKK?
+- İsim + doğum tarihi/saati/yeri "özel nitelikli" değil; ama sunucuda tutulunca aydınlatma metni ayrı, açık rıza metni ayrı olmalı (Kurul ilke kararı 2026/347). Yurt dışı aktarım (Cloudflare, Anthropic, Google): 2024'ten beri SCC/standart sözleşme ile, aydınlatmada açıkça yazılır. [24]
+- Mevcut privacy-policy.html yetersiz: "hesap yok, sunucu tarafı veritabanı yok, reklam SDK'sı yok, e-posta toplamıyoruz" diyor; üyelik + AdMob + D1 ile dördü de yanlış olur. Yeniden yazılır: toplanan veri, amaç, aktarım, saklama süresi, silme (sunucudan da), iletişim.
+Mevcut kodda: backend/worker.js:43-54 uçlar, :76-127 handler'lar, :176-216 token doğrulama, :222-245 JWT; backend/schema.sql:5-18; UserProfile.swift:65-74 isim/doğum alanları UserDefaults; ReadingHistory.swift:30 maxRecords=50, kayıt kart tutmuyor; SettingsView.swift:512-513 cihazdan silme (profil + geçmiş + ChartCache); docs/privacy-policy.html.
+Eksik: istemci giriş ekranı; e-posta akışı; cüzdan/okuma/gündem tabloları; senkron; web istemcisi; Google JWKS doğrulama; KVKK metinleri; sunucudan silme ucu; D1 id.
+
+=====================================================================
+6. KART REHBERİ  ("kartlara tıklayınca detay; tarot rehberi gibi"; şarkı/kitap yok)
+=====================================================================
+78 kart için katmanlar (statik JSON, iki dil)?
+- Anahtar kelime (3-5), düz anlam (2 cümle), arketip (majör için; minör için "takım+sayı" hikâyesi), sayı anlamı (As=başlangıç … On=tamamlanma; saray=insan tipi), element.
+- Damla karar: astrolojik karşılık katmanı olsun mu?
+- Kartın açılımdaki pozisyonu ne olursa olsun kart sayfası aynı; "bu açılımda anlamı" cümlesi yorumdan gelir, rehbere yazılmaz.
+"Bu kart sende kaç kez geldi"?
+- readings.cards(json) alanından sayılır: kart id'sine göre count, son geliş tarihi, en sık geldiği açılım. Hesapsızda cihaz geçmişinden; hesaplıda sunucudan. Bugün geçmiş kart tutmadığı için sayılamaz.
+Mevcut kodda: TarotCard.swift:19-26 alanlar (id, name, arcana, suit, keywords, meaning, imageName); :142-163 minör anahtar kelimeler sayıya göre jenerik (takım farkı yok); CardDetailView.swift:8-57 TR ad eşlemesi replace zinciri, :59-64 lore sözlükleri; ReadingRecord (ReadingHistory.swift:3-25) kart listesi yok.
+Eksik: number/element alanları; TR isim modelde değil (string replace); arketip metinleri; 56 minör için özgün metin; geçmişte kart id'leri; sayım ekranı.
+
+=====================================================================
+7. NAVİGASYON "EVREN HİSSİ" — seçenekler ve sayılar (karar Damla'nın)
+=====================================================================
+| Uygulama | Kalıp | Sayı | Verdiği his | Kaynak |
+|---|---|---|---|---|
+| Co-Star | alt bar, minimalist, soyut ikon | alt bar + "Your Chart/All Updates" kısayolları; yazı küçük, keşfedilebilirlik zayıf (Pratt 2024) | soğuk, metin-odaklı, "arşiv" | [35] |
+| The Pattern | alt sekme | 3: Your Pattern / Bonds / Timing | dosya/rapor hissi | [36] |
+| Sanctuary | sohbet balonu akışı | günlük yorum "mesaj" gibi gelir, dersler sohbet formatında | "biri sana yazıyor" | [39] |
+| Nebula | alt sekme | Home / Compatibility / Chat (+ profil), her özellik ayrı sekme | portal/vitrin | [40] |
+| Moonly | tek merkez + katmanlı takvim | 7 ekran; ana ekranda "çok seçenek", takvimde güne tıkla → detay | yoğun, ansiklopedi | [38] |
+| Labyrinthos | alt sekme | 6: Daily / Reading / Learn / Journal / Meanings / Shop | okul + günlük | [37] |
+| Spotify | 3→4 sekme + "Now Playing" kalıcı alt şerit + Create sheet | Home / Search / Library / Create | "hep çalan bir şey var" katmanı | [41] |
+| Instagram | 5 sekme, yatay kaydırma sekmeler arası | Home / Reels / DM / Search / Profile, + sol üst | akış/hız | [42] |
+| Apple Music | 5 sekme | Listen Now / Browse / Radio / Library / Search (iOS 18 adları DOĞRULANMADI) | kütüphane | — |
+| Arc Search | sekme yok, tek alt hap, kaydırınca gizlenir | 0 sekme; sağ-sol kaydırma ile geçmiş | "içindesin", chrome yok | [43] |
+| Duolingo | tek dikey yol (ağaçtan yola, 2022) | 1 rota; başlangıç tamamlama ↑, uzman kullanıcı şikâyeti | yolculuk/ilerleme | [44] |
+| Zenly / Snap Map | harita = ana ekran; Snap'te 5'li "action bar", harita en solda | harita merkez, kamera orta | "dünya, arkadaşlar orada" | [45][46] |
+| Candy Crush saga map | dikey kaydırmalı dünya haritası, pinler | dünya→bölüm→seviye; uzun kaydırma şikâyeti | "yol alıyorum" | [47][48] |
+Kalıp → his eşlemesi?
+- Tab bar (3-5): hızlı, tanıdık, "araç" hissi; evren hissi yok. Bugünkü Moonlight bu (3 sekme, sayfa kaydırma).
+- Harita/gökyüzü sahnesi (Zenly, saga map): mekân hissi en güçlü; tarot/horary/iskambil/Lenormand haritada "yer" olur, yeni fal = yeni yer. Maliyet: gesture + performans + boş alan sorunu.
+- Yatay swipe sayfalar (Instagram, Snap): "yan yana odalar" hissi; 5+ sayfada kaybolma.
+- Katmanlı sheet (Spotify Now Playing, Arc hap): ana sahne hep görünür, fallar üstüne biner; "gökyüzünün önünde" hissi, chrome az. Sahne ContentView'da zaten arka planda duruyor (MoonSceneView).
+- Dikey yol (Duolingo): zaman çizgisi olarak -2 hafta/+1 ay olay çizgisine tam oturur; fallar için değil, gökyüzü için.
+Mevcut kodda: ContentView.swift:23-43 TabView(.page) + 3 özel buton (Tarot / Ay / Horary); :17 MoonSceneView tüm sekmelerin arkasında; HomeView.swift:59-62 ayarlar ve kredi sheet.
+Eksik: mock yok; iskambil/Lenormand için yer yok; gökyüzü çizgisi ekranı yok.
+
+=====================================================================
+8. XCTEST  (A: "para kuralları ve yorum girdisi için XCTest, faz 2")
+=====================================================================
+Para kuralları (Wallet saf Swift model, sunucu taklidi ile)?
+- KH süre: süreli KH 24 sa sonra düşer; 23:59'da düşmez, 24:01'de düşer. Süresiz KH hiç düşmez.
+- Harcama sırası: süreli+süresiz varken önce en erken sönecek süreli; 5 kart = 2 KH, süreli 1 + süresiz 1 doğru düşer; yetersiz bakiyede bakiye değişmez.
+- 15 coin çevirme: 15 → coin 0, kh_perm +1; 14 coin'de reddedilir; 30 coin'de tek basışta tek dönüşüm.
+- 4+1 sayacı: 4 tarot açılımı → kh_perm +1 ve sayaç 0; Kelt tek açılım sayar; ek kart saymaz; iade edilen açılım saymaz.
+- Günlük KH reset: aynı gün ikinci talep reddedilir; yerel gece yarısı sonrası kabul; reinstall taklidinde (DeviceCheck damgası aynı gün) reddedilir.
+- Davet çift ödeme: arkadaşın 2. falında ödül tekrar verilmez; kendi kodu reddedilir; ödül tam 5+5.
+Yorum girdisi (prompt string üstünde)?
+- Kombinasyon analizi: verilen 3 kart için majör sayısı, element sayımı, eksik takım, tekrar eden sayı, saray sayısı beklenen cümlelerle prompt'ta.
+- İsim: prompt'ta kullanıcı adı geçiyor; isim boşken yorum isteği atılmıyor.
+- Ek kart: önceki kartlar + ek kart + ek soru + ay evresi/ay burcu prompt'ta.
+- Horary: gösterge planetleri, Ay'ın sonraki açısı, boş seyir bayrağı prompt'ta; chart yoksa istek atılmıyor.
+Mevcut kodda: test hedefi yok; CreditManager singleton + UserDefaults/Keychain'e bağlı, saf model yok.
+Eksik: MoonlightTests hedefi; Wallet ve PromptBuilder'ın enjekte edilebilir saat/deposu ile ayrılması.
+
+=====================================================================
+KAYNAKLAR
+=====================================================================
+[1] https://support.google.com/admob/answer/7313578  [2] https://support.google.com/publisherpolicies/answer/10437795  [3] https://support.google.com/publisherpolicies/answer/10502938
+[4] https://developers.google.com/admob/ios/rewarded-interstitial  [5] https://developers.google.com/admob/ios/ios14  [6] https://support.google.com/admob/answer/9603226
+[7] https://developer.apple.com/app-store/review/guidelines/ + https://appcompliance.io/blog/apple-guideline-4-3-spam-rejection/
+[8] https://www.astro.com/swisseph/swephprice_e.htm  [9] https://github.com/aloistr/swisseph/blob/master/LICENSE  [10] https://github.com/cosinekitty/astronomy
+[11] https://github.com/onekiloparsec/SwiftAA  [12] https://github.com/mannylopez/TinyMoon  [13] https://mishimay.github.io/moon-shape-in-swift/
+[14] https://github.com/cosinekitty/astronomy/discussions/125  [15] https://freeastrologyapi.com/api-reference
+[16] https://developer.apple.com/videos/play/wwdc2021/10244/  [17] https://developer.apple.com/forums/thread/36442
+[18] https://developer.apple.com/videos/play/wwdc2024/10061/  [19] https://developer.apple.com/forums/thread/781978  [20] https://developers.google.com/identity/sign-in/ios/backend-auth
+[21] https://developers.cloudflare.com/email-service/  [22] https://developers.cloudflare.com/workers/tutorials/send-emails-with-resend/  [23] https://support.mailchannels.com/hc/en-us/articles/4565898358413
+[24] https://www.alomaliye.com/2026/03/24/kvkkdan-yeni-ilke-karari-acik-riza-metni-ile-aydinlatma-metni-artik-ayri-duzenlenmeli/
+[25] https://theastrokind.com/blog/william-lilly-horary-a-practical-summary-of-his-rules  [26] https://tonylouis.wordpress.com/2021/02/27/lillys-definition-of-the-void-of-course-moon/  [27] https://www.skyscript.co.uk/horary1c.html
+[28] https://teachmetarot.com/celtic-cross-spread/how-to-read-the-celtic-cross-spread/  [29] https://marykgreer.com/2008/02/05/24/  [30] https://biddytarot.com/blog/astrology-and-missing-suits/
+[31] https://christianagaudet.com/tarot-news/2019/11/9/when-numbers-repeat-in-a-tarot-spread  [32] https://marykgreer.com/2008/02/01/21/
+[33] https://mysticryst.com/blogs/the-mystic-journal/the-history-of-tarot-spreads-how-layouts-evolved-over-200-years  [34] https://www.tarot-guru.com/blog/how-each-moon-phase-affects-your-tarot-readings
+[35] https://ixd.prattsi.org/2024/09/design-critique-co-star-ios-app/  [36] https://www.bustle.com/life/pattern-app-review-features-price  [37] https://www.bustle.com/life/labyrinthos-tarot-reading-app-review
+[38] https://screensdesign.com/showcase/moonly-moon-phases-calendar  [39] https://www.auraeastrology.com/blog/sanctuary-astrology-app-review-2026-an-astrologers-honest-opinion
+[40] https://www.lunarguideapp.com/blog/nebula-horoscope-app-review-complaints-accuracy-2025  [41] https://ixd.prattsi.org/2026/02/design-critique-spotify-ios-app-2/
+[42] https://www.inro.social/blog/instagram-tabs-new-layout-2025  [43] https://arc.net/blog/arc-search  [44] https://blog.duolingo.com/new-duolingo-home-screen-design
+[45] https://techcrunch.com/2020/06/11/snapchat-redesigns-its-app-with-new-action-bar/  [46] https://uxdesign.cc/designing-zenly-part-ii-3e525eb10ef0
+[47] https://candycrush.fandom.com/wiki/Map  [48] https://www.gameuidatabase.com/index.php?scrn=6&set=1&series=12&sort=2
+[49] https://developer.apple.com/forums/thread/688069  [50] https://support.google.com/admob/answer/7311747
+Zayıf kaynaklı / DOĞRULANMADI: Apple Music sekme adları; 5 kart açılımının "klasik" pozisyonları (kaynak yok, gelenek yok); Co-Star sekme adları (Pratt eleştirisi alt barı doğruluyor, adları vermiyor); Swiss Ephemeris eski fiyat (750/400/1550 CHF) yerine sayfada tek fiyat 700 CHF var.
+
+=====================================================================
+SORULMAMIŞ AMA GÖRDÜKLERİM
+=====================================================================
+- worker.js:288 model "claude-haiku-4-5-20251001" sabit; kombinasyon+horary yargısı için yetersiz olabilir, ölçülmedi. max_tokens 2048 tavanı Kelt yorumunu kesebilir.
+- worker.js:37 rate limit IP başına dakikada 30; bir chart 3 istek, ev/okul Wi-Fi'da paylaşılan IP hızlı dolar.
+- CreditManager.swift:68-73 DEBUG'da 500 kredi; TestFlight build'inde kalırsa herkes bedava.
+- HoraryChartService "topocentric" gözlem noktası kullanıyor; astroloji standardı geocentric, Ay için birkaç derece fark eder, ev/açı sonucunu değiştirir. DOĞRULANMADI (API dokümanı açık değil).
+- ChartCache natal chart'ı UserDefaults'ta süresiz tutuyor; "verilerimi sil" ChartCache.clear() çağırıyor (SettingsView:513), kapalı.
+- privacy-policy.html "no accounts / no server DB / no ad SDK" — üyelik fazı başlar başlamaz yanlış; App Store submit'te uyuşmazlık reddi.
+- Info.plist: NSLocationWhenInUse var; ATT/SKAdNetwork yok. PrivacyInfo'da FreeAstrologyAPI/Anthropic alan adları "tracking" değil, doğru.
+- Widget hedefi (MoonlightWidget/) ve DailyReadingService günlük ücretsiz Claude çağrısı yapıyor; A'da geçmiyor, hakem "sapma" sayabilir.
+- İlişki/kariyer açılımı TarotView.swift:206-207'de duruyor; hakem "yapma" listesinde.
+- Element.swift:14-58 "element enerjileri" uydurma sayılar (ay evresine göre %); astrolojik dayanağı yok, yoruma "Ateş %30" diye giriyor.
+- 4.3(b) reddi gerçek risk: Apple metni "astrology, horoscopes, palm reading, fortune telling… saturated category". Kombinasyon motoru + horary + cihazda efemeris fark olarak yazılmalı.
+- Erişemediklerim: Apple DeviceCheck/HIG/StoreKit sayfaları WebFetch'te boş döndü (WWDC ve forum kaynağı kullanıldı); skyscript ev tablosu sayfaları; Co-Star ekran kaydı; FreeAstrologyAPI rate limit sayfası.
+- Tekrarlanan repo notu: docs/0809-arastirma/rakipler.md "Moonlight" adında bir tarot platformu (Danielle Baskin, 2024) var diyor; App Store isim çakışması bu spec'in dışında ama submit'i etkiler.
