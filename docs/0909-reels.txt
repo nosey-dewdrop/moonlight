@@ -1,145 +1,97 @@
-MOONLIGHT 0909 REELS — izleyici, R1..R21, CTA, takvim, yasak (9 Eyl 2026, içerik stratejisti)
-Yasa: docs/0809-kosu.md A (9 Eyl: TR Instagram; EN sonra seslendirmeli; LinkedIn App Store sonrası; CTA ve format kararı Damla'nın).
-Özellik nasıl çalışır: docs/0909-spec.txt. Hangi iş ne zaman biter: docs/0909-faz.txt §6. Kaynak numaraları [n] sonda. Zayıf kaynak: DOĞRULANMADI.
-Not: ~/damla_projects_2026/icerik/ boş ("real entries" 0 dosya); ses/üslup notu bulunamadı. Üslup kuralı memory'den: sıfır bilgi taşıyan cümle ölü, "WhatsApp'tan atar mıydı" testi.
+MOONLIGHT 0909 REELS — izleyici, R1..R21, CTA, takvim, kamerada söyle/söyleme (9 Eyl 2026; hakem + eleştirmen turu işlendi)
+Yasa: docs/0809-kosu.md A (TR Instagram; EN sonra seslendirmeli; LinkedIn App Store sonrası; CTA ve format kararı Damla'nın). İş sırası: docs/0909-faz.txt §6. Kaynaklar [n] §6. Zayıf kaynak: DOĞRULANMADI.
+İKİ UYARI ÖNDE: (1) Faz 2 = 21 adım, 3 reels; seri burada ölür, §4'te karar maddesi. (2) "Organik içerik güvenli" varsayımı doğrulanmadı; Kurul Instagram hesaplarını cezalandırdı (§5). Seri öncesi 1 hukukçu görüşü — karar Damla'nın.
+icerik/ boş, ses notu yok; üslup memory'den: sıfır bilgi taşıyan cümle ölü.
 
 =====================================================================
-1. İZLEYİCİ + MEKANİK (10 satır)
+1. İZLEYİCİ (3 satır)
 =====================================================================
-- Kim: ABD verisi (Pew 2024, n=9593): kadın 18-49'un %46'sı yılda en az bir kez fal/astroloji/tarota bakıyor; %20 "sadece eğlence", %1 kararlarda güveniyor. TR için aynı kalitede sayı yok; "18-24 en yoğun astroloji tüketicisi" iddiası (TÜİK Mar 2026'ya atıf, ikincil site) DOĞRULANMADI. [1][2]
-- TR Instagram 62M kullanıcı, en büyük dilim 25-34 (Statista). Fal içeriğinin TR kitlesi için birincil demografi verisi bulunamadı. [3]
-- Neden: astrolojiye ilgi kişisel KRİZ sayısıyla korele (ayrılık, sınav, iş, taşınma), travmayla değil (Lindeman & Lillqvist 1998). Satılan şey kehanet değil kontrol hissi. [1]
-- Ne zaman: İstanbul saat dilimi Instagram aktivitesi 13:00 ve 17-19 tepe (araç verisi, DOĞRULANMADI). Fal içeriğine özel saat verisi yok. [4]
-- Reels/TikTok tarot mekaniği 4 parça: (a) "bu video sana geldiyse" = Barnum'un "senin için" etiketi, tek başına kabulü artıran en güçlü kaldıraç (Snyder & Larson 1972); (b) pick-a-card = izleyici bir şey VERİYOR (deste seçiyor), değer verme jestinden geliyor (Dickson & Kelly 1985: projektif > test); (c) "claim yaz" yorumu = tutarlılık/taahhüt; (d) çok parçalı okuma = Zeigarnik (açık döngü). [1][5][6]
-- Kişisellik hissi algoritmadan geliyor: binlerce kişiye giden video "bana geldi" hissi veriyor; işaret verme ("bugün 11:11 görürsen") Baader-Meinhof. Moonlight bunu gerçek isimle yapabiliyor; reels bunu göstermeli, taklit etmemeli. [6]
-- Hook bilimi: merak = bilgi boşluğu, boşluk spesifik ve kapanabilir olmalı (Loewenstein 1994). İlk 3 sn'de %50 kayıp, altyazılı reels +%38 izlenme süresi — pazarlama araçlarının sayıları, DOĞRULANMADI. [7][8]
-- Co-Star: 2019'da 3M+ hesap, sıfır pazarlama; motor = ekran görüntüsü paylaşılan küstah bildirim + arkadaş haritası karşılaştırma + "kişilik gibi uygulama". The Pattern: lansman öncesi 30K kullanıcı ağızdan ağıza, 2019 Channing Tatum tweeti kaza. Sanctuary: astrolojik yeni yıl gününde lansman, sohbet formatı; Nebula ~%50 paid. Ders: organik büyüme = paylaşılabilir bir ÇIKTI (ekran görüntüsü) + arkadaşla karşılaştırma + tanınır bir ses. [9][10][11][12]
-- Build-in-public izleyicisi ≠ pazar: "builder alkışı postun iyiliğini ölçer, ürünün değil" (Indie Hackers); 68 bootstrapped app'te BIP "güven yükseltici, trafik kanalı değil", $1M ARR üstü her app'in ikinci kanalı vardı. [13][14]
-- Bu seride iki kitle aynı karede tutulur: her reels'in ekranında GERÇEK bir fal çıktısı var (fal izleyicisi bir şey alır) ve o çıktının nasıl yapıldığı var (builder süreci görür). Çıktı yoksa reels sadece builder'a gider.
+- Kim/neden: ABD (Pew 2024): kadın 18-49'un %46'sı yılda en az bir kez bakıyor, %20 "sadece eğlence". İlgi kişisel kriz sayısıyla korele (ayrılık, sınav, iş; Lindeman 1998): satılan şey kehanet değil kontrol hissi. TR için birincil sayı yok; "18-24 en yoğun" iddiası DOĞRULANMADI. [1][2]
+- Mekanik: "bu video sana geldiyse" = Barnum "senin için" etiketi; pick-a-card = izleyici bir şey VERİYOR; "claim" yorumu = taahhüt; çok parça = Zeigarnik. Kişisellik hissi algoritmadan; Moonlight'ta gerçek isimden. [1][5][6]
+- Builder izleyicisi ≠ pazar (68 app: BIP güven yükseltir, trafik getirmez) [13][14]. Kural: her reels'te ekranda GERÇEK bir fal çıktısı, hook izleyiciyi içeri çağırır ("ben yaptım" bildirimi değil). Co-Star'ın motoru paylaşılan ekran görüntüsüydü [9]; bizde o yer yorumun ilk cümlesi.
 
 =====================================================================
-2. R1..R21 — hook, ekran, kitle, ilke, ekran kaydı
+2. R1..R21 — hook, ekran, kitle, ilke, çekim şartı
 =====================================================================
-Kitle: F = fal izleyicisi, B = builder, F+B = ikisi. Ekran kaydı: simülatörden `xcrun simctl io booted recordVideo out.mp4` (Damla'nın makinesinde).
-Her hook düz cümle; soru cümleleri "?" ile biter. Ton: sıcak kahve, tehdit yok.
+F = fal izleyicisi, B = builder. Çekim: hangi T bitmiş olmalı + ekranda hangi gerçek çıktı; "kayıt" = simülatör ekran kaydı (`xcrun simctl io booted recordVideo`). Format (yüz/ekran) kararı Damla'nın.
+Hook düz cümle, soru "?" ile biter, tehdit/omen yok. Eleştirmenin zayıf dediği R2 R6 R7 R10 R20 yeniden yazıldı; R3 boşluğu sertleşti; R10→horary, R20 TR→horary (hız ölçümü LinkedIn'e).
 
-| R | Hook (ilk cümle · ekran metni) | Ekranda ne | Kitle | Neden çalışır (ilke) | Ekran kaydı |
+| R | Hook (ilk cümle · ekran metni) | Ekranda ne | Kitle | Neden çalışır | Çekim için gereken |
 |---|---|---|---|---|---|
-| R1 | "Uygulamam falımı ismimle okuyor." · "İsmini bilmeden yorum yok" | İsim kapısı → 3 kart → yorumda "Damla" geçen ilk 2 cümle | F+B | Barnum "senin için" etiketi (Snyder & Larson) + Sahni 2018 isim etkisi | Evet (T02 sonrası) |
-| R2 | "Şu an gökyüzünde ne var? Yorum ona göre değişiyor." · "Bugün: Ay Yengeç'te, Merkür retro" | Anasayfa olay listesi → tarot yorumunda ay evresi cümlesi | F+B | Kişiselleştirme nereden bildiğini söylüyor (White 2008: gerekçeli kişiselleştirme reaktans yaratmıyor) | Evet (kodda var) |
-| R3 | "Soruyu sordum, kart çekmedim, cevap geldi." · "Horary: soruya göre harita" | Soru yaz → cevap; harita ekranı 1 sn | F+B | Bilgi boşluğu: "kartsız nasıl?" (Loewenstein) | Evet (kodda var) |
-| R4 | "Üç kartı tek tek değil, birlikte okuyor." · "Kupa yok = duygu eksik" | Açılım → yorumun ilk paragrafı: dağılım cümlesi | F+B | Tek çarpıcı isabet profili taşır (Marks & Kammann 1980) | Evet (T05 sonrası; R4 tarot-only, horary derinleşmesi T18 reels'e girmez) |
-| R5 | "Yorumu anlamadım dedim, bir kart daha çekti." · "Anlamadım → ek soru + ek kart" | Anlamadım butonu → ek soru → ek kart → "ilk açılımda Su yoktu" cümlesi | F | Kullanıcı etkileşimi ritüelin kendisi (Dickson & Kelly, 7. madde) | Evet (T07 sonrası) |
-| R6 | "Bu uygulamada para birimi kahve hakkı." · "Uzun reklam → 1 kahve hakkı" | Cüzdan ekranı: coin, KH, 4+1 sayacı | B (+F) | Kayıptan kaçınma: 24 saatlik KH bugün kullanılmazsa gider (Kahneman & Tversky) | Evet (T14 sonrası: coin T13/T14, günlük KH T13, 4+1 T12) |
-| R7 | "Fal uygulamaları hep sekmeli, ben evren istiyorum." · "3 mock, birini seçiyorum" | mock/moonlight-mock.html 3 kalıp yan yana | B | Karar anına ortak etme (IKEA etkisi, Norton 2012) | Evet (HTML kaydı, T15 sonrası) |
-| R8 | "Evren navigasyonu Swift'te çalıştı." · "Tarot · Horary · Gökyüzü · 2 boş yer" | Yeni kabuk, geçişler; iskambil/Lenormand eklenirse nasıl olacak belli değil (A) | B (+F) | Dönüşüm hook'u: "6 aydır bunun üstündeyim, şimdi böyle" (presskit.gg) | Evet (T19 sonrası) |
-| R9 | "Ay bugün gerçekten bu şekilde." · "-2 hafta / +1 ay" | Ay çizimi + olay çizgisi kaydırma | F+B | Fresh start: yeni ay/dolunay yerli başlangıç işareti (Dai 2014) | Evet (T20-21 sonrası) |
-| R10 | "Giriş yaptım, ismimi sordu, bir daha sormadı." · "Apple ile giriş" | Giriş → /api/me isimli ekran | B | Güven: veriyi ne için istediğini göster (Aguirre 2015) | Evet (T22 sonrası) |
-| R11 | "Uygulama sık ne sorduğumu biliyor." · "Sık konular: iş, taşınma" | Profil: gündem, sık konular, geçmiş; iki cihaz | F+B | Kendine referans etkisi, hatırlanan metin (Symons & Johnson 1997) | Evet (T25 sonrası) |
-| R12 | "Bu kart bana 4 kez geldi." · "Kart rehberi" | Karta tıkla → anlam → "4 kez geldi, son: tarih" | F | Baader-Meinhof'un dürüst hali: sayıyı gerçekten sayıyor | Evet (T27 sonrası) |
-| R13 | "Ayı kendim çiziyorum." · "8 ay evresi, sulu boya" | Çizim masası + uygulamada ay | F+B | Süreç görünürlüğü, emek → değer (Norton 2012) | Ekran kaydıyla kısmen |
-| R14 | "78 kartı kendim çizdim." · "Deste" | Kartlar kaydırma | F | Estetik nesne paylaşılır; Tamir & Mitchell 2012 kendini ifade | Ekran kaydıyla kısmen |
-| R15 | "Uygulamanın kedisi var." · "İkonlar + app icon" | İkon seti, kedi helper | F+B | Karakter = kişilik; Co-Star dersi "uygulama araç değil kişilik" | Ekran kaydıyla kısmen |
-| R16 | "Her kartın bir gezegeni var, yorum artık onu da söylüyor." · "Kart → gezegen/burç" | Yorumda gezegen cümlesi + rehberde alan | F | Tutarlı sistem hissi, "nereden bildi" (yansıtılabilir, belirsiz değil) | Evet (T33 sonrası) |
+| R1 | "Falına ismini yazınca ne değişiyor?" · "Damla için" | İsimsiz vs isimli aynı 3 kart, yorumun ilk cümlesi yan yana | F+B | Barnum "senin için" etiketi + Sahni 2018 isim | T02 · isimli yorum ilk cümlesi · kayıt evet |
+| R2 | "Aynı üç kart dolunayda başka okunuyor." · "Bugün: dolunay, Ay Yengeç'te, Merkür retro" | Anasayfa olay → yorumda ay evresi + ay burcu cümlesi | F+B | Kişiselleştirme nereden bildiğini söylüyor (White 2008) | T05 (ay burcu prompt'a o zaman giriyor; ekran metni = prompt'ta gerçekten olan: evre + ay burcu + iç gezegen retro) · kayıt evet |
+| R3 | "Kart yok, fincan yok. Soruyu yazdım, cevap geldi. Nereden?" · "Horary: sorduğun an + bulunduğun yer" | Soru yaz → harita 2 sn → cevabın ilk cümlesi | F+B | Bilgi boşluğu spesifik ve kapanabilir (Loewenstein 1994) | kodda var · horary cevabı · kayıt evet |
+| R4 | "Bu üç kart sana gelse ne derdin? Uygulamam şunu dedi." · yorumun ilk cümlesi | Açılım → ilk cümle (isim + soruya cevap; sayım cümlesi tek başına değil) | F+B | Pick-a-card jesti + tek çarpıcı isabet (Marks & Kammann) | T05 · tarot yorumu (tarot-only; horary T18'e) · kayıt evet |
+| R5 | "Yorumu anlamadım dedim, bir kart daha çekti." · "Anlamadım → ek soru + ek kart" | Buton → ek soru → ek kart → "ilk açılımda Su yoktu" | F | Etkileşim ritüelin kendisi (Dickson & Kelly) | T07 · ek kart yorumu · kayıt evet |
+| R6 | "Her gün bir kahve hakkı, gece yarısı sönüyor." · "Uzun reklam → 1 kahve hakkı · 24 saat" | Cüzdan: KH sayacı, 4+1, sonra o KH ile açılan 3 kart | F+B | Kayıptan kaçınma 2-2.5x (Kahneman & Tversky) | T14 · KH ile açılmış fal · kayıt evet · NOT: kamerada "reklam izle → fal" göstermek §5 hizmete-yönlendirme riski, Damla karar |
+| R7 | "Aynı fal, iki düzen: sekme mi, evren mi?" · "10 saniye: sol sekme, sağ evren" | Mock'ta aynı 3-kart yorumu iki kalıpta yan yana | F+B | Karar anına ortak etme (IKEA etkisi) | T15 · mock'a gerçek yorum metni yapıştırılır · HTML kaydı · gerçek çıktı yoksa F serisinden çıkar, hikâyeye gider (Damla karar) |
+| R8 | "Tarot solda, gökyüzü ortada, horary sağda. Kaydır." · "Tarot · Horary · Gökyüzü · 2 boş yer" | Kabuk → bir açılım açılıyor | F+B | Dönüşüm hook'u ("aylardır bunun üstündeyim, şimdi böyle") [28] | T19 · açılan tarot yorumu · kayıt evet |
+| R9 | "Telefondaki ay dışarıdakiyle aynı mı?" · "-2 hafta / +1 ay" | Ay çizimi + olay çizgisi + bugünün gökyüzü kartı (şablon cümle) | F+B | Fresh start: yeni ay/dolunay başlangıç işareti (Dai 2014) | T20-21 · günlük gökyüzü kartı · kayıt evet |
+| R10 | "Soruyu sorduğun saniyenin haritası." · "Yükselen · Ay · gösterge · açı" | Soru → harita → "Ay Venüs'e yaklaşıyor, 3 derece" tipi gösterge cümlesi | F+B | Wrapper olmayan çekirdek: ChatGPT harita hesaplamaz | T18b · horary gösterge cümlesi · kayıt evet |
+| R11 | "Telefon değiştirdim, falım orada." · "Sık konular: iş, taşınma" | Giriş → profil → iki cihazda aynı geçmiş | F+B | Kendine referans (Symons & Johnson 1997); eski R10 buraya birleşti | T22 + T25 · geçmişteki gerçek yorum · kayıt evet |
+| R12 | "Bu kart bana 4 kez geldi. Sana kaç kez?" · "Kart rehberi" | Karta tıkla → anlam → "4 kez, son: tarih" | F | Baader-Meinhof'un dürüst hali: gerçekten sayıyor | T27 · sayım ekranı · kayıt evet |
+| R13 | "Ayı kendim çiziyorum." · "8 evre, sulu boya" | Uygulamada ay + bugünün kartı | F+B | Emek → değer (Norton 2012) | T28a · gökyüzü kartı · ekran kaydıyla kısmen |
+| R14 | "78 kartı kendim çizdim." · "Deste" | Kartlar kaydırma → bir açılım | F | Estetik nesne paylaşılır (Tamir & Mitchell 2012) | T28b · açılım yorumu · ekran kaydıyla kısmen |
+| R15 | "Uygulamanın kedisi var." · "İkonlar + app icon" | Kedi helper bir fal ekranında | F+B | Karakter = kişilik (Co-Star dersi) | T28c · fal ekranı · ekran kaydıyla kısmen |
+| R16 | "Kartın gezegeni bugün gökyüzünde ne yapıyor?" · "Kart → gezegen/burç" | Yorumda gezegen cümlesi + rehberde alan | F | Tutarlı sistem hissi | T33 · yorumda astro cümlesi · kayıt evet |
 | R17 | Faz 5 sonunda hakem belirler | — | — | — | — |
-| R18 | "Doğum haritan da burada." · "BELKİ" | Evrenden haritaya geçiş | F | Kimlik teknolojisi: burç = kendini anlatma dili (Eserol 2025) | Evet (T29 sonrası) |
-| R19 | "Verilerin nerede duruyor, sildiğinde siliniyor mu?" · "KVKK, sil butonu" | Silme → hesap yok ekranı | B | Güven; TR'de fal uygulamasına güvensizlik: Faladdin kurucusu Taşdelen Tem 2025 tutuklandı [12]; "güvensizlik yüksek" ölçümü yok, DOĞRULANMADI | Evet (T30 sonrası) |
-| R20 | "Yorum kaç saniyede geliyor, ölçtüm." · "Önce/sonra" | Sayılar ekranda | B | Kanıt kültürü; builder izleyicisi sayı ister | Evet (T31) |
-| R21 | "Gönderdim." · "Waiting for Review" | App Store Connect durumu | F+B | Zeigarnik kapanışı: serinin açık döngüsü kapanır | Evet (ASC ekranı) |
+| R18 | "Doğum saatini biliyor musun? Harita saatle değişiyor." · "BELKİ" | Evrenden haritaya | F | Burç = kendini anlatma dili (Eserol 2025) [29] | T29 · harita ekranı · kayıt evet |
+| R19 | "Sil dedim, sunucudan da silindi." · "KVKK · sil butonu" | Silme → hesap yok | B | Güven; Faladdin kurucusu Tem 2025 tutuklandı [12], "güvensizlik yüksek" ölçümü DOĞRULANMADI | T30 · silme akışı · kayıt evet |
+| R20 | "Aynı soruyu iki saat sonra sordum, cevap değişti." · "Ay burç değiştirdi" | İki horary cevabı yan yana | F+B | Harita ana ait: kartsız cevap boşluğu 2. kez; hız ölçümü LinkedIn'e (App Store sonrası) | T18b + T17 · iki horary cevabı · kayıt evet |
+| R21 | "Gönderdim." · "Waiting for Review" | ASC durumu + son bir fal | F+B | Zeigarnik kapanışı | T32 · ASC ekranı |
 
 =====================================================================
-3. CTA SEÇENEKLERİ (sıralı; karar Damla'nın)
+3. CTA (sıralı; karar Damla'nın)
 =====================================================================
-1. "Takip et, sıradaki bölümde X'i gösteriyorum." — Zeigarnik/açık döngü; risk yok; seri formatı (Instagram "Series" özelliği Haz 2026'da sınırlı test, hesabında var mı bakılır). [15]
-2. (A dışı, bkz. §3b) Hikâyeye soru kutusu.
-3. (A dışı, bkz. §3b) Bekleme listesi / DM anahtar kelime.
-4. (A dışı, bkz. §3b) TestFlight herkese açık link.
-5. "İsmini yaz, sana bakayım" yorum tuzağı. Etkileşim en yüksek; iki risk birden: (a) Meta engagement bait = dağıtım düşer [18]; (b) herkese açık hesapta fal hizmeti sunmak = Reklam Kurulu'nun cezalandırdığı kalıp (863.580 TL, bkz. §5) [19]. CTA5'te iki risk birden; karar Damla'nın.
-6. "İndir." — App Store sonrası. Uygulamanın kendisi "falcı hizmeti" sayılırsa mağazaya yönlendirme de reklamdır; buna dair karar/emsal bulunamadı, DOĞRULANMADI.
-Ortak kural: CTA'da vaat yok ("aşkın gelecek", "ücretsiz bakıyorum" yok); süreç dili var ("yapıyorum, gösteriyorum, çıkınca söylerim").
-
-3b. A DIŞI ÖNERİLER (A "TR Instagram reels" dedi; bunlar Instagram/Apple içinde ama A'da yok; Damla karar)
-- Hikâyeye soru kutusu "Sen olsan ne sorardın?" — cevaplar horary/gündem verisi olur; hikâye yanıtı yorumdan yüksek niyet sinyali (araç kaynağı, DOĞRULANMADI); fal hizmeti vaadi yok. [16]
-- Bekleme listesi "çıkınca haber vereyim" → hikâye yanıtı / DM anahtar kelime. %80-90 açılma iddiası satıcı verisi, DOĞRULANMADI. Risk: reklam sınırına yaklaşır (§5); App Store öncesi yalnız haber verme dili. [16]
-- TestFlight herkese açık link (10.000 test kullanıcısı, build 90 günde biter). 0909-faz.txt R19: güvenlik + KVKK metni öncesi TestFlight yok → en erken faz 7. [17]
-- Trial Reels: ilk üç reels'in hook'unu takipçi dışına test etme (Meta, Ara 2024). [20]
-- Haiku/Sonnet karşılaştırması (T05 kanıtı) 22. reels malzemesi olabilir; B'de 21 reels var.
-- Faz 5 çizim kesitleri reels yerine hikâyeye gidebilir (faz 2 boşluğu için).
+1. "Takip et, sıradaki bölümde X." — açık döngü; risk yok. (Instagram "Series" Haz 2026 sınırlı test; yoksa "N/21".) [15]
+2. "İsmini yaz, sana bakayım" — etkileşim en yüksek; iki risk: Meta engagement bait [18] + Kurul'un cezalandırdığı hizmet-sunma kalıbı (§5).
+3. "İndir" — App Store sonrası; mağazaya yönlendirme reklam sayılır mı, emsal yok, DOĞRULANMADI.
+A DIŞI (A "TR Instagram reels" dedi; Damla karar): hikâye soru kutusu "Sen olsan ne sorardın?" (horary/gündem verisi olur, hizmet vaadi yok) · DM bekleme listesi "çıkınca haber vereyim" (reklam sınırına yakın; %80-90 açılma satıcı verisi DOĞRULANMADI) [16] · TestFlight herkese açık link (R19 öncesi yok → en erken faz 7) [17] · Trial Reels ile ilk 3 hook'u takipçi dışına test [20] · Haiku/Sonnet karşılaştırması 22. reels · çizim kesitleri hikâyeye.
+Ortak kural: vaat yok, "ücretsiz bakıyorum" yok; süreç dili ("yapıyorum, gösteriyorum, çıkınca söylerim").
 
 =====================================================================
-4. SIKLIK / TAKVİM (0909-faz.txt §6 iş sırasına göre; reels çekildiğinde özellik çalışıyor olmalı)
+4. TAKVİM (0909-faz.txt §6; özellik çalışmadan reels yok)
 =====================================================================
-- Hafta 1: R1 (T02 biter bitmez), R2, R3 — üçü de kodda var, hemen çekilir.
-- R7 (mock) iş sırasında 4. sırada, yani faz 2'nin başında hazır olur; çekilir, R6 yayınlanana kadar bekletilir (gösterim sırası B değişmez). Bu, faz 2'nin uzun boşluğunu (11 alt görev) kapatan tek yedek.
-- Faz 2 (R4, R5, R6): T05 → R4 çekilir; T07 → R5; T14 → R6 (cüzdan ekranı coin/günlük KH/4+1 için T12-T14 de bitmiş olmalı).
-- Faz 3: R8 (T19), R9 (T20-21). Faz 4: R10 (T22), R11 (T25), R12 (T27). Faz 5: Damla çizince, üçü aynı hafta. Faz 6: R16 (T33), R18 (T29). Faz 7: R19-R21.
-- Ritim: özellik bitmeden reels yok; boşluk uzarsa çekilmiş-bekletilen R7 girer (çizim kesitleri: §3b). "Kaç günde bir" için doğrulanmış eşik yok; 7-15 sn'lik reels en yüksek tamamlanma oranı (%74) iddiası araç verisi, DOĞRULANMADI. [8]
-- Saat: 13:00 veya 17-19 İstanbul (DOĞRULANMADI, araç). EN seslendirme ve LinkedIn A'daki karara göre sonra.
+- Hafta 1: R1 (T02), R3 (kodda). R2 artık T05'i bekler → hafta 1'de 2 reels.
+- Faz 2: R2 + R4 (T05), R5 (T07), R7 (T15, erken çekilir, R6'dan sonra yayınlanır), R6 (T14). Faz 3: R8 (T19), R9 (T20-21). Faz 4: R10 (T18b, faz 2 sonunda hazır), R11 (T22+T25), R12 (T27). Faz 5: çizince. Faz 6: R16 (T33), R18 (T29), R20 (T18b+T17). Faz 7: R19, R21.
+- FAZ 2 BOŞLUĞU — KARAR MADDESİ (Damla seçer): (a) R4 ikiye bölünür: T04 sonrası "üç kartın elementi" ekranı (SpreadAnalysis cümlesi), T05 sonrası yorum; (b) faz 2 boyunca hikâye kesitleri (K2 kurulum, test yeşili, prompt dosyası); (c) ikisi. Seçilmezse faz 2'de 3 hafta+ reels yok.
+- Saat 13:00 / 17-19 İstanbul (araç verisi, DOĞRULANMADI) [4]. EN seslendirme ve LinkedIn A'ya göre sonra.
 
 =====================================================================
-5. YASAK / RİSKLER
+5. KAMERADA SÖYLE / SÖYLEME
 =====================================================================
-- Kaynak: Ticari Reklam ve Haksız Ticari Uygulamalar Yönetmeliği (Ticaret Bakanlığı / Reklam Kurulu), RTÜK değil, Meta değil. Madde: "Falcı, medyum, astrolog ve benzerleri tarafından verilen hizmet reklamları … hiçbir şekilde yapılamaz." Kapsam genişlemesi RG 1 Tem 2026 sayı 33297, yürürlük 1 Ağu 2026 (ntv galeri metniyle doğrulandı; RG'nin kendisi açılmadı). [21][22]
-- 10 Eki 2023 (338. toplantı): Kurul YouTube + Instagram + 39 sitedeki falcı/medyum/astrolog tanıtımlarına durdurma + erişim engeli uyguladı. [22]
-- 16 Oca 2025 kararı (tarih hakem doğrulaması; [19] metninde tarih yok): ADC Boru Metal ve İnşaat Ltd. Şti.'ye 863.580 TL, Instagram @astrocenterturkiye ve bağlı siteler; alıntılar "Neslin Yazar ile Hayatınızı Aydınlatın! Durugörü, Reiki ve Bioenerji", "Numeroloji Severler Buraya! Yeni Üyelere Özel %50 İndirim!", "10 Dakika Ücretsiz Danışmanlık!" (10 dk bedava, sonra 1€/dk). Bir şirketin hesabından üçüncü kişinin ücretli hizmetinin reklamı; kurucunun kendi ürün sürecini anlatmasına birebir emsal DEĞİL. [19]
-- Organik içerik yine de güvenli sayılamaz: yasak "reklam"ı platformdan bağımsız tanımlıyor ve Instagram hesapları cezalandırıldı.
-- Influencer tarafı (1 Ağu 2026): menfaat varsa etiket zorunlu; kendi ürününü kendi hesabından anlatmak bu düzenlemenin konusu değil. Ama fal yasağı ayrı madde, etiketle aşılmaz. [23]
-- Sınır (Kurul kararlarındaki ifadelerden): vaat ("olacak", "gelecek"), "ücretsiz bakıyorum", korku çerçevesi, hizmete yönlendirme = reklam kalıbı. Ürün geliştirme süreci, kendi falını gösterme, sayı/ölçüm = bu kalıpta değil; emsal karar YOK, DOĞRULANMADI.
-- Ceza 2026: iki hukuk bürosu farklı sayı veriyor — [23] tavan 8.635.800 TL + yıl içinde tekrarda 10 kat; [30] 6502 m.77/12-e internet için 1.083.706–10.837.065 TL, 10 kat kuralı yazmıyor. Kanun metni açılmadı → sayılar DOĞRULANMADI. Erişim engeli hesaba uygulanabiliyor (Oca 2026, 15 sosyal medya hesabı, bahis). [22]
-- 677 sayılı kanun: falcılık 1925'ten beri suç; Faladdin kurucusu Tem 2025 tutuklu (rakipler.md). Reels'te "gaipten haber" dili yok; "yansıtma/günlük" dili var.
-- RTÜK 6112 m.8/1(r) yalnız radyo-TV; Instagram'a uygulanmaz. [24]
-- TikTok reklam politikası: fal/burç reklamı Türkiye'de yasak (organik değil). Meta reklam standartlarında fal maddesi bulunamadı. LinkedIn: fal reklamı "eğlence vurgusu" hariç yasak. [25][26]
-- Apple: 4.3(b) "fortune telling … saturated"; 1.1.6 "for entertainment purposes" demek kuralı aşmaz. "5.x entertainment disclaimer zorunlu" diye bir madde yok; sektör alışkanlığı. 12+ yaş sınıfı iddiası satıcı kaynağı, DOĞRULANMADI. [27]
-- Meta engagement bait: "yorum yaz / beğen" açık isteği dağıtımı düşürür; API ile anahtar kelime → DM izinli. [18]
-- İsim çakışması: "Moonlight" adlı tarot platformu (Baskin 2024) — reels'te marka aramasında karışır (rakipler.md).
+Dayanak: Yönetmelik "falcı, medyum, astrolog ve benzerleri tarafından verilen HİZMET reklamları hiçbir şekilde yapılamaz" (RG 1 Tem 2026 sayı 33297, yürürlük 1 Ağu 2026; ntv metniyle doğrulandı, RG açılmadı) [21]. Kurul 10 Eki 2023: YouTube + Instagram + 39 site, durdurma + erişim engeli [22]. Kurul 16 Oca 2025 (tarih hakem doğrulaması): ADC Boru Metal Ltd., Instagram @astrocenterturkiye, 863.580 TL; cezalandırılan ifadeler: "Hayatınızı Aydınlatın!", "Durugörü, Reiki ve Bioenerji Uzmanlığıyla Yanınızda!", "Yeni Üyelere Özel %50 İndirim!", "10 Dakika Ücretsiz Danışmanlık!" [19]. Üçüncü kişinin ücretli hizmeti; kurucunun kendi ürün sürecine birebir emsal DEĞİL, emsal yok.
+"FAL" KELİMESİ: yasak kelime değil, yasak olan HİZMET reklamı. Kurul'un cezalandırdığı kalıp = hizmet fiili + fiyat/ücretsiz + vaat + uzman sıfatı. Kelimeyi isim olarak söylemek ("fal uygulaması yapıyorum") cezalandırılmış örnek yok; fiil olarak ("sana fal bakayım") cezalandırılan kalıbın kendisi. En güvenli dil: "tarot uygulaması", "kart çektim", "yorum", "harita", "gökyüzü"; "fal" isim olarak gri, fiil olarak söyleme. Emsal yok → hukukçu görüşü (karar Damla'nın).
+SÖYLE (10):
+1. "Yapıyorum / kodladım / çizdim / ölçtüm" (süreç).  2. Kendi ismim, kendi kartlarım, kendi sorum.  3. "Yorum", "kart", "harita", "gökyüzü", "açılım".
+4. "Bugün gökyüzünde şu var" (astronomik olgu).  5. "App Store'a hazırlıyorum, gönderdim."  6. "Sen olsan ne sorardın?" (soru toplama, hizmet değil).
+7. "Anlamadım dedim, bir kart daha çekti" (ürün davranışı).  8. "Sil dedim, sunucudan silindi."  9. "Çıkınca haber vereceğim."  10. "Bu benim için yansıtma/günlük" (677 diline karşı).
+SÖYLEME (10):
+1. "Sana bakayım / falına bakayım / ismini yaz" (hizmet fiili; "danışmanlık" kalıbı) [19].  2. "Ücretsiz" + hizmet ("10 dk ücretsiz") [19].  3. Fiyat, indirim, paket ("%50", "2025 Tarot Paketi") [19].
+4. Vaat: "olacak, gelecek, kavuşacaksın, geleceğini söyler" (677: gaipten haber) [12].  5. "Hayatını aydınlat / değiştir" [19].  6. "Uzman / medyum / astrolog" sıfatı ("uzmanlığıyla yanınızda") [19].
+7. Korku: "dikkat, tehlike, kötü/olumsuz enerji" (RTÜK "olumsuz enerji" kararı; omen tonu yok) [24].  8. "İndir, link bio'da" App Store öncesi.  9. "Yorum yaz / beğen / etiketle" açık isteği (Meta bait) [18].  10. "AI/yapay zekâ senin geleceğini biliyor" (1.1.6: "entertainment purposes" demek Apple'da kuralı aşmaz [27]; Kurul'da vaat).
+GRİ: "reklam izle → kahve hakkı → fal" kamerada (hizmete yönlendirme okunabilir); "fal" ismi. Diğer: TikTok reklamda fal TR'de yasak, Meta reklam standardında fal maddesi bulunamadı [25][26]; RTÜK yalnız radyo-TV [24]; Apple 4.3(b) doygun kategori [27]; ceza 2026 iki büro çelişik (8.635.800 TL+10 kat [23] / 1.083.706–10.837.065 TL [30]) DOĞRULANMADI; "Moonlight" ad çakışması (Baskin 2024) [12].
 
 =====================================================================
 6. KAYNAKLAR
 =====================================================================
-[1] docs/0809-arastirma/psikoloji.md (Pew 2024, Forer, Dickson & Kelly, Sahni 2018, Lindeman 1998, Dai 2014, Loewenstein)
-[2] https://www.isbul.net/is-rehberi/burclara-gore-meslek-secimi-nasil-olmalidir-2026-rehberi (TÜİK atfı, ikincil)
-[3] https://www.statista.com/statistics/1024687/instagram-users-turkey-age-gender/
-[4] https://www.radaar.io/free-tools/best-times-to-post/europe-istanbul/
-[5] https://fooddrinklife.com/tiktok-tarot-card-pulls/
-[6] https://www.boshemiamagazine.com/blog/tik-tok-tarot-jennifer-cartwright
-[7] https://www.truefuturemedia.com/articles/science-of-short-form-video-hooks
-[8] https://www.zebracat.ai/post/instagram-reels-statistics ; https://www.inro.social/blog/instagram-reels-3-second-hook-leads
-[9] https://www.yahoo.com/lifestyle/meet-banu-guler-ceo-co-150000063.html ; https://techcrunch.com/2019/04/17/co-star-astrology-app-seed-round/
-[10] https://www.bustle.com/rule-breakers/the-pattern-lisa-donovan-made-the-best-astrology-app ; https://www.refinery29.com/en-us/2019/07/237785/channing-tatum-pattern-app-explained
-[11] https://fortune.com/2019/03/23/new-astrology-app-sanctuary
-[12] docs/0809-arastirma/rakipler.md (Nebula paid, Faladdin)
-[13] https://www.indiehackers.com/post/your-build-in-public-audience-is-not-your-market-i-learned-the-difference-the-slow-way-2cbea1089d
-[14] https://www.distributionbase.com/blog/channels/x-twitter/build-in-public-results
-[15] https://www.mediapost.com/publications/article/415494/meta-series-feature-welcomes-episodic-reels-cont.html
-[16] https://creatorflow.so/blog/instagram-dm-waitlist-pre-launch/ ; https://socialk.it/en/blog/instagram-story-stickers-engagement
-[17] https://developer.apple.com/news/?id=09262018a ; https://developer.apple.com/testflight/
-[18] https://transparency.meta.com/features/approach-to-ranking/content-distribution-guidelines/engagement-bait/ ; https://www.socialmediatoday.com/news/instagram-certain-ctas-impact-post-reach/717732/
-[19] https://www.aserlegal.com/blog-reklam-kurulundan-863580-tl-lik-rekor-ceza-fal-ve-astroloji-tanitimlarinda-uymaniz-gerekenler-33
-[20] https://about.fb.com/news/2024/12/trial-reels-try-content-non-followers-first-see-what-perfoms-best/
-[21] https://www.ntv.com.tr/ntvpara/galeri-ticaret-bakanligindan-yeni-duzenleme-1-agustosta-basliyor-artik-internette-o-reklamlar-yasak-1735203
-[22] https://tuketici.ticaret.gov.tr/haberler/reklam-kurulu-10-ekim-2023-tarihinde-338-toplantisini-gerceklestirdi ; https://ticaret.gov.tr/haberler/ticaret-bakanligi-reklam-kurulu-yasa-disi-bahis-ve-kumar-reklamlarina-karsi-mucadeleye-devam-ediyor
-[23] https://www.cbhukuk.com/influencer-reklam-kurallari/
-[24] https://www.rtuk.gov.tr/UstKurulKarar/Detay/6902
-[25] https://ads.tiktok.com/help/article/tiktok-ads-policy-other-products-and-services
-[26] https://searchengineland.com/you-cant-advertise-that-the-big-list-of-prohibited-ads-across-social-and-search-platforms-322222
-[27] https://developer.apple.com/app-store/review/guidelines/
-[28] https://presskit.gg/field-guides/tiktok-indie-game-marketing (dönüşüm hook'u)
-[29] https://www.researchgate.net/publication/399035645 (Eserol 2025, TR dijital spiritüellik; tam metin 403, yalnız özet)
-[30] https://bilalalyar.av.tr/gizli-reklam-cezasi-rehberi/
-Erişilemeyen: turkishminute.com (sertifika), Female Founders Fund Co-Star yazısı, ResearchGate tam metin, Meta reklam standartları fal maddesi (sayfa taranmadı).
+[1] docs/0809-arastirma/psikoloji.md (Pew 2024, Dickson & Kelly, Sahni 2018, Lindeman 1998, Dai 2014, Loewenstein)  [2] https://www.isbul.net/is-rehberi/burclara-gore-meslek-secimi-nasil-olmalidir-2026-rehberi (ikincil)
+[4] https://www.radaar.io/free-tools/best-times-to-post/europe-istanbul/  [5] https://fooddrinklife.com/tiktok-tarot-card-pulls/  [6] https://www.boshemiamagazine.com/blog/tik-tok-tarot-jennifer-cartwright
+[9] https://www.yahoo.com/lifestyle/meet-banu-guler-ceo-co-150000063.html ; https://techcrunch.com/2019/04/17/co-star-astrology-app-seed-round/  [12] docs/0809-arastirma/rakipler.md
+[13] https://www.indiehackers.com/post/your-build-in-public-audience-is-not-your-market-i-learned-the-difference-the-slow-way-2cbea1089d  [14] https://www.distributionbase.com/blog/channels/x-twitter/build-in-public-results
+[15] https://www.mediapost.com/publications/article/415494/meta-series-feature-welcomes-episodic-reels-cont.html  [16] https://creatorflow.so/blog/instagram-dm-waitlist-pre-launch/  [17] https://developer.apple.com/news/?id=09262018a
+[18] https://transparency.meta.com/features/approach-to-ranking/content-distribution-guidelines/engagement-bait/  [19] https://www.aserlegal.com/blog-reklam-kurulundan-863580-tl-lik-rekor-ceza-fal-ve-astroloji-tanitimlarinda-uymaniz-gerekenler-33
+[20] https://about.fb.com/news/2024/12/trial-reels-try-content-non-followers-first-see-what-perfoms-best/  [21] https://www.ntv.com.tr/ntvpara/galeri-ticaret-bakanligindan-yeni-duzenleme-1-agustosta-basliyor-artik-internette-o-reklamlar-yasak-1735203
+[22] https://tuketici.ticaret.gov.tr/haberler/reklam-kurulu-10-ekim-2023-tarihinde-338-toplantisini-gerceklestirdi  [23] https://www.cbhukuk.com/influencer-reklam-kurallari/  [24] https://www.rtuk.gov.tr/UstKurulKarar/Detay/6902
+[25] https://ads.tiktok.com/help/article/tiktok-ads-policy-other-products-and-services  [26] https://searchengineland.com/you-cant-advertise-that-the-big-list-of-prohibited-ads-across-social-and-search-platforms-322222  [27] https://developer.apple.com/app-store/review/guidelines/
+[28] https://presskit.gg/field-guides/tiktok-indie-game-marketing  [29] https://www.researchgate.net/publication/399035645 (tam metin 403, özet)  [30] https://bilalalyar.av.tr/gizli-reklam-cezasi-rehberi/
+Erişilemeyen: turkishminute.com, Female Founders Fund Co-Star yazısı, ResearchGate tam metin, Meta reklam standartları fal maddesi, Resmî Gazete 33297 metni.
 
 =====================================================================
 7. SORULMAMIŞ AMA GÖRDÜKLERİM
 =====================================================================
-- TR'de "uygulamamı yapıyorum / day X" formatının Türkçe örneği bulunamadı; arama boş döndü. Cal AI / Rizz / Locket'ın TikTok büyümesi kurucu serisiyle değil ücretli yaratıcı ordusuyla (Rizz $2M+ yaratıcı ödemesi). Kurucu-yüzlü seriyle büyüyen tüketici uygulaması için doğrulanmış vaka bulamadım.
-- En büyük çelişki: fal reklamı yasak diye tek kanal reels; ama Kurul Instagram hesaplarından yapılan tanıtımı reklam saydı (üçüncü kişi hizmeti, birebir emsal değil). "Organik güvenli" varsayımı doğrulanmadı; reels dilinin kendisi risk sınırı.
-- "10 Dakika Ücretsiz Danışmanlık!" alıntısı [19]'da var; hakem ikinci turda doğruladı, metne geri kondu. Hukukçu görüşü alınmadan "fal uygulaması" kelimesiyle 21 reels çıkarmak karar ister.
-- Davet kodu (+5 coin, "arkadaşa öner") = uygulama içi referral; bu da "fal hizmetine yönlendirme" sayılır mı, emsal yok. DOĞRULANMADI.
-- 0909-faz.txt: R19 öncesi TestFlight yok, privacy-policy.html R6'dan itibaren yanlış. CTA3-4 faz 7 öncesi kapalı (risk notu); faz 2-6 için CTA seçimi Damla'nın.
-- Faz 2 en uzun boşluk (T01..T18b, 20 alt görev) ve reels'i 3; seri burada ölür. Yedek: R7 mock erken çekilir (çizim kesitleri hikâyeye: §3b, A dışı).
-- 0809-kosu.md B R12 satırında "şarkı/kitap" hâlâ yazıyor; A "bu turda yok" (faz hakemi de yazmış).
-- Instagram "Series" özelliği sınırlı test; hesabında yoksa ekran metnine "N/21" yazılır.
-- Pew: inanç 2017→2024 büyümüyor; kitle sabit, kazanç dağıtımdan. Türkiye için bu bile yok.
-- Co-Star'ın motoru bildirim ekran görüntüsüydü; Moonlight'ta ekran görüntüsü alınacak tek yer yorumun ilk cümlesi. R1/R4 hook'u o cümleye yaslanıyor; cümle vasat çıkarsa reels de vasat (Marks & Kammann: kabul maksimumdan).
-- Sıcak kahve tonu ile "kahve hakkı" adı aynı; R6 markanın kendisi.
-- Görmediklerim: Damla'nın mevcut Instagram hesabı (takipçi kimliği: builder mı, fal mı, sayı), simülatörde yorum metni örneği, mock HTML'in görünümü.
+- TR'de "uygulamamı yapıyorum / day X" Türkçe örnek bulunamadı. Cal AI / Rizz / Locket kurucu serisiyle değil ücretli yaratıcıyla büyüdü; kurucu-yüzlü seriyle büyüyen tüketici uygulaması vakası bulamadım.
+- R1 isim kapısı: eleştirmen "isim yoksa yorum yok" kararının Damla'ya sorulmadığını yazdı; R1 hook'u isimli/isimsiz karşılaştırma olarak yazıldı, iki kararla da çalışır.
+- Davet kodu (+5 coin) = uygulama içi referral; "hizmete yönlendirme" sayılır mı, emsal yok, DOĞRULANMADI.
+- 0809-kosu.md B R12'de "şarkı/kitap" hâlâ yazıyor; A "bu turda yok". R10/R20 içerik değişikliği B'nin "reels içeriği hakem kararına açık" satırına dayanır; slot sayısı ve faz sırası değişmedi.
+- Görmediklerim: Damla'nın Instagram hesabı (kim takip ediyor, sayı), simülatörde gerçek yorum metni, mock HTML görünümü, Resmî Gazete metni.

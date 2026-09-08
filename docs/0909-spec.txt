@@ -7,29 +7,28 @@ Yasa: docs/0809-kosu.md A. Bu dosya A'yı değiştirmez, "nasıl" yazar. Kaynak 
 Okuyucu kombinasyonu nasıl okur (5 katman, prompt'a sırayla girer)?
 - Majör/minör oranı: 3 kartta 2+ majör = "hayat dönemeci, dış güçler"; hiç majör yok = "gündelik, kişinin elinde". Kelt'te 10 karttan 4+ majör aynı yorum. [31][32]
 - Element dağılımı: Asa=Ateş, Kupa=Su, Kılıç=Hava, Tılsım=Toprak. Ateş-Su ve Hava-Toprak birbirini zayıflatır; aynı element güçlendirir; diğer çiftler dost. [29]
-- Karar (9 Eyl): astrolojik karşılık katmanı son fazlarda, App Store'a atmadan önce (faz 6). Bu turda yok.
+- Astrolojik karşılık katmanı (kart → gezegen/burç): kaynak seçimi faz 6'da Damla'ya. Bu turda yok.
 - Eksik takım: Asa yok = tutku eksik; Kupa yok = duygu eksik; Kılıç yok = net düşünce/iletişim eksik; Tılsım yok = pratik zemin yok. Majör telafi edebilir (Güneş, Asa yokluğunu kapatır). [30]
 - Tekrar eden sayı: aynı sayı 2+ kez = o sayının teması baskın (ör. iki "Beş" = çatışma dönemi); bazen zaman birimi. [31]
 - Saray kartları: 2+ saray = olayda başka insanlar var; tek saray = soranın kendi tavrı. Uşak=haber, Şövalye=hareket, Kraliçe=içselleştirme, Kral=yönetme. [31]
 Pozisyon anlamları (klasik kaynak)?
-- 3 kart: Geçmiş / Şimdi / Gelecek; 18. yy'dan gelir, Golden Dawn ve RWS ile yaygınlaşır. [33]
-- 5 kart: klasik tek kaynak yok. Kodda "Past, Present, Hidden, Advice, Outcome" var; yaygın alternatif "Durum / Engel / Tavsiye / Gizli etki / Sonuç". Karar (9 Eyl): sabit pozisyon adı yok. 5 kart ve 3 kart pozisyonsuz okunur; kombinasyon ve his üzerinden, duruma göre. Kelt pozisyonları kalır.
+- 3 ve 5 kart pozisyonsuz; Kelt pozisyonlu (9 Eyl kararı).
 - Kelt Haçı (Waite 1910, Pictorial Key): 1 Örten (durum), 2 Kesen (engel), 3 Taçlandıran (hedef/bilinç), 4 Altındaki (temel/bilinçaltı), 5 Arkasındaki (yakın geçmiş), 6 Önündeki (yakın gelecek), 7 Kendisi (tavır), 8 Evi (çevre), 9 Umut/Korku, 10 Sonuç. [28]
 Gökyüzü yoruma nasıl girer?
 - Ay evresi: Yeni Ay = başlangıç/niyet sorularına; Dolunay = açığa çıkma/bırakma; İlk Dördün = eylem; Son Dördün = bırakma. Yorum tonu buna göre. [34]
-- Ayın burcu: element olarak katılır (Ay Yengeç'te = Su vurgusu; açılımdaki Su kartlarını güçlendirir). Ay burcu bugün API'den geliyor, MoonService'ten değil.
+- Ayın burcu: element olarak katılır (Ay Yengeç'te = Su vurgusu; açılımdaki Su kartlarını güçlendirir). BUGÜN prompt'a girmiyor: ClaudeService:53 yalnız ay evresini yazar, ay burcu chart'ta var ama tarot prompt'una taşınmıyor. R2 ekranında "Ay Yengeç'te, yorum değişiyor" gösterilemez; ya R2 metni evre/retro olur ya R2 bu iş bitince çekilir.
 - Retro: sadece Merkür/Venüs/Mars retro yoruma girer; dış gezegen retroları yılın yarısı olduğu için yok sayılır (yoksa her yoruma "Plüton retro" giriyor).
 Prompt'a girecek girdi listesi (bu sırayla)?
-- İsim (zorunlu; yoksa yorum üretilmez, isim ekranı çıkar). Soru metni. Açılım tipi + pozisyon adları.
+- İsim. KARAR DAMLA'NIN: hesapsız ilk falda isim kapısı mı, isimsiz yorum + "ismini yaz, daha iyi olur" mu? Soru metni. Açılım tipi (Kelt'te pozisyon adları).
 - Her kart: ad (TR), arkana, takım/element, sayı, anahtar kelime.
-- Hesaplanmış katmanlar (cihazda, LLM'e hazır cümle olarak): majör sayısı, element sayımı + düşman/dost çiftler, eksik takım, tekrar eden sayı, saray sayısı.
+- Hesaplanmış dağılım (cihazda sayılır, LLM'e "bu dağılımı hisset ve hikâyeye yedir" diye verilir, "say/listele" diye değil): majör sayısı, element sayımı + zayıflatan/dost çiftler, eksik takım, tekrar eden sayı, saray sayısı.
 - Gökyüzü: Ay evresi + Ay burcu + aktif iç gezegen retroları. Gündem: son 5 sorunun konusu (LLM çıkardığı).
-- Kural: "Her kartı ayrı paragrafta anlatma; önce dağılımı söyle, sonra kartları birbirine bağla, ismi kullan."
+- Kural: sayımlar hikâyeye yedirilir; ilk cümle isim + soruya cevap; sayım cümlesi tek başına paragraf olmaz. Mevcut ClaudeService:70 "Kartları hikaye gibi birbirine bağla" satırı korunur.
 "Anlamadım" ek kartı önceki açılıma nasıl bağlanır?
 - Ek kart pozisyonsuzdur; "en belirsiz pozisyona ışık" olarak okunur. Prompt'a önceki kartlar + önceki yorum + ek soru + ek kart + aynı gökyüzü verilir (bugün gökyüzü verilmiyor).
 - Ek kart element sayımına dahil edilir; "ilk açılımda Su yoktu, ek kart Kupa geldi" tipi cümle üretilir. Ücret 3 coin (A).
 Mevcut kodda: Moonlight/Services/ClaudeService.swift:36-86 tarot prompt (isim :52 promptDescription ile giriyor, anahtar kelime :40, ay evresi :53, retro :55, 200/400 kelime :81); tarotClarification :172-197 (gökyüzü yok); TarotView.swift:425 max 3 kart, :204-207 Kelt 10 / beş 5 / ilişki 7 / kariyer 9 kredi.
-Eksik: element/majör/sayı/saray sayımı yok; ay burcu prompt'a girmiyor; ilişki ve kariyer açılımı A'da yok (hakem listesi "yapma"); 5 kart pozisyon adları karar bekliyor; isim boşsa yorum yine üretiliyor.
+Eksik: element/majör/sayı/saray sayımı yok; ay burcu prompt'a girmiyor; ilişki ve kariyer açılımı A'da yok (hakem listesi "yapma"); isim boşsa yorum yine üretiliyor (isim politikası Damla kararı).
 
 =====================================================================
 2. HORARY  ("soru soruyoruz, soruya göre cevap veriliyor"; 1 KH, ek soru 3 coin)
@@ -83,26 +82,19 @@ Harcama sırası?
 15 coin → süresiz KH?
 - Kullanıcı butona basar, sunucu 15 coin düşer, kh_perm+1. Otomatik değil. Coin bakiyesi 15'in altındaysa buton pasif.
 4 açılım → 1 süresiz KH: sayaç neyi sayar?
-- Açılım sayar, KH değil (Kelt 3 KH ama 1 açılım). A'ya göre yalnız tarot açılımı sayar. Ek kart/ek soru saymaz.
-- Karar (9 Eyl): horary 4+1 sayacına girer. KH harcanan her fal sayar.
+- Karar (9 Eyl): horary 4+1 sayacına girer. KH harcanan her fal sayar (Kelt 3 KH ama 1 fal); ek kart/ek soru saymaz.
 - 4. açılım tamamlanınca (yorum döndü, iade olmadı) kh_perm+1, sayaç 0. Hediye KH'nin harcandığı açılım da sayaca girer.
 Davet kodu?
-- Her hesabın 6 haneli kodu. Arkadaş kayıt olurken kodu girer (invited_by). Arkadaşın ilk yorumu sunucudan başarıyla dönünce ikisine +5 coin; sunucu first_reading_done ile tek sefer garanti eder. Kendi kodunu girme, aynı cihazdan çoklu hesap (DeviceCheck biti) reddedilir.
+- Her hesabın 6 haneli kodu. Arkadaş kayıt olurken kodu girer (invited_by). Arkadaşın ilk yorumu sunucudan başarıyla dönünce ikisine +5 coin; sunucu first_reading_done ile tek sefer garanti eder. Kendi kodunu girmek reddedilir; aynı cihazdan çoklu hesap DeviceCheck ile loglanır (ret yok).
 Hesapsız kullanıcı?
 - Cüzdan Keychain'de (ThisDeviceOnly) durur; Keychain silme-yükleme sonrası kalır ama bu belgelenmemiş bir uygulama detayı, garanti değil. [17]
-- "Silip yükleyen günlük KH'yi tekrar almamalı": DeviceCheck 2 bit + zaman damgası Apple sunucusunda, reinstall ve "tüm içeriği sil"den sonra bile kalır. Bit0 = "bugün KH aldı" olamaz (gün bilgisi yok) ama zaman damgası var: sunucu son güncelleme tarihine bakar, aynı günse vermez. App Attest ise cihazı kimliklendirmez, sadece "gerçek uygulama" kanıtı; sahte istek engeli için ayrıca kullanılır. [16]
+- "Silip yükleyen günlük KH'yi tekrar almamalı": DeviceCheck sadece sayar (faz §4f). 2 bit + zaman damgası Apple'da reinstall sonrası da kalır; sunucu aynı gün ikinci talebi loglar, ret davranışı yok. [16]
 - Hesapsız kullanıcı hesap açınca Keychain cüzdanı sunucuya taşınır, Keychain kopyası silinir.
-AdMob?
-- Politika: Google yayıncı yasak/kısıt listelerinde astroloji/fal/tarot YOK; ödül "doğrudan para" olamaz, coin/KH uygulama içi ve devredilemez olduğu için uygun. Kullanıcı reklamı açıkça seçmeli (opt-in), atlanabilir olmalı. [1][2][3]
-- Apple: ödüllü video ile uygulama içi para kazandırmak serbest; yasak olan puan/paylaşım karşılığı ödül. Asıl risk 4.3(b) "fal uygulaması doygun kategori" reddi; kombinasyon+horary+gökyüzü farkını App Review notuna yaz. [7][49]
-- ATT: AdMob ATT zorunlu tutmaz; istemezsen kişiselleştirilmemiş reklam, düşük eCPM. SKAdNetwork ID'leri Info.plist'e girer. ATT izni istenirse NSUserTrackingUsageDescription + PrivacyInfo "tracking: true" gerekir; şu an false. [5]
-- Kısa reklam +1 coin = rewarded (opt-in, AdMob frekans sınırı ile). Karar (9 Eyl): kısa reklam günde 3 kez. Uzun reklam günlük KH = rewarded interstitial (opt-in gerekmez, giriş ekranı zorunlu) DEĞİL; ikisi de rewarded olsun, ayrı ad unit, sunucu SSV callback'iyle ödül verilir. [4][6][50]
+AdMob / StoreKit (detay T13 ajan brifingine)?
+- Google yayıncı yasak/kısıt listelerinde astroloji/fal YOK; ödül uygulama içi ve devredilemez olmalı, reklam opt-in ve atlanabilir. Apple'da asıl risk 4.3(b) "fal, doygun kategori" reddi. [1][2][3][7][49]
+- Kısa reklam +1 coin ve uzun reklam günlük KH: ikisi de rewarded, ayrı ad unit, ödül sunucu SSV callback'iyle. ATT AdMob'da zorunlu değil; SKAdNetwork ID'leri Info.plist'e. Damla karar: kısa reklam günde kaç kez? [4][5][6][50]
+- KH consumable IAP; iOS 18+ SKIncludeConsumableInAppPurchaseHistory. credits5/10/15 ve Plus "satıştan kaldır". Damla karar: KH paketleri/fiyat ne? Damla karar: eski kredi + Plus geçiş kuralı ne? [18]
 - TR: uygulama içi reklam göstermek yasağa girmiyor; yasak fal hizmetinin reklamı (docs/0809-arastirma/rakipler.md).
-StoreKit?
-- KH tüketilebilir (consumable) IAP olarak tanımlanır, satın alınan KH süresiz. iOS 18+ SKIncludeConsumableInAppPurchaseHistory=true ile Transaction.all bitmiş consumable'ları da döner. [18]
-- Karar (9 Eyl): KH paketleri 1 / 3 / 10 KH. Fiyatı Damla App Store Connect'te girer.
-- credits5/10/15 ve plus.monthly App Store Connect'te "satıştan kaldır" (silme değil; eski işlemler kalsın). Plus aboneliği Apple kendiliğinden bitirmez, App Store Connect'ten kaldırılır.
-- Karar (9 Eyl): mevcut kullanıcı yok, geçiş kuralı yok. Plus ve credits plandan çıkar.
 Mevcut kodda: CreditManager.swift:28 günlük 3 kredi, :30 hoş geldin 10, :32-37 ürünler, :42-45 Plus, :108-114 takvim günü sıfırlama, :131-154 önce günlük sonra satın alınan, :157-169 iade, :8-13 Keychain, :68-73 DEBUG 500 kredi; KeychainHelper.swift:25-27 ThisDeviceOnly; worker.js:147 purchased_credits sütunu var ama endpoint yok; Info.plist'te SKAdNetworkItems/NSUserTracking yok; PrivacyInfo NSPrivacyTracking=false.
 Eksik: coin/KH ayrımı yok; süreli KH yok; sunucu cüzdanı yok; davet kodu yok; DeviceCheck yok; AdMob SDK yok; 4+1 sayacı yok; 15→1 dönüşüm yok; yeni IAP ürünleri yok; geçiş kodu yok; XCTest hedefi yok (MoonlightTests klasörü yok).
 
@@ -114,16 +106,18 @@ Worker bugün ne yapıyor?
 - /api/auth/google: Google tokeninfo endpoint'iyle doğrular; Google bunu "debug için, üretimde kısıtlanabilir" der, üretimde JWKS ile yerel doğrulama gerekir. [20]
 - /api/me: oturumdan kullanıcı döner. /api/profile: yalnız sun/rising/moon/birth_time yazar. D1 şeması: users (id, apple_sub, google_sub, email, 3 burç, birth_time, purchased_credits, premium_until). wrangler.toml database_id hâlâ "REPLACE_WITH_D1_DATABASE_ID".
 - İstemcide ASAuthorization/GoogleSignIn kodu YOK; auth uçları çağrılmıyor.
-E-posta+şifre için ne gerekir?
-- Hash: PBKDF2-SHA256 WebCrypto ile Worker'da (bcrypt/argon2 native yok; PBKDF2 ≥600k iterasyon). Sütunlar: password_hash, email_verified_at, verify_token, reset_token+exp.
-- Doğrulama maili + sıfırlama linki: Cloudflare Email Sending (beta, Workers Paid, $0.35/1000) veya Resend (Cloudflare'in kendi tutorial'ı). MailChannels ücretsiz katman 2024'te bitti. Alan adı için SPF/DKIM zorunlu; damla@moonlight.app gerçek mi belirsiz (PROJECT.md açık). [21][22][23]
-- Hesap birleştirme: aynı e-posta Apple + Google + şifre ile gelirse tek users satırı (email UNIQUE).
+E-posta+şifre (detay T23b brifingine)?
+- Worker'da PBKDF2-SHA256 hash; doğrulama/sıfırlama maili Cloudflare Email Sending (beta) veya Resend, MailChannels ücretsiz katman bitti; aynı e-posta üç sağlayıcıda tek users satırı. [21][22][23]
 Senkronlanacak veri (yeni tablolar)?
 - users: + name, birth_date, birth_place, lat/lon, tz, invite_code, invited_by. wallets: coins, kh_perm, daily_kh_claimed_on, spreads_since_gift. kh_timed: user_id, expires_at.
 - readings: id, user_id, type, question, spread, cards(json), reading, sky(json), created_at — 50 sınırı kalkar. agenda: user_id, text, topic(LLM), created_at. card_notes: user_id, card_id, note.
 - Çakışma: son yazan kazanır, her satırda updated_at; cihaz çevrimdışı yazdıysa kuyruklar.
-Webden okuma?
-- Aynı Worker + Sign in with Apple JS / Google Identity web istemcisi; aynı JWT; sadece okuma (geçmiş, cüzdan, kart notları). Şifre girişi web'de doğrudan çalışır. CORS şu an "*", web alan adına daraltılır.
+Webden okuma ("aynı hesap webden de okunabilir") için ne gerekir?
+- Ekranlar: giriş, fal geçmişi listesi + tek fal detayı, cüzdan bakiyesi, kart notları. Fal bakma web'de yok (KH/coin cihazda).
+- İstemci: repodaki Next.js (next.config.mjs, app/) zaten var; landing'e /app/history + /app/wallet sayfaları eklenir. Damla karar: web bu turda mı, A'dan mı düşülür?
+- Giriş: Sign in with Apple JS (Services ID + return URL) ve Google Identity web istemcisi; e-posta+şifre doğrudan. Aynı JWT.
+- Worker: GET /api/readings?cursor, GET /api/wallet, GET /api/card-notes; CORS "*" yerine web alan adı.
+- Kanıt: telefonda bakılan fal 10 sn içinde web'de listede görünür.
 KVKK?
 - İsim + doğum tarihi/saati/yeri "özel nitelikli" değil; ama sunucuda tutulunca aydınlatma metni ayrı, açık rıza metni ayrı olmalı (Kurul ilke kararı 2026/347). Yurt dışı aktarım (Cloudflare, Anthropic, Google): 2024'ten beri SCC/standart sözleşme ile, aydınlatmada açıkça yazılır. [24]
 - Mevcut privacy-policy.html yetersiz: "hesap yok, sunucu tarafı veritabanı yok, reklam SDK'sı yok, e-posta toplamıyoruz" diyor; üyelik + AdMob + D1 ile dördü de yanlış olur. Yeniden yazılır: toplanan veri, amaç, aktarım, saklama süresi, silme (sunucudan da), iletişim.
@@ -147,19 +141,12 @@ Eksik: number/element alanları; TR isim modelde değil (string replace); arketi
 =====================================================================
 | Uygulama | Kalıp | Sayı | Verdiği his | Kaynak |
 |---|---|---|---|---|
-| Co-Star | alt bar, minimalist, soyut ikon | alt bar + "Your Chart/All Updates" kısayolları; yazı küçük, keşfedilebilirlik zayıf (Pratt 2024) | soğuk, metin-odaklı, "arşiv" | [35] |
-| The Pattern | alt sekme | 3: Your Pattern / Bonds / Timing | dosya/rapor hissi | [36] |
-| Sanctuary | sohbet balonu akışı | günlük yorum "mesaj" gibi gelir, dersler sohbet formatında | "biri sana yazıyor" | [39] |
-| Nebula | alt sekme | Home / Compatibility / Chat (+ profil), her özellik ayrı sekme | portal/vitrin | [40] |
-| Moonly | tek merkez + katmanlı takvim | 7 ekran; ana ekranda "çok seçenek", takvimde güne tıkla → detay | yoğun, ansiklopedi | [38] |
-| Labyrinthos | alt sekme | 6: Daily / Reading / Learn / Journal / Meanings / Shop | okul + günlük | [37] |
 | Spotify | 3→4 sekme + "Now Playing" kalıcı alt şerit + Create sheet | Home / Search / Library / Create | "hep çalan bir şey var" katmanı | [41] |
-| Instagram | 5 sekme, yatay kaydırma sekmeler arası | Home / Reels / DM / Search / Profile, + sol üst | akış/hız | [42] |
-| Apple Music | 5 sekme | Listen Now / Browse / Radio / Library / Search (iOS 18 adları DOĞRULANMADI) | kütüphane | — |
+| Instagram | 5 sekme, yatay kaydırma | Home / Reels / DM / Search / Profile, + sol üst | akış/hız | [42] |
+| Co-Star | alt bar, minimalist, soyut ikon | alt bar + "Your Chart/All Updates" kısayolları; yazı küçük, keşfedilebilirlik zayıf (Pratt 2024) | soğuk, metin-odaklı, "arşiv" | [35] |
 | Arc Search | sekme yok, tek alt hap, kaydırınca gizlenir | 0 sekme; sağ-sol kaydırma ile geçmiş | "içindesin", chrome yok | [43] |
-| Duolingo | tek dikey yol (ağaçtan yola, 2022) | 1 rota; başlangıç tamamlama ↑, uzman kullanıcı şikâyeti | yolculuk/ilerleme | [44] |
 | Zenly / Snap Map | harita = ana ekran; Snap'te 5'li "action bar", harita en solda | harita merkez, kamera orta | "dünya, arkadaşlar orada" | [45][46] |
-| Candy Crush saga map | dikey kaydırmalı dünya haritası, pinler | dünya→bölüm→seviye; uzun kaydırma şikâyeti | "yol alıyorum" | [47][48] |
+Dipnot: The Pattern 3 sekme (Your Pattern/Bonds/Timing) [36]; Sanctuary sohbet balonu akışı [39]; Nebula alt sekme Home/Compatibility/Chat [40]; Moonly tek merkez + katmanlı takvim, 7 ekran [38]; Labyrinthos 6 sekme [37]; Apple Music 5 sekme (adlar DOĞRULANMADI); Duolingo tek dikey yol (2022) [44]; Candy Crush dikey saga haritası [47][48].
 Kalıp → his eşlemesi?
 - Tab bar (3-5): hızlı, tanıdık, "araç" hissi; evren hissi yok. Bugünkü Moonlight bu (3 sekme, sayfa kaydırma).
 - Harita/gökyüzü sahnesi (Zenly, saga map): mekân hissi en güçlü; tarot/horary/iskambil/Lenormand haritada "yer" olur, yeni fal = yeni yer. Maliyet: gesture + performans + boş alan sorunu.
@@ -177,15 +164,33 @@ Para kuralları (Wallet saf Swift model, sunucu taklidi ile)?
 - Harcama sırası: süreli+süresiz varken önce en erken sönecek süreli; 5 kart = 2 KH, süreli 1 + süresiz 1 doğru düşer; yetersiz bakiyede bakiye değişmez.
 - 15 coin çevirme: 15 → coin 0, kh_perm +1; 14 coin'de reddedilir; 30 coin'de tek basışta tek dönüşüm.
 - 4+1 sayacı: 4 fal (tarot veya horary, KH harcanan her fal) → kh_perm +1 ve sayaç 0; Kelt tek açılım sayar; ek kart saymaz; iade edilen açılım saymaz.
-- Günlük KH reset: aynı gün ikinci talep reddedilir; yerel gece yarısı sonrası kabul; reinstall taklidinde (DeviceCheck damgası aynı gün) reddedilir.
+- Günlük KH reset: aynı gün ikinci talep reddedilir; yerel gece yarısı sonrası kabul; reinstall taklidi DeviceCheck ile loglanır (ret yok).
 - Davet çift ödeme: arkadaşın 2. falında ödül tekrar verilmez; kendi kodu reddedilir; ödül tam 5+5.
 Yorum girdisi (prompt string üstünde)?
 - Kombinasyon analizi: verilen 3 kart için majör sayısı, element sayımı, eksik takım, tekrar eden sayı, saray sayısı beklenen cümlelerle prompt'ta.
-- İsim: prompt'ta kullanıcı adı geçiyor; isim boşken yorum isteği atılmıyor.
+- İsim: prompt'ta kullanıcı adı geçiyor; isim boşken davranış Damla'nın kapı kararına göre test edilir.
 - Ek kart: önceki kartlar + ek kart + ek soru + ay evresi/ay burcu prompt'ta.
 - Horary: gösterge planetleri, Ay'ın sonraki açısı, boş seyir bayrağı prompt'ta; chart yoksa istek atılmıyor.
 Mevcut kodda: test hedefi yok; CreditManager singleton + UserDefaults/Keychain'e bağlı, saf model yok.
 Eksik: MoonlightTests hedefi; Wallet ve PromptBuilder'ın enjekte edilebilir saat/deposu ile ayrılması.
+
+=====================================================================
+9. BİRİM EKONOMİ  (1 yorum kaça mal, 1 reklam kaç getirir?)
+=====================================================================
+Model fiyatı (claude-api skill, 24 Haz 2026 önbelleği; girdi/çıktı $ per 1M token)?
+- Sonnet 5: $2 / $10. Sonnet 4.6: $3 / $15. Haiku 4.5 (bugün worker.js:288'de): $1 / $5.
+Token tahmini (Türkçe metin İngilizceden ~%30 fazla token yakar; ölçülmedi, tahmin)?
+- 3 kart tarot: girdi ~1.200 (prompt + kartlar + gökyüzü + gündem), çıktı ~500 (200 kelime TR). Kelt: girdi ~1.600, çıktı ~1.000 (400 kelime). Horary: girdi ~2.000 (chart dökümü), çıktı ~550.
+Yorum başına maliyet?
+- Sonnet 5: 3 kart ≈ $0,0074 (0,74 sent); Kelt ≈ $0,013; horary ≈ $0,0095. Sonnet 4.6: 3 kart ≈ $0,011; Kelt ≈ $0,020.
+- Haiku 4.5: 3 kart ≈ $0,0037; Kelt ≈ $0,0066; horary ≈ $0,0048.
+- Faz T25 "her yorumdan sonra konu çıkarımı" küçük çağrısı (Haiku, ~300 girdi / 20 çıktı) ≈ $0,0004; ihmal edilebilir ama sayılmalı.
+Reklam geliri?
+- Rewarded video eCPM: ABD iOS $14–22 (2026), "iyi kurulmuş" $15–30. Türkiye için yayınlanmış sayı bulunamadı; TR orta-alt gelişmekte olan pazar, tahmin $1–4 eCPM → 1 uzun reklam ≈ $0,001–0,004. DOĞRULANMADI (kaynak ABD/global). [51][52]
+Hesapsız herkese günlük 1 KH senaryosu (kullanıcı günde 1 uzun reklam izler, 1 tane 3 kart bakar)?
+- Sonnet 5: gelir $0,001–0,004 − maliyet $0,0074 = kullanıcı başına günde −$0,003 … −$0,006. 10.000 günlük aktif → ayda −$1.000 … −$2.000.
+- Haiku 4.5: $0,001–0,004 − $0,0037 = −$0,003 … +$0,0003. 10.000 aktif → ayda −$800 … +$100.
+- Sonuç: TR eCPM'de reklam yorumun parasını Haiku'da ancak öder, Sonnet'te ödemez. Fark satın alınan KH ve coin→KH dönüşümünden (15 kısa reklam ≈ $0,015–0,06 gelir → 1 süresiz KH, maliyeti $0,0074) kapanmalı. Damla karar: Sonnet mi Haiku mu; ölçüm T05 6 örnekle.
 
 =====================================================================
 KAYNAKLAR
@@ -211,7 +216,8 @@ KAYNAKLAR
 [45] https://techcrunch.com/2020/06/11/snapchat-redesigns-its-app-with-new-action-bar/  [46] https://uxdesign.cc/designing-zenly-part-ii-3e525eb10ef0
 [47] https://candycrush.fandom.com/wiki/Map  [48] https://www.gameuidatabase.com/index.php?scrn=6&set=1&series=12&sort=2
 [49] https://developer.apple.com/forums/thread/688069  [50] https://support.google.com/admob/answer/7311747
-Zayıf kaynaklı / DOĞRULANMADI: Apple Music sekme adları; 5 kart açılımının "klasik" pozisyonları (kaynak yok, gelenek yok); Co-Star sekme adları (Pratt eleştirisi alt barı doğruluyor, adları vermiyor); Swiss Ephemeris eski fiyat (750/400/1550 CHF) yerine sayfada tek fiyat 700 CHF var.
+[51] https://www.revenuelab.fyi/blog/admob-ecpm-benchmarks-2026  [52] https://www.playwire.com/blog/admob-ecpm-benchmarks-what-publishers-should-expect
+Zayıf kaynaklı / DOĞRULANMADI: Apple Music sekme adları; TR rewarded eCPM (ABD/global kaynaktan tahmin); token sayıları ölçülmedi; Co-Star sekme adları (Pratt eleştirisi alt barı doğruluyor, adları vermiyor); Swiss Ephemeris eski fiyat (750/400/1550 CHF) yerine sayfada tek fiyat 700 CHF var.
 
 =====================================================================
 SORULMAMIŞ AMA GÖRDÜKLERİM
