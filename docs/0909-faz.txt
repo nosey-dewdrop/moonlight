@@ -35,8 +35,8 @@ Faz sonunda ekranda ne var: F1 isimli tarot + horary cevabı · F2 3/5/Kelt aç�
 | R7 Mock | T15 | S | — | Damla karar vermezse R8 başlamaz | Damla kalıp seçer |
 | R8 Evren navigasyonu | T19a, T19b | L (2) | R7 kararı | CreditBadge/.padding(.top,54) yerleşimleri kayar | sim: 4 fal yeri (2 "yakında") |
 | R9 Anasayfa gökyüzü | T16, T17, T20, T21 | L (4) | T16-17 T18a'ya da lazım | AstrologyService/MoonService USNO çağrılmaz olur, silinmez; widget ayrı formül (MoonlightWidget:17-50) → SkyEngine | XCTest: 2026-03-03 ve 2026-08-28 ay, 2026-08-12 güneş tutulması; sim: -2 hafta/+1 ay; ay gölgesi aydınlanmaya göre |
-| R10 Apple ile giriş | K4, T22, T23a, T23b | M+L | T09a | Apple ismi yalnız ilk yetkide; anında POST | sim: /api/me isimli; cüzdan aynı |
-| R11 Profil + senkron + web | T24, T25, T34 | M+M+M | T03, T22 | Son yazan kazanır yalnız favori/silme | iki sim aynı hesap; tarayıcıda geçmiş |
+| R10 Horary haritası ("soruyu sorduğun saniyenin haritası") | T18b (çekim T18b sonrası; iş R4 bloğunda) | — | T17, T18a | Gösterge/boş seyir cümlesi yorumda yoksa reels boş | sim: harita ekranı + yorumda gösterge cümlesi; chart yoksa istek yok |
+| R11 Apple giriş + profil + senkron + web ("telefon değiştirdim, falım orada") | K4, T22, T23a, T23b, T24, T25, T34 | M+L+M+M+M | T09a, T03 | Apple ismi yalnız ilk yetkide, anında POST; son yazan kazanır yalnız favori/silme | iki sim aynı hesap; /api/me isimli; cüzdan birleşme kuralına göre; tarayıcıda geçmiş |
 | R12 Kart rehberi | T26a, T26b1-4, T27 | M+4S+M | T03 | CardDetailView:8-57 replace zinciri kalkar; TarotCard.name İngilizce anahtar | 78 kartı gezen rehber; Damla 5 rastgele kart okur; "N kez geldi" ReadingStore ile eşit |
 | R13-15 Resimler | T28a/b/c (yeni dosyalar eklenir, mevcutlara dokunulmaz) | S×3 | Damla çizer | Ad değişirse Image("…") kırılır; adlar damla_tasks ile birebir | build; ekran görüntüsü |
 | R16 Astrolojik karşılık | T33 (kaynak Damla) | M | T04, T26a | Prompt uzar | 3 örnek: gezegen/burç cümlesi; rehberde alan dolu |
@@ -65,8 +65,8 @@ Faz sonunda ekranda ne var: F1 isimli tarot + horary cevabı · F2 3/5/Kelt aç�
 | T09a | R6 | D1 v2 + anon | worker.js, schema.sql → 350 | schema: users(+name,+anon,+invite_code,+invited_by), wallets, kh_timed, readings, agenda, iap_transactions; /api/anon (anon_id + JWT); günlük KH hesapsıza; DeviceCheck yok (T30a) | node test; curl | A "Keychain anonim kimlik + sunucu" |
 | T09b | R6 | Cüzdan uçları | worker.js, wallet.js → 450 | /api/wallet GET, /convert, /iap (T10b ile; JWS imzası T30a'ya kadar yalnız decode + transaction_id tekilliği — ARADA doğrulanmamış makbuz, risk kabul, TestFlight R19 sonrası), /daily-claim; /reading/* borç/iade/4+1 atomik | curl akışı | spec 4 "sunucu doğrusu" |
 | T10a | R6 | İnce adaptör | CreditManager(280), CreditBadge(53), 5 view çağrı satırları → 500 | WalletManager.swift CreditManager'ı sarar; 6 view WalletManager'a bağlanır; davranış aynı | build; sim aynı | — |
-| T10b | R6 | Sunucu cüzdanı | WalletManager, KeychainHelper(56), ReadingAPI → 400 | anon_id Keychain, JWT, fetch/cache, optimistic düşüm; StoreKit kh1/kh3/kh10 → /wallet/iap; CreditManager çağrılmaz olur (dosya durur) | sim bakiye = sunucu | A "credits ve Plus kalkıyor" |
-| T11 | R6 | Cüzdan ekranı | NoCreditView(278), CreditBadge, SettingsView:258-410, WelcomeView(101), NotificationManager:103-118 → 700 | WalletView.swift (coin, süreli KH + süre, süresiz, 4+1, 15→1 butonu, günlük KH, davet alanı yalnız hesaplı, paketler); rozet; metinler | sim | A cüzdan paragrafı |
+| T10b | R6 | Sunucu cüzdanı | WalletManager, KeychainHelper(56), ReadingAPI → 400 | anon_id Keychain, JWT, fetch/cache, optimistic düşüm; StoreKit kh1/kh3/kh10 → /wallet/iap; Moonlight.storekit yerel yapılandırma (kh1/kh3/kh10, scheme'e bağlanır; ASC'yi beklemez), ASC gerçek ürünleri K2b'de, sandbox testi K2b sonrası; CreditManager çağrılmaz olur (dosya durur) | sim bakiye = sunucu | A "credits ve Plus kalkıyor" |
+| T11 | R6 | Cüzdan ekranı | NoCreditView(278), CreditBadge, SettingsView:258-410, WelcomeView(101), NotificationManager:103-118 → 700 | WalletView.swift (coin, süreli KH + süre, süresiz, 4+1, 15→1 butonu, günlük KH, davet alanı yalnız hesaplı ve yalnız T14 yapıldıysa ("yakında" yok, yoksa satır yok), paketler); rozet; metinler | sim | A cüzdan paragrafı |
 | K2b | R6 | Kurulum: AdMob + ASC (Damla) | — | AdMob hesabı + 2 rewarded ad unit (onay günler; K2a ile aynı gün başvur); ASC kh1/kh3/kh10 | ad unit id'leri; ASC ürünleri "Ready to Submit" | A "elle kurulum" |
 | T12 | R6 | Fiyat çağrı yerleri | TarotView, HoraryView, WalletManager → 950 | 1/2/3 KH, ek kart 3 coin, Horary 1 KH, ek soru 3 coin; yetmezse istek gitmez; iade aynı kova; horary 4+1'e girer | sim | A fiyatları |
 | T13 | R6 | AdMob | project.yml, Info.plist, WalletView, worker.js → 500 | GoogleMobileAds SPM (8 GB makinede ilk derleme uzun, tek oturum); UMP izin formu (EEA) + ATT kararı (şu an tracking=false, kişiselleştirilmemiş reklam); 2 rewarded; SSV imza doğrulama → cüzdan; SKAdNetworkItems; ilk ekran kaydı TEST ad unit ile | sim test ad; SSV logu | A "reklam 1 coin", "uzun → KH", "günde 3" |
@@ -74,15 +74,15 @@ Faz sonunda ekranda ne var: F1 isimli tarot + horary cevabı · F2 3/5/Kelt aç�
 | T16 | R9 | SkyEngine ay | project.yml, MoonService(150), MoonPhase(57), AstrologyService:37-82 → 350 | Packages/SkyEngine: CAstronomy (astronomy.c/.h, MIT) + Swift: illumination, phase, quarters(-14,+30), moonSign, ingresses | XCTest bilinen dördün/dolunay ±1 sa (USNO tablosu tarihleri) | A "ayın şekli evreye göre" |
 | T17 | R9 | SkyEngine gezegenler | SkyEngine, HoraryChartService:44-61 → 400 | longitude+speed, ingress, retroStations, voidOfCourse, eclipses | XCTest: 2026-03-03, 08-28 ay; 08-12 güneş (NASA tablosu) | spec 3 |
 | T18a | R4 | HoraryFacts (Swift) | HoraryChartService(329), SkyEngine, ClaudeService:90-145 → 600 | Yöneticiler, 1. ev yöneticisi, Ay, gösterge açıları uygulayan/ayrılan + orb + kalan derece, Ay'ın sonraki açısı, boş seyir; evler yalnız API /houses | XCTest 6 vaka = YAYINLANMIŞ horary örnekleri: Lilly Christian Astrology 1647 (Skyscript'teki örnek haritalar, tarih/saat/yer + kitabın gösterge sonucu) + Frawley Horary Textbook örnekleri; beklenen değer kaynaktan, ajan uydurmaz, kaynak bulunamayan vaka yazılmaz | spec 2 "hazır hesaplanmış"; "chart yoksa istek yok" |
-| T18b | R4 | Horary prompt Worker'a | worker.js, prompt.js, HoraryView(277), HoraryFacts → 700 | prompts/horary.txt + followup; /api/reading/horary: kategori→ev sınıflandırma (küçük çağrı, backend/houses.js) sonra ana yorum; ek soru chart görür; ClaudeService çağrılmaz olur | node test; 3 örnek | A "soruya göre cevap" |
+| T18b | R4/R10 | Horary prompt Worker'a | worker.js, prompt.js, HoraryView(277), HoraryFacts → 700 | prompts/horary.txt + followup; /api/reading/horary: kategori→ev sınıflandırma (küçük çağrı, backend/houses.js) sonra ana yorum; ek soru chart görür; ClaudeService çağrılmaz olur | node test; 3 örnek | A "soruya göre cevap" |
 | T19a | R8 | Evren kabuğu | ContentView(90), HomeView(316), Theme(180), MoonSceneView(177), seçilen mock → 900 | Seçilen kalıba göre kök view; 4 fal yeri; Settings/Wallet giriş | sim | A "evren hissi" |
 | T19b | R8 | Geçişler | T19a, TarotView/HoraryView üst 60 satır → 700 | jest/animasyon; rozet/üst boşluk uyar | sim video | aynı |
 | T20 | R9 | Gökyüzü çizgisi | AstrologyService(189), AstroEvent(63), HomeView(316), DailyReadingService(48), NotificationManager:120-150 → 750 | SkyEvents.swift (-14/+30); AstrologyService/USNO/sabit tutulma çağrılmaz olur; HomeView dikey çizgi; DailyReadingService LLM çağrısı kalkar → şablon cümle | sim; XCTest olay sayısı | A "-2 hafta ve +1 ay" |
 | T21 | R9 | Ay çizimi + widget | MoonSceneView:167-176, HomeView:242-248, MoonlightWidget(170), NotificationManager:183-224 → 450 | Aydınlanmadan gölge maskesi (elips terminatör); widget + bildirim SkyEngine (sadece evre sınırında fark, düşük öncelik: bloğun sonunda) | sim; widget = uygulama | A "ayın şekli" |
-| K4 | R10 | Kurulum faz 4 (Damla) | — | Apple Sign in capability + Services ID; Google client id; Resend + DNS yalnız T23b yapılacaksa | test mail; token doğrulanır | A "elle kurulum" |
-| T22 | R10 | Apple ile giriş | worker.js:76-171, schema, WalletManager, SettingsView:1-110 → 700 | AuthManager.swift (fullName ilk yetkide anında POST; isim zaten varsa tekrar sorulmaz), SignInView.swift; anon→hesap BİRLEŞME KURALI: coins toplanır, kh_perm toplanır, kh_timed birleşir (süreler korunur), spreads_since_gift büyük olan, daily_kh_claimed_on ikisinden en yenisi (aynı gün ikinci günlük KH yok), readings taşınır, hesap kimliği kazanır, anon satırı kapanır | sim: giriş → /api/me; iki bakiye toplamı | A "Apple ile giriş"; spec 5 |
-| T23a | R10 | Google | worker.js:205-216, AuthManager → 400 | GoogleSignIn SPM; JWKS yerel doğrulama; e-posta UNIQUE birleştirme | sim | A "Apple, Google, e-posta" |
-| T23b | R10 | E-posta + şifre (kullanıcı yokken erken; Damla "şimdi" derse) | worker.js, schema, SignInView → 500 | PBKDF2 ≥600k; verify/reset; Resend | node test; sim | aynı |
+| K4 | R11 | Kurulum faz 4 (Damla) | — | Apple Sign in capability + Services ID; Google client id; Resend + DNS yalnız T23b yapılacaksa | test mail; token doğrulanır | A "elle kurulum" |
+| T22 | R11 | Apple ile giriş | worker.js:76-171, schema, WalletManager, SettingsView:1-110 → 700 | AuthManager.swift (fullName ilk yetkide anında POST; isim zaten varsa tekrar sorulmaz), SignInView.swift; anon→hesap BİRLEŞME KURALI: coins toplanır, kh_perm toplanır, kh_timed birleşir (süreler korunur), spreads_since_gift büyük olan, daily_kh_claimed_on ikisinden en yenisi (aynı gün ikinci günlük KH yok), readings taşınır, hesap kimliği kazanır, anon satırı kapanır | sim: giriş → /api/me; iki bakiye toplamı | A "Apple ile giriş"; spec 5 |
+| T23a | R11 | Google | worker.js:205-216, AuthManager → 400 | GoogleSignIn SPM; JWKS yerel doğrulama; e-posta UNIQUE birleştirme | sim | A "Apple, Google, e-posta" |
+| T23b | R11 | E-posta + şifre (kullanıcı yokken erken; Damla "şimdi" derse) | worker.js, schema, SignInView → 500 | PBKDF2 ≥600k; verify/reset; Resend | node test; sim | aynı |
 | T24 | R11 | Senkron | ReadingStore, worker.js, schema → 600 | /api/readings push/pull, /api/agenda; updated_at sunucu saati; son yazan kazanır (favori/silme); kuyruk | iki sim | A "iki cihazda aynı hesap" |
 | T25 | R11 | Profil + konu | SettingsView(520), BirthChartView:300-448, reading uçları → 900 | ProfileView.swift: isim, burç, gündem (son 5 soru), sık konular (readings.topic: yorum çağrısının sonuna "KONU: x" satırı, ek çağrı yok), geçmiş, cüzdan; {{agenda}} prompt'a | sim; 3 örnek | A "sık konular LLM çıkarır", "gündem birikir" |
 | T34 | R11 | Web okuma (Damla kararı: bu turda mı) | app/page.js, app/layout.js, worker.js CORS → 300 | Repodaki Next.js: /gecmis sayfası; Sign in with Apple JS → aynı JWT; /api/readings GET + /api/wallet GET salt okuma; CORS web alanına | tarayıcıda geçmiş + bakiye | A "aynı hesap webden de okunabilir"; spec 5:125-126 |
@@ -105,15 +105,15 @@ Toplam: 50 alt görev (K2a, K2b, K4; T01-T34; T05/T09/T10/T18/T19/T23/T30 ikiye,
 |---|---|---|
 | R4 yorum kalitesi AdMob/ASC'yi bekliyordu | K2 ikiye: K2a (login + D1) T03'ten önce; K2b (AdMob + ASC) yalnız T12-T13 önünde; DeviceCheck .p8 T30a'ya | Yorum, reklam hesabına bağlı değil |
 | R2 reels ekranda ay burcu, yorumda yok | R2 T05b sonrası çekilir (reels dosyasına aynı karar) | Ekranda yorumun kullanmadığı şey gösterilmez |
-| R6 cüzdan cihazda, R10-11 sunucuda | Cüzdan ilk günden sunucuda (/api/anon, Keychain anon_id); R10'da T22 birleşme kuralı | A "Keychain anonim kimlik + sunucu" |
+| R6 cüzdan cihazda, R10-11 sunucuda | Cüzdan ilk günden sunucuda (/api/anon, Keychain anon_id); R11'de T22 birleşme kuralı | A "Keychain anonim kimlik + sunucu" |
 | Tarot prompt cihaz/sunucu | Sunucuda (T05a) | Borç + yorum atomik; token ipa'da açık; web aynı ucu kullanır |
-| Horary derinleşmesi B'de reels'i yok | R4'e bağlı (T18a/b); reels R10 slotu horary'ye (reels dosyası) | Wrapper olmayan çekirdek: harita + efemeris + hafıza |
+| Horary derinleşmesi B'de reels'i yoktu | R10 = horary haritası (karar); iş R4 bloğunda (T18a/b), çekim T18b sonrası; Apple giriş R11'e | Wrapper olmayan çekirdek: harita + efemeris + hafıza |
 | Gezegen hızı API'de var mı DOĞRULANMADI | SkyEngine (T16-17) T18a'dan önce | API'ye yalnız /houses kalır |
 | Kart id'li geçmiş R12'de lazım | T03 R4 bloğunun başına | "N kez" boş başlamasın |
 | CreditManager'ı 6 view okuyor | T10a adaptör → T10b → T11 → T12 | Her adım build yeşil |
-| Erken/gereksiz (eleştirmen) | T23b e-posta, T14 davet, T21 widget bağı: bloğun sonuna, Damla "şimdi" demezse faz kapanışını beklemez | Kullanıcı yokken üç servis kurulmaz |
+| Erken/gereksiz (eleştirmen) | T23b e-posta, T14 davet, T21 widget bağı: bloğun sonuna, Damla "şimdi" demezse faz kapanışını beklemez; R6 çekimi T13 sonrası, T14'e bağlı değil | Kullanıcı yokken üç servis kurulmaz |
 | Web okuma A'da var, plan yoktu | T34 eklendi, Damla "bu turda yok" derse A'dan düşer | Söz verildiyse planlanır |
-Önce altyapı: K2a → T03-T05; T01 → R6; T03 → R11/R12; T05a → R4; T09a → R6/R10; T16-17 → T18a.
+Önce altyapı: K2a → T03-T05; T01 → R6; T03 → R11/R12; T05a → R4; T09a → R6/R11; T16-17 → T18a.
 
 =====================================================================
 4. ALTYAPI (3'er satır)
@@ -136,8 +136,8 @@ Toplam: 50 alt görev (K2a, K2b, K4; T01-T34; T05/T09/T10/T18/T19/T23/T30 ikiye,
 | R6 | R4-R5 borç sonrası; vektörler Swift+JS; 14 coin'de pasif; 4. fal (horary dahil) +1; iade eski expires_at; DEBUG 500 yok; "Moonlight+" grep boş |
 | R8 | R1-R6 ekranları yeni kabuktan; rozet kaymamış |
 | R9 | çizgi; tarih testleri; R4 prompt'ta ay burcu SkyEngine = API (1 gün örnek) |
-| R10 | R6 bakiye birleşme kuralına göre; anon kapandı; isim /api/me; isim ikinci kez sorulmuyor |
-| R11 | iki cihaz geçmişi eşit; {{agenda}} dolu; 4+1 iki cihazda aynı; web'de aynı geçmiş |
+| R10 | R3 örneği yeniden: gösterge gezegenler + Ay'ın sonraki açısı + boş seyir bayrağı prompt'ta; chart yoksa istek yok; R4-R5 tarot örnekleri bozulmamış |
+| R11 | R6 bakiye birleşme kuralına göre; anon kapandı; isim /api/me, ikinci kez sorulmuyor; iki cihaz geçmişi eşit; {{agenda}} dolu; 4+1 iki cihazda aynı; web'de aynı geçmiş |
 | R12 | kart id'leri sayımla eşit; 78 kayıt dolu; Damla 5 kart okudu |
 | R13-15 | Image(ad) kırık yok |
 | R16 | R4-R5 örnekleri astro satırıyla; kombinasyon cümlesi kaybolmamış |
@@ -149,7 +149,7 @@ Sabit: build + test + node yeşil; "yapma" grep (Plus, paylaşım kartı, pixel 
 6. GERÇEK İŞ SIRASI
 =====================================================================
 1 T02 (R1) ── Faz 1 kapanış ──
-2 K2a → 3 T01 → 4 T15 mock → 5 T03 → 6 T04 → 7 T05a → 8 T05b (R2 reels burada çekilir) → 9 T06 → 10 T07 → 11 T08 → 12 T09a → 13 T09b → 14 T10a → 15 T10b → 16 T11 → 17 K2b → 18 T12 → 19 T13 → 20 T16 → 21 T17 → 22 T18a → 23 T18b → 24 T14 (Damla "şimdi" derse) ── Faz 2 kapanış (Haiku/Sonnet kararı) ──
+2 K2a → 3 T01 → 4 T15 mock → 5 T03 → 6 T04 → 7 T05a → 8 T05b (R2 reels burada çekilir) → 9 T06 → 10 T07 → 11 T08 → 12 T09a → 13 T09b → 14 T10a → 15 T10b → 16 T11 → 17 K2b → 18 T12 → 19 T13 (R6 reels burada çekilir) → 20 T16 → 21 T17 → 22 T18a → 23 T18b (R10 reels burada çekilir) → 24 T14 (Damla "şimdi" derse) ── Faz 2 kapanış (Haiku/Sonnet kararı) ──
 25 T19a → 26 T19b → 27 T20 → 28 T21 ── Faz 3 ──
 29 K4 → 30 T22 → 31 T24 → 32 T25 → 33 T34 → 34 T26a → 35-38 T26b1-4 → 39 T27 → 40 T23a → 41 T23b (Damla "şimdi" derse) ── Faz 4 ──
 42-44 T28a/b/c ── Faz 5 ── 45 T33 → R17 hakem → 46 T29 ── Faz 6 ── 47 T30a → 48 T30b → 49 T31 → 50 T32 ── Faz 7 ──
@@ -157,7 +157,7 @@ Sabit: build + test + node yeşil; "yapma" grep (Plus, paylaşım kartı, pixel 
 =====================================================================
 SORULMAMIŞ AMA GÖRDÜKLERİM
 =====================================================================
-- Birim ekonomi hesaplanmadı: 1 Sonnet yorumu vs 1 uzun rewarded reklam geliri; hesapsız herkese günlük 1 KH. Büyüklük sırası olarak yorum reklamdan pahalı görünüyor — DOĞRULANMADI, spec'e iki sayı gerekir (T05b 6 örneğin token sayısı ilk veri olur).
+- Birim ekonomi: spec 9 hesapladı (uzun reklam Sonnet yorumunu ödemiyor, TR eCPM DOĞRULANMADI); ilk gerçek ölçüm T05b'nin 6 örneğinin token sayısı.
 - 0809-kosu.md B R12 "şarkı/kitap" hâlâ yazıyor; A "bu turda yok".
 - /api/claude açık proxy; T05a/T18b ile taşınır, T20'de DailyReadingService çağrısı kalkar, T30a'da uç kapanır. privacy-policy.html R6'dan itibaren yanlış; R19 öncesi TestFlight yok.
 - T09b/T10b arası IAP makbuzu imzasız (decode + tekillik); JWS zinciri T30a. Risk kabul edildi, yazıldı.

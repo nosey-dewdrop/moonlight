@@ -19,7 +19,7 @@ Gökyüzü yoruma nasıl girer?
 - Ayın burcu: element olarak katılır (Ay Yengeç'te = Su vurgusu; açılımdaki Su kartlarını güçlendirir). BUGÜN prompt'a girmiyor: ClaudeService:53 yalnız ay evresini yazar, ay burcu chart'ta var ama tarot prompt'una taşınmıyor. R2 ekranında "Ay Yengeç'te, yorum değişiyor" gösterilemez; ya R2 metni evre/retro olur ya R2 bu iş bitince çekilir.
 - Retro: sadece Merkür/Venüs/Mars retro yoruma girer; dış gezegen retroları yılın yarısı olduğu için yok sayılır (yoksa her yoruma "Plüton retro" giriyor).
 Prompt'a girecek girdi listesi (bu sırayla)?
-- İsim. KARAR DAMLA'NIN: hesapsız ilk falda isim kapısı mı, isimsiz yorum + "ismini yaz, daha iyi olur" mu? Soru metni. Açılım tipi (Kelt'te pozisyon adları).
+- İsim zorunlu, isimsiz yorum yok, hesapsızda da (9 Eyl, Damla). Soru metni. Açılım tipi (Kelt'te pozisyon adları).
 - Her kart: ad (TR), arkana, takım/element, sayı, anahtar kelime.
 - Hesaplanmış dağılım (cihazda sayılır, LLM'e "bu dağılımı hisset ve hikâyeye yedir" diye verilir, "say/listele" diye değil): majör sayısı, element sayımı + zayıflatan/dost çiftler, eksik takım, tekrar eden sayı, saray sayısı.
 - Gökyüzü: Ay evresi + Ay burcu + aktif iç gezegen retroları. Gündem: son 5 sorunun konusu (LLM çıkardığı).
@@ -28,7 +28,7 @@ Prompt'a girecek girdi listesi (bu sırayla)?
 - Ek kart pozisyonsuzdur; "en belirsiz pozisyona ışık" olarak okunur. Prompt'a önceki kartlar + önceki yorum + ek soru + ek kart + aynı gökyüzü verilir (bugün gökyüzü verilmiyor).
 - Ek kart element sayımına dahil edilir; "ilk açılımda Su yoktu, ek kart Kupa geldi" tipi cümle üretilir. Ücret 3 coin (A).
 Mevcut kodda: Moonlight/Services/ClaudeService.swift:36-86 tarot prompt (isim :52 promptDescription ile giriyor, anahtar kelime :40, ay evresi :53, retro :55, 200/400 kelime :81); tarotClarification :172-197 (gökyüzü yok); TarotView.swift:425 max 3 kart, :204-207 Kelt 10 / beş 5 / ilişki 7 / kariyer 9 kredi.
-Eksik: element/majör/sayı/saray sayımı yok; ay burcu prompt'a girmiyor; ilişki ve kariyer açılımı A'da yok (hakem listesi "yapma"); isim boşsa yorum yine üretiliyor (isim politikası Damla kararı).
+Eksik: element/majör/sayı/saray sayımı yok; ay burcu prompt'a girmiyor; ilişki ve kariyer açılımı A'da yok (hakem listesi "yapma"); isim boşsa yorum yine üretiliyor (karar: isim zorunlu, hesapsızda da).
 
 =====================================================================
 2. HORARY  ("soru soruyoruz, soruya göre cevap veriliyor"; 1 KH, ek soru 3 coin)
@@ -92,8 +92,8 @@ Hesapsız kullanıcı?
 - Hesapsız kullanıcı hesap açınca Keychain cüzdanı sunucuya taşınır, Keychain kopyası silinir.
 AdMob / StoreKit (detay T13 ajan brifingine)?
 - Google yayıncı yasak/kısıt listelerinde astroloji/fal YOK; ödül uygulama içi ve devredilemez olmalı, reklam opt-in ve atlanabilir. Apple'da asıl risk 4.3(b) "fal, doygun kategori" reddi. [1][2][3][7][49]
-- Kısa reklam +1 coin ve uzun reklam günlük KH: ikisi de rewarded, ayrı ad unit, ödül sunucu SSV callback'iyle. ATT AdMob'da zorunlu değil; SKAdNetwork ID'leri Info.plist'e. Damla karar: kısa reklam günde kaç kez? [4][5][6][50]
-- KH consumable IAP; iOS 18+ SKIncludeConsumableInAppPurchaseHistory. credits5/10/15 ve Plus "satıştan kaldır". Damla karar: KH paketleri/fiyat ne? Damla karar: eski kredi + Plus geçiş kuralı ne? [18]
+- Kısa reklam +1 coin ve uzun reklam günlük KH: ikisi de rewarded, ayrı ad unit, ödül sunucu SSV callback'iyle. ATT AdMob'da zorunlu değil; SKAdNetwork ID'leri Info.plist'e. Kısa reklam günde 3 (A). [4][5][6][50]
+- KH consumable IAP; iOS 18+ SKIncludeConsumableInAppPurchaseHistory. credits5/10/15 ve Plus "satıştan kaldır". Paketler 1/3/10 KH, fiyat ASC'de Damla; geçiş kuralı yok, mevcut kullanıcı yok (A). [18]
 - TR: uygulama içi reklam göstermek yasağa girmiyor; yasak fal hizmetinin reklamı (docs/0809-arastirma/rakipler.md).
 Mevcut kodda: CreditManager.swift:28 günlük 3 kredi, :30 hoş geldin 10, :32-37 ürünler, :42-45 Plus, :108-114 takvim günü sıfırlama, :131-154 önce günlük sonra satın alınan, :157-169 iade, :8-13 Keychain, :68-73 DEBUG 500 kredi; KeychainHelper.swift:25-27 ThisDeviceOnly; worker.js:147 purchased_credits sütunu var ama endpoint yok; Info.plist'te SKAdNetworkItems/NSUserTracking yok; PrivacyInfo NSPrivacyTracking=false.
 Eksik: coin/KH ayrımı yok; süreli KH yok; sunucu cüzdanı yok; davet kodu yok; DeviceCheck yok; AdMob SDK yok; 4+1 sayacı yok; 15→1 dönüşüm yok; yeni IAP ürünleri yok; geçiş kodu yok; XCTest hedefi yok (MoonlightTests klasörü yok).
@@ -168,7 +168,7 @@ Para kuralları (Wallet saf Swift model, sunucu taklidi ile)?
 - Davet çift ödeme: arkadaşın 2. falında ödül tekrar verilmez; kendi kodu reddedilir; ödül tam 5+5.
 Yorum girdisi (prompt string üstünde)?
 - Kombinasyon analizi: verilen 3 kart için majör sayısı, element sayımı, eksik takım, tekrar eden sayı, saray sayısı beklenen cümlelerle prompt'ta.
-- İsim: prompt'ta kullanıcı adı geçiyor; isim boşken davranış Damla'nın kapı kararına göre test edilir.
+- İsim: prompt'ta kullanıcı adı geçiyor; isim boşken yorum isteği atılmıyor (isim zorunlu, hesapsızda da; 9 Eyl Damla).
 - Ek kart: önceki kartlar + ek kart + ek soru + ay evresi/ay burcu prompt'ta.
 - Horary: gösterge planetleri, Ay'ın sonraki açısı, boş seyir bayrağı prompt'ta; chart yoksa istek atılmıyor.
 Mevcut kodda: test hedefi yok; CreditManager singleton + UserDefaults/Keychain'e bağlı, saf model yok.
@@ -184,13 +184,15 @@ Token tahmini (Türkçe metin İngilizceden ~%30 fazla token yakar; ölçülmedi
 Yorum başına maliyet?
 - Sonnet 5: 3 kart ≈ $0,0074 (0,74 sent); Kelt ≈ $0,013; horary ≈ $0,0095. Sonnet 4.6: 3 kart ≈ $0,011; Kelt ≈ $0,020.
 - Haiku 4.5: 3 kart ≈ $0,0037; Kelt ≈ $0,0066; horary ≈ $0,0048.
-- Faz T25 "her yorumdan sonra konu çıkarımı" küçük çağrısı (Haiku, ~300 girdi / 20 çıktı) ≈ $0,0004; ihmal edilebilir ama sayılmalı.
+- Konu çıkarımı (faz T25) ana yorumun sonunda "KONU:" satırı, ek çağrı yok, maliyet 0.
 Reklam geliri?
 - Rewarded video eCPM: ABD iOS $14–22 (2026), "iyi kurulmuş" $15–30. Türkiye için yayınlanmış sayı bulunamadı; TR orta-alt gelişmekte olan pazar, tahmin $1–4 eCPM → 1 uzun reklam ≈ $0,001–0,004. DOĞRULANMADI (kaynak ABD/global). [51][52]
 Hesapsız herkese günlük 1 KH senaryosu (kullanıcı günde 1 uzun reklam izler, 1 tane 3 kart bakar)?
 - Sonnet 5: gelir $0,001–0,004 − maliyet $0,0074 = kullanıcı başına günde −$0,003 … −$0,006. 10.000 günlük aktif → ayda −$1.000 … −$2.000.
 - Haiku 4.5: $0,001–0,004 − $0,0037 = −$0,003 … +$0,0003. 10.000 aktif → ayda −$800 … +$100.
-- Sonuç: TR eCPM'de reklam yorumun parasını Haiku'da ancak öder, Sonnet'te ödemez. Fark satın alınan KH ve coin→KH dönüşümünden (15 kısa reklam ≈ $0,015–0,06 gelir → 1 süresiz KH, maliyeti $0,0074) kapanmalı. Damla karar: Sonnet mi Haiku mu; ölçüm T05 6 örnekle.
+- 4+1 hediye: her 5. fal bedava → yorum maliyeti ×1,25 (Sonnet 5 3 kart $0,0093, Haiku $0,0046).
+- Kısa reklam ×3/gün: +$0,003–0,012 gelir, maliyetsiz (coin birikir, 15'te 1 süresiz KH = 1 ek yorum maliyeti).
+- Sonuç: kullanıcı-gün net, Sonnet 5: ($0,001–0,004 + $0,003–0,012) − $0,0093 = −$0,005 … +$0,007; Haiku: −$0,001 … +$0,011. Kısa reklamlar izlenirse ikisi de başa baş civarı, izlenmezse Sonnet zarar. Damla karar: Sonnet mi Haiku mu; ölçüm T05b 6 örnekle.
 
 =====================================================================
 KAYNAKLAR

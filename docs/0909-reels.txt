@@ -18,12 +18,12 @@ Hook düz cümle, soru "?" ile biter, tehdit/omen yok. Eleştirmenin zayıf dedi
 
 | R | Hook (ilk cümle · ekran metni) | Ekranda ne | Kitle | Neden çalışır | Çekim için gereken |
 |---|---|---|---|---|---|
-| R1 | "Falına ismini yazınca ne değişiyor?" · "Damla için" | İsimsiz vs isimli aynı 3 kart, yorumun ilk cümlesi yan yana | F+B | Barnum "senin için" etiketi + Sahni 2018 isim | T02 · isimli yorum ilk cümlesi · kayıt evet |
-| R2 | "Aynı üç kart dolunayda başka okunuyor." · "Bugün: dolunay, Ay Yengeç'te, Merkür retro" | Anasayfa olay → yorumda ay evresi + ay burcu cümlesi | F+B | Kişiselleştirme nereden bildiğini söylüyor (White 2008) | T05 (ay burcu prompt'a o zaman giriyor; ekran metni = prompt'ta gerçekten olan: evre + ay burcu + iç gezegen retro) · kayıt evet |
+| R1 | "Falına ismini yazınca ne değişiyor?" · "Damla için" | İsimsiz vs isimli aynı 3 kart, yorumun ilk cümlesi yan yana | F+B | Barnum "senin için" etiketi + Sahni 2018 isim | isimsiz yarı T02 ÖNCESİ build'den çekilir (bugünkü uygulama), isimli yarı T02 sonrası; ikisi de gerçek çıktı · kayıt evet |
+| R2 | "Yorum bugünün gökyüzünü biliyor: dolunay, Ay Yengeç'te." · "Bugün: dolunay, Ay Yengeç'te, Merkür retro" | Anasayfa olay → yorumda ay evresi + ay burcu cümlesi | F+B | Kişiselleştirme nereden bildiğini söylüyor (White 2008) | T05b (ay burcu prompt'a o zaman giriyor; ekran metni = prompt'ta gerçekten olan: evre + ay burcu + iç gezegen retro) · kayıt evet |
 | R3 | "Kart yok, fincan yok. Soruyu yazdım, cevap geldi. Nereden?" · "Horary: sorduğun an + bulunduğun yer" | Soru yaz → harita 2 sn → cevabın ilk cümlesi | F+B | Bilgi boşluğu spesifik ve kapanabilir (Loewenstein 1994) | kodda var · horary cevabı · kayıt evet |
-| R4 | "Bu üç kart sana gelse ne derdin? Uygulamam şunu dedi." · yorumun ilk cümlesi | Açılım → ilk cümle (isim + soruya cevap; sayım cümlesi tek başına değil) | F+B | Pick-a-card jesti + tek çarpıcı isabet (Marks & Kammann) | T05 · tarot yorumu (tarot-only; horary T18'e) · kayıt evet |
+| R4 | "Bu üç kart sana gelse ne derdin? Uygulamam şunu dedi." · yorumun ilk cümlesi | Açılım → ilk cümle (isim + soruya cevap; sayım cümlesi tek başına değil) | F+B | Pick-a-card jesti + tek çarpıcı isabet (Marks & Kammann) | T05b · tarot yorumu (tarot-only; horary T18'e) · kayıt evet |
 | R5 | "Yorumu anlamadım dedim, bir kart daha çekti." · "Anlamadım → ek soru + ek kart" | Buton → ek soru → ek kart → "ilk açılımda Su yoktu" | F | Etkileşim ritüelin kendisi (Dickson & Kelly) | T07 · ek kart yorumu · kayıt evet |
-| R6 | "Her gün bir kahve hakkı, gece yarısı sönüyor." · "Uzun reklam → 1 kahve hakkı · 24 saat" | Cüzdan: KH sayacı, 4+1, sonra o KH ile açılan 3 kart | F+B | Kayıptan kaçınma 2-2.5x (Kahneman & Tversky) | T14 · KH ile açılmış fal · kayıt evet · NOT: kamerada "reklam izle → fal" göstermek §5 hizmete-yönlendirme riski, Damla karar |
+| R6 | "Her gün bir kahve hakkı, gece yarısı sönüyor." · "Uzun reklam → 1 kahve hakkı · 24 saat" | Cüzdan: coin, KH sayacı, 4+1 (davet kodu yok), sonra o KH ile açılan 3 kart | F+B | Kayıptan kaçınma 2-2.5x (Kahneman & Tversky) | T13 (davet T14'e bağlı değil; ekranda davet kodu alanı yoksa gösterilmez) · KH ile açılmış fal · kayıt evet · NOT: kamerada "reklam izle → fal" göstermek §5 hizmete-yönlendirme riski, Damla karar |
 | R7 | "Aynı fal, iki düzen: sekme mi, evren mi?" · "10 saniye: sol sekme, sağ evren" | Mock'ta aynı 3-kart yorumu iki kalıpta yan yana | F+B | Karar anına ortak etme (IKEA etkisi) | T15 · mock'a gerçek yorum metni yapıştırılır · HTML kaydı · gerçek çıktı yoksa F serisinden çıkar, hikâyeye gider (Damla karar) |
 | R8 | "Tarot solda, gökyüzü ortada, horary sağda. Kaydır." · "Tarot · Horary · Gökyüzü · 2 boş yer" | Kabuk → bir açılım açılıyor | F+B | Dönüşüm hook'u ("aylardır bunun üstündeyim, şimdi böyle") [28] | T19 · açılan tarot yorumu · kayıt evet |
 | R9 | "Telefondaki ay dışarıdakiyle aynı mı?" · "-2 hafta / +1 ay" | Ay çizimi + olay çizgisi + bugünün gökyüzü kartı (şablon cümle) | F+B | Fresh start: yeni ay/dolunay başlangıç işareti (Dai 2014) | T20-21 · günlük gökyüzü kartı · kayıt evet |
@@ -52,9 +52,9 @@ Ortak kural: vaat yok, "ücretsiz bakıyorum" yok; süreç dili ("yapıyorum, g�
 =====================================================================
 4. TAKVİM (0909-faz.txt §6; özellik çalışmadan reels yok)
 =====================================================================
-- Hafta 1: R1 (T02), R3 (kodda). R2 artık T05'i bekler → hafta 1'de 2 reels.
-- Faz 2: R2 + R4 (T05), R5 (T07), R7 (T15, erken çekilir, R6'dan sonra yayınlanır), R6 (T14). Faz 3: R8 (T19), R9 (T20-21). Faz 4: R10 (T18b, faz 2 sonunda hazır), R11 (T22+T25), R12 (T27). Faz 5: çizince. Faz 6: R16 (T33), R18 (T29), R20 (T18b+T17). Faz 7: R19, R21.
-- FAZ 2 BOŞLUĞU — KARAR MADDESİ (Damla seçer): (a) R4 ikiye bölünür: T04 sonrası "üç kartın elementi" ekranı (SpreadAnalysis cümlesi), T05 sonrası yorum; (b) faz 2 boyunca hikâye kesitleri (K2 kurulum, test yeşili, prompt dosyası); (c) ikisi. Seçilmezse faz 2'de 3 hafta+ reels yok.
+- Hafta 1: R1 (T02), R3 (kodda). R2 artık T05b'yi bekler → hafta 1'de 2 reels.
+- Faz 2: R2 + R4 (T05b), R5 (T07), R7 (T15, erken çekilir, R6'dan sonra yayınlanır), R6 (T13; davet T14 isteğe bağlı, R6 onu beklemez). Faz 3: R8 (T19), R9 (T20-21). Faz 4: R10 (T18b, faz 2 sonunda hazır), R11 (T22+T25), R12 (T27). Faz 5: çizince. Faz 6: R16 (T33), R18 (T29), R20 (T18b+T17). Faz 7: R19, R21.
+- FAZ 2 BOŞLUĞU — KARAR MADDESİ (Damla seçer): (a) R4 ikiye bölünür: T04 sonrası "üç kartın elementi" ekranı (SpreadAnalysis cümlesi), T05b sonrası yorum; (b) faz 2 boyunca hikâye kesitleri (K2 kurulum, test yeşili, prompt dosyası); (c) ikisi. Seçilmezse faz 2'de 3 hafta+ reels yok.
 - Saat 13:00 / 17-19 İstanbul (araç verisi, DOĞRULANMADI) [4]. EN seslendirme ve LinkedIn A'ya göre sonra.
 
 =====================================================================
@@ -70,6 +70,8 @@ SÖYLEME (10):
 1. "Sana bakayım / falına bakayım / ismini yaz" (hizmet fiili; "danışmanlık" kalıbı) [19].  2. "Ücretsiz" + hizmet ("10 dk ücretsiz") [19].  3. Fiyat, indirim, paket ("%50", "2025 Tarot Paketi") [19].
 4. Vaat: "olacak, gelecek, kavuşacaksın, geleceğini söyler" (677: gaipten haber) [12].  5. "Hayatını aydınlat / değiştir" [19].  6. "Uzman / medyum / astrolog" sıfatı ("uzmanlığıyla yanınızda") [19].
 7. Korku: "dikkat, tehlike, kötü/olumsuz enerji" (RTÜK "olumsuz enerji" kararı; omen tonu yok) [24].  8. "İndir, link bio'da" App Store öncesi.  9. "Yorum yaz / beğen / etiketle" açık isteği (Meta bait) [18].  10. "AI/yapay zekâ senin geleceğini biliyor" (1.1.6: "entertainment purposes" demek Apple'da kuralı aşmaz [27]; Kurul'da vaat).
+ALTYAZI / CAPTION / HASHTAG / BIO: aynı liste geçerli. #fal #falbakma #falcı yok; güvenli: #tarot #gökyüzü #buildinpublic #uygulama; bio'da "fal uygulaması" yerine "tarot + gökyüzü uygulaması, App Store'a hazırlanıyor".
+"BANA DA BAK" YORUMUNA TEK CEVAP: "Çıkınca kendin bakacaksın, haber vereceğim." Yorumda fal yok, isim yok, vaat yok.
 GRİ: "reklam izle → kahve hakkı → fal" kamerada (hizmete yönlendirme okunabilir); "fal" ismi. Diğer: TikTok reklamda fal TR'de yasak, Meta reklam standardında fal maddesi bulunamadı [25][26]; RTÜK yalnız radyo-TV [24]; Apple 4.3(b) doygun kategori [27]; ceza 2026 iki büro çelişik (8.635.800 TL+10 kat [23] / 1.083.706–10.837.065 TL [30]) DOĞRULANMADI; "Moonlight" ad çakışması (Baskin 2024) [12].
 
 =====================================================================

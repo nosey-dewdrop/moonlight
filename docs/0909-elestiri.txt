@@ -78,3 +78,47 @@ DÜZELTMELER — 0909-reels.txt (8)
 8. Faz 2 boşluğu → öneri tablosu: R4 ikiye (T04 ekranı "üç kartın elementi", T05 ekranı yorum) ya da hikâye kesitleri; "not" değil karar maddesi, Damla seçer.
 
 Görmediklerim: simülatör çalıştırmadım; mock HTML'i açmadım; hakem dosyalarının yalnız sonlarını okudum; reklam ve model fiyatlarını kaynaktan çekmedim (bu yüzden ekonomi satırı DOĞRULANMADI).
+
+=====================================================================
+İKİNCİ TUR — 9 Eyl, aynı göz (spec 237 / faz 166, 50 alt görev / reels 97)
+=====================================================================
+KARAR: BİR TUR DAHA, ama kısa: 12 satır düzeltmesi, yeni araştırma yok. T02 ve R3 çekimi bunu beklemez; düzeltmeler K2a'dan önce biter.
+
+Benim 24 maddem — gerçekten çözülen / cümle olarak çözülen?
+- Gerçekten çözülen (18): spec 1:15 tarihçe silindi, 4:86 silindi, 1:26 "hikâyeye yedir" kuralı, DeviceCheck tek satır, AdMob/şifre detayı brifinge, tablo 7 beşe indi, web okuma (5:115-120), birim ekonomi (9); faz K2a/K2b, T05a/b, T26b×4 + Damla 5 kart okur, T18a yayınlanmış vaka + "bulunamazsa yazılmaz", T34, T22 birleşme kuralı, T13 UMP/test ad unit, tek sayfa blok (kimin ne yaptığı 9 satırda okunuyor); reels §5 söyle/söyleme listesi, R7 gerçek yorumla, R10 horary, R11 birleşti, faz 2 boşluğu karar maddesi, iki uyarı başa.
+- Cümle olarak çözülen (3): spec 1:22 "KARAR DAMLA'NIN" hâlâ yazıyor, Damla kararı verdi (isim zorunlu); 1:31 ve 8:171 aynı. Faz 2:114 "T14 bloğun sonuna, Damla şimdi demezse beklemez" der, reels R6 çekimi "T14" ister: davet kodu ertelenirse cüzdan reels'i de ertelenmiş olur, oysa R6'nın davete ihtiyacı yok. Faz §Sorulmamış:160 "birim ekonomi hesaplanmadı" bayat, spec 9 var.
+- Geri giden (3, yeni): spec 4:95 "Damla karar: kısa reklam günde kaç kez?" (A: 3), 4:96 "KH paketleri/fiyat ne?" (A: 1/3/10, fiyatı ASC'de Damla) ve "eski kredi + Plus geçiş kuralı ne?" (A: geçiş yok). Kısaltırken karar satırları soruya dönmüş; T13/T10b ajanı spec'i okuyunca cevaplanmış soruyu hakeme taşır.
+
+Üç belge birbirini tutuyor mu?
+- R2 = T05b sonrası: faz §1, §3, §6 ✓; reels R2 "T05" yazıyor (a/b yok), §4 aynı. Küçük, ama T05a'da istemci yok; "T05b" yazılmalı.
+- R10 = horary: reels ✓, faz §3:110 ✓; faz §1 R10 satırı hâlâ "Apple ile giriş | K4, T22, T23a, T23b", §5 R10 "isim /api/me". Faz tablosu eski R10'u, reels yeni R10'u anlatıyor; hakem R10 sonunda hangisini kontrol eder?
+- T34 web: spec 5 ↔ faz T34 (adım 33) ↔ reels R11 kanıtı "tarayıcıda geçmiş" ✓.
+- K2a/K2b ✓. Gizli sıra: T10b (adım 15) StoreKit kh1/3/10'u çağırıyor, K2b (ASC ürünleri) adım 17. Arada ürün yok; repoda .storekit yapılandırma dosyası da yok (kontrol ettim). T10b'ye "Moonlight.storekit yerel yapılandırma, ASC'yi beklemez" satırı gerekir.
+- T25: faz "ek çağrı yok, yorumun sonuna KONU: satırı"; spec 9:187 hâlâ "küçük çağrı ≈ $0,0004". Biri seçilsin.
+
+Birim ekonomi (spec 9) mantıklı mı?
+- Fiyatlar doğru (claude-api skill, 24 Haz 2026: Sonnet 5 $2/$10, Sonnet 4.6 $3/$15, Haiku 4.5 $1/$5). Çarpımlar doğru: 3 kart Sonnet 5 = 1.200×2 + 500×10 = $0,0074; Kelt $0,0132; horary $0,0095; Haiku $0,0037. Kullanıcı-gün ve 10.000 aktif rakamları tutuyor.
+- Mantık doğru ve sonuç net: TR eCPM tahmininde uzun reklam Sonnet yorumunu ödemez, Haiku'yu ancak öder. Eksik iki kalem: 4+1 hediye (her 5. fal bedava, maliyet +%25) ve "kısa reklam ×3" (günde 3 ek gösterim, maliyetsiz gelir) hesaba girmemiş; ikisi ters yönde, birbirini kabaca dengeler ama yazılmalı. Token sayıları tahmin, T05b'nin 6 örneği ilk gerçek ölçüm; spec bunu söylüyor ✓. TR eCPM DOĞRULANMADI etiketi doğru.
+
+"Kamerada söyle/söyleme" yarın için yetiyor mu?
+- Evet, konuşma için yetiyor: 10+10 somut, "fal" ismi gri / fiili yasak cevabı net, dayanak alıntılı. Yarın çekilebilecek tek reels R3 (T02 yok); listenin SÖYLE 3-4-7'si R3'ü karşılıyor.
+- İki delik: (1) liste konuşmayı kapsıyor, altyazı/caption/hashtag/bio'yu değil — "#fal #falbakma" etiketi ve bio'daki "fal uygulaması" aynı hizmet-sunma kalıbına girer, bir satır lazım. (2) İlk gün en olası tuzak: bir izleyici "bana da bak" yazınca ne cevap verilir? Yorumda fal vermek = CTA2 riskinin kendisi; hazır bir cümle yok ("uygulama çıkınca kendin bakacaksın" gibi).
+- R1 hook'u "isimsiz vs isimli aynı 3 kart": T02'den sonra isimsiz yorum uygulamada ÜRETİLEMEZ (kapı). İsimsiz yarı yalnız T02 öncesi build'den çekilebilir; yazılmazsa sahnelenmiş karşılaştırma olur. R2 "aynı üç kart dolunayda başka okunuyor": kartlar karışık desteden kapalı seçiliyor (TarotView:9,140), aynı üçü ikinci kez çekmek mümkün değil; hook gösterilemeyeni vaat ediyor, ekran zaten "yorumda ay evresi + ay burcu cümlesi".
+
+DÜZELTMELER — spec (4)
+1. 1:22, 1:31, 8:171 → "İsim zorunlu, isimsiz yorum yok, hesapsızda da (9 Eyl, Damla)".
+2. 4:95 → "kısa reklam günde 3 (A)"; 4:96 → "paketler 1/3/10 KH, fiyat ASC'de Damla; geçiş kuralı yok, mevcut kullanıcı yok (A)".
+3. 9:187 → faz T25 ile aynı: "konu çıkarımı ana yorumun sonunda, ek çağrı yok, maliyet 0".
+4. 9:190-193'e iki satır: "4+1 hediye: maliyet ×1,25" ve "kısa reklam ×3/gün: +$0,003–0,012 gelir, maliyetsiz"; sonuç cümlesi buna göre.
+DÜZELTMELER — faz (4)
+1. §1 R10 satırı → "R10 Horary haritası | T18b | — | T17, T18a | … | sim: gösterge cümlesi"; Apple giriş R11 satırına (K4, T22, T23a, T23b). §5 R10 → "gösterge cümlesi prompt'ta; chart yoksa istek yok"; §5 R11'e "isim /api/me, ikinci kez sorulmuyor".
+2. T10b çıktısına → "Moonlight.storekit yerel yapılandırma (kh1/kh3/kh10), ASC ürünleri K2b'de; sandbox testi K2b sonrası".
+3. §3:114 → T14 satırından "faz kapanışını beklemez" kalır ama eklenir: "R6 çekimi T13 sonrası, T14'e bağlı değil".
+4. §Sorulmamış:160 → "spec 9 hesapladı; ilk gerçek ölçüm T05b token sayısı".
+DÜZELTMELER — reels (4)
+1. R1 çekim sütunu → "isimsiz yarı T02 ÖNCESİ build'den çekilir (bugünkü uygulama), isimli yarı T02 sonrası; ikisi de gerçek çıktı".
+2. R2 hook → "Yorum bugünün gökyüzünü biliyor: dolunay, Ay Yengeç'te." (aynı üç kart iddiası kalkar); çekim "T05b".
+3. R6 çekim → "T13" (T14 değil).
+4. §5'e iki satır: "Aynı liste altyazı, caption, hashtag ve bio için geçerli: #fal/#falbakma yok, bio'da 'fal uygulaması' yerine 'tarot + gökyüzü uygulaması'"; "Yorumda 'bana da bak' gelirse tek cevap: 'Çıkınca kendin bakacaksın, haber vereceğim.' Yorumda fal yok."
+
+Görmediklerim (2. tur): simülatör yine çalışmadı; mock HTML açılmadı; reklam eCPM kaynakları [51][52] açılmadı, spec'in DOĞRULANMADI etiketine güvendim.
