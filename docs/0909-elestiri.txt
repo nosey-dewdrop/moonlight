@@ -122,3 +122,24 @@ DÜZELTMELER — reels (4)
 4. §5'e iki satır: "Aynı liste altyazı, caption, hashtag ve bio için geçerli: #fal/#falbakma yok, bio'da 'fal uygulaması' yerine 'tarot + gökyüzü uygulaması'"; "Yorumda 'bana da bak' gelirse tek cevap: 'Çıkınca kendin bakacaksın, haber vereceğim.' Yorumda fal yok."
 
 Görmediklerim (2. tur): simülatör yine çalışmadı; mock HTML açılmadı; reklam eCPM kaynakları [51][52] açılmadı, spec'in DOĞRULANMADI etiketine güvendim.
+
+=====================================================================
+ÜÇÜNCÜ TUR — 9 Eyl, son okuma (spec 239 / faz 166, 50 alt görev / reels 99 / B güncel)
+=====================================================================
+KARAR: HAZIR. Damla yarın R3'ü ve R1'in isimsiz yarısını bugünkü build'den çeker; ajan T02'ye başlar.
+
+12 madde, tek tek?
+- Spec 4/4: 1:22, 1:31, 8:171 "isim zorunlu, hesapsızda da" ✓ · 4:95 "günde 3 (A)", 4:96 "1/3/10, fiyat ASC'de, geçiş yok" ✓ · 9 T25 "ek çağrı yok, maliyet 0" ✓ (faz T25 ile aynı) · 9'a 4+1 ×1,25 ve kısa reklam ×3 girdi; sonuç yeniden hesaplandı, tutuyor: Sonnet 5 kullanıcı-gün (0,004–0,016) − 0,0093 = −0,005…+0,007, Haiku −0,001…+0,011 ✓.
+- Faz 4/4: §1 R10 = horary (T18b; T17, T18a), R11 = K4+T22+T23a/b+T24+T25+T34 ✓ · T10b "Moonlight.storekit yerel, ASC K2b'de, sandbox K2b sonrası" ✓ · §3:114 "R6 çekimi T13 sonrası, T14'e bağlı değil" ✓, T11 de "davet alanı yalnız T14 yapıldıysa" diyor ✓ · §Sorulmamış ekonomi satırı güncel ✓.
+- Reels 4/4: R1 "isimsiz yarı T02 öncesi build, isimli yarı sonrası, ikisi de gerçek" ✓ · R2 hook "Yorum bugünün gökyüzünü biliyor", çekim T05b ✓ (§4 de T05b) · R6 çekim T13, "davet kodu yok" ✓ · §5 altyazı/hashtag/bio satırı + "bana da bak" tek cevabı ✓.
+
+Üç belge + B birbirini tutuyor mu?
+- Evet. B R10 "horary derinliği", R11 "giriş + profil" = faz §1 = reels §2 = faz §3:110. R2/T05b, R6/T13, T34/R11, K2a/K2b, isim kararı: dört yerde aynı cümle. Çelişki bulamadım.
+- Kozmetik, iş değil: faz R11 boyu "M+L+M+M+M" 7 görev için 5 etiket; faz §5 R10 satırını bu turda açmadım (DOĞRULANMADI, karar etkilemez).
+
+Yarın başlayabilir mi?
+- R3: kodda var, §5 SÖYLE 3-4-7 karşılıyor, hook hazır. Evet.
+- R1 isimsiz yarı: bugünkü build isimsiz yorum üretiyor (ClaudeService:52 isim boşsa satır düşüyor). Evet.
+- T02: girdi paketi, kapı yeri (kart seçilir, açmadan önce), karar (zorunlu, hesapsızda da), kanıt (3 örnekte isim) yazılı. Evet.
+Kalan tek not (faz, 1): T02 kapıyı koyar ama bugünkü prompt'ta "ismi kullan" kuralı yok; isim yalnız "Doğum haritası: Name: X" satırında geçiyor (ClaudeService:52, UserProfile:132), model kullanmayabilir → T02 kanıtı "3 örnekte isim" boşa çıkar, R1'in isimli yarısı çekilemez. T02 çıktısına → "ClaudeService tarot + horary prompt'una tek satır: 'Kişiye adıyla hitap et, ilk cümlede.' (T05a'ya kadar köprü)". Spec ve reels'te kalan yok.
+Görmediklerim: simülatör yine çalışmadı; mock HTML açılmadı; §5 R10 satırı.
