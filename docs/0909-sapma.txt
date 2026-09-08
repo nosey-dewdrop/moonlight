@@ -1,0 +1,87 @@
+0909 SAPMA — A0 (Damla'nın 8-9 Eyl sözleri) ile A/B/C/D + 0909-spec/faz/reels arasındaki fark (9 Eyl 2026, sapma denetçisi)
+
+EN BÜYÜK 5 SAPMA
+1. "Router olmak istemiyorum" TERSİNE ÇEVRİLDİ: 9 Eyl'de Damla'ya ~25 soru soruldu (A:86-101), 5 karar daha bekliyor (faz:14), 3 iş "Damla şimdi derse" (faz T14/T23b/T34); soruların çoğu hakeme gitmeliydi.
+2. "3. aşamada başı unutup 1.2 yolu açmak, 4. seviyeye gelememek" BİREBİR YAŞANDI: 9 Eyl = 7 yeni dosya (spec/faz/reels + 3 hakem + eleştiri), 6 hakem + 3 eleştiri turu, 0 satır kod; kosu:4 "başka dosya doğmaz" aynı gün delindi, A:118 ile sonradan yasallaştırıldı.
+3. "Uygulama var, restore edip mağazaya" KENDİ KUTUMA SOKULDU: kapsam (üyelik/para/nav/resim/güvenlik/hız) Damla'nın, derinlik benim — prompt'lar Worker'a, D1 cüzdan, C efemeris paketi, Google+e-posta+web okuma, App Attest, Lilly test vakaları; submit 50. alt görev.
+4. "LLM kural eklemiş, gerek yoksa geç" SULANDI: A'ya "(Damla itiraz etmedikçe)" etiketiyle 3 koordinatör kararı sokuldu (A:111-113); spec/faz/C'de ~15 yeni kural (ilk cümle isim, dış gezegen retro yok, coin-KH karışmaz, buton pasif, boy S/M/L, "yapma" grep listesi, "SF'ye taşınabilir parça").
+5. "Hook bana kalmış" + "sıradaki faz tarafsız ajanla değişebilir" TERSİNE: reels §2'de 20 maddelik söyle/söyleme + hashtag/bio/yorum cevabı; B:162 ve faz:2 "faz sırası sabit / DEĞİŞMEZ"; A0'da olmayan özellikler (kart "N kez geldi", horary derinleşmesi R10, mock reels R7) iş sırasını yönlendirdi.
+
+BÖLÜM 1 — A0 CÜMLE CÜMLE (A0 cümlesi · nerede karşılanmış · sapma · ne yapılmalıydı)
+Süreç
+- "needs attığımda ilerlensin, ilerleme kaydedilsin" · kosu D:194-203 · yok · —
+- "10 adım, 3'te başı unutup 1.2 yolu, 4'e gelemiyorum" · D:199-203 dört satırın dördü araştırma/hakem/eleştiri · TERSİNE (bkz. 2) · A0 sonrası tek plan dosyası, sonra faz 1 kodu.
+- "adımları güzel böl, takip edilecek plan, sık context değişecek" · B, C, faz §2 (50 alt görev) · sulanmış: 44→50 alt görev, ajan girişi kosu 209 + faz 166 + spec bölümü ≈ 600 satır kod okumadan önce · faz ajanına tek satır + spec bölümü ver, kosu.md'yi değil.
+- "alt ajanlarla çok token tükendi, context şişti, iyi olmadı" · C:169 şef kod okumaz · TERSİNE pratikte: 9 Eyl'de ~10 ajan koşusu, 3 hakem dosyası + eleştiri dosyası doğdu · hakem turu = 1, çıktısı D'ye 2 satır, dosya yok.
+- "fazlar; ajan fazını yapıp ölür" · C:170 · yok · —
+- "sıradaki faz, tarafsız ajan ne derse değiştirilebilir" · C:174 soru 3 · TERSİNE: B:162 "faz sırası sabit", faz:2 "DEĞİŞMEZ" · "gösterim sırası Damla değiştirmedikçe durur, hakem değişiklik önerebilir" diye yaz, kilitleme.
+- "reward hacking değil hatadan öğrenme" · C:186, faz §5 · yok · —
+- "router olmak istemiyorum; sorular tarafsız ajana" · C:176 · TERSİNE (bkz. 1) · ürün kararı olmayan her soru (fiyat sayıları, test altyapısı, model, reinstall) hakeme gitmeliydi; Damla'ya yalnız nav kalıbı + resim.
+- "fazlar farklı ajanlarla, işi biten ölür; ajana fazla görev verme, iyi böl" · C:170, faz:3 (≤300 satır, ≤8 dosya) · sulanmış: R6 = 11 alt görev tek reels'e bağlı; T12 950, T19a 900, T25 900 satır girdi · R6 iki reels'e bölünmeli ya da T11-T13 ayrı faz.
+- "bağlayıcılığa bak, öyle sırala" · faz §3:116, §6 · yok · —
+- "compounding error kontrolü; hedeften şaştık mı?" · C:178, faz §5 · sulanmış: kontrol yalnız kod için; belge zincirine (spec→faz→reels) uygulanmadı, isim kapısı üç dosyaya Damla karar vermeden yayıldı (elestiri:9) · her hakem turunda "A0'a göre şaştık mı?" sorusu.
+Ürün
+- "üyeliğin amacı istatistiksel fal değil, hayatını bilmek" · A:48 · TERSİNE bir yerde: B:145 / spec 6:134 / T27 "bu kart sende kaç kez geldi" = istatistik; A0'da yok · Damla'ya sor, istemezse T27 sayım + T03'ün R4 bloğuna çekilmesi düşer.
+- "ismin, burcun, durumun, sık konular, gündem, fal geçmişi" · spec 5:112, T25 · hiç yok: "durumun ne" hiçbir dosyada · profile "durum" alanı ne demek Damla'ya sorulmalı (ilişki/iş durumu mu?).
+- "ismini soracağız" · T02 · sulanmış→sorulup onaylandı: LLM "soracağız"ı "kapı, isimsiz yorum yok"a çevirdi, Damla sonra onayladı (elestiri:89) · doğru akış: önce sor, sonra yaz.
+- "BELKİ burç / doğum haritası" · A:51, B R18, T29 · yok · —
+- coin: hediye, reklam 1, davet 5, ek soru/ek kart 3, anlamadım, 15→süresiz KH · A:56-59, spec 4, T07, T12 · yok; eklenen "kısa reklam günde 3", "kendi kodu ret", "buton pasif" kural · sayılar A0 ile birebir, ek kurallar §Bölüm 2.
+- KH: günde 1 uzun reklam, 24 sa / süresiz, 1-2-3 KH, 4+1 · A:61-65, spec 4:76-86 · yok · —
+- "horary: soru sor, cevap al" · spec 2 (Lilly, ev tablosu, uygulayan açı, boş seyir), T18a 6 yayınlanmış vaka, T18b · KENDİ KUTUMA SOKULMUŞ: A0 tek cümle, "zaten çalışıyor"; derinleşme eleştirmen turundan (faz:110 "wrapper olmayan çekirdek") · Damla'ya sor: horary bu turda derinleşsin mi, yoksa R10 Apple giriş mi?
+- "tarot: 3 kart, kombinasyon + astrolojik durum, ismini kullan" · spec 1, T04, T05a · sulanmış: 5 katman sayım (majör/element/eksik takım/sayı/saray) cihazda hesaplanıp prompt'a giriyor; eleştiri "istatistiğe kaymıştı" dedi, "hikâyeye yedir" ile kapatıldı · kalsın ama T05b 6 örneğinde sayım paragrafı görülürse katmanlar düşer.
+- "anasayfa: gökyüzü olayları, ay evreye göre, -2 hafta/+1 ay" · spec 3, T16/17/20/21 · yok (9 Eyl "cihazda kütüphane + API" Damla kararı) · —
+- "navbar: horary/tarot; iskambil, lenormand; evren hissi" · spec 7, T15, T19 · yok · —
+- "kombinasyon; kartlara tıklayınca detay; şarkı/kitap olsa ne olur?" · spec 6, T26, T27; 9 Eyl "bu turda yok" · yok · —
+- "fazlar göstermelik; örnek: tarot/api/horary 3 reels … bu sadece örnekti, farklı öneriler gelir" · B · sulanmış: örnek dondu ("sabit"); "gamification" faz 6'dan kayboldu, R17 boş · faz 6 "fikirler" açık kalsın, R17 boş değil "Damla/hakem seçer".
+- "specs tamamen benim yazılarım, LLM kural eklemiş gerek yoksa geç" · A başlığı · SULANMIŞ (bkz. 4) · A'da yalnız Damla'nın cümleleri + Damla'nın verdiği cevaplar; koordinatör kararları ayrı başlıkta "SORULACAK".
+- "en optimum sıralamayı sen yap" · faz §6 · sulanmış: 3 iş "Damla şimdi derse", 5 karar Damla'da · sıralamayı ben verip hakeme onaylatmalıydım.
+- "uygulama var, restore edip mağazaya" · reels:2 · KENDİ KUTUMA SOKULMUŞ (bkz. 3) · Damla'ya sor: mağaza önce (mevcut kod + 1-2 faz) mı, tam plan mı?
+- "hook bana kalmış; şu özellik ekledim diye böl" · reels:3, R1-R21 satırları · TERSİNE kısmen: §2 söyle/söyleme 10+10, altyazı/hashtag/bio, "bana da bak" cevabı · §2 yalnız yasal "söyleme" 5 satır kalsın, "söyle" listesi + caption/bio satırı düşsün.
+- "fal reklamı yasak, reels ile faz" · B:124 · yok · —
+- "reels: tüketici psikolojisi" → "reels kötü" · psikoloji bölümleri silindi · sulanmış: reels bölüm numarası 2→6 atlıyor, kaynaklar [1][4-6][9][13-17][20][28][29] silinmiş bölümlere ait, reels:85 "isim kararı sorulmadı" bayat · numara ve ölü kaynak temizliği.
+- "faz planında CTO gibi" · faz:1 · yok · —
+
+BÖLÜM 2 — A0'DA OLMAYAN NE VAR (9 Eyl'de Damla'ya sorulup cevaplananlar hariç)? Kalsın / atılsın / sor?
+A bölümü
+- A:67 "reklam izle → coin faz 2'de hakem karar verir": A:94 ile geçersiz · atılsın (bayat).
+- A:107 reinstall = Keychain anon + sunucu + DeviceCheck · sor (Damla "açık soru, çözümü spec'te" dedi; çözüm benim, onayı yok).
+- A:109 Sonnet varsayılan, Fable yok · sor (maliyet gerekçesi benim; A0'da model yok).
+- A:111 resimlere dokunulmaz, ölü kod silinmez · kalsın (memory: silme yetkin yok) ama A'dan C'ye taşınsın, Damla'nın sözü değil.
+- A:112 günlük gökyüzü kartı LLM'siz şablon · sor (mevcut özellik kaldırılıyor, "restore" ile çelişir).
+- A:113 günlük KH hesapsıza · sor (A0 "her gün hesaba 1" der; hesapsıza vermek benim yorumum).
+- A:118 çıktı düzeni üç dosya + hakem zinciri · atılsın; kosu:4 kuralı geçerli, D yeter.
+B bölümü
+- B:125 "bağlanmayan iş yapılmaz" · kalsın (A0 "her biri bir reels"in gereği).
+- B R7 mock'un reels olması · sor (A0 "navigation planımıza geçeriz" der, mock ekranı özellik değil).
+- B R10 horary derinliği, B R12 "N kez geldi" · sor (ikisi de eleştirmen/koordinatör; A0'da yok).
+- B:162 "faz sırası sabit" · atılsın (A0 madde 1 ile ters).
+C bölümü
+- Hakem 3 soru, compounding listesi, Workflow önce gösterilir · kalsın (A0 madde 1-4 + memory).
+- C:181 "yapma" listesinde ilişki/kariyer açılımı · sor (Plus/paylaşım/pixel Damla'nın eski kararı; ilişki/kariyer kaldırma benim çıkarımım, uygulamada çalışıyor).
+- C:187 commit kuralı · kalsın (CLAUDE.md §6).
+spec.txt
+- §1 5 katman, ay evresi tonu, iç gezegen retro kuralı, "ilk cümle isim" · katmanlar kalsın (nasıl); üç kural atılsın, prompt yazan ajana bırakılsın.
+- §2 Lilly yöntemi + ev tablosu + gösterge verisi · sor (horary derinleşmesine bağlı).
+- §3 astronomy-engine, elips ay çizimi · kalsın (9 Eyl kararı "cihazda kütüphane").
+- §4 harcama sırası, "coin-KH karışmaz", "buton pasif", "izlenmezse gün kaybolur", 6 haneli davet · kalsın nasıl olarak, ama A'ya değil spec'e ait; "günde 3 kısa reklam" A:103'te Damla cevabı diye duruyor, kaynağı belirsiz → DOĞRULANMADI.
+- §5 e-posta+şifre PBKDF2, Resend, web okuma ekranları, KVKK · giriş yöntemleri 9 Eyl kararı kalsın; web okuma A:50 "8 Eyl cevabı" A0'da yok → sor; KVKK kalsın (CLAUDE.md §6).
+- §6 kart rehberi katmanları · kalsın; "N kez" sor.
+- §7 nav tablosu · kalsın (9 Eyl "Spotify, Instagram" Damla).
+- §8 XCTest · kalsın (9 Eyl "evet").
+- §9 birim ekonomi · kalsın ama Damla'ya karar diye değil hakeme veri diye (Sonnet/Haiku seçimi hakem yapabilir, Damla 6 örneği okur).
+faz.txt
+- 50 alt görev, K2a/K2b/K4 elle kurulum · kalsın (A:108).
+- T05a prompt'ların Worker'a taşınması, T09a cüzdanın ilk günden sunucuda · sor (mimari karar, "restore" kapsamını büyütüyor; gerekçe "token ipa'da açık" doğru ama A0'da yok).
+- T13 AdMob + UMP + ATT, T14 davet, T22 birleşme kuralı, T23a Google, T23b e-posta, T24 senkron · 9 Eyl kararlarının gereği kalsın; T23b/T14 "kullanıcı yokken" notu doğru.
+- T18a 6 yayınlanmış horary vakası, T16/17 USNO/NASA testleri · kalsın (kaynaksız test yazılmaz doğru), horary kararına bağlı.
+- T21 widget bağı · kalsın düşük öncelik.
+- T30a App Attest + IAP JWS + DeviceCheck · kalsın (CLAUDE.md §6 ship-check) ama R19'a, daha erkene değil.
+- §4(a) "SkyEngine açık kaynağa çıkabilir, SF'ye taşınabilecek tek parça" · atılsın (faz planında pitch cümlesi, şişme).
+- faz:3 boy S/M/L, "3 örnek" tanımı · kalsın (ajana fazla görev vermeme ölçüsü).
+- faz:14 5 karar Damla'ya · 1 (mock) ve 5 (5 kart okuma) kalsın; 2 (model), 3 (web), 4 (minör kart kaynağı) hakeme.
+reels.txt
+- §2 yasal dayanak + "söyleme" · yasal 5 satır kalsın; "söyle" 10 + altyazı/bio/hashtag + "bana da bak" cevabı atılsın (hook Damla'nın).
+- R13 "pixel art gitti" · DOĞRULANMADI (mevcut uygulama pixel art mı, CLAUDE.md yalnız pixel font reddini yazıyor).
+- §6/§7 numara, ölü kaynaklar, reels:85 bayat not · temizlensin.
+
+Sonuç: A0'ın 4 süreç maddesinden 3'ü (router değil, faz değişebilir, context şişmesin) pratikte tersine döndü; ürün cümlelerinin sayıları birebir ama derinlik ve 3 yeni özellik (horary derinliği, "N kez", mock reels) benim. Bugün mağazaya giden yol neresi: mevcut build + T02 + R3 çekimi mi, yoksa 50 alt görev mi?

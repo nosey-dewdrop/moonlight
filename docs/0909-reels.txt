@@ -45,44 +45,10 @@ Sıra: reels, özellik çalışmadan çekilmez. Faz 2 uzun; boşlukta R7 ve çiz
 Kanal: TR Instagram. EN sonra seslendirmeli. LinkedIn App Store sonrası.
 
 =====================================================================
-2. KAMERADA / ALTYAZIDA — SÖYLE / SÖYLEME
+2. KAMERADA / ALTYAZIDA — SÖYLE / SÖYLEME (kısa; dayanak ve kaynaklar 0909-reels-hakem.txt ve git geçmişinde)
 =====================================================================
-Dayanak: Yönetmelik "falcı, medyum, astrolog ve benzerleri tarafından verilen HİZMET reklamları hiçbir şekilde yapılamaz" (RG 1 Tem 2026 sayı 33297, yürürlük 1 Ağu 2026; ntv metniyle doğrulandı, RG açılmadı) [21]. Kurul 10 Eki 2023: YouTube + Instagram + 39 site, durdurma + erişim engeli [22]. Kurul 16 Oca 2025 (tarih hakem doğrulaması): ADC Boru Metal Ltd., Instagram @astrocenterturkiye, 863.580 TL; cezalandırılan ifadeler: "Hayatınızı Aydınlatın!", "Durugörü, Reiki ve Bioenerji Uzmanlığıyla Yanınızda!", "Yeni Üyelere Özel %50 İndirim!", "10 Dakika Ücretsiz Danışmanlık!" [19]. Üçüncü kişinin ücretli hizmeti; kurucunun kendi ürün sürecine birebir emsal DEĞİL, emsal yok.
-"FAL" KELİMESİ: yasak kelime değil, yasak olan HİZMET reklamı. Kurul'un cezalandırdığı kalıp = hizmet fiili + fiyat/ücretsiz + vaat + uzman sıfatı. Kelimeyi isim olarak söylemek ("fal uygulaması yapıyorum") cezalandırılmış örnek yok; fiil olarak ("sana fal bakayım") cezalandırılan kalıbın kendisi. En güvenli dil: "tarot uygulaması", "kart çektim", "yorum", "harita", "gökyüzü"; "fal" isim olarak gri, fiil olarak söyleme. Emsal yok → hukukçu görüşü (karar Damla'nın).
-SÖYLE (10):
-1. "Yapıyorum / kodladım / çizdim / ölçtüm" (süreç).  2. Kendi ismim, kendi kartlarım, kendi sorum.  3. "Yorum", "kart", "harita", "gökyüzü", "açılım".
-4. "Bugün gökyüzünde şu var" (astronomik olgu).  5. "App Store'a hazırlıyorum, gönderdim."  6. "Sen olsan ne sorardın?" (soru toplama, hizmet değil).
-7. "Anlamadım dedim, bir kart daha çekti" (ürün davranışı).  8. "Sil dedim, sunucudan silindi."  9. "Çıkınca haber vereceğim."  10. "Bu benim için yansıtma/günlük" (677 diline karşı).
-SÖYLEME (10):
-1. "Sana bakayım / falına bakayım / ismini yaz" (hizmet fiili; "danışmanlık" kalıbı) [19].  2. "Ücretsiz" + hizmet ("10 dk ücretsiz") [19].  3. Fiyat, indirim, paket ("%50", "2025 Tarot Paketi") [19].
-4. Vaat: "olacak, gelecek, kavuşacaksın, geleceğini söyler" (677: gaipten haber) [12].  5. "Hayatını aydınlat / değiştir" [19].  6. "Uzman / medyum / astrolog" sıfatı ("uzmanlığıyla yanınızda") [19].
-7. Korku: "dikkat, tehlike, kötü/olumsuz enerji" (RTÜK "olumsuz enerji" kararı; omen tonu yok) [24].  8. "İndir, link bio'da" App Store öncesi.  9. "Yorum yaz / beğen / etiketle" açık isteği (Meta bait) [18].  10. "AI/yapay zekâ senin geleceğini biliyor" (1.1.6: "entertainment purposes" demek Apple'da kuralı aşmaz [27]; Kurul'da vaat).
-ALTYAZI / CAPTION / HASHTAG / BIO: aynı liste geçerli. #fal #falbakma #falcı yok; güvenli: #tarot #gökyüzü #buildinpublic #uygulama; bio'da "fal uygulaması" yerine "tarot + gökyüzü uygulaması, App Store'a hazırlanıyor".
-"BANA DA BAK" YORUMUNA TEK CEVAP: "Çıkınca kendin bakacaksın, haber vereceğim." Yorumda fal yok, isim yok, vaat yok.
-GRİ: "reklam izle → kahve hakkı → fal" kamerada (hizmete yönlendirme okunabilir); "fal" ismi. Diğer: TikTok reklamda fal TR'de yasak, Meta reklam standardında fal maddesi bulunamadı [25][26]; RTÜK yalnız radyo-TV [24]; Apple 4.3(b) doygun kategori [27]; ceza 2026 iki büro çelişik (8.635.800 TL+10 kat [23] / 1.083.706–10.837.065 TL [30]) DOĞRULANMADI; "Moonlight" ad çakışması (Baskin 2024) [12].
-
-=====================================================================
-
-=====================================================================
-6. KAYNAKLAR
-=====================================================================
-[1] docs/0809-arastirma/psikoloji.md (Pew 2024, Dickson & Kelly, Sahni 2018, Lindeman 1998, Dai 2014, Loewenstein)  [2] https://www.isbul.net/is-rehberi/burclara-gore-meslek-secimi-nasil-olmalidir-2026-rehberi (ikincil)
-[4] https://www.radaar.io/free-tools/best-times-to-post/europe-istanbul/  [5] https://fooddrinklife.com/tiktok-tarot-card-pulls/  [6] https://www.boshemiamagazine.com/blog/tik-tok-tarot-jennifer-cartwright
-[9] https://www.yahoo.com/lifestyle/meet-banu-guler-ceo-co-150000063.html ; https://techcrunch.com/2019/04/17/co-star-astrology-app-seed-round/  [12] docs/0809-arastirma/rakipler.md
-[13] https://www.indiehackers.com/post/your-build-in-public-audience-is-not-your-market-i-learned-the-difference-the-slow-way-2cbea1089d  [14] https://www.distributionbase.com/blog/channels/x-twitter/build-in-public-results
-[15] https://www.mediapost.com/publications/article/415494/meta-series-feature-welcomes-episodic-reels-cont.html  [16] https://creatorflow.so/blog/instagram-dm-waitlist-pre-launch/  [17] https://developer.apple.com/news/?id=09262018a
-[18] https://transparency.meta.com/features/approach-to-ranking/content-distribution-guidelines/engagement-bait/  [19] https://www.aserlegal.com/blog-reklam-kurulundan-863580-tl-lik-rekor-ceza-fal-ve-astroloji-tanitimlarinda-uymaniz-gerekenler-33
-[20] https://about.fb.com/news/2024/12/trial-reels-try-content-non-followers-first-see-what-perfoms-best/  [21] https://www.ntv.com.tr/ntvpara/galeri-ticaret-bakanligindan-yeni-duzenleme-1-agustosta-basliyor-artik-internette-o-reklamlar-yasak-1735203
-[22] https://tuketici.ticaret.gov.tr/haberler/reklam-kurulu-10-ekim-2023-tarihinde-338-toplantisini-gerceklestirdi  [23] https://www.cbhukuk.com/influencer-reklam-kurallari/  [24] https://www.rtuk.gov.tr/UstKurulKarar/Detay/6902
-[25] https://ads.tiktok.com/help/article/tiktok-ads-policy-other-products-and-services  [26] https://searchengineland.com/you-cant-advertise-that-the-big-list-of-prohibited-ads-across-social-and-search-platforms-322222  [27] https://developer.apple.com/app-store/review/guidelines/
-[28] https://presskit.gg/field-guides/tiktok-indie-game-marketing  [29] https://www.researchgate.net/publication/399035645 (tam metin 403, özet)  [30] https://bilalalyar.av.tr/gizli-reklam-cezasi-rehberi/
-Erişilemeyen: turkishminute.com, Female Founders Fund Co-Star yazısı, ResearchGate tam metin, Meta reklam standartları fal maddesi, Resmî Gazete 33297 metni.
-
-=====================================================================
-7. SORULMAMIŞ AMA GÖRDÜKLERİM
-=====================================================================
-- TR'de "uygulamamı yapıyorum / day X" Türkçe örnek bulunamadı. Cal AI / Rizz / Locket kurucu serisiyle değil ücretli yaratıcıyla büyüdü; kurucu-yüzlü seriyle büyüyen tüketici uygulaması vakası bulamadım.
-- R1 isim kapısı: eleştirmen "isim yoksa yorum yok" kararının Damla'ya sorulmadığını yazdı; R1 hook'u isimli/isimsiz karşılaştırma olarak yazıldı, iki kararla da çalışır.
-- Davet kodu (+5 coin) = uygulama içi referral; "hizmete yönlendirme" sayılır mı, emsal yok, DOĞRULANMADI.
-- 0809-kosu.md B R12'de "şarkı/kitap" hâlâ yazıyor; A "bu turda yok". R10/R20 içerik değişikliği B'nin "reels içeriği hakem kararına açık" satırına dayanır; slot sayısı ve faz sırası değişmedi.
-- Görmediklerim: Damla'nın Instagram hesabı (kim takip ediyor, sayı), simülatörde gerçek yorum metni, mock HTML görünümü, Resmî Gazete metni.
+Yasak olan HİZMET reklamı ("falcı, medyum, astrolog hizmetleri", Reklam Kurulu). Kendi ürününü yaptığını anlatmak için emsal yok, ne lehte ne aleyhte.
+Söyle: yapıyorum / düzelttim / çizdim / ölçtüm; kendi ismim, kendi kartlarım; yorum, kart, harita, gökyüzü, açılım; App Store'a hazırlıyorum; çıkınca haber vereceğim.
+Söyleme: sana bakayım / ismini yaz; ücretsiz + hizmet; fiyat, indirim; olacak / gelecek / kavuşacaksın; hayatını değiştir; uzman / medyum; korku, olumsuz enerji; indir (App Store öncesi); yorum yaz / beğen isteği.
+"Fal" kelimesi: isim olarak gri, fiil olarak ("fal bakayım") cezalandırılan kalıp. Güvenli: "tarot uygulaması". Hashtag: #tarot #gökyüzü #buildinpublic; #fal yok.
+"Bana da bak" yorumuna: "Çıkınca kendin bakacaksın, haber vereceğim."
