@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonlight — Font karşılaştırma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Nunito:wght@400;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#0b0b2e; --accent:#FFE566; --card:#12123a; --border:#2a2a5e; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  body{
+    background:
+      radial-gradient(900px 500px at 50% -10%, rgba(167,139,250,.18), transparent 60%),
+      radial-gradient(700px 400px at 50% 110%, rgba(255,229,102,.10), transparent 60%),
+      var(--bg);
+    min-height:100vh; color:#fff; padding:48px 24px;
+    font-family:'Nunito',sans-serif;
+    display:flex; flex-direction:column; align-items:center; gap:36px;
+  }
+  .pagehead{ text-align:center; opacity:.7; font-size:14px; letter-spacing:.5px; }
+  .row{ display:flex; gap:28px; flex-wrap:wrap; justify-content:center; width:100%; max-width:880px; }
+  .card{
+    flex:1 1 380px; max-width:420px; background:var(--card);
+    border:1px solid var(--border); border-radius:24px; padding:30px 28px 34px;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  .tag{
+    display:inline-block; font-family:'Nunito'; font-size:12px; font-weight:700;
+    letter-spacing:1px; text-transform:uppercase; color:var(--accent);
+    background:rgba(255,229,102,.10); border:1px solid rgba(255,229,102,.25);
+    padding:5px 12px; border-radius:999px; margin-bottom:22px;
+  }
+  .moon{
+    width:84px; height:84px; border-radius:50%; margin:0 auto 18px;
+    background:radial-gradient(circle at 35% 30%, #fff6cf, #ffe566 45%, #d9a93a 100%);
+    box-shadow:0 0 36px rgba(255,229,102,.45);
+  }
+  .applogo{ text-align:center; font-size:34px; line-height:1.1; margin-bottom:6px; }
+  .sub{ text-align:center; opacity:.6; font-size:13px; margin-bottom:26px; }
+  .h{ font-size:22px; margin-bottom:10px; }
+  .body{ font-size:16px; line-height:1.65; opacity:.92; margin-bottom:18px; }
+  .meta{ font-size:13px; opacity:.55; margin-bottom:22px; }
+  .btn{
+    display:block; text-align:center; background:var(--accent); color:#1a1400;
+    font-weight:700; padding:13px; border-radius:14px; font-size:16px;
+  }
+
+  /* Direction A — warm serif (Fraunces) */
+  .serif .applogo{ font-family:'Fraunces'; font-weight:600; font-style:italic; letter-spacing:.3px; }
+  .serif .h{ font-family:'Fraunces'; font-weight:600; }
+  .serif .body{ font-family:'Fraunces'; font-weight:400; }
+  .serif .meta{ font-family:'Nunito'; }
+  .serif .btn{ font-family:'Fraunces'; font-weight:600; }
+
+  /* Direction B — soft rounded sans (Quicksand) */
+  .sans .applogo{ font-family:'Quicksand'; font-weight:700; letter-spacing:.5px; }
+  .sans .h{ font-family:'Quicksand'; font-weight:700; }
+  .sans .body{ font-family:'Quicksand'; font-weight:500; }
+  .sans .meta{ font-family:'Quicksand'; font-weight:500; }
+  .sans .btn{ font-family:'Quicksand'; font-weight:700; }
+</style>
+</head>
+<body>
+  <div class="pagehead">Moonlight — aynı ekran, iki font yönü. Soldan sağa karşılaştır.</div>
+  <div class="row">
+
+    <!-- A: Serif -->
+    <div class="card serif">
+      <span class="tag">A · Sıcak serif (Fraunces)</span>
+      <div class="moon"></div>
+      <div class="applogo">Moonlight</div>
+      <div class="sub">Büyüyen Hilal · 28 Haziran</div>
+      <div class="h">Bugünün falı</div>
+      <div class="body">Çağırdığın yıldızlar ışıldıyor. Bugün içine doğan o sesi dinle; aradığın cevap sandığından daha yakın, yalnızca biraz sabır istiyor.</div>
+      <div class="meta">Güneş Yengeç · Yükselen Başak · Ay Akrep</div>
+      <div class="btn">Falına bak</div>
+    </div>
+
+    <!-- B: Sans -->
+    <div class="card sans">
+      <span class="tag">B · Yumuşak yuvarlak sans (Quicksand)</span>
+      <div class="moon"></div>
+      <div class="applogo">Moonlight</div>
+      <div class="sub">Büyüyen Hilal · 28 Haziran</div>
+      <div class="h">Bugünün falı</div>
+      <div class="body">Çağırdığın yıldızlar ışıldıyor. Bugün içine doğan o sesi dinle; aradığın cevap sandığından daha yakın, yalnızca biraz sabır istiyor.</div>
+      <div class="meta">Güneş Yengeç · Yükselen Başak · Ay Akrep</div>
+      <div class="btn">Falına bak</div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>moonlight · mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14112a;--ink2:#1b1638;--line:rgba(255,255,255,.09);--card:rgba(255,255,255,.04);
+    --gold:#EBD6A0;--text:#F3EFFA;--muted:#A69FC0;--faint:#6f6890;
+    --serif:"Fraunces",Georgia,serif;--sans:"Inter",-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+  body{background:radial-gradient(1100px 700px at 30% 8%,#221a44,#0c0920 72%);min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    font-family:var(--sans);padding:26px 12px;color:#b8b0d4}
+  .caption{max-width:390px;text-align:center;font-size:12.5px;line-height:1.6;color:#9990b8}
+  .caption b{color:var(--gold);font-weight:500}
+
+  .phone{width:390px;height:800px;border-radius:52px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,var(--ink),#0e0a24);
+    box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 11px #05030f,0 0 0 13px #221c3e}
+  .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#05030f;border-radius:20px;z-index:60}
+  .stars{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .stars i{position:absolute;background:#fff;border-radius:50%;animation:tw 4s ease-in-out infinite}
+  @keyframes tw{0%,100%{opacity:.15}50%{opacity:.6}}
+
+  .head{position:absolute;top:54px;left:0;right:0;z-index:40;display:flex;align-items:center;
+    justify-content:space-between;padding:0 24px;height:36px}
+  .head .date{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--faint)}
+  .avatar{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none;cursor:pointer;
+    color:var(--gold);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+
+  .track{position:absolute;top:0;left:0;height:800px;width:1170px;display:flex;z-index:10;
+    transition:transform .42s cubic-bezier(.5,.05,.2,1);will-change:transform;touch-action:pan-y}
+
+  /* Profil = push overlay opened from the avatar (not a tab) */
+  .overlay{position:absolute;inset:0;z-index:55;background:linear-gradient(180deg,var(--ink),#0e0a24);
+    transform:translateX(100%);transition:transform .4s cubic-bezier(.5,.05,.2,1);overflow-y:auto;
+    scrollbar-width:none;padding:58px 24px 40px}
+  .overlay::-webkit-scrollbar{display:none}
+  .overlay.open{transform:translateX(0)}
+  .overlay .back{background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;margin-bottom:10px}
+  .lobby{width:390px;height:800px;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;padding:100px 24px 110px}
+  .lobby::-webkit-scrollbar{display:none}
+
+  /* simple tab bar — line icons, no emoji */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;z-index:50;height:88px;
+    background:linear-gradient(180deg,rgba(14,10,36,0),rgba(10,7,26,.94) 45%);
+    display:flex;align-items:flex-start;justify-content:space-around;padding:16px 40px 0}
+  .tab{background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;
+    color:var(--faint);transition:.25s}
+  .tab svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.5}
+  .tab .lb{font-size:11px;letter-spacing:.2px}
+  .tab.on{color:var(--gold)}
+
+  h1{font-family:var(--serif);font-weight:300;color:var(--text);font-size:38px;line-height:1.08;letter-spacing:-.3px}
+  .greet{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .kicker{color:var(--gold);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px}
+  .sub{color:var(--muted);font-size:15px;line-height:1.6;font-family:var(--serif);font-weight:300}
+  .row{display:flex;align-items:center}
+  .section-h{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin:30px 0 14px}
+  .rule{height:1px;background:var(--line)}
+
+  /* moon = honest empty slot (light only, no fake character) */
+  .moonslot{width:184px;height:184px;border-radius:50%;margin:6px auto 0;position:relative;
+    background:radial-gradient(circle at 42% 40%,rgba(235,214,160,.16),transparent 68%);
+    display:flex;align-items:center;justify-content:center}
+  .moonslot .ring{width:150px;height:150px;border-radius:50%;border:1px dashed rgba(235,214,160,.28)}
+  .moonslot .t{position:absolute;bottom:-4px;font-size:10px;color:var(--faint);letter-spacing:.5px}
+
+  .big3{display:flex;gap:1px;background:var(--line);border-radius:16px;overflow:hidden;margin-top:2px}
+  .b3{flex:1;text-align:center;background:var(--ink2);padding:18px 6px}
+  .b3 .lab{font-size:10px;letter-spacing:1.5px;color:var(--faint);text-transform:uppercase}
+  .b3 .n{font-family:var(--serif);font-size:20px;color:var(--text);margin-top:8px;font-weight:400}
+
+  .listrow{display:flex;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+  .listrow:last-child{border-bottom:none}
+  .listrow .nm{color:var(--text);font-size:15px}
+  .listrow .meta{margin-left:auto;color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+  .listrow .sign{color:var(--faint);font-size:13px;margin-left:10px}
+
+  .when{color:var(--gold);font-size:12px;min-width:50px}
+  .evt .t{color:var(--text);font-size:15px}.evt .d{color:var(--muted);font-size:13px;margin-top:2px}
+
+  .fallist .listrow .nm{font-family:var(--serif);font-size:18px;font-weight:400}
+  .fallist .listrow .d{color:var(--muted);font-size:13px;margin-top:3px}
+  .iconslot{width:34px;height:34px;border:1px solid var(--line);border-radius:9px;margin-right:14px;flex:none}
+
+  .link{color:var(--gold);font-size:14px;margin-top:18px;display:inline-block;border-bottom:1px solid rgba(235,214,160,.35);padding-bottom:2px}
+  .disc{font-size:11px;color:var(--faint);text-align:center;margin-top:26px;line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="caption">
+  <b>moonlight</b> — mock v3, çıkararak. Emoji yok, sahte ay yok, gradient gürültüsü yok. Alt <b>3 tab</b>: bas ya da yana kaydır.
+  Yuvarlak/kare kesik çizgiler = <b>senin çizimin gelecek slot</b> (dürüst boş, sahte değil).
+</div>
+
+<div class="phone">
+  <div class="notch"></div>
+  <div class="stars" id="stars"></div>
+
+  <div class="head">
+    <div class="date">8 TEMMUZ</div>
+    <button class="avatar" id="avatar">D</button>
+  </div>
+
+  <div class="track" id="track">
+
+    <!-- BUGÜN -->
+    <section class="lobby">
+      <div class="greet">İyi akşamlar, Damla</div>
+      <div class="moonslot"><div class="ring"></div><div class="t">ay çizimin</div></div>
+      <h1 style="text-align:center;margin-top:22px">Dolunay</h1>
+      <p class="sub" style="text-align:center;margin-top:10px;padding:0 6px">
+        Akrep Ay’ında — hislerin bu gece yüksek sesle konuşuyor.
+      </p>
+
+      <div class="section-h">Yaklaşan gökyüzü</div>
+      <div class="row evt" style="padding:2px 0 16px"><div class="when">2 gün</div><div><div class="t">Merkür retrosu bitiyor</div><div class="d">iletişim yeniden akıyor</div></div></div>
+      <div class="rule"></div>
+      <div class="row evt" style="padding:16px 0"><div class="when">6 gün</div><div><div class="t">Venüs → Yay</div><div class="d">aşk hafifliyor</div></div></div>
+      <div class="rule"></div>
+      <div class="row evt" style="padding:16px 0"><div class="when">12 gün</div><div><div class="t">Yeni Ay · Oğlak</div><div class="d">niyet ekme zamanı</div></div></div>
+
+      <a class="link">Uyumunu keşfet →</a>
+      <p class="disc">Eğlence ve öz-yansıma amaçlıdır; gelecekten haber vermez.</p>
+    </section>
+
+    <!-- FAL -->
+    <section class="lobby">
+      <div class="kicker">Fal</div>
+      <h1>Ne sormak<br>istersin?</h1>
+      <div class="fallist" style="margin-top:26px">
+        <div class="listrow"><div class="iconslot"></div><div><div class="nm">Tarot</div><div class="d">78 kart, derin açılımlar</div></div></div>
+        <div class="listrow"><div class="iconslot"></div><div><div class="nm">Lenormand</div><div class="d">36 kart, net cevaplar</div></div></div>
+        <div class="listrow"><div class="iconslot"></div><div><div class="nm">İskambil</div><div class="d">klasik kâğıt falı</div></div></div>
+        <div class="listrow"><div class="iconslot"></div><div><div class="nm">Horary</div><div class="d">tek soru, o anın göğü</div></div></div>
+      </div>
+
+      <div class="section-h">Geçmiş okumaların</div>
+      <div class="row" style="padding:2px 0 16px"><div class="nm" style="color:var(--text);font-size:15px">“Bu iş bana göre mi?”</div><div class="meta" style="margin-left:auto;color:var(--muted)">dün</div></div>
+      <div class="rule"></div>
+      <div class="row" style="padding:16px 0"><div class="nm" style="color:var(--text);font-size:15px">“Geri dönecek mi?”</div><div class="meta" style="margin-left:auto;color:var(--muted)">1 hafta</div></div>
+    </section>
+
+    <!-- PROFİL -->
+    <section class="lobby">
+      <div class="kicker">Profil</div>
+      <h1>Damla</h1>
+      <p class="sub" style="margin-top:8px;font-size:14px">14 Mart 2003 · 09:20 · İstanbul</p>
+
+      <!-- the creative centerpiece: the real natal chart wheel -->
+      <div id="wheel" style="margin:22px auto 6px;width:262px;height:262px"></div>
+      <p style="text-align:center;font-size:11px;color:var(--faint);letter-spacing:.5px">gezegene dokun → hikâyesi açılır</p>
+
+      <div class="big3" style="margin-top:20px">
+        <div class="b3"><div class="lab">Güneş</div><div class="n">Balık</div></div>
+        <div class="b3"><div class="lab">Ay</div><div class="n">Akrep</div></div>
+        <div class="b3"><div class="lab">Yükselen</div><div class="n">İkizler</div></div>
+      </div>
+      <a class="link">Tam haritayı aç →</a>
+
+      <div class="section-h">Hesap</div>
+      <div class="listrow"><div class="nm">Kredin</div><div class="meta">124</div></div>
+      <div class="listrow"><div class="nm">moonlight+</div><div class="meta" style="color:var(--gold)">Yükselt</div></div>
+      <div class="listrow"><div class="nm">Bildirimler</div><div class="meta">›</div></div>
+      <div class="listrow"><div class="nm">Verilerim & gizlilik</div><div class="meta">›</div></div>
+    </section>
+
+  </div>
+
+  <div class="tabbar" id="tabbar">
+    <button class="tab on" data-i="0">
+      <svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 10.5 4a6.2 6.2 0 0 0 9.5 10.5Z"/></svg>
+      <span class="lb">Bugün</span>
+    </button>
+    <button class="tab" data-i="1">
+      <svg viewBox="0 0 24 24"><rect x="4" y="3" width="12" height="17" rx="2"/><path d="M8 20l9-1.5"/></svg>
+      <span class="lb">Fal</span>
+    </button>
+  </div>
+</div>
+
+<div class="caption" style="opacity:.6">
+  Bir satıra / gezegene dokununca <b>tam ekran üste açılır</b> (push). Tab'lar sakin. Kesik çizgi slotlar = senin el çizimlerin.
+</div>
+
+<script>
+  const s=document.getElementById('stars');
+  for(let i=0;i<40;i++){const e=document.createElement('i');const sz=Math.random()*1.8+.8;
+    e.style.width=e.style.height=sz+'px';e.style.left=Math.random()*100+'%';e.style.top=Math.random()*100+'%';
+    e.style.animationDelay=(Math.random()*4)+'s';if(Math.random()<.18)e.style.background='#EBD6A0';s.appendChild(e);}
+
+  const track=document.getElementById('track');
+  const tabs=[...document.querySelectorAll('.tab')];
+  const W=390;let idx=0;
+  function go(i){idx=Math.max(0,Math.min(2,i));
+    track.style.transition='transform .42s cubic-bezier(.5,.05,.2,1)';
+    track.style.transform='translateX('+(-W*idx)+'px)';
+    tabs.forEach(t=>t.classList.toggle('on',+t.dataset.i===idx));}
+  tabs.forEach(t=>t.onclick=()=>go(+t.dataset.i));
+  document.getElementById('avatar').onclick=()=>go(2); // avatar → Profil
+  window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(idx+1);if(e.key==='ArrowLeft')go(idx-1);});
+
+  // ── natal chart wheel (the creative centerpiece) ──────────────────
+  (function drawWheel(){
+    const NS='http://www.w3.org/2000/svg', S=262, C=S/2;
+    const svg=document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox','0 0 '+S+' '+S);svg.setAttribute('width','100%');svg.setAttribute('height','100%');
+    const gold='#EBD6A0', faint='rgba(235,214,160,.30)', line='rgba(255,255,255,.10)';
+    function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+    function pt(r,deg){const a=(deg-90)*Math.PI/180;return[C+r*Math.cos(a),C+r*Math.sin(a)];}
+    const rZo=124,rZi=100,rHi=46,rPl=74;
+    // rings
+    [rZo,rZi,rHi].forEach(r=>svg.appendChild(el('circle',{cx:C,cy:C,r,fill:'none',stroke:line,'stroke-width':1})));
+    // 12 divisions + zodiac glyphs
+    const zg=['♈','♉','♊','♋','♌','♍','♎','♏','♐','♑','♒','♓'];
+    for(let i=0;i<12;i++){
+      const d=i*30;
+      const [x1,y1]=pt(rHi,d),[x2,y2]=pt(rZo,d);
+      svg.appendChild(el('line',{x1,y1,x2,y2,stroke:line,'stroke-width':1}));
+      const [gx,gy]=pt((rZo+rZi)/2,d+15);
+      const g=el('text',{x:gx,y:gy,fill:faint,'font-size':13,'text-anchor':'middle','dominant-baseline':'central'});
+      g.textContent=zg[i];svg.appendChild(g);
+    }
+    // planets (mock degrees) — dot + glyph, tappable
+    const planets=[{g:'☉',d:355,n:'Güneş'},{g:'☽',d:222,n:'Ay'},{g:'☿',d:340,n:'Merkür'},
+      {g:'♀',d:308,n:'Venüs'},{g:'♂',d:14,n:'Mars'},{g:'♃',d:138,n:'Jüpiter'},{g:'♄',d:82,n:'Satürn'}];
+    planets.forEach(p=>{
+      const [px,py]=pt(rPl,p.d);
+      const grp=el('g',{style:'cursor:pointer'});
+      grp.appendChild(el('line',{x1:C,y1:C,x2:px,y2:py,stroke:'rgba(235,214,160,.12)','stroke-width':1}));
+      grp.appendChild(el('circle',{cx:px,cy:py,r:12,fill:'rgba(20,17,42,.9)',stroke:faint,'stroke-width':1}));
+      const t=el('text',{x:px,y:py,fill:gold,'font-size':13,'text-anchor':'middle','dominant-baseline':'central'});
+      t.textContent=p.g;grp.appendChild(t);
+      grp.onclick=()=>{document.querySelectorAll('#wheel circle[data-p]').forEach(c=>c.setAttribute('stroke',faint));
+        c2.setAttribute('stroke',gold);flash.textContent=p.n+' · dokundun → detay push';};
+      const c2=grp.querySelector('circle');c2.setAttribute('data-p',p.n);
+      svg.appendChild(grp);
+    });
+    // center moon dot
+    svg.appendChild(el('circle',{cx:C,cy:C,r:5,fill:gold}));
+    const flash=el('text',{x:C,y:S-6,fill:'rgba(235,214,160,.55)','font-size':9,'text-anchor':'middle'});
+    svg.appendChild(flash);
+    document.getElementById('wheel').appendChild(svg);
+  })();
+
+  let sx=0,sy=0,dragging=false,axis=null;
+  function down(x,y){sx=x;sy=y;dragging=true;axis=null;track.style.transition='none';}
+  function move(x,y,ev){if(!dragging)return;const dx=x-sx,dy=y-sy;
+    if(axis===null&&(Math.abs(dx)>6||Math.abs(dy)>6))axis=Math.abs(dx)>Math.abs(dy)?'x':'y';
+    if(axis==='x'){if(ev&&ev.cancelable)ev.preventDefault();track.style.transform='translateX('+(-W*idx+dx)+'px)';}}
+  function up(x){if(!dragging)return;dragging=false;const dx=x-sx;
+    if(axis==='x'){if(dx<-70)go(idx+1);else if(dx>70)go(idx-1);else go(idx);}else go(idx);}
+  track.addEventListener('mousedown',e=>down(e.pageX,e.pageY));
+  window.addEventListener('mousemove',e=>move(e.pageX,e.pageY,e));
+  window.addEventListener('mouseup',e=>up(e.pageX));
+  track.addEventListener('touchstart',e=>down(e.touches[0].pageX,e.touches[0].pageY),{passive:true});
+  track.addEventListener('touchmove',e=>move(e.touches[0].pageX,e.touches[0].pageY,e),{passive:false});
+  track.addEventListener('touchend',e=>up((e.changedTouches[0]||{}).pageX||sx));
+</script>
+</body>
+</html>

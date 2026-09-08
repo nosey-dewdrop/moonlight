@@ -4,6 +4,7 @@ struct ContentView: View {
     @State private var selectedTab = 1
     @State private var moonData: MoonData?
     @State private var showWelcome = false
+    @State private var showSplash = true
     @ObservedObject private var creditManager = CreditManager.shared
 
     private let moonService = MoonService()
@@ -40,10 +41,19 @@ struct ContentView: View {
                 .padding(.bottom, 24)
                 .background(Theme.bg.opacity(0.95))
             }
+
+            if showSplash {
+                SplashView()
+                    .transition(.opacity)
+                    .zIndex(10)
+            }
         }
         .ignoresSafeArea()
         .task {
             moonData = moonService.calculateMoonPhase(date: Date())
+            // Hold the splash briefly so branding registers, then fade out.
+            try? await Task.sleep(nanoseconds: 1_400_000_000)
+            withAnimation(.easeOut(duration: 0.5)) { showSplash = false }
         }
         .onAppear {
             if creditManager.isFirstLaunch {

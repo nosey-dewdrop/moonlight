@@ -1,0 +1,330 @@
+<!DOCTYPE html><html lang="tr"><head><meta charset="utf-8">
+<title>Moonlight — UI mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b2e;--gold:#FFE566;--lilac:#c3c0ec;--ink:#eeedf9;
+  --glass:rgba(255,255,255,.09);--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Quicksand',sans-serif}
+body{background:#0e0e18;color:var(--ink);padding:36px 24px 60px;
+  background-image:radial-gradient(900px 500px at 50% -5%,rgba(167,139,250,.12),transparent 60%)}
+h1.page{text-align:center;font-weight:600;color:#fff;font-size:20px;margin-bottom:4px}
+p.page{text-align:center;color:#8484a6;font-size:12.5px;margin-bottom:30px}
+.row{display:flex;gap:32px;overflow-x:auto;padding:6px 6px 22px;align-items:flex-start}
+.col{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:11px}
+.cap{color:#8484a6;font-size:12px;font-weight:500}
+.phone{position:relative;width:294px;height:636px;border-radius:40px;overflow:hidden;
+  border:6px solid #1c1c24;box-shadow:0 24px 64px rgba(0,0,0,.5);
+  background:linear-gradient(rgba(11,11,46,.12),rgba(11,11,46,.44)),
+    url("processed/bg_3.png") center/cover no-repeat,#20204d}
+.phone.form{background:linear-gradient(rgba(9,9,32,.5),rgba(9,9,32,.76)),
+    url("processed/bg_3.png") center/cover no-repeat,#191940}
+.scr{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;overflow-y:auto}
+.scr::-webkit-scrollbar{display:none}
+.grain{position:absolute;inset:0;z-index:40;pointer-events:none;opacity:.07;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.status{height:40px;flex:0 0 40px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;font-size:11.5px;font-weight:600;color:#fff;opacity:.8}
+.ph{display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;
+  border:1.5px dashed rgba(255,229,102,.5);background:rgba(255,229,102,.06);
+  color:var(--gold);font-size:9px;font-weight:700;letter-spacing:.3px}
+.ph.circle{border-radius:50%}.ph.round{border-radius:14px}.abs{position:absolute}
+.glass{background:var(--glass);backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px);
+  border:1px solid var(--line);border-radius:18px}
+.btn{text-align:center;background:linear-gradient(180deg,#ffef9f,var(--gold));color:#2a2100;
+  font-weight:600;padding:12px;border-radius:14px;font-size:14px;box-shadow:0 8px 20px rgba(255,229,102,.22)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+.kick{color:var(--gold);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase}
+.title{font-size:19px;font-weight:600;line-height:1.3;color:#fff}
+.muted{color:#c3c0ec;opacity:.8}
+.dots{display:flex;gap:6px}.dots i{width:6px;height:6px;border-radius:8px;background:rgba(255,255,255,.26)}
+.dots i.on{width:18px;background:var(--gold)}
+.icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:15px;background:rgba(255,255,255,.09);border:1px solid var(--line)}
+.field{padding:13px 15px;border-radius:14px;color:#fff;font-size:14px;font-weight:500;
+  background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.badge{display:flex;align-items:center;gap:5px;padding:6px 11px;border-radius:18px;font-size:12.5px;font-weight:600}
+.rowline{display:flex;align-items:center;gap:10px;padding:12px 13px;border-radius:14px;
+  background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:13px;font-weight:500}
+.chip{flex:1;text-align:center;padding:8px 4px;border-radius:12px;font-size:12px;font-weight:600;border:1px solid var(--line)}
+.chip.on{background:rgba(255,229,102,.16);color:var(--gold);border-color:rgba(255,229,102,.4)}
+.tabbar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;z-index:30;
+  display:flex;gap:4px;padding:7px;border-radius:22px}
+.tab{width:54px;height:50px;border-radius:15px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;color:#cdcceb;font-size:9.5px;font-weight:600}
+.tab.on{background:rgba(255,229,102,.15);color:var(--gold)}
+.tab .d{width:19px;height:19px;border:1.3px dashed rgba(255,229,102,.5);border-radius:5px;
+  background:rgba(255,229,102,.06)}
+.tab.moon .d,.tab.ball .d{border-radius:50%}
+.tab.on .d{border:1.4px solid var(--gold);background:rgba(255,229,102,.18)}
+.zsign{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px}
+.zsign .g{font-size:22px}.zsign .l{font-size:10px;color:#cdcceb;font-weight:600}.zsign .v{font-size:12px;color:var(--gold);font-weight:700}
+.bubble{position:absolute;z-index:24;max-width:172px;padding:11px 13px;border-radius:15px 15px 15px 4px;
+  font-size:12px;line-height:1.45;color:#2a2540;background:#efe9ff;font-weight:500;box-shadow:0 10px 24px rgba(0,0,0,.28)}
+.tgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.tcard{aspect-ratio:2/3;border-radius:6px;border:1px dashed rgba(255,229,102,.35);
+  background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;
+  color:rgba(255,229,102,.6);font-size:13px}
+.tcard.on{border:1.5px solid var(--gold);color:var(--gold);background:rgba(255,229,102,.12)}
+</style></head>
+<body>
+<h1 class="page">Moonlight — modernize UI (placeholder assetlerle)</h1>
+<p class="page">onboarding · Ay · Bugün · Tarot · Horary · Ayarlar · Doğum haritası — eski yapı korundu</p>
+<div class="row">
+
+<!-- 1 WELCOME -->
+<div class="col"><div class="phone"><div class="scr">
+  <div class="status"><span>20:14</span><span>◐ 100%</span></div>
+  <div style="position:relative;flex:1">
+   <div class="ph circle abs" style="top:44px;left:50%;transform:translateX(-50%);width:118px;height:118px">AY<br>(faz)</div>
+   <div class="ph round abs" style="top:78px;left:24px;width:58px;height:32px">BULUT</div>
+   <div class="ph round abs" style="top:88px;right:22px;width:50px;height:28px">BULUT</div>
+   <div class="ph circle abs" style="top:36px;left:40px;width:18px;height:18px">★</div>
+   <div class="ph circle abs" style="top:30px;right:52px;width:15px;height:15px">★</div>
+  </div>
+  <div style="padding:0 24px 32px;text-align:center">
+   <div class="kick" style="margin-bottom:8px">gökyüzü seni bekliyor</div>
+   <div style="font-size:26px;font-weight:600;color:#fff">Moonlight</div>
+   <p class="muted" style="font-size:13px;margin:10px 6px 20px;line-height:1.5">Ayın fazları, doğum haritan ve sana özel fallar tek bir gökyüzünde.</p>
+   <div class="btn" style="margin-bottom:10px">Başla</div>
+   <div class="btn ghost">Zaten hesabım var</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">1 · Karşılama</div></div>
+
+<!-- 2 NAME -->
+<div class="col"><div class="phone form"><div class="scr">
+  <div class="status"><span>20:14</span><span>◐ 100%</span></div>
+  <div style="padding:14px 24px 26px;display:flex;flex-direction:column;flex:1">
+   <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><div class="icon">‹</div><div class="dots"><i class="on"></i><i></i><i></i></div></div>
+   <div class="kick" style="margin-bottom:10px">1/3 · tanışalım</div>
+   <div class="title">Sana nasıl hitap edelim?</div>
+   <p class="muted" style="margin:12px 0 20px;font-size:13px;line-height:1.5">İsmin selamlamalarda ve fal yorumlarında kullanılır.</p>
+   <input class="field" value="Damla" readonly>
+   <div style="flex:1"></div><div class="btn">Devam</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">2 · İsim</div></div>
+
+<!-- 3 BIRTH DATE -->
+<div class="col"><div class="phone form"><div class="scr">
+  <div class="status"><span>20:15</span><span>◐ 100%</span></div>
+  <div style="padding:14px 24px 26px;display:flex;flex-direction:column;flex:1">
+   <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><div class="icon">‹</div><div class="dots"><i></i><i class="on"></i><i></i></div></div>
+   <div class="kick" style="margin-bottom:10px">2/3 · doğum günün</div>
+   <div class="title">Ne zaman doğdun?</div>
+   <p class="muted" style="margin:12px 0 16px;font-size:13px;line-height:1.5">Güneş burcun ve haritan bununla hesaplanır.</p>
+   <div class="glass" style="padding:16px;display:flex;justify-content:center;gap:12px;font-size:16px;font-weight:600">
+     <span style="opacity:.4">13</span><span style="color:var(--gold)">14</span><span style="opacity:.4">15</span><span style="opacity:.3">·</span>
+     <span style="opacity:.4">Nis</span><span style="color:var(--gold)">May</span><span style="opacity:.4">Haz</span><span style="opacity:.3">·</span><span style="color:var(--gold)">2002</span>
+   </div>
+   <div style="flex:1"></div><div class="btn">Devam</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">3 · Doğum tarihi</div></div>
+
+<!-- 4 BIRTH TIME + CAT -->
+<div class="col"><div class="phone form"><div class="scr">
+  <div class="status"><span>20:15</span><span>◐ 100%</span></div>
+  <div style="padding:14px 24px 26px;display:flex;flex-direction:column;flex:1;position:relative">
+   <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><div class="icon">‹</div><div class="dots"><i></i><i></i><i class="on"></i></div></div>
+   <div class="kick" style="margin-bottom:10px">3/3 · doğum saatin</div>
+   <div class="title">Saat kaçta?</div>
+   <div class="glass" style="padding:16px;display:flex;justify-content:center;gap:10px;font-size:19px;font-weight:600;margin-top:14px">
+     <span style="opacity:.4">09</span><span style="color:var(--gold)">10</span><span style="opacity:.4">11</span><span style="opacity:.3">:</span>
+     <span style="opacity:.4">24</span><span style="color:var(--gold)">25</span><span style="opacity:.4">26</span>
+   </div>
+   <label class="rowline" style="margin-top:14px"><span style="width:22px;height:22px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.05)"></span>Saatimi bilmiyorum <span class="muted" style="font-weight:500">(12:00)</span></label>
+   <div style="flex:1"></div>
+   <div class="ph circle abs" style="bottom:112px;left:24px;width:62px;height:62px">GÜLEN<br>YILDIZ</div>
+   <div class="bubble" style="bottom:126px;left:94px">Hatırlıyorsan saatini gir 🌙 girmezsen küçük sapmalar olabilir.</div>
+   <div class="btn">Haritamı oluştur</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">4 · Doğum saati + kedi</div></div>
+
+<!-- 5 HOME (Ay) — eski yapı: ay + faz + olaylar -->
+<div class="col"><div class="phone"><div class="scr" style="padding-bottom:76px">
+  <div class="status"><span>20:16</span><span>◐ 100%</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:2px 18px 0">
+   <div class="icon">☰</div>
+   <div class="glass badge"><span style="color:var(--gold)">✦</span> 3</div>
+  </div>
+  <div style="text-align:center;margin-top:8px">
+   <div style="color:var(--gold);font-size:15px;font-weight:600;letter-spacing:.3px">Büyüyen Hilal</div>
+   <div class="muted" style="font-size:11.5px;margin-top:2px">%64 aydınlık · 1 Temmuz</div>
+  </div>
+  <div style="position:relative;height:182px;margin-top:2px">
+   <div class="ph circle abs" style="top:44px;left:50%;transform:translateX(-50%);width:118px;height:118px">AY<br>(faz)</div>
+   <div class="ph round abs" style="top:148px;left:50%;transform:translateX(-50%);width:112px;height:36px">BULUT (büyük)</div>
+   <div class="ph round abs" style="top:120px;left:16px;width:56px;height:30px">BULUT</div>
+   <div class="ph round abs" style="top:126px;right:16px;width:50px;height:28px">BULUT</div>
+   <div class="ph circle abs" style="top:34px;left:34px;width:15px;height:15px">★</div>
+   <div class="ph circle abs" style="top:26px;right:44px;width:13px;height:13px">★</div>
+   <div class="ph circle abs" style="top:74px;right:22px;width:20px;height:20px">GEZ.</div>
+  </div>
+  <div style="display:flex;justify-content:center;gap:26px;margin-top:2px;font-size:12px" class="muted"><span>↑ 14:20</span><span>↓ 01:45</span></div>
+  <div style="margin:14px 16px 0">
+   <div style="font-size:13px;font-weight:600;color:#fff;opacity:.85;margin-bottom:8px">Gökyüzü Olayları</div>
+   <div class="rowline" style="margin-bottom:7px;padding:10px 12px"><div class="ph round" style="width:28px;height:28px;flex:0 0 28px">İKON</div><div><div style="font-weight:600;font-size:12.5px">Dolunay</div><div class="muted" style="font-size:11.5px">Yengeç'te · 3 Temmuz</div></div></div>
+   <div class="rowline" style="padding:10px 12px"><div class="ph round" style="width:28px;height:28px;flex:0 0 28px">İKON</div><div><div style="font-weight:600;font-size:12.5px">Merkür retrosu</div><div class="muted" style="font-size:11.5px">bitiyor · 5 Temmuz</div></div></div>
+  </div>
+ </div>
+ <div class="tabbar glass">
+   <div class="tab"><div class="d"></div>Bugün</div>
+   <div class="tab moon on"><div class="d"></div>Ay</div>
+   <div class="tab"><div class="d"></div>Tarot</div>
+   <div class="tab ball"><div class="d"></div>Horary</div>
+ </div><div class="grain"></div>
+</div><div class="cap">5 · Ana ekran / Ay (eski yapı)</div></div>
+
+<!-- 6 BUGÜN (yeni tab) -->
+<div class="col"><div class="phone"><div class="scr" style="padding-bottom:76px">
+  <div class="status"><span>20:16</span><span>◐ 100%</span></div>
+  <div style="padding:6px 16px 0">
+   <div class="muted" style="font-size:12.5px;font-weight:600">1 Temmuz Salı</div>
+   <div style="font-size:20px;font-weight:600;color:#fff">Bugün</div>
+  </div>
+  <!-- bugünün falı -->
+  <div class="glass" style="margin:14px 16px 0;padding:15px">
+   <div class="kick" style="margin-bottom:7px">bugünün falı · sana özel</div>
+   <p style="font-size:13px;line-height:1.55;color:#fff">Işıldıyorsun Damla. Yengeç güneşin sezgilerini keskinleştiriyor; bugün içine doğan sesi dinle.</p>
+   <div class="btn" style="margin-top:11px;padding:9px;font-size:12.5px">Devamını oku</div>
+  </div>
+  <!-- bugünün burç yorumu -->
+  <div class="glass" style="margin:12px 16px 0;padding:15px">
+   <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:18px">♋</span><div class="kick">bugünün burç yorumu · yengeç</div></div>
+   <p style="font-size:13px;line-height:1.55;color:#eeedf9">Duyguların bugün rehberin. Bir yakınınla arandaki buz çözülebilir; ilk adımı atan sen ol.</p>
+  </div>
+  <!-- stamp -->
+  <div class="glass" style="margin:12px 16px 0;padding:13px 15px">
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px"><div class="kick">fal kartın</div><div class="muted" style="font-size:11.5px;font-weight:600">1 fal sonra hediye 🎁</div></div>
+   <div style="display:flex;gap:8px;align-items:center">
+     <span style="flex:1;height:24px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#2a2100;font-size:11px;font-weight:700">✦</span>
+     <span style="flex:1;height:24px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#2a2100;font-size:11px;font-weight:700">✦</span>
+     <span style="flex:1;height:24px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#2a2100;font-size:11px;font-weight:700">✦</span>
+     <span style="flex:1;height:24px;border-radius:50%;border:1.5px dashed rgba(255,229,102,.5)"></span>
+     <span style="flex:0 0 28px;height:28px;border-radius:50%;background:rgba(255,229,102,.14);border:1px solid rgba(255,229,102,.4);display:flex;align-items:center;justify-content:center;font-size:14px">🎁</span>
+   </div>
+  </div>
+  <!-- geçmiş günler -->
+  <div style="margin:16px 16px 0">
+   <div style="font-size:13px;font-weight:600;color:#fff;opacity:.85;margin-bottom:9px">Geçmiş günler</div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:7px"><span>30 Haziran</span><span class="muted" style="font-size:12px">"cesur ol" ›</span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:7px"><span>29 Haziran</span><span class="muted" style="font-size:12px">"sabır" ›</span></div>
+   <div class="rowline" style="justify-content:space-between"><span>28 Haziran</span><span class="muted" style="font-size:12px">"yeni kapı" ›</span></div>
+  </div>
+ </div>
+ <div class="tabbar glass">
+   <div class="tab on"><div class="d"></div>Bugün</div>
+   <div class="tab moon"><div class="d"></div>Ay</div>
+   <div class="tab"><div class="d"></div>Tarot</div>
+   <div class="tab ball"><div class="d"></div>Horary</div>
+ </div><div class="grain"></div>
+</div><div class="cap">6 · Bugün (fal + burç + geçmiş)</div></div>
+
+<!-- 7 TAROT -->
+<div class="col"><div class="phone"><div class="scr" style="padding-bottom:76px">
+  <div class="status"><span>20:17</span><span>◐ 100%</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:2px 16px 0">
+   <div style="font-size:16px;font-weight:600;color:var(--gold)">Tarot</div>
+   <div class="glass badge"><span style="color:var(--gold)">✦</span> 3</div>
+  </div>
+  <div style="padding:12px 16px 0;text-align:center">
+   <div class="muted" style="font-size:12.5px">3'e kadar kart seç · okuma başı 1 kredi</div>
+   <input class="field" placeholder="Sorun ne?" style="width:100%;text-align:center;margin-top:12px">
+   <div class="btn" style="margin-top:10px">Kart Aç</div>
+   <div class="tgrid" style="margin-top:14px">
+     <div class="tcard on">✦</div><div class="tcard">?</div><div class="tcard on">✦</div><div class="tcard">?</div><div class="tcard">?</div>
+     <div class="tcard">?</div><div class="tcard">?</div><div class="tcard on">✦</div><div class="tcard">?</div><div class="tcard">?</div>
+     <div class="tcard">?</div><div class="tcard">?</div><div class="tcard">?</div><div class="tcard">?</div><div class="tcard">?</div>
+   </div>
+   <div class="muted" style="font-size:12px;margin-top:8px">3/3 seçildi · 78 kart</div>
+  </div>
+  <div style="margin:16px 16px 0">
+   <div style="font-size:13px;font-weight:600;color:#fff;opacity:.7;margin-bottom:9px">Premium Açılımlar</div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:7px"><div><div style="font-weight:600;font-size:13px">Kelt Haçı</div><div class="muted" style="font-size:11.5px">10 kart</div></div><span style="color:var(--gold);font-size:12px">10 kredi</span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:7px"><div><div style="font-weight:600;font-size:13px">Beş Kart Açılımı</div><div class="muted" style="font-size:11.5px">5 kart</div></div><span style="color:var(--gold);font-size:12px">5 kredi</span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:7px"><div><div style="font-weight:600;font-size:13px">İlişki Açılımı</div><div class="muted" style="font-size:11.5px">7 kart</div></div><span style="color:var(--gold);font-size:12px">7 kredi</span></div>
+   <div class="rowline" style="justify-content:space-between"><div><div style="font-weight:600;font-size:13px">Kariyer Yolu</div><div class="muted" style="font-size:11.5px">9 kart</div></div><span style="color:var(--gold);font-size:12px">9 kredi</span></div>
+  </div>
+ </div>
+ <div class="tabbar glass">
+   <div class="tab"><div class="d"></div>Bugün</div>
+   <div class="tab moon"><div class="d"></div>Ay</div>
+   <div class="tab on"><div class="d"></div>Tarot</div>
+   <div class="tab ball"><div class="d"></div>Horary</div>
+ </div><div class="grain"></div>
+</div><div class="cap">7 · Tarot (kart seç + açılımlar)</div></div>
+
+<!-- 8 HORARY -->
+<div class="col"><div class="phone"><div class="scr" style="padding-bottom:76px">
+  <div class="status"><span>20:18</span><span>◐ 100%</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:2px 16px 0">
+   <div style="font-size:16px;font-weight:600;color:var(--gold)">Horary</div>
+   <div class="glass badge"><span style="color:var(--gold)">✦</span> 3</div>
+  </div>
+  <div style="padding:14px 16px 0;text-align:center">
+   <div class="ph circle" style="width:78px;height:78px;margin:0 auto 4px">AY</div>
+   <div class="muted" style="font-size:13px;margin-top:6px">Ay'a Bir Soru Sor</div>
+   <input class="field" placeholder="Aklından ne geçiyor?" style="width:100%;text-align:center;margin-top:12px">
+   <div class="btn" style="margin-top:10px">Yıldızlara Sor · 1 kredi</div>
+  </div>
+  <div class="glass" style="margin:16px 16px 0;padding:15px;border-color:rgba(255,229,102,.3)">
+   <div class="kick" style="margin-bottom:7px">Yorum</div>
+   <p style="font-size:13px;line-height:1.6;color:#eeedf9">Ay şu an Balık'ta ilerliyor — sorunun cevabı "henüz değil ama yakında". Acele etme, işaretler netleşiyor.</p>
+   <div style="display:flex;gap:8px;margin-top:12px"><div class="btn" style="flex:1;padding:9px;font-size:12.5px">Devam</div><div class="btn ghost" style="flex:1;padding:9px;font-size:12.5px">Tamam</div></div>
+   <div class="muted" style="font-size:10.5px;opacity:.4;margin-top:8px;text-align:center">Bu yorum yalnızca eğlence amacıyladır</div>
+  </div>
+ </div>
+ <div class="tabbar glass">
+   <div class="tab"><div class="d"></div>Bugün</div>
+   <div class="tab moon"><div class="d"></div>Ay</div>
+   <div class="tab"><div class="d"></div>Tarot</div>
+   <div class="tab ball on"><div class="d"></div>Horary</div>
+ </div><div class="grain"></div>
+</div><div class="cap">8 · Horary (Ay'a soru)</div></div>
+
+<!-- 9 SETTINGS -->
+<div class="col"><div class="phone form"><div class="scr">
+  <div class="status"><span>20:19</span><span>◐ 100%</span></div>
+  <div style="padding:8px 20px 40px">
+   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div class="icon" style="font-size:14px">✕</div><div style="font-size:17px;font-weight:600;color:var(--gold)">Ayarlar</div><div style="width:32px"></div></div>
+   <div class="glass" style="padding:13px;display:flex;align-items:center;gap:12px;margin-bottom:16px">
+     <div class="ph circle" style="width:42px;height:42px;flex:0 0 42px">GÜLEN<br>YILDIZ</div>
+     <div style="flex:1"><div style="font-weight:600;font-size:14px">Damla</div><div class="muted" style="font-size:12px">Yengeç · üye</div></div>
+     <div class="chip on" style="flex:0 0 auto;padding:6px 12px">Premium</div>
+   </div>
+   <div class="muted" style="font-size:11px;font-weight:600;margin:4px 0 8px;letter-spacing:.5px">DİL</div>
+   <div style="display:flex;gap:8px;margin-bottom:16px"><div class="chip on">🇹🇷 Türkçe</div><div class="chip">🇬🇧 English</div></div>
+   <div class="muted" style="font-size:11px;font-weight:600;margin:4px 0 8px;letter-spacing:.5px">BİLDİRİMLER</div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:8px">Ay fazı değişimi<span style="width:36px;height:20px;border-radius:12px;background:var(--gold);position:relative"><span style="position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#2a2100"></span></span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:16px">Günlük hatırlatma<span style="width:36px;height:20px;border-radius:12px;background:rgba(255,255,255,.15);position:relative"><span style="position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff"></span></span></div>
+   <div class="muted" style="font-size:11px;font-weight:600;margin:4px 0 8px;letter-spacing:.5px">KREDİLER</div>
+   <div class="glass" style="padding:13px;text-align:center;margin-bottom:8px"><div style="font-size:22px;font-weight:700;color:var(--gold)">3</div><div class="muted" style="font-size:11.5px">2 günlük ücretsiz · 1 satın alınan</div></div>
+   <div class="btn" style="margin-bottom:16px;font-size:13px">Kredi Al</div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:8px">Doğum Haritası<span class="muted">›</span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:8px">Okuma Geçmişi<span class="muted">›</span></div>
+   <div class="rowline" style="justify-content:space-between;margin-bottom:8px">Gizlilik Politikası<span class="muted">›</span></div>
+   <div class="rowline" style="justify-content:space-between">Çıkış Yap<span class="muted">›</span></div>
+   <div class="muted" style="text-align:center;font-size:11px;margin-top:16px;opacity:.4">Moonlight v1.0</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">9 · Ayarlar (☰ menü)</div></div>
+
+<!-- 10 BIRTH CHART -->
+<div class="col"><div class="phone form"><div class="scr">
+  <div class="status"><span>20:20</span><span>◐ 100%</span></div>
+  <div style="padding:8px 22px 34px">
+   <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><div class="icon">‹</div><div style="font-size:16px;font-weight:600;color:#fff">Doğum Haritan</div></div>
+   <div class="kick" style="margin-bottom:6px">gökyüzü doğduğunda</div>
+   <div class="title" style="font-size:18px">Damla, sen böyle bir gökyüzüydün</div>
+   <div class="glass" style="display:flex;margin-top:16px">
+     <div class="zsign"><span class="g">♋</span><span class="l">Güneş</span><span class="v">Yengeç</span></div>
+     <div class="zsign" style="border-left:1px solid var(--line);border-right:1px solid var(--line)"><span class="g">♍</span><span class="l">Yükselen</span><span class="v">Başak</span></div>
+     <div class="zsign"><span class="g">♏</span><span class="l">Ay</span><span class="v">Akrep</span></div>
+   </div>
+   <p style="font-size:13px;line-height:1.6;margin-top:16px;color:#eeedf9"><b style="color:var(--gold)">Yengeç güneşin</b> seni derin hisseden, koruyan biri yapıyor. <b style="color:var(--gold)">Başak yükselenin</b> bu duyguları düzene sokma ihtiyacı veriyor.</p>
+   <p style="font-size:13px;line-height:1.6;margin-top:10px;color:#c8c6e6"><b style="color:#fff">Akrep ayın</b> ise gizli, yoğun bir iç dünya taşıyor.</p>
+   <div class="btn" style="margin-top:18px;font-size:13px">Tam yorumu aç</div>
+  </div>
+</div><div class="grain"></div></div><div class="cap">10 · Doğum haritası yorumu</div></div>
+
+</div>
+</body></html>

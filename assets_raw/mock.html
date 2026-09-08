@@ -1,0 +1,29 @@
+<!DOCTYPE html><html><head><meta charset=utf-8>
+<style>
+body{background:#111;display:flex;flex-direction:column;align-items:center;gap:14px;
+justify-content:center;min-height:100vh;font-family:-apple-system,sans-serif;padding:40px}
+h2{color:#fff;font-weight:600}
+.phone{position:relative;width:320px;height:693px;border-radius:44px;overflow:hidden;
+box-shadow:0 30px 80px rgba(0,0,0,.6);border:6px solid #222;background:#526bac}
+.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.05)}
+.moon{position:absolute;top:31%;left:47%;transform:translate(-50%,-50%);width:200px;z-index:5;
+filter:drop-shadow(0 0 22px rgba(255,229,102,.4)) drop-shadow(0 0 58px rgba(255,214,120,.22))}
+.cloud{position:absolute;transform:translate(-50%,-50%) scaleX(var(--fl,1));
+animation:drift 12s ease-in-out infinite}
+@keyframes drift{0%,100%{margin-left:0}50%{margin-left:12px}}
+.el{position:absolute;transform:translate(-50%,-50%);z-index:6;
+animation:tw 3.4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.4;transform:translate(-50%,-50%) scale(.85)}
+50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+.label{color:#999;font-size:13px}
+</style></head><body>
+<h2>Moonlight — mock</h2>
+<div class="phone">
+  <img class="bg" src="processed/bg_3.png">
+  <img class="cloud" style="top:40%;left:20%;width:74px;opacity:0.6;z-index:3;--fl:1;animation-delay:1.9s" src="processed/cloud_0.png"><img class="cloud" style="top:47%;left:74%;width:88px;opacity:0.68;z-index:3;--fl:-1;animation-delay:0.4s" src="processed/cloud_0.png"><img class="cloud" style="top:52%;left:40%;width:66px;opacity:0.5;z-index:3;--fl:1;animation-delay:2.6s" src="processed/cloud_0.png">
+  <img class=moon src="processed/moon_0.png">
+  <img class="cloud" style="top:43%;left:46%;width:138px;opacity:0.95;z-index:7;--fl:-1;animation-delay:0.8s" src="processed/cloud_0.png">
+  <img class="el" style="top:10.335665304829082%;left:34.49728330531829%;width:11px;animation-delay:0.2s" src="processed/sparkle_0.png"><img class="el" style="top:25.31230079395565%;left:11.103905380174199%;width:11px;animation-delay:0.3s" src="processed/sparkle_1.png"><img class="el" style="top:6.482641255317544%;left:54.492158333641946%;width:13px;animation-delay:3.0s" src="processed/sparkle_2.png"><img class="el" style="top:13.285436585221232%;left:10.363859578299888%;width:14px;animation-delay:0.9s" src="processed/sparkle_3.png"><img class="el" style="top:8.947273999291472%;left:18.6944473354545%;width:16px;animation-delay:1.8s" src="processed/sparkle_4.png"><img class="el" style="top:8.328339922630837%;left:66.016237138986%;width:16px;animation-delay:1.2s" src="processed/sparkle_5.png"><img class="el" style="top:8.95876268670841%;left:92.25538657934723%;width:22px;animation-delay:0.5s" src="processed/sparkle_6.png"><img class="el" style="top:6.888043875088144%;left:76.1264938723003%;width:13px;animation-delay:3.0s" src="processed/star_0.png"><img class="el" style="top:33.4626648947858%;left:11.338909628555335%;width:26px;animation-delay:0.9s" src="processed/star_1.png"><img class="el" style="top:7.384414650405822%;left:82.68513372311435%;width:26px;animation-delay:1.3s" src="processed/sparkle_0.png"><img class="el" style="top:45.43161740204982%;left:68.16291043569217%;width:22px;animation-delay:3.1s" src="processed/sparkle_1.png"><img class="el" style="top:13.800115514596166%;left:26.41220428011915%;width:26px;animation-delay:2.7s" src="processed/sparkle_2.png"><img class="el" style="top:40.086481866617795%;left:17.043253099645977%;width:11px;animation-delay:1.5s" src="processed/sparkle_3.png"><img class="el" style="top:43.97922127492393%;left:82.6461961018839%;width:22px;animation-delay:1.3s" src="processed/sparkle_4.png"><img class="el" style="top:12.00560057780593%;left:41.238951485438704%;width:16px;animation-delay:1.4s" src="processed/sparkle_5.png">
+</div>
+<div class="label">bg: bg_3.png · süzülen bulutlar · temiz gold pırıltılar</div>
+</body></html>
