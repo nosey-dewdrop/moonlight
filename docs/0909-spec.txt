@@ -7,13 +7,13 @@ Yasa: docs/0809-kosu.md A. Bu dosya A'yı değiştirmez, "nasıl" yazar. Kaynak 
 Okuyucu kombinasyonu nasıl okur (5 katman, prompt'a sırayla girer)?
 - Majör/minör oranı: 3 kartta 2+ majör = "hayat dönemeci, dış güçler"; hiç majör yok = "gündelik, kişinin elinde". Kelt'te 10 karttan 4+ majör aynı yorum. [31][32]
 - Element dağılımı: Asa=Ateş, Kupa=Su, Kılıç=Hava, Tılsım=Toprak. Ateş-Su ve Hava-Toprak birbirini zayıflatır; aynı element güçlendirir; diğer çiftler dost. [29]
-- Damla karar: astrolojik karşılık katmanı (kart → gezegen/burç) olsun mu?
+- Karar (9 Eyl): astrolojik karşılık katmanı son fazlarda, App Store'a atmadan önce (faz 6). Bu turda yok.
 - Eksik takım: Asa yok = tutku eksik; Kupa yok = duygu eksik; Kılıç yok = net düşünce/iletişim eksik; Tılsım yok = pratik zemin yok. Majör telafi edebilir (Güneş, Asa yokluğunu kapatır). [30]
 - Tekrar eden sayı: aynı sayı 2+ kez = o sayının teması baskın (ör. iki "Beş" = çatışma dönemi); bazen zaman birimi. [31]
 - Saray kartları: 2+ saray = olayda başka insanlar var; tek saray = soranın kendi tavrı. Uşak=haber, Şövalye=hareket, Kraliçe=içselleştirme, Kral=yönetme. [31]
 Pozisyon anlamları (klasik kaynak)?
 - 3 kart: Geçmiş / Şimdi / Gelecek; 18. yy'dan gelir, Golden Dawn ve RWS ile yaygınlaşır. [33]
-- 5 kart: klasik tek kaynak yok. Kodda "Past, Present, Hidden, Advice, Outcome" var; yaygın alternatif "Durum / Engel / Tavsiye / Gizli etki / Sonuç". Hangisi? Damla seçer.
+- 5 kart: klasik tek kaynak yok. Kodda "Past, Present, Hidden, Advice, Outcome" var; yaygın alternatif "Durum / Engel / Tavsiye / Gizli etki / Sonuç". Karar (9 Eyl): sabit pozisyon adı yok. 5 kart ve 3 kart pozisyonsuz okunur; kombinasyon ve his üzerinden, duruma göre. Kelt pozisyonları kalır.
 - Kelt Haçı (Waite 1910, Pictorial Key): 1 Örten (durum), 2 Kesen (engel), 3 Taçlandıran (hedef/bilinç), 4 Altındaki (temel/bilinçaltı), 5 Arkasındaki (yakın geçmiş), 6 Önündeki (yakın gelecek), 7 Kendisi (tavır), 8 Evi (çevre), 9 Umut/Korku, 10 Sonuç. [28]
 Gökyüzü yoruma nasıl girer?
 - Ay evresi: Yeni Ay = başlangıç/niyet sorularına; Dolunay = açığa çıkma/bırakma; İlk Dördün = eylem; Son Dördün = bırakma. Yorum tonu buna göre. [34]
@@ -135,7 +135,7 @@ Eksik: istemci giriş ekranı; e-posta akışı; cüzdan/okuma/gündem tablolar�
 =====================================================================
 78 kart için katmanlar (statik JSON, iki dil)?
 - Anahtar kelime (3-5), düz anlam (2 cümle), arketip (majör için; minör için "takım+sayı" hikâyesi), sayı anlamı (As=başlangıç … On=tamamlanma; saray=insan tipi), element.
-- Damla karar: astrolojik karşılık katmanı olsun mu?
+- Karar (9 Eyl): astrolojik karşılık katmanı faz 6'da, App Store öncesi.
 - Kartın açılımdaki pozisyonu ne olursa olsun kart sayfası aynı; "bu açılımda anlamı" cümlesi yorumdan gelir, rehbere yazılmaz.
 "Bu kart sende kaç kez geldi"?
 - readings.cards(json) alanından sayılır: kart id'sine göre count, son geliş tarihi, en sık geldiği açılım. Hesapsızda cihaz geçmişinden; hesaplıda sunucudan. Bugün geçmiş kart tutmadığı için sayılamaz.
