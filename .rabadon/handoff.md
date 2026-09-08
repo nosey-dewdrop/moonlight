@@ -1,5 +1,5 @@
 # rabadon devridaim — moonlight
-updated: 2026-09-08T22:34:55Z
+updated: 2026-09-08T22:37:03Z
 
 ## goal (as captured from the session)
 kısa keser misin napıyoruz?
@@ -11,7 +11,6 @@ not run this cycle
 - none
 
 ## last moves
-- bash: cd ~/damla_projects_2026/moonlight && git add docs && git commit -qm "0909: crit
 - SendMessage: 
 - bash: cd ~/damma 2>/dev/null; cd ~/damla_projects_2026/moonlight && echo "=== SPEC" &&
 - bash: cat >> ~/damla_projects_2026/moonlight/docs/0909-elestiri.txt <<'EOF'
@@ -23,6 +22,9 @@ p='docs/0909-faz.txt'; s
 - bash: cd ~/damla_projects_2026/moonlight && awk '/5. KAMERADA/{f=1} f' docs/0909-reels
 - bash: cd ~/damla_projects_2026/moonlight && { cat <<'EOF'
 MOONLIGHT 0909 REELS — faz
+- bash: cd ~/damla_projects_2026/moonlight && python3 - <<'EOF'
+import re
+p='docs/0909-r
 
 ## for the next session
 - if tests are RED above: that is the open front — start there.
