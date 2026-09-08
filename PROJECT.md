@@ -1,6 +1,6 @@
 # moonlight
 
-Moon phases / horary / astrology tracking iOS app. Also Damla's architecture learning project: she writes the backend code, Claude teaches. Backend roadmap lives in her Obsidian.
+Moon phases / horary / astrology tracking iOS app (Swift/SwiftUI, Cloudflare Worker proxy). Damla does not write code; she directs and uses AI.
 
 ## Status
 Current phase: Launch
@@ -8,7 +8,7 @@ Last session: 2026-07-10 — widget extension + engagement prompts shipped, ship
 
 ## Roadmap
 ### Phase 1: Foundation
-- [x] moon phase engine, charts via worker proxy (Damla's backend domain)
+- [x] moon phase engine, charts via worker proxy
 - [x] ChartCache: request coalescing, 10 min now-chart cache, natal forever, stale-on-failure, 15s timeout
 
 ### Phase 2: Core Features
@@ -23,7 +23,6 @@ Last session: 2026-07-10 — widget extension + engagement prompts shipped, ship
 - [ ] Damla's assets, then submit
 
 ## Ideas
-- Backend learning roadmap (Obsidian): Damla codes, Claude teaches only
 - Move daily reading to a KV cached worker endpoint at scale (good learning exercise)
 - Spotify integration idea parked in old notes
 

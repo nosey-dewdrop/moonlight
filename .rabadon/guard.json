@@ -1,0 +1,48 @@
+{
+  "project": "moonlight",
+  "bash": [
+    {
+      "id": "no-force-push-main",
+      "deny": "git\\s+push(?=[\\s\\S]*(--force|\\s-f\\b))(?=[\\s\\S]*\\b(main|master)\\b)",
+      "why": "baseline rule: never force-push to the main branch"
+    },
+    {
+      "id": "no-rm-rf-outside-project",
+      "deny": "rm\\s+-\\w*r\\w*\\s+(/(?!Users/damummyphus/damla_projects_2026)|~|\\$HOME)",
+      "why": "baseline rule: no recursive delete on absolute/home paths outside the project"
+    },
+    {
+      "id": "no-hard-reset-shared",
+      "deny": "git\\s+reset\\s+--hard\\s+(origin/)?(main|master)\\b",
+      "why": "baseline rule: no destructive reset on shared branches"
+    },
+    {
+      "id": "no-coauthor-commit",
+      "deny": "git\\s+commit[\\s\\S]*co-authored-by",
+      "why": "global law §6: commit messages carry no co-author, ever"
+    },
+    {
+      "id": "no-pixel-fonts",
+      "deny": "pixelify",
+      "why": "moonlight type law: NO pixel fonts (Damla's call after trying Pixelify) — block fetching/installing it"
+    }
+  ],
+  "protectedPaths": [
+    {
+      "id": "worker-proxy-untouched",
+      "match": "worker[-_ ]?proxy|proxy[-_ ]?worker",
+      "why": "moonlight law: Worker proxy untouched — Damla's backend domain, she writes the backend herself"
+    },
+    {
+      "id": "fonts-are-generated",
+      "match": "\\.(ttf|otf)$",
+      "why": "moonlight type law: font instances are regenerated via fontTools instancer, not hand-edited"
+    },
+    {
+      "id": "no-share-card-readd",
+      "match": "share[-_ ]?card",
+      "why": "moonlight law: share card feature was deleted by Damla — do not re-add without a concrete reference from her"
+    }
+  ],
+  "generatedBy": "rabadon guard (claude code cli)"
+}

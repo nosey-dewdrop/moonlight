@@ -43,3 +43,6 @@ next-env.d.ts
 CLAUDE.md
 Moonlight/Services/Secrets.swift
 CLAUDE.context.md
+
+.rabadon/state.json
+.rabadon/sessions/
